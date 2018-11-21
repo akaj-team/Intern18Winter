@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Intern18Summer</string>
+    <string name="beatrice_maxwell">Beatrice Maxwell</string>
+    <string name="slovakia">Slovakia</string>
+    <string name="posts">Posts</string>
+    <string name="bookmarks">Bookmarks</string>
+    <string name="news">News</string>
+    <string name="loadding">loadding</string>
+    <string name="todo">TODO</string>
+    <string name="conent">conent</string>
+    <string name="viewgroup">ViewGroup</string>
+    <string name="profile">Profile</string>
 </resources>

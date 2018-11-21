@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LayoutActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:background="@drawable/background">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp">
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="25dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_weight="1"
+                android:src="@drawable/pasted"
+                android:layout_marginStart="15dp"
+                android:contentDescription="@string/todo" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="25dp"
+                android:layout_marginTop="15dp"
+                android:layout_weight="7"
+                android:text="@string/profile"
+                android:textColor="#f3e4ece7"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:contentDescription="@string/todo" />
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="25dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_weight="1"
+                android:src="@drawable/dot"
+                android:layout_marginEnd="15dp"
+                android:contentDescription="@string/todo" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/line"/>
+
+
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="70dp">
+        <ImageView
+            android:background="@drawable/border1"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="5dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="30dp"
+            android:layout_marginTop="35dp"
+            android:layout_marginLeft="40dp"
+            android:src="@drawable/check"
+            android:contentDescription="@string/todo"
+            android:layout_marginStart="40dp" />
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_weight="6"
+            android:src="@drawable/image"
+            />
+        <ImageView
+            android:background="@drawable/border"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="5dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="30dp"
+            android:layout_marginTop="35dp"
+            android:layout_marginRight="40dp"
+            android:src="@drawable/dot1"
+            android:contentDescription="@string/todo"
+            android:layout_marginEnd="40dp" />
+    </LinearLayout>
+    <RelativeLayout android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="170dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:textStyle="bold"
+            android:text="@string/beatrice_maxwell"
+
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_marginTop="30dp"
+            android:gravity="center"
+            tools:ignore="UseCompoundDrawables">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:src="@drawable/pin"
+                android:contentDescription="@string/todo" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:text="@string/slovakia"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_marginTop="230dp"
+        android:background="@drawable/line1" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="230dp"
+        android:gravity="center">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/posts"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:text="@string/bookmarks"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/news"/>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_marginTop="270dp"
+        android:background="@drawable/line1"/>
+    <GridView
+        android:id="@+id/gridView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="273dp"
+        android:numColumns="2"
+        android:gravity="center"
+
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_alignParentBottom="true"
+        >
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:text="@string/loadding"/>
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:src="@drawable/loadding"
+            android:contentDescription="@string/todo" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:text="@string/conent"/>
+    </LinearLayout>
+</RelativeLayout>
