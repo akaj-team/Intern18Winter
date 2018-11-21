@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/height_130dp"
+    android:layout_margin="@dimen/margin_15dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tvDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/a_city_living_under_the_shadows"
+        android:textColor="@color/colorBlack"
+        android:textSize="@dimen/text_size_17sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:orientation="horizontal">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imgIcon"
+            android:layout_width="@dimen/width_40dp"
+            android:layout_height="@dimen/height_40dp"
+            android:src="@drawable/avatar" />
+
+        <TextView
+            android:id="@+id/tvFirmName"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/margin_left_15dp"
+            android:layout_marginLeft="@dimen/margin_left_15dp"
+            android:layout_weight="3"
+            android:gravity="center|left"
+            android:text="@string/rbc_news"
+            android:textColor="@color/colorPrimaryDark"
+            tools:ignore="RtlHardcoded" />
+    </LinearLayout>
+</RelativeLayout>
+

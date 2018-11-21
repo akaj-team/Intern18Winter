@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">Intern18Summer</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="profile">Profile</string>
+    <string name="todo">TODO</string>
+    <string name="message">Message</string>
+    <string name="beatrice_maxwell">Beatrice Maxwell</string>
+    <string name="location">Location</string>
+    <string name="slovakia">Slovakia</string>
+    <string name="posts">Posts</string>
+    <string name="bookmarks">Bookmarks</string>
+    <string name="news">News</string>
+    <string name="bai1_view">View and View Group </string>
+    <string name="Loading">Loading</string>
+    <string name="content">content</string>
+    <string name="icon_loading">Icon Loading</string>
+    <string name="a_city_living_under_the_shadows">A City Living Under the Shadows</string>
+    <string name="rbc_news">RBC News</string>
 </resources>
+

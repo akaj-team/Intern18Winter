@@ -1,0 +1,46 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="appbar_padding_top">8dp</dimen>
+    <dimen name="margin_10dp">10dp</dimen>
+    <dimen name="text_size_20sp">20sp</dimen>
+    <dimen name="margin_bottom_5dp">5dp</dimen>
+    <dimen name="text_size_15sp">15sp</dimen>
+    <dimen name="margin_left_10dp">10dp</dimen>
+    <dimen name="margin_start_10dp">10dp</dimen>
+    <dimen name="width_30dp">30dp</dimen>
+    <dimen name="height_30dp">30dp</dimen>
+    <dimen name="margin_5dp">5dp</dimen>
+    <dimen name="padding_left_10dp">10dp</dimen>
+    <dimen name="text_size_17sp">17sp</dimen>
+    <dimen name="margin_top_35dp">35dp</dimen>
+    <dimen name="width_50dp">50dp</dimen>
+    <dimen name="height_50dp">50dp</dimen>
+    <dimen name="width_0dp">0dp</dimen>
+    <dimen name="margin_left_15dp">15dp</dimen>
+    <dimen name="width_40dp">40dp</dimen>
+    <dimen name="height_40dp">40dp</dimen>
+    <dimen name="padding_left_20dp">20dp</dimen>
+    <dimen name="padding_right_20dp">20dp</dimen>
+    <dimen name="height_130dp">130dp</dimen>
+    <dimen name="margin_20dp">20dp</dimen>
+    <dimen name="padding_20dp">20dp</dimen>
+    <dimen name="margin_15dp">15dp</dimen>
+    <dimen name="margin_top_10px">10dp</dimen>
+    <dimen name="padding_5dp">5dp</dimen>
+    <dimen name="layout_width_130dp">130dp</dimen>
+    <dimen name="layout_height_130dp">130dp</dimen>
+    <dimen name="layout_marginLeft_35dp">35dp</dimen>
+    <dimen name="layout_marginRight_35dp">35dp</dimen>
+    <dimen name="layout_width_50dp">50dp</dimen>
+    <dimen name="padding_10dp">10dp</dimen>
+    <dimen name="layout_margin_10dp">10dp</dimen>
+    <dimen name="layout_height_18dp">18dp</dimen>
+    <dimen name="layout_height_8dp">8dp</dimen>
+    <dimen name="layout_height_1dp">1dp</dimen>
+    <dimen name="layout_marginLeft_30dp">30dp</dimen>
+    <dimen name="layout_marginRight_30dp">30dp</dimen>
+    <dimen name="layout_marginTop_55dp">55dp</dimen>
+</resources>
