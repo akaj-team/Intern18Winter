@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:text="@string/a_city_living_under_the_shadows"
         android:textColor="@color/colorBlack"
-        android:textSize="@dimen/text_size_17sp" />
+        android:textSize="@dimen/font_size_17sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,16 +23,16 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/imgIcon"
-            android:layout_width="@dimen/width_40dp"
-            android:layout_height="@dimen/height_40dp"
-            android:src="@drawable/avatar" />
+            android:layout_width="@dimen/circle_imageview_width_40dp"
+            android:layout_height="@dimen/circle_imageview_height_40dp"
+            android:src="@drawable/img_avatar" />
 
         <TextView
             android:id="@+id/tvFirmName"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/margin_left_15dp"
-            android:layout_marginLeft="@dimen/margin_left_15dp"
+            android:layout_marginStart="@dimen/textview_margin_start_15dp"
+            android:layout_marginLeft="@dimen/textview_margin_left_15dp"
             android:layout_weight="3"
             android:gravity="center|left"
             android:text="@string/rbc_news"
@@ -40,4 +40,3 @@
             tools:ignore="RtlHardcoded" />
     </LinearLayout>
 </RelativeLayout>
-

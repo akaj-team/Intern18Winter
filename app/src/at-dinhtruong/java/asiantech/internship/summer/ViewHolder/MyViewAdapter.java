@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
 import java.util.ArrayList;
 
 import asiantech.internship.summer.Model.ModelPaper;
@@ -53,8 +52,6 @@ public class MyViewAdapter extends RecyclerView.Adapter<MyViewAdapter.ViewHolder
             tvDescription = itemView.findViewById(R.id.tvDescription);
             imgIcon = itemView.findViewById(R.id.imgIcon);
             tvNameFirm = itemView.findViewById(R.id.tvFirmName);
-
-
         }
     }
 }

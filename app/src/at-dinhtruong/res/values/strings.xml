@@ -11,11 +11,11 @@
     <string name="posts">Posts</string>
     <string name="bookmarks">Bookmarks</string>
     <string name="news">News</string>
-    <string name="bai1_view">View and View Group </string>
+    <string name="view">View and View Group </string>
     <string name="Loading">Loading</string>
     <string name="content">content</string>
     <string name="icon_loading">Icon Loading</string>
     <string name="a_city_living_under_the_shadows">A City Living Under the Shadows</string>
     <string name="rbc_news">RBC News</string>
+    <string name="event">Event And Listener</string>
 </resources>
-
