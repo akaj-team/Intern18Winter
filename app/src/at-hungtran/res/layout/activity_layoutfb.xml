@@ -45,12 +45,11 @@
                 android:layout_marginEnd="15dp"
                 android:contentDescription="@string/todo" />
         </LinearLayout>
-
-        <LinearLayout
+        <View
             android:layout_width="match_parent"
-            android:layout_height="3dp"
+            android:layout_height="1dp"
             android:layout_marginTop="50dp"
-            android:background="@drawable/line"/>
+            android:background="@android:color/darker_gray"/>
 
 
     </RelativeLayout>
@@ -103,9 +102,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
             android:textStyle="bold"
-            android:text="@string/beatrice_maxwell"
-
-            />
+            android:text="@string/beatrice_maxwell" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="20dp"
@@ -123,12 +120,11 @@
                 android:text="@string/slovakia"/>
         </LinearLayout>
     </RelativeLayout>
-
-    <LinearLayout
+    <View
         android:layout_width="match_parent"
-        android:layout_height="3dp"
+        android:layout_height="1dp"
         android:layout_marginTop="230dp"
-        android:background="@drawable/line1" />
+        android:background="@android:color/darker_gray"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
@@ -158,16 +154,14 @@
         android:layout_width="match_parent"
         android:layout_height="3dp"
         android:layout_marginTop="270dp"
-        android:background="@drawable/line1"/>
+        android:background="@android:color/darker_gray"/>
     <GridView
         android:id="@+id/gridView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="273dp"
         android:numColumns="2"
-        android:gravity="center"
-
-        />
+        android:gravity="center" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="30dp"

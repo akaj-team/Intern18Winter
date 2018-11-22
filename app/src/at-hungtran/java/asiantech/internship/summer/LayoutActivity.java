@@ -17,12 +17,12 @@ public class LayoutActivity extends AppCompatActivity {
             "The Labels to Sort Messages in Facebook"
     };
     int[] images = {
-            R.drawable.avt,
-            R.drawable.avt1,
-            R.drawable.avt2,
-            R.drawable.avt3,
-            R.drawable.avt4,
-            R.drawable.avt5
+            R.drawable.ic_avt,
+            R.drawable.ic_avt1,
+            R.drawable.ic_avt2,
+            R.drawable.ic_avt3,
+            R.drawable.ic_avt4,
+            R.drawable.ic_avt5
     };
     String[] values1 = {
             "RBC News",
@@ -35,7 +35,7 @@ public class LayoutActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_layoutfb);
         gridView = findViewById(R.id.gridView);
         gridView.setNumColumns(2);
         GridAdapter gridAdapter = new GridAdapter(this, values, values1, images);
