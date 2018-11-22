@@ -11,22 +11,23 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class GridAdapter extends BaseAdapter {
     private Context context;
-    private final String [] values;
-    private final int [] images;
-    private final String [] values1;
+    private final String [] mValues;
+    private final int [] mImages;
+    private final String [] mValues1;
     View view;
     private LayoutInflater layoutInflater;
 
-    public GridAdapter(Context context, String[] values, int[] images, String[] values1) {
+
+    public GridAdapter(Context context, String[] mValues, int[] mImages, String[] mValues1) {
         this.context = context;
-        this.values = values;
-        this.images = images;
-        this.values1 = values1;
+        this.mValues = mValues;
+        this.mImages = mImages;
+        this.mValues1 = mValues1;
     }
 
     @Override
     public int getCount() {
-        return values.length;
+        return mValues.length;
     }
 
     @Override
@@ -48,9 +49,9 @@ public class GridAdapter extends BaseAdapter {
             TextView textView = view.findViewById(R.id.tv);
             TextView textView1 = view.findViewById(R.id.tv1);
 
-            textView.setText(values[position]);
-            circleImageView.setImageResource(images[position]);
-            textView1.setText(values1[position]);
+            textView.setText(mValues[position]);
+            circleImageView.setImageResource(mImages[position]);
+            textView1.setText(mValues1[position]);
         }
         return view;
     }
