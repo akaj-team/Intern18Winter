@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ViewActivity">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:background="@drawable/bg_background">
+    </RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:weightSum="10">
+                <ImageView
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="18dp"
+                    android:src="@drawable/ic_back"
+
+                    android:contentDescription="@string/todo" />
+
+                <TextView
+                    android:layout_weight="8"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorWhite"
+                    android:text="@string/profile"
+                    android:textSize="20sp"
+                    android:gravity="center"
+                    />
+
+                <ImageView
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="10dp"
+                    android:src="@drawable/ic_dot"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:contentDescription="@string/todo" />
+
+            </LinearLayout>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_line"
+                android:contentDescription="@string/todo" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="30dp"
+                android:weightSum="6">
+                <ImageView
+                    android:background="@drawable/shapeimage"
+                    android:layout_width="0dp"
+                    android:layout_height="25dp"
+                    android:padding="7dp"
+                    android:src="@drawable/ic_check"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/todo" />
+                <de.hdodenhof.circleimageview.CircleImageView
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/profile_image"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/img_image"
+                    app:civ_border_width="2dp"
+                    app:civ_border_color="@color/colorWhite"
+                    android:layout_weight="2" />
+                <ImageView
+                    android:background="@drawable/shapeimage1"
+                    android:layout_width="0dp"
+                    android:layout_height="25dp"
+                    android:padding="7dp"
+                    android:src="@drawable/ic_dot1"
+                    android:scaleType="centerInside"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/todo" />
+            </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/beat"
+                android:textStyle="bold"
+                app:fontFamily="casual"
+                android:textSize="15sp"
+                android:gravity="center"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                tools:ignore="UseCompoundDrawables">
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="15dp"
+                    android:src="@drawable/ic_pin"
+                    android:contentDescription="@string/todo" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/slovakia"
+                    android:textColor="@color/colorGray"/>
+            </LinearLayout>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_line1"
+                android:contentDescription="@string/todo" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center">
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/post"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorGray"
+                    app:fontFamily="casual"
+                    android:textSize="15sp"
+                    android:gravity="center"/>
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/bookmarks"
+                    android:textStyle="bold"
+                    app:fontFamily="casual"
+                    android:gravity="center"
+                    android:textSize="15sp"/>
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/news"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorGray"
+                    android:fontFamily="casual"
+                    android:textSize="15sp"
+                    android:gravity="center"
+                    tools:targetApi="jelly_bean" />
+            </LinearLayout>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_line1"
+                android:contentDescription="@string/todo" />
+
+            <GridView
+                android:id="@+id/gv1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnWidth="100dp"
+                android:gravity="center"
+                android:numColumns="2"></GridView>
+        </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center|bottom">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/loading"
+            android:textColor="@color/colorGray"/>
+        <ImageViewư
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:src="@drawable/loadding"
+            android:padding="5dp"
+            android:contentDescription="@string/todo" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/content"
+            android:textColor="@color/colorGray"/>
+    </LinearLayout>
+</RelativeLayout>
