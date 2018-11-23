@@ -27,9 +27,7 @@
                     android:layout_width="0dp"
                     android:layout_height="18dp"
                     android:src="@drawable/ic_back"
-
                     android:contentDescription="@string/todo" />
-
                 <TextView
                     android:layout_weight="8"
                     android:layout_width="0dp"
@@ -37,9 +35,7 @@
                     android:textColor="@color/colorWhite"
                     android:text="@string/profile"
                     android:textSize="20sp"
-                    android:gravity="center"
-                    />
-
+                    android:gravity="center" />
                 <ImageView
                     android:layout_weight="1"
                     android:layout_width="0dp"
@@ -48,7 +44,6 @@
                     android:layout_marginRight="10dp"
                     android:layout_marginEnd="10dp"
                     android:contentDescription="@string/todo" />
-
             </LinearLayout>
             <ImageView
                 android:layout_width="match_parent"
