@@ -2,8 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/height_130dp"
-    android:layout_margin="@dimen/margin_15dp"
+    android:layout_height="@dimen/rl_height_150dp"
+    android:padding="@dimen/rlPadding_15dp"
+    android:id="@+id/rlCustomView"
     android:orientation="vertical">
 
     <TextView

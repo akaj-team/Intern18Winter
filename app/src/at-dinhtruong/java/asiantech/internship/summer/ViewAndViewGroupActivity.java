@@ -17,9 +17,9 @@ public class ViewAndViewGroupActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-      /*  requestWindowFeature(Window.FEATURE_NO_TITLE);
+      requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);*/
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_view_and_viewgroup);
         initView();
     }
@@ -36,7 +36,7 @@ public class ViewAndViewGroupActivity extends AppCompatActivity {
         listPaper.add(new ModelPaper("How to Plan Your First Ski Vacation", R.drawable.ic_nbc, "NBC Nightly"));
         listPaper.add(new ModelPaper("How Social Isolation Is Killing Us", R.drawable.ic_nbc, "RBC News"));
         listPaper.add(new ModelPaper("Use Labels to Sort Messages in Facebook", R.drawable.ic_bbc, "BBC World"));
-        MyViewAdapter myViewAdapter = new MyViewAdapter(listPaper, getApplicationContext());
+        MyViewAdapter myViewAdapter = new MyViewAdapter(listPaper);
         recyclerView.setAdapter(myViewAdapter);
     }
 }

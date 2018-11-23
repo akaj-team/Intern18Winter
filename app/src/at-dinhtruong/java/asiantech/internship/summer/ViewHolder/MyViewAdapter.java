@@ -1,12 +1,15 @@
 package asiantech.internship.summer.ViewHolder;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -16,11 +19,9 @@ import asiantech.internship.summer.R;
 
 public class MyViewAdapter extends RecyclerView.Adapter<MyViewAdapter.ViewHolder> {
     private ArrayList<ModelPaper> dataFirm;
-    private Context context;
 
-    public MyViewAdapter(ArrayList<ModelPaper> dataFirm, Context context) {
+    public MyViewAdapter(ArrayList<ModelPaper> dataFirm) {
         this.dataFirm = dataFirm;
-        this.context = context;
     }
 
     @NonNull
@@ -33,9 +34,7 @@ public class MyViewAdapter extends RecyclerView.Adapter<MyViewAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        viewHolder.tvDescription.setText(dataFirm.get(i).getTxtDescription());
-        viewHolder.imgIcon.setImageResource(dataFirm.get(i).getImgIcon());
-        viewHolder.tvNameFirm.setText(dataFirm.get(i).getTxtNameFirm());
+        viewHolder.initData();
     }
 
     @Override
@@ -46,12 +45,24 @@ public class MyViewAdapter extends RecyclerView.Adapter<MyViewAdapter.ViewHolder
     class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvDescription, tvNameFirm;
         ImageView imgIcon;
+        RelativeLayout rlCustomView;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvDescription = itemView.findViewById(R.id.tvDescription);
             imgIcon = itemView.findViewById(R.id.imgIcon);
             tvNameFirm = itemView.findViewById(R.id.tvFirmName);
+            rlCustomView = itemView.findViewById(R.id.rlCustomView);
+        }
+
+        void initData() {
+            int mPosition = getAdapterPosition();
+            tvDescription.setText(dataFirm.get(getAdapterPosition()).getTxtDescription());
+            imgIcon.setImageResource(dataFirm.get(getAdapterPosition()).getImgIcon());
+            tvNameFirm.setText(dataFirm.get(getAdapterPosition()).getTxtNameFirm());
+            if (mPosition % 4 == 0 || (mPosition + 1) % 4 == 0) {
+                rlCustomView.setBackgroundColor(Color.parseColor("#f4f2f2"));
+            }
         }
     }
 }

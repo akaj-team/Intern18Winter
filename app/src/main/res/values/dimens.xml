@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="rlPadding_15dp">15dp</dimen>
+    <dimen name="rl_height_150dp">150dp</dimen>
+    <dimen name="view_height_2dp">2dp</dimen>
+</resources>

@@ -5,13 +5,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/colorGrayWhite"
     tools:context="asiantech.internship.summer.EventAndListenerActivity">
-
-    <TextView
+    <ImageView
+        android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Dinh"
-        android:textSize="30sp"
-        />
+        android:layout_height="0dp"
+        android:src="@drawable/ic_person_black_48dp"/>
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+
+    </LinearLayout>
+
 
 </LinearLayout>

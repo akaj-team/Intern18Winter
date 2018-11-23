@@ -4,8 +4,11 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorGray">#b9b8b8</color>
+    <color name="colorGrayBlack">#9e9d9d</color>
+    <color name="colorGrayWhite">#f4f2f2</color>
     <color name="colorButtonGreen">#1bd81e</color>
     <color name="colorButtonBlue">#1b86d8</color>
+    <color name="colorBlue">#1b86d8</color>
     <color name="colorWhite">#ffffff</color>
     <color name="colorBlack">#000000</color>
     <color name="tabtextColor">#ffffff</color>

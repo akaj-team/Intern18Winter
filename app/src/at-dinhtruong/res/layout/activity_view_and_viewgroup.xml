@@ -155,7 +155,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/view_height_1dp"
                 android:layout_marginTop="@dimen/view_margin_top_10dp"
-                android:background="@color/colorGray" />
+                android:background="@color/colorGrayBlack" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -193,11 +193,20 @@
                     android:textStyle="bold" />
 
             </LinearLayout>
-
-            <View
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/view_height_1dp"
-                android:background="@color/colorGray" />
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <View
+                    android:layout_gravity="center"
+                    android:layout_width="80dp"
+                    android:layout_height="@dimen/view_height_2dp"
+                    android:background="@color/colorBlue" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/view_height_1dp"
+                    android:background="@color/colorGrayBlack" />
+            </LinearLayout>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rcvFirm"
@@ -213,6 +222,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:text="@string/Loading"
                     android:textColor="@color/colorGray" />
 
@@ -226,6 +236,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:text="@string/content"
                     android:textColor="@color/colorGray" />
             </LinearLayout>
