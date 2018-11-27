@@ -84,7 +84,7 @@ public class EventAndListenerActivity extends AppCompatActivity implements Compo
     private boolean isValidEmail(String mEmail) {
         Pattern patternEmail;
         Matcher matcherEmail;
-        String emailPattern = "^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$";
+        String emailPattern = "^([a-zA-Z0-9_\\-.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(]?)$";
         patternEmail = Pattern.compile(emailPattern);
         matcherEmail = patternEmail.matcher(mEmail);
         return matcherEmail.matches();

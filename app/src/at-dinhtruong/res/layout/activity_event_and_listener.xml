@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingLeft="10dp"
-            android:text="SignUpActivity"
+            android:text="@string/sign_up_activity"
             android:textColor="@color/colorGray" />
 
         <ImageView
@@ -53,8 +53,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/user_name"
-                android:inputType="text"
                 android:importantForAutofill="no"
+                android:inputType="text"
                 tools:targetApi="o" />
 
             <EditText
@@ -63,7 +63,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/pass_word"
                 android:inputType="textPassword"
-                android:importantForAutofill="no" />
+                tools:ignore="Autofill" />
 
             <EditText
                 android:id="@+id/edtEmail"
@@ -72,7 +72,8 @@
                 android:hint="@string/email"
                 android:importantForAutofill="no"
                 android:inputType="text"
-                />
+                tools:ignore="TextFields"
+                tools:targetApi="o" />
 
             <RadioGroup
                 android:id="@+id/rgGender"
