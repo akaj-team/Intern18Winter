@@ -8,7 +8,7 @@ import android.widget.Button;
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private Button btnViewGroup, btnEvent;
+    private Button btnViewGroup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,12 +16,10 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_home);
         initView();
         btnViewGroup.setOnClickListener(this);
-        btnEvent.setOnClickListener(this);
     }
 
     private void initView() {
         btnViewGroup = findViewById(R.id.btnViewGroup);
-        btnEvent = findViewById(R.id.btnEvent);
     }
 
     @Override
@@ -32,11 +30,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(intent);
                 break;
             }
-            case R.id.btnEvent: {
-                Intent intent = new Intent(HomeActivity.this, EventAndListenerActivity.class);
-                startActivity(intent);
-                break;
-            }
+
         }
     }
 }

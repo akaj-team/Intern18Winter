@@ -20,6 +20,5 @@
             </intent-filter>
         </activity>
         <activity android:name=".ViewAndViewGroupActivity" />
-        <activity android:name=".EventAndListenerActivity" />
     </application>
 </manifest>

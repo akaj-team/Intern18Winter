@@ -6,8 +6,4 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
-    <style name="MyEditTextStyle" parent="Widget.AppCompat.EditText">
-        <item name="colorControlActivated">#4196dc</item>
-        <item name="colorControlNormal">#848686</item>
-    </style>
 </resources>
