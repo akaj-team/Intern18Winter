@@ -1,37 +1,37 @@
 package asiantech.internship.summer.Model;
 
 public class Paper {
-    private String txtDescription;
-    private int imgIcon;
-    private String txtNameFirm;
+    private String mDescription;
+    private int mIcon;
+    private String mNameFirm;
 
-    public String getTxtDescription() {
-        return txtDescription;
+    public String getmDescription() {
+        return mDescription;
     }
 
-    public void setTxtDescription(String txtDescription) {
-        this.txtDescription = txtDescription;
+    public void setmDescription(String mDescription) {
+        this.mDescription = mDescription;
     }
 
-    public int getImgIcon() {
-        return imgIcon;
+    public int getmIcon() {
+        return mIcon;
     }
 
-    public void setImgIcon(int imgIcon) {
-        this.imgIcon = imgIcon;
+    public void setmIcon(int mIcon) {
+        this.mIcon = mIcon;
     }
 
-    public String getTxtNameFirm() {
-        return txtNameFirm;
+    public String getmNameFirm() {
+        return mNameFirm;
     }
 
-    public void setTxtNameFirm(String txtNameFirm) {
-        this.txtNameFirm = txtNameFirm;
+    public void setmNameFirm(String mNameFirm) {
+        this.mNameFirm = mNameFirm;
     }
 
-    public Paper(String txtDescription, int imgIcon, String txtNameFirm) {
-        this.txtDescription = txtDescription;
-        this.imgIcon = imgIcon;
-        this.txtNameFirm = txtNameFirm;
+    public Paper(String mDescription, int mIcon, String mNameFirm) {
+        this.mDescription = mDescription;
+        this.mIcon = mIcon;
+        this.mNameFirm = mNameFirm;
     }
 }

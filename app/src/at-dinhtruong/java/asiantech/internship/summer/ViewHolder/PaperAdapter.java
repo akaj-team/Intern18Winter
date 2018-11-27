@@ -10,56 +10,56 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import asiantech.internship.summer.Model.Paper;
 import asiantech.internship.summer.R;
 
-public class PaperAdapter extends RecyclerView.Adapter<PaperAdapter.ViewHolder> {
-    private ArrayList<Paper> dataFirm;
+public class PaperAdapter extends RecyclerView.Adapter<PaperAdapter.PaperViewHolder> {
+    private List<Paper> paperList;
 
-    public PaperAdapter(ArrayList<Paper> dataFirm) {
-        this.dataFirm = dataFirm;
+    public PaperAdapter(List<Paper> dataFirm) {
+        this.paperList = dataFirm;
     }
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public PaperViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         LayoutInflater layoutInflater = LayoutInflater.from(viewGroup.getContext());
         View itView = layoutInflater.inflate(R.layout.recyclerview_item, viewGroup, false);
-        return new ViewHolder(itView);
+        return new PaperViewHolder(itView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        viewHolder.initData();
+    public void onBindViewHolder(@NonNull PaperViewHolder viewHolder, int position) {
+        viewHolder.initData(paperList.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return dataFirm.size();
+        return paperList.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tvDescription, tvNameFirm;
-        ImageView imgIcon;
-        RelativeLayout rlCustomView;
+    class PaperViewHolder extends RecyclerView.ViewHolder {
+        TextView mDescription;
+        TextView mNameFirm;
+        ImageView mIcon;
+        RelativeLayout mCustomViewPaper;
 
-        ViewHolder(@NonNull View itemView) {
+        PaperViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvDescription = itemView.findViewById(R.id.tvDescription);
-            imgIcon = itemView.findViewById(R.id.imgIcon);
-            tvNameFirm = itemView.findViewById(R.id.tvFirmName);
-            rlCustomView = itemView.findViewById(R.id.rlCustomView);
+            mDescription = itemView.findViewById(R.id.tvDescription);
+            mIcon = itemView.findViewById(R.id.imgIcon);
+            mNameFirm = itemView.findViewById(R.id.tvFirmName);
+            mCustomViewPaper = itemView.findViewById(R.id.rlCustomView);
         }
-
-        void initData() {
+        private void initData(Paper paper) {
             int mPosition = getAdapterPosition();
-            tvDescription.setText(dataFirm.get(getAdapterPosition()).getTxtDescription());
-            imgIcon.setImageResource(dataFirm.get(getAdapterPosition()).getImgIcon());
-            tvNameFirm.setText(dataFirm.get(getAdapterPosition()).getTxtNameFirm());
+            mDescription.setText(paper.getmDescription());
+            mIcon.setImageResource(paper.getmIcon());
+            mNameFirm.setText(paper.getmNameFirm());
             if (mPosition % 4 == 0 || (mPosition + 1) % 4 == 0) {
-                rlCustomView.setBackgroundColor(Color.parseColor("#f4f2f2"));
+                mCustomViewPaper.setBackgroundColor(Color.parseColor("#f4f2f2"));
             }
         }
     }

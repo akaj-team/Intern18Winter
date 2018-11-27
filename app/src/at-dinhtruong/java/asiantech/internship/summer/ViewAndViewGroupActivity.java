@@ -6,6 +6,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import asiantech.internship.summer.Model.Paper;
 import asiantech.internship.summer.ViewHolder.PaperAdapter;
@@ -24,7 +25,7 @@ public class ViewAndViewGroupActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         int numberOfColumns = 2;
         recyclerView.setLayoutManager(new GridLayoutManager(this, numberOfColumns));
-        ArrayList<Paper> listPaper = new ArrayList<>();
+        List<Paper> listPaper = new ArrayList<>();
         listPaper.add(new Paper("A City Living Under the Shadow", R.drawable.ic_nbc, "RBC News"));
         listPaper.add(new Paper("One Problem for Democaratic Leaders", R.drawable.ic_newyork, "NY Times"));
         listPaper.add(new Paper("The Golden Secret to Better Breakfast", R.drawable.ic_bbc, "BBC World"));
