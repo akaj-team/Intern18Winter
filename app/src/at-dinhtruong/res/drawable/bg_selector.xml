@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Active tab -->
+    <item android:drawable="@drawable/ic_message"  android:state_selected="false"/>
+    <!-- Inactive tab -->
+    <item android:drawable="@drawable/ic_check_white_36dp" android:state_selected="true"/>
+</selector>

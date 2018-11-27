@@ -1,10 +1,8 @@
 package asiantech.internship.summer.ViewHolder;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,13 +12,13 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import asiantech.internship.summer.Model.ModelPaper;
+import asiantech.internship.summer.Model.Paper;
 import asiantech.internship.summer.R;
 
-public class MyViewAdapter extends RecyclerView.Adapter<MyViewAdapter.ViewHolder> {
-    private ArrayList<ModelPaper> dataFirm;
+public class PaperAdapter extends RecyclerView.Adapter<PaperAdapter.ViewHolder> {
+    private ArrayList<Paper> dataFirm;
 
-    public MyViewAdapter(ArrayList<ModelPaper> dataFirm) {
+    public PaperAdapter(ArrayList<Paper> dataFirm) {
         this.dataFirm = dataFirm;
     }
 

@@ -1,6 +1,6 @@
 package asiantech.internship.summer.Model;
 
-public class ModelPaper {
+public class Paper {
     private String txtDescription;
     private int imgIcon;
     private String txtNameFirm;
@@ -29,7 +29,7 @@ public class ModelPaper {
         this.txtNameFirm = txtNameFirm;
     }
 
-    public ModelPaper(String txtDescription, int imgIcon, String txtNameFirm) {
+    public Paper(String txtDescription, int imgIcon, String txtNameFirm) {
         this.txtDescription = txtDescription;
         this.imgIcon = imgIcon;
         this.txtNameFirm = txtNameFirm;
