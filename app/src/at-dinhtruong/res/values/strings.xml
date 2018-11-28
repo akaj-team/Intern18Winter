@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Intern18Summer</string>
-    <string name="user_name">Username</string>
+    <string name="user_name">Password</string>
+    <string name="sign_up_activity">SignUpActivity</string>
     <string name="pass_word">Password</string>
     <string name="email">Email</string>
     <string name="male">Male</string>

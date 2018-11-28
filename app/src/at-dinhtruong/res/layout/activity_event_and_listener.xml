@@ -3,9 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorGrayWhite"
+    android:background="@color/colorGrayWhile"
     android:orientation="vertical"
-    tools:context="asiantech.internship.summer.dinhtruong.debug.EventAndListenerActivity"
+    tools:context="asiantech.internship.summer.EventAndListenerActivity"
     tools:ignore="MissingDefaultResource">
 
     <android.support.v7.widget.ActionMenuView

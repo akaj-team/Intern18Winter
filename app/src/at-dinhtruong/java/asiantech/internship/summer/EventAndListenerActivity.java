@@ -1,4 +1,4 @@
-package asiantech.internship.summer.dinhtruong.debug;
+package asiantech.internship.summer;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,8 +12,6 @@ import android.widget.RadioButton;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import asiantech.internship.summer.R;
 
 public class EventAndListenerActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener {
     private EditText mEdtUsername;
@@ -115,4 +113,3 @@ public class EventAndListenerActivity extends AppCompatActivity implements Compo
         checkAll();
     }
 }
-
