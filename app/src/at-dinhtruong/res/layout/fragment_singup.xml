@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorVioletBlue"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".dinhtruong.debug.LoginFragment">
+
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/edtEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="70dp"
+        android:layout_marginRight="70dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/bg_gray_edittext"
+        android:padding="10dp"
+        android:text="@string/email"
+        android:textColor="@color/colorWhile" />
+
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/edtPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="70dp"
+        android:layout_marginRight="70dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/bg_gray_edittext"
+        android:padding="10dp"
+        android:text="@string/password"
+        android:textColor="@color/colorWhile" />
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/edtConfirm_Password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="70dp"
+        android:layout_marginRight="70dp"
+        android:background="@drawable/bg_gray_edittext"
+        android:padding="10dp"
+        android:text="@string/password"
+        android:textColor="@color/colorWhile" />
+
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="70dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginRight="70dp"
+        android:background="?android:selectableItemBackground"
+        android:text="@string/sing_up"
+        android:textColor="@color/colorWhile"
+        android:textSize="40sp" />
+</LinearLayout>
