@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">Intern18Summer</string>
+    <string name="inputUser">Username</string>
+    <string name="inputPassword">Password</string>
+    <string name="inputEmail">Email</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="sub">Email subscriptions</string>
+    <string name="allow">Allow email from other</string>
+    <string name="app_name1">SignUpActivity</string>
+    <string name="off">OFF</string>
+    <string name="on">ON</string>
+    <string name="max">18</string>
 </resources>
