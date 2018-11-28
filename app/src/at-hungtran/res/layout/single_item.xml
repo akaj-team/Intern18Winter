@@ -1,45 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="8dp"
     android:gravity="center"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="8dp">
 
     <TextView
-        android:id="@+id/textView"
-        android:gravity="center"
-        android:layout_marginLeft="20dp"
+        android:id="@+id/tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
         android:layout_marginBottom="20dp"
-        app:fontFamily="Arial"
-        android:layout_marginStart="20dp" />
+        app:fontFamily="Arial" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="horizontal">
+
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/imageView"
+            android:id="@+id/imgIcon"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:gravity="center"
-            android:paddingLeft="10dp"
             android:paddingStart="10dp"
-            tools:ignore="RtlSymmetry" />
-        <TextView
-            android:id="@+id/textView1"
-            android:gravity="center"
             android:paddingLeft="10dp"
+            tools:ignore="RtlSymmetry" />
+
+        <TextView
+            android:id="@+id/tv1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#2b67e9"
+            android:gravity="center"
             android:paddingStart="10dp"
+            android:paddingLeft="10dp"
+            android:textColor="#2b67e9"
             tools:ignore="RtlSymmetry" />
     </LinearLayout>
-
 
 </LinearLayout>

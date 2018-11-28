@@ -2,13 +2,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".LayoutActivity">
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="120dp"
-        android:background="@drawable/bg_header">
+        android:background="@mipmap/bg_header">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -17,174 +16,194 @@
             <ImageView
                 android:layout_width="0dp"
                 android:layout_height="25dp"
+                android:layout_marginStart="15dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="15dp"
                 android:layout_weight="1"
-                android:src="@drawable/ic_pasted"
-                android:layout_marginStart="15dp"
-                android:contentDescription="@string/todo" />
+                android:contentDescription="@string/todo"
+                android:src="@mipmap/ic_pasted" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="25dp"
                 android:layout_marginTop="15dp"
                 android:layout_weight="7"
+                android:contentDescription="@string/todo"
+                android:gravity="center"
                 android:text="@string/profile"
                 android:textColor="#f3e4ece7"
-                android:textSize="20sp"
-                android:gravity="center"
-                android:contentDescription="@string/todo" />
+                android:textSize="20sp" />
 
             <ImageView
                 android:layout_width="0dp"
                 android:layout_height="25dp"
                 android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_weight="1"
-                android:src="@drawable/ic_dot"
-                android:layout_marginEnd="15dp"
-                android:contentDescription="@string/todo" />
+                android:contentDescription="@string/todo"
+                android:src="@mipmap/ic_dot" />
         </LinearLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="50dp"
-            android:background="@android:color/darker_gray"/>
+            android:background="@android:color/darker_gray" />
 
 
     </RelativeLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_marginTop="70dp">
+
         <ImageView
-            android:background="@drawable/border1"
-            android:paddingBottom="5dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingTop="5dp"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="30dp"
-            android:layout_marginTop="35dp"
+            android:layout_marginStart="40dp"
             android:layout_marginLeft="40dp"
-            android:src="@drawable/ic_check"
+            android:layout_marginTop="35dp"
+            android:layout_weight="1"
+            android:background="@drawable/border1"
             android:contentDescription="@string/todo"
-            android:layout_marginStart="40dp" />
+            android:paddingLeft="10dp"
+            android:paddingTop="5dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="5dp"
+            android:src="@mipmap/ic_check" />
+
         <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="0dp"
             android:layout_height="100dp"
             android:layout_weight="6"
-            android:src="@drawable/img_avatar"
-            />
+            android:src="@mipmap/img_avatar" />
+
         <ImageView
-            android:background="@drawable/border"
-            android:paddingBottom="5dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingTop="5dp"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="30dp"
             android:layout_marginTop="35dp"
+            android:layout_marginEnd="40dp"
             android:layout_marginRight="40dp"
-            android:src="@drawable/ic_dot1"
+            android:layout_weight="1"
+            android:background="@drawable/border"
             android:contentDescription="@string/todo"
-            android:layout_marginEnd="40dp" />
+            android:paddingLeft="10dp"
+            android:paddingTop="5dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="5dp"
+            android:src="@mipmap/ic_dot1" />
     </LinearLayout>
-    <RelativeLayout android:layout_width="match_parent"
+
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginTop="170dp">
+        android:layout_marginTop="170dp"
+        android:textColor="@android:color/black">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="20dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
-            android:textStyle="bold"
-            android:text="@string/beatrice_maxwell" />
+            android:text="@string/beatrice_maxwell"
+            android:textStyle="bold" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="20dp"
             android:layout_marginTop="30dp"
             android:gravity="center"
             tools:ignore="UseCompoundDrawables">
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"
-                android:src="@drawable/ic_pin"
-                android:contentDescription="@string/todo" />
+                android:contentDescription="@string/todo"
+                android:src="@mipmap/ic_pin" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"
-                android:text="@string/slovakia"/>
+                android:text="@string/slovakia" />
         </LinearLayout>
     </RelativeLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="230dp"
-        android:background="@android:color/darker_gray"/>
+        android:background="@android:color/darker_gray" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginTop="230dp"
         android:gravity="center">
+
         <TextView
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:gravity="center"
-            android:text="@string/posts"/>
+            android:text="@string/posts" />
+
         <TextView
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:gravity="center"
-            android:textStyle="bold"
-            android:text="@string/bookmarks"/>
+            android:text="@string/bookmarks"
+            android:textStyle="bold" />
+
         <TextView
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:gravity="center"
-            android:text="@string/news"/>
+            android:text="@string/news" />
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="3dp"
         android:layout_marginTop="270dp"
-        android:background="@android:color/darker_gray"/>
+        android:background="@android:color/darker_gray" />
+
     <GridView
         android:id="@+id/gridView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="273dp"
-        android:numColumns="2"
-        android:gravity="center" />
+        android:gravity="center"
+        android:numColumns="2" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:layout_alignParentBottom="true"
-        >
+        android:layout_alignParentBottom="true">
+
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="3"
             android:gravity="center"
-            android:text="@string/loadding"/>
+            android:text="@string/loadding" />
+
         <ImageView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:contentDescription="@string/todo"
             android:gravity="center"
-            android:src="@drawable/ic_loadding"
-            android:contentDescription="@string/todo" />
+            android:src="@mipmap/ic_loadding" />
+
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="3"
             android:gravity="center"
-            android:text="@string/conent"/>
+            android:text="@string/conent" />
     </LinearLayout>
 </RelativeLayout>

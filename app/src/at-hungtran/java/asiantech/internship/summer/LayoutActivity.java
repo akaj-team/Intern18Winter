@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.GridView;
 
-
 public class LayoutActivity extends AppCompatActivity {
     GridView gridView;
     String[] values = {
@@ -17,12 +16,12 @@ public class LayoutActivity extends AppCompatActivity {
             "The Labels to Sort Messages in Facebook"
     };
     int[] images = {
-            R.drawable.ic_avt,
-            R.drawable.ic_avt1,
-            R.drawable.ic_avt2,
-            R.drawable.ic_avt3,
-            R.drawable.ic_avt4,
-            R.drawable.ic_avt5
+            R.mipmap.ic_avt,
+            R.mipmap.ic_avt1,
+            R.mipmap.ic_avt2,
+            R.mipmap.ic_avt3,
+            R.mipmap.ic_avt4,
+            R.mipmap.ic_avt5
     };
     String[] values1 = {
             "RBC News",
@@ -32,14 +31,14 @@ public class LayoutActivity extends AppCompatActivity {
             "RBC News",
             "BBC World"
     };
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_layoutfb);
         gridView = findViewById(R.id.gridView);
         gridView.setNumColumns(2);
-        GridAdapter gridAdapter = new GridAdapter(this, values, values1, images);
-        gridView.setAdapter(gridAdapter);
-
+        NewsAdapter newsAdapter = new NewsAdapter(this, values, values1, images);
+        gridView.setAdapter(newsAdapter);
     }
 }

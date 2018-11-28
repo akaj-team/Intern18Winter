@@ -10,4 +10,14 @@
     <string name="conent">conent</string>
     <string name="viewgroup">W1-D3 View and ViewGroup</string>
     <string name="profile">Profile</string>
+    <string name="allow_email_from_other">Allow_email_from_other</string>
+    <string name="email_subscriptions">Email Subscriptions</string>
+    <string name="female">Female</string>
+    <string name="male">Male</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="username">Username</string>
+    <string name="apply">Apply</string>
+    <string name="signupactivity">SignUpActivity</string>
+    <string name="w1_d4_event_and_listener">W1_D4 Event and Listener</string>
 </resources>
