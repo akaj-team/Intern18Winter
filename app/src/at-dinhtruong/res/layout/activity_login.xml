@@ -3,11 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".dinhtruong.debug.LoginActivity">
+    tools:context=".LoginActivity">
 
     <fragment
         android:id="@+id/fragment"
-        android:name="asiantech.internship.summer.dinhtruong.debug.LoginFragment"
+        android:name="asiantech.internship.summer.LoginFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </LinearLayout>

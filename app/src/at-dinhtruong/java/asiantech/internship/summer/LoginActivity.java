@@ -1,11 +1,7 @@
-package asiantech.internship.summer.dinhtruong.debug;
+package asiantech.internship.summer;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.TextView;
-
-import asiantech.internship.summer.R;
+import android.support.v7.app.AppCompatActivity;
 
 public class LoginActivity extends AppCompatActivity {
     @Override
