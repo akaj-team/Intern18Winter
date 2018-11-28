@@ -186,5 +186,9 @@
                 android:text="@string/content"
                 android:textColor="@color/colorGray"/>
         </LinearLayout>
+
     </LinearLayout>
+
+
+
 </RelativeLayout>
