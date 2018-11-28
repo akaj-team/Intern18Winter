@@ -8,7 +8,6 @@ import android.widget.Button;
 
 public class HomeActivity extends AppCompatActivity {
     private Button btnViewandViewGroup;
-    private Button btnEventandListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,7 +16,6 @@ public class HomeActivity extends AppCompatActivity {
         initView();
         initView1();
         initListener();
-        innitListener1();
     }
 
     private void initView() {
@@ -25,7 +23,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void initView1() {
-        btnEventandListener = findViewById(R.id.idBtn1);
+        Button btnEventandListener = findViewById(R.id.idBtn1);
     }
 
     private void initListener() {
@@ -34,16 +32,6 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(HomeActivity.this, LayoutActivity.class);
                 startActivity(intent);
-            }
-        });
-    }
-
-    private void innitListener1() {
-        btnEventandListener.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent1 = new Intent(HomeActivity.this, LoginActivity.class);
-                startActivity(intent1);
             }
         });
     }

@@ -15,7 +15,7 @@ public class NewsAdapter extends BaseAdapter {
     private int[] mImages;
     private View mView;
 
-    public NewsAdapter(Context mContext, String[] mValues, String[] mValues1, int[] mImages) {
+    NewsAdapter(Context mContext, String[] mValues, String[] mValues1, int[] mImages) {
         this.mContext = mContext;
         this.mValues = mValues;
         this.mValues1 = mValues1;
