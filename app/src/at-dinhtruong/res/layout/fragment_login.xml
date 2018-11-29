@@ -29,6 +29,7 @@
         android:background="@drawable/bg_gray_edittext"
         android:padding="10dp"
         android:hint="@string/password"
+        android:inputType="textPassword"
         android:textColor="@color/colorWhile" />
 
     <Button

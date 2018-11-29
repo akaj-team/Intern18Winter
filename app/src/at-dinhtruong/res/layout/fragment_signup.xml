@@ -16,8 +16,8 @@
         android:layout_marginRight="70dp"
         android:layout_marginBottom="30dp"
         android:background="@drawable/bg_gray_edittext"
-        android:padding="10dp"
         android:hint="@string/email"
+        android:padding="10dp"
         android:textColor="@color/colorWhile" />
 
     <android.support.v7.widget.AppCompatEditText
@@ -28,29 +28,32 @@
         android:layout_marginRight="70dp"
         android:layout_marginBottom="30dp"
         android:background="@drawable/bg_gray_edittext"
-        android:padding="10dp"
         android:hint="@string/password"
+        android:inputType="textPassword"
+        android:padding="10dp"
         android:textColor="@color/colorWhile" />
+
     <android.support.v7.widget.AppCompatEditText
-        android:id="@+id/edtConfirm_Password"
+        android:id="@+id/edtConfirmPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="70dp"
         android:layout_marginRight="70dp"
         android:background="@drawable/bg_gray_edittext"
+        android:hint="@string/confirm_password"
+        android:inputType="textPassword"
         android:padding="10dp"
-        android:hint="@string/password"
         android:textColor="@color/colorWhile" />
 
     <Button
-        android:id="@+id/btnLogin"
+        android:id="@+id/btnSignup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="70dp"
         android:layout_marginTop="60dp"
         android:layout_marginRight="70dp"
         android:background="?android:selectableItemBackground"
-        android:text="@string/sing_up"
+        android:text="@string/sign_up"
         android:textColor="@color/colorWhile"
         android:textSize="40sp" />
 </LinearLayout>
