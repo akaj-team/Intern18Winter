@@ -44,23 +44,21 @@ public class PaperAdapter extends RecyclerView.Adapter<PaperAdapter.PaperViewHol
         TextView mDescription;
         TextView mNameFirm;
         ImageView mIcon;
-        RelativeLayout mCustomViewPaper;
+        RelativeLayout mRlCustomPaper;
 
         PaperViewHolder(@NonNull View itemView) {
             super(itemView);
             mDescription = itemView.findViewById(R.id.tvDescription);
             mIcon = itemView.findViewById(R.id.imgIcon);
             mNameFirm = itemView.findViewById(R.id.tvFirmName);
-            mCustomViewPaper = itemView.findViewById(R.id.rlCustomView);
+            mRlCustomPaper = itemView.findViewById(R.id.rlCustomPaper);
         }
+
         private void initData(Paper paper) {
-            int mPosition = getAdapterPosition();
             mDescription.setText(paper.getmDescription());
             mIcon.setImageResource(paper.getmIcon());
             mNameFirm.setText(paper.getmNameFirm());
-            if (mPosition % 4 == 0 || (mPosition + 1) % 4 == 0) {
-                mCustomViewPaper.setBackgroundColor(Color.parseColor("#f4f2f2"));
-            }
+            mRlCustomPaper.setBackgroundColor(Color.parseColor(paper.getmColor()));
         }
     }
 }

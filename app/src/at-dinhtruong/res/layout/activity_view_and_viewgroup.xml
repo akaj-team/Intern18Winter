@@ -21,48 +21,42 @@
                 android:background="@drawable/bg_header">
 
                 <LinearLayout
+                    android:id="@+id/llTop"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    tools:ignore="UselessParent">
+                    android:layout_margin="@dimen/layout_margin_10dp"
+                    android:orientation="horizontal">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                    <ImageView
+                        android:id="@+id/btnBack"
+                        android:layout_width="@dimen/button_width_0dp"
+                        android:layout_height="@dimen/button_height_18dp"
+                        android:layout_weight="1"
+                        android:src="@drawable/ic_beheader" />
+
+                    <TextView
+                        android:id="@+id/tvProfile"
+                        android:layout_width="@dimen/textview_width_0dp"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/layout_margin_10dp"
-                        android:orientation="horizontal"
-                        tools:ignore="UselessParent">
+                        android:layout_weight="16"
+                        android:text="@string/profile"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorWhite" />
 
-                        <Button
-                            android:id="@+id/btnBack"
-                            android:layout_width="@dimen/button_width_0dp"
-                            android:layout_height="@dimen/button_height_18dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/ic_beheader" />
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="8dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:src="@drawable/ic_dot" />
 
-                        <TextView
-                            android:id="@+id/tvProfile"
-                            android:layout_width="@dimen/textview_width_0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="16"
-                            android:text="@string/profile"
-                            android:textAlignment="center"
-                            android:textColor="@color/colorWhite" />
-
-                        <Button
-                            android:layout_width="0dp"
-                            android:layout_height="@dimen/button_height_8dp"
-                            android:layout_gravity="center"
-                            android:layout_weight="1"
-                            android:background="@drawable/dot" />
-
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/view_height_1dp"
-                        android:background="@android:color/white" />
                 </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/view_height_1dp"
+                    android:layout_below="@id/llTop"
+                    android:background="@android:color/white" />
 
             </RelativeLayout>
 
@@ -80,8 +74,7 @@
                     android:id="@+id/btnCheck"
                     android:layout_width="@dimen/imageview_width_50dp"
                     android:layout_height="@dimen/imageview_height_30dp"
-                    android:layout_gravity="center"
-                    android:background="@drawable/buttonblue"
+                    android:background="@drawable/bg_blue_check"
                     android:contentDescription="@string/todo"
                     android:padding="@dimen/imageview_padding_7dp"
                     android:src="@drawable/ic_check" />
@@ -97,8 +90,7 @@
                     android:id="@+id/btnMessage"
                     android:layout_width="@dimen/imageview_width_50dp"
                     android:layout_height="@dimen/imageview_height_30dp"
-                    android:layout_gravity="center"
-                    android:background="@drawable/button"
+                    android:background="@drawable/bg_green_comment"
                     android:contentDescription="@string/todo"
                     android:padding="@dimen/padding_7dp"
                     android:src="@drawable/ic_message" />
@@ -116,33 +108,17 @@
             android:textSize="@dimen/font_size_20sp"
             android:textStyle="bold" />
 
-        <LinearLayout
-            android:id="@+id/layoutLocation"
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:drawableLeft="@drawable/ic_location"
+            android:fontFamily="sans-serif"
             android:gravity="center"
-            android:orientation="horizontal"
-            tools:ignore="UseCompoundDrawables">
-
-            <ImageView
-                android:layout_width="@dimen/imageview_width_30dp"
-                android:layout_height="@dimen/height_30dp"
-                android:contentDescription="@string/location"
-                android:src="@drawable/ic_location" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginStart="@dimen/textview_margin_start_10dp"
-                android:layout_marginLeft="@dimen/textview_margin_left_10dp"
-                android:fontFamily="sans-serif"
-                android:text="@string/slovakia"
-                android:textColor="@color/colorBlack"
-                android:textSize="@dimen/font_size_15sp"
-                android:textStyle="bold"
-                tools:targetApi="jelly_bean" />
-        </LinearLayout>
+            android:text="@string/slovakia"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/font_size_15sp"
+            android:textStyle="bold" />
 
         <View
             android:layout_width="match_parent"
@@ -205,7 +181,7 @@
         </LinearLayout>
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/rcvFirm"
+            android:id="@+id/recycleViewFirm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 

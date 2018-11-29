@@ -21,18 +21,17 @@ public class ViewAndViewGroupActivity extends AppCompatActivity {
     }
 
     public void initView() {
-        RecyclerView recyclerView = findViewById(R.id.rcvFirm);
+        RecyclerView recyclerView = findViewById(R.id.recycleViewFirm);
         recyclerView.setHasFixedSize(true);
         int numberOfColumns = 2;
         recyclerView.setLayoutManager(new GridLayoutManager(this, numberOfColumns));
         List<Paper> listPaper = new ArrayList<>();
-        listPaper.add(new Paper("A City Living Under the Shadow", R.drawable.ic_nbc, "RBC News"));
-        listPaper.add(new Paper("One Problem for Democaratic Leaders", R.drawable.ic_newyork, "NY Times"));
-        listPaper.add(new Paper("The Golden Secret to Better Breakfast", R.drawable.ic_bbc, "BBC World"));
-        listPaper.add(new Paper("How to Plan Your First Ski Vacation", R.drawable.ic_nbc, "NBC Nightly"));
-        listPaper.add(new Paper("How Social Isolation Is Killing Us", R.drawable.ic_nbc, "RBC News"));
-        listPaper.add(new Paper("Use Labels to Sort Messages in Facebook", R.drawable.ic_bbc, "BBC World"));
-        PaperAdapter myViewAdapter = new PaperAdapter(listPaper);
-        recyclerView.setAdapter(myViewAdapter);
+        listPaper.add(new Paper("A City Living Under the Shadow", R.drawable.ic_nbc, "RBC News", "#f4f2f2"));
+        listPaper.add(new Paper("One Problem for Democaratic Leaders", R.drawable.ic_newyork, "NY Times", "#ffffff"));
+        listPaper.add(new Paper("The Golden Secret to Better Breakfast", R.drawable.ic_bbc, "BBC World", "#ffffff"));
+        listPaper.add(new Paper("How to Plan Your First Ski Vacation", R.drawable.ic_nbc, "NBC Nightly", "#f4f2f2"));
+        listPaper.add(new Paper("How Social Isolation Is Killing Us", R.drawable.ic_nbc, "RBC News", "#f4f2f2"));
+        listPaper.add(new Paper("Use Labels to Sort Messages in Facebook", R.drawable.ic_bbc, "BBC World", "#ffffff"));
+        recyclerView.setAdapter(new PaperAdapter(listPaper));
     }
 }

@@ -8,18 +8,18 @@ import android.widget.Button;
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private Button btnViewGroup;
+    private Button mButtonViewGroup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         initView();
-        btnViewGroup.setOnClickListener(this);
     }
 
     private void initView() {
-        btnViewGroup = findViewById(R.id.btnViewGroup);
+        mButtonViewGroup = findViewById(R.id.btnViewGroup);
+        mButtonViewGroup.setOnClickListener(this);
     }
 
     @Override
