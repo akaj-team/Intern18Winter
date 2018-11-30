@@ -13,14 +13,14 @@ public class ShowInformationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_information);
-        initInfor();
+        initInformation();
     }
 
-    private void initInfor() {
+    private void initInformation() {
         mTextViewEmail = findViewById(R.id.tvEmail);
         mTextViewPassword = findViewById(R.id.tvPassword);
         Intent intent = getIntent();
-        mTextViewEmail.setText(intent.getStringExtra("Email"));
-        mTextViewPassword.setText(intent.getStringExtra("Password"));
+        mTextViewEmail.setText(intent.getStringExtra(LoginFragment.EMAIL));
+        mTextViewPassword.setText(intent.getStringExtra(LoginFragment.PASSWORD));
     }
 }

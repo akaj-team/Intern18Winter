@@ -31,5 +31,4 @@
         android:padding="10dp"
         android:textAlignment="center"
         android:textColor="@color/colorWhile" />
-
 </LinearLayout>

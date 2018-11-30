@@ -18,7 +18,6 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
     private EditText mEditTextEmail;
     private EditText mEditTextPassWord;
     private EditText mEditTextConFirmPassWord;
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -45,17 +44,22 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
             case R.id.btnSignup: {
                 if (validate.isValidEmail(mEmail) && validate.isValidPassword(mPassword)) {
                     if (mPassword.equals(mConfirmPassword)) {
+                        if (getActivity() instanceof LoginActivity) {
+                            ((LoginActivity) getActivity()).setTitleToolBar(getString(R.string.login));
+                            ((LoginActivity) getActivity()).setButtonBack(0);
+                        }
                         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                        fragmentTransaction.setCustomAnimations(R.anim.right_to_left1, R.anim.right_to_left2);
                         fragmentTransaction.add(R.id.fragment_container, new LoginFragment());
                         fragmentTransaction.addToBackStack(new Fragment().getClass().getSimpleName());
                         fragmentTransaction.commit();
                     } else {
-                        mEditTextConFirmPassWord.setError("Confirm Password Wrong!");
+                        mEditTextConFirmPassWord.setError(getString(R.string.confirmPasswordWrong));
                     }
                 } else if (!validate.isValidEmail(mEmail)) {
-                    mEditTextEmail.setError("Email Format Wrong!");
+                    mEditTextEmail.setError(getString(R.string.emailFormatWrong));
                 } else if (!validate.isValidPassword(mPassword)) {
-                    mEditTextPassWord.setError("Password format Wrong!");
+                    mEditTextPassWord.setError(getString(R.string.passwordFormatWrong));
                 }
                 break;
             }

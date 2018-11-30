@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorVioletBlue"
     android:gravity="center"
+    android:background="@color/colorVioletBlue"
     android:orientation="vertical"
     tools:context=".LoginFragment">
 
@@ -16,8 +16,8 @@
         android:layout_marginRight="70dp"
         android:layout_marginBottom="30dp"
         android:background="@drawable/bg_gray_edittext"
-        android:padding="10dp"
         android:hint="@string/email"
+        android:padding="10dp"
         android:textColor="@color/colorWhile" />
 
     <android.support.v7.widget.AppCompatEditText
@@ -27,9 +27,9 @@
         android:layout_marginLeft="70dp"
         android:layout_marginRight="70dp"
         android:background="@drawable/bg_gray_edittext"
-        android:padding="10dp"
         android:hint="@string/password"
         android:inputType="textPassword"
+        android:padding="10dp"
         android:textColor="@color/colorWhile" />
 
     <Button
@@ -41,6 +41,7 @@
         android:layout_marginRight="70dp"
         android:background="?android:selectableItemBackground"
         android:text="@string/signup"
+        android:textAllCaps="false"
         android:textColor="@color/colorWhile"
         android:textSize="20sp"
         android:textStyle="italic" />
@@ -53,7 +54,8 @@
         android:layout_marginTop="40dp"
         android:layout_marginRight="70dp"
         android:background="?android:selectableItemBackground"
-        android:text="@string/log_in"
+        android:text="@string/login"
         android:textColor="@color/colorWhile"
         android:textSize="40sp" />
+
 </LinearLayout>

@@ -15,6 +15,8 @@ import android.widget.EditText;
 import asiantech.internship.summer.utils.Validate;
 
 public class LoginFragment extends Fragment implements View.OnClickListener {
+    final public static String EMAIL ="email";
+    final public static String PASSWORD ="password";
     private Button mButtonLogin;
     private Button mButtonSignUp;
     private EditText mEditTextEmail;
@@ -47,7 +49,12 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         Validate validate = new Validate();
         switch (v.getId()) {
             case R.id.btnSignup: {
+                if (getActivity() instanceof LoginActivity) {
+                    ((LoginActivity) getActivity()).setTitleToolBar(getString(R.string.signup));
+                    ((LoginActivity) getActivity()).setButtonBack(R.drawable.ic_arrow_back_black_36dp);
+                }
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                fragmentTransaction.setCustomAnimations(R.anim.right_to_left1, R.anim.right_to_left2, R.anim.left_to_right1, R.anim.left_to_right2);
                 fragmentTransaction.add(R.id.fragment_container, new SignUpFragment());
                 fragmentTransaction.addToBackStack(new Fragment().getClass().getSimpleName());
                 fragmentTransaction.commit();
@@ -58,8 +65,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 String mPassWord = mEditTextPassWord.getText().toString();
                 if (validate.isValidEmail(mEmail) && validate.isValidPassword(mPassWord)) {
                     Intent intent = new Intent(getActivity(), ShowInformationActivity.class);
-                    intent.putExtra("Email", mEmail);
-                    intent.putExtra("Password", mPassWord);
+                    intent.putExtra(EMAIL, mEmail);
+                    intent.putExtra(PASSWORD, mPassWord);
                     startActivity(intent);
                 }
                 break;
