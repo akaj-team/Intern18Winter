@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorPurple"
+    android:gravity="center" >
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/titleResult"
+        android:textSize="20sp"
+        android:layout_marginBottom="30dp"
+        android:textColor="@color/colorGreen"
+        android:textStyle="bold|italic"/>
+    <TextView
+        android:id="@+id/tvEmail"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/inputEmail"
+        android:textColorHint="@color/colorWhite"
+        android:padding="8dp"
+        android:background="@drawable/shape"/>
+    <TextView
+        android:id="@+id/tvPassword"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:padding="8dp"
+        android:textColorHint="@color/colorWhite"
+        android:hint="@string/inputPass"
+        android:background="@drawable/shape"/>
+</LinearLayout>

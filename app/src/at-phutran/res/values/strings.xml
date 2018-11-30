@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Intern18Summer</string>
+    <string name="inputEmail">Email</string>
+    <string name="inputPass">Password</string>
+    <string name="confirmPass">Confirm Password</string>
+    <string name="sign_up">Signup?</string>
+    <string name="login">LOGIN</string>
+    <string name="titleInput">Please input email and password:</string>
+    <string name="titleResult">Your email and password:</string>
 </resources>
