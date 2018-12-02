@@ -1,0 +1,53 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="asiantech.internship.summer.SignUpFragment"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/edtSUEmail"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="100dp"
+        android:background="@drawable/border"
+        android:paddingLeft="20dp"
+        android:hint="Email"
+        android:textColor="#FFF" />
+
+    <EditText
+        android:id="@+id/edtSUPwd"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/border"
+        android:paddingLeft="20dp"
+        android:hint="Password"
+        android:textColor="#FFF" />
+
+    <EditText
+        android:id="@+id/edtSURePwd"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/border"
+        android:paddingLeft="20dp"
+        android:hint="Confirm Password"
+        android:textColor="#FFF" />
+
+    <Button
+        android:id="@+id/btnSUSignUp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:background="@color/colorPrimary"
+        android:text="SIGN UP"
+        android:textColor="#FFF"
+        android:textSize="30dp" />
+
+</LinearLayout>
