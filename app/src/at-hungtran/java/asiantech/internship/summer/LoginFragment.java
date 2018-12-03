@@ -19,7 +19,6 @@ public class LoginFragment extends Fragment {
     private EditText mEdtEmail;
     private EditText mEdtPwd;
 
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -27,7 +26,6 @@ public class LoginFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_login, container, false);
         initView(view);
         return view;
-
     }
 
     private void initView(View view) {

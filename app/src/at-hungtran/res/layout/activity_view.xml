@@ -2,36 +2,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="asiantech.internship.summer.SignUpFragment"
     android:background="@color/colorPrimary"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context="asiantech.internship.summer.SignUpFragment">
 
     <TextView
         android:id="@+id/tvEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:gravity="center"
-        android:textSize="30sp"
-        android:layout_marginTop="20dp"
         android:layout_marginLeft="30dp"
+        android:layout_marginTop="20dp"
         android:layout_marginRight="30dp"
         android:background="@drawable/border"
+        android:gravity="center"
         android:paddingLeft="20dp"
-        android:textColor="#FFF" />
+        android:textColor="#FFF"
+        android:textSize="30sp" />
 
     <TextView
         android:id="@+id/tvPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:gravity="center"
-        android:textSize="30sp"
-        android:layout_marginTop="20dp"
         android:layout_marginLeft="30dp"
+        android:layout_marginTop="20dp"
         android:layout_marginRight="30dp"
         android:background="@drawable/border"
+        android:gravity="center"
         android:paddingLeft="20dp"
-        android:textColor="#FFF" />
+        android:textColor="#FFF"
+        android:textSize="30sp" />
 
 </LinearLayout>

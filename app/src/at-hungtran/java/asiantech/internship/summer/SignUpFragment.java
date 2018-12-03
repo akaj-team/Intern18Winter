@@ -26,11 +26,10 @@ public class SignUpFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_sign_up, container, false);
         initView(view);
-        
-        
         return view;
     }
-    private void initView(View view){
+
+    private void initView(View view) {
         mEdtSUEmail = view.findViewById(R.id.edtSUEmail);
         mEdtSUPwd = view.findViewById(R.id.edtSUPwd);
         mEdtSURePwd = view.findViewById(R.id.edtSURePwd);
@@ -38,11 +37,10 @@ public class SignUpFragment extends Fragment {
         mBtnSUSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(checkEmailPassword()) {
+                if (checkEmailPassword()) {
                     FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.setCustomAnimations(R.anim.anim_right_to_left, R.anim.anim_left_to_right);
-
                     fragmentTransaction.replace(R.id.fragment, new LoginFragment());
                     fragmentTransaction.addToBackStack(null);
                     fragmentTransaction.commit();
@@ -50,13 +48,15 @@ public class SignUpFragment extends Fragment {
             }
         });
     }
+
     private boolean checkEmailPassword() {
-        Button btnLogin =view.findViewById(R.id.btnLogin);
+        Button btnLogin = view.findViewById(R.id.btnLogin);
         String mPassword = mEdtSUPwd.getText().toString();
         String mRePassword = mEdtSURePwd.getText().toString();
         String mEmail = mEdtSUEmail.getText().toString();
         return isValidPassword(mPassword) && isValidEmail(mEmail) && mRePassword.equals(mPassword);
     }
+
     private boolean isValidEmail(String mEmail) {
         Pattern pattern;
         Matcher matcher;
@@ -65,6 +65,7 @@ public class SignUpFragment extends Fragment {
         matcher = pattern.matcher(mEmail);
         return matcher.matches();
     }
+
     private boolean isValidPassword(String mPassword) {
         Pattern pattern;
         Matcher matcher;
@@ -73,5 +74,4 @@ public class SignUpFragment extends Fragment {
         matcher = pattern.matcher(mPassword);
         return matcher.matches();
     }
-
 }

@@ -9,10 +9,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-
 public class LogActivity extends AppCompatActivity {
     Button btn;
     TextView tv;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,26 +38,30 @@ public class LogActivity extends AppCompatActivity {
         fragmentTransaction.commit();
 
     }
-    public void onButton(){
+
+    public void onButton() {
         btn.setVisibility(View.VISIBLE);
     }
-    public void setTextForToolBar(String mText){
+
+    public void setTextForToolBar(String mText) {
         tv = findViewById(R.id.tvToolBar);
         tv.setText(mText);
     }
-    public void backFragment(){
+
+    public void backFragment() {
         btn.setOnClickListener(v -> {
             onBackPressed();
         });
     }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment);
-        if(fragment instanceof LoginFragment){
+        if (fragment instanceof LoginFragment) {
             setTextForToolBar("LOGIN");
             btn.setVisibility(View.GONE);
-        }else{
+        } else {
             setTextForToolBar("SIGN UP");
             btn.setVisibility(View.VISIBLE);
         }
