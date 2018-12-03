@@ -1,35 +1,29 @@
 package asiantech.internship.summer;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class LoginFragment extends Fragment {
-    private Button btnSignUp;
     private EditText mEdtEmail;
     private EditText mEdtPwd;
-    private Button mBtnLogin;
-    public LoginFragment() {
-        // Required empty public constructor
-    }
+
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.d("xx", "onCreateView: ");
         View view = inflater.inflate(R.layout.fragment_login, container, false);
         initView(view);
         return view;
@@ -37,29 +31,27 @@ public class LoginFragment extends Fragment {
     }
 
     private void initView(View view) {
-        btnSignUp = view.findViewById(R.id.btnSignUp);
-        mBtnLogin = view.findViewById(R.id.btnLogin);
+        Button btnSignUp = view.findViewById(R.id.btnSignUp);
+        Button mBtnLogin = view.findViewById(R.id.btnLogin);
         mEdtPwd = view.findViewById(R.id.edtPwd);
         mEdtEmail = view.findViewById(R.id.edtEmail);
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.fragment, new SignUpFragment());
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+                ((LogActivity) getActivity()).replaceFragmemnt();
             }
         });
         mBtnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(checkEmailPassword() == true) {
-                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.fragment, new SignUpFragment());
-                    fragmentTransaction.addToBackStack(null);
-                    fragmentTransaction.commit();
+                if (checkEmailPassword()) {
+                    Intent i = new Intent(getActivity(), ViewActivity.class);
+                    i.putExtra("email", mEdtEmail.getText().toString());
+                    i.putExtra("password", mEdtPwd.getText().toString());
+                    startActivity(i);
+                } else {
+                    Toast.makeText(getActivity(), "Please check your email and password",
+                            Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -69,12 +61,9 @@ public class LoginFragment extends Fragment {
         Button btnLogin = getView().findViewById(R.id.btnLogin);
         String mPassword = mEdtPwd.getText().toString();
         String mEmail = mEdtEmail.getText().toString();
-        if (!isValidPassword(mPassword) || !isValidEmail(mEmail)) {
-            return false;
-        } else {
-            return true;
-        }
+        return isValidPassword(mPassword) && isValidEmail(mEmail);
     }
+
     private boolean isValidEmail(String mEmail) {
         Pattern pattern;
         Matcher matcher;
@@ -83,6 +72,7 @@ public class LoginFragment extends Fragment {
         matcher = pattern.matcher(mEmail);
         return matcher.matches();
     }
+
     private boolean isValidPassword(String mPassword) {
         Pattern pattern;
         Matcher matcher;

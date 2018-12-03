@@ -15,8 +15,9 @@
         android:layout_marginTop="100dp"
         android:background="@drawable/border"
         android:paddingLeft="20dp"
-        android:hint="Email"
-        android:textColor="#FFF" />
+        android:hint="@string/email"
+        android:textColor="#FFF"
+        tools:ignore="Autofill,TextFields" />
 
     <EditText
         android:id="@+id/edtPwd"
@@ -26,9 +27,10 @@
         android:layout_marginTop="20dp"
         android:background="@drawable/border"
         android:paddingLeft="20dp"
-        android:hint="Password"
+        android:hint="@string/password"
         android:inputType="textPassword"
-        android:textColor="#FFF" />
+        android:textColor="#FFF"
+        tools:ignore="Autofill,HardcodedText" />
 
     <Button
         android:id="@+id/btnSignUp"
@@ -37,7 +39,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="30dp"
         android:background="@color/colorPrimary"
-        android:text="Singup?"
+        android:text="@string/singup"
         android:textAllCaps="false"
         android:textColor="#FFF"
         android:textSize="15dp"
@@ -50,7 +52,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="50dp"
         android:background="@color/colorPrimary"
-        android:text="LOGIN"
+        android:text="@string/login"
         android:textColor="#FFF"
         android:textSize="30dp" />
 

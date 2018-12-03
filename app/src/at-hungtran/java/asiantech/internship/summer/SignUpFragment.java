@@ -1,7 +1,10 @@
 package asiantech.internship.summer;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,19 +15,16 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class SignUpFragment extends Fragment {
-    private Button mBtnSUSignUp;
     private EditText mEdtSUEmail;
     private EditText mEdtSUPwd;
     private EditText mEdtSURePwd;
-    public SignUpFragment() {
-        // Required empty public constructor
-    }
+    private View view;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_sign_up, container, false);
+        view = inflater.inflate(R.layout.fragment_sign_up, container, false);
         initView(view);
         
         
@@ -34,23 +34,28 @@ public class SignUpFragment extends Fragment {
         mEdtSUEmail = view.findViewById(R.id.edtSUEmail);
         mEdtSUPwd = view.findViewById(R.id.edtSUPwd);
         mEdtSURePwd = view.findViewById(R.id.edtSURePwd);
+        Button mBtnSUSignUp = view.findViewById(R.id.btnSUSignUp);
         mBtnSUSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(checkEmailPassword()) {
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.setCustomAnimations(R.anim.anim_right_to_left, R.anim.anim_left_to_right);
 
+                    fragmentTransaction.replace(R.id.fragment, new LoginFragment());
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+                }
             }
         });
     }
     private boolean checkEmailPassword() {
-        Button btnLogin = getView().findViewById(R.id.btnLogin);
+        Button btnLogin =view.findViewById(R.id.btnLogin);
         String mPassword = mEdtSUPwd.getText().toString();
         String mRePassword = mEdtSURePwd.getText().toString();
         String mEmail = mEdtSUEmail.getText().toString();
-        if (!isValidPassword(mPassword) || !isValidEmail(mEmail)) {
-            return false;
-        } else {
-            return true;
-        }
+        return isValidPassword(mPassword) && isValidEmail(mEmail) && mRePassword.equals(mPassword);
     }
     private boolean isValidEmail(String mEmail) {
         Pattern pattern;
@@ -68,6 +73,5 @@ public class SignUpFragment extends Fragment {
         matcher = pattern.matcher(mPassword);
         return matcher.matches();
     }
-
 
 }
