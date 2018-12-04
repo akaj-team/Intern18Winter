@@ -14,10 +14,9 @@ import android.widget.EditText;
 import asiantech.internship.summer.utils.Validate;
 
 public class SignUpFragment extends Fragment implements View.OnClickListener {
-    private Button mButtonSignUp;
-    private EditText mEditTextEmail;
-    private EditText mEditTextPassWord;
-    private EditText mEditTextConFirmPassWord;
+    private EditText mEdtEmail;
+    private EditText mEdtPassWord;
+    private EditText mEdtConfirmPassWord;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -27,23 +26,23 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
     }
 
     private void init(View view) {
-        mButtonSignUp = view.findViewById(R.id.btnSignup);
-        mEditTextEmail = view.findViewById(R.id.edtEmail);
-        mEditTextPassWord = view.findViewById(R.id.edtPassword);
-        mEditTextConFirmPassWord = view.findViewById(R.id.edtConfirmPassword);
-        mButtonSignUp.setOnClickListener(this);
+        Button mBtnSignUp = view.findViewById(R.id.btnSignup);
+        mEdtEmail = view.findViewById(R.id.edtEmail);
+        mEdtPassWord = view.findViewById(R.id.edtPassword);
+        mEdtConfirmPassWord = view.findViewById(R.id.edtConfirmPassword);
+        mBtnSignUp.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         Validate validate = new Validate();
-        String mEmail = mEditTextEmail.getText().toString();
-        String mPassword = mEditTextPassWord.getText().toString();
-        String mConfirmPassword = mEditTextConFirmPassWord.getText().toString();
+        String email = mEdtEmail.getText().toString();
+        String passWord = mEdtPassWord.getText().toString();
+        String confirmPassword = mEdtConfirmPassWord.getText().toString();
         switch (v.getId()) {
             case R.id.btnSignup: {
-                if (validate.isValidEmail(mEmail) && validate.isValidPassword(mPassword)) {
-                    if (mPassword.equals(mConfirmPassword)) {
+                if (validate.isValidEmail(email) && validate.isValidPassword(passWord)) {
+                    if (passWord.equals(confirmPassword)) {
                         if (getActivity() instanceof LoginActivity) {
                             ((LoginActivity) getActivity()).setTitleToolBar(getString(R.string.login));
                             ((LoginActivity) getActivity()).setButtonBack(0);
@@ -51,15 +50,15 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
                         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                         fragmentTransaction.setCustomAnimations(R.anim.right_to_left1, R.anim.right_to_left2);
                         fragmentTransaction.add(R.id.fragment_container, new LoginFragment());
-                        fragmentTransaction.addToBackStack(new Fragment().getClass().getSimpleName());
+                        fragmentTransaction.addToBackStack(SignUpFragment.class.getSimpleName());
                         fragmentTransaction.commit();
                     } else {
-                        mEditTextConFirmPassWord.setError(getString(R.string.confirmPasswordWrong));
+                        mEdtConfirmPassWord.setError(getString(R.string.confirmPasswordWrong));
                     }
-                } else if (!validate.isValidEmail(mEmail)) {
-                    mEditTextEmail.setError(getString(R.string.emailFormatWrong));
-                } else if (!validate.isValidPassword(mPassword)) {
-                    mEditTextPassWord.setError(getString(R.string.passwordFormatWrong));
+                } else if (!validate.isValidEmail(email)) {
+                    mEdtEmail.setError(getString(R.string.emailFormatWrong));
+                } else if (!validate.isValidPassword(passWord)) {
+                    mEdtPassWord.setError(getString(R.string.passwordFormatWrong));
                 }
                 break;
             }

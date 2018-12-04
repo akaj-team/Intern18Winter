@@ -6,7 +6,7 @@
     android:background="@color/colorVioletBlue"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".ShowInformationActivity">
+    tools:context=".InformationActivity">
 
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/tvEmail"

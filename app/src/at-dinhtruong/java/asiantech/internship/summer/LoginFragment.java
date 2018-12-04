@@ -15,12 +15,10 @@ import android.widget.EditText;
 import asiantech.internship.summer.utils.Validate;
 
 public class LoginFragment extends Fragment implements View.OnClickListener {
-    final public static String EMAIL ="email";
-    final public static String PASSWORD ="password";
-    private Button mButtonLogin;
-    private Button mButtonSignUp;
-    private EditText mEditTextEmail;
-    private EditText mEditTextPassWord;
+    public static final String EMAIL = "email";
+    public static final String PASSWORD = "password";
+    private EditText mEdtEmail;
+    private EditText mEdtPassWord;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,12 +34,12 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     }
 
     private void init(View view) {
-        mButtonSignUp = view.findViewById(R.id.btnSignup);
-        mButtonLogin = view.findViewById(R.id.btnLogin);
-        mEditTextEmail = view.findViewById(R.id.edtEmail);
-        mEditTextPassWord = view.findViewById(R.id.edtPassword);
-        mButtonLogin.setOnClickListener(this);
-        mButtonSignUp.setOnClickListener(this);
+        Button mBtnSignUp = view.findViewById(R.id.btnSignup);
+        Button mBtnLogin = view.findViewById(R.id.btnLogin);
+        mEdtEmail = view.findViewById(R.id.edtEmail);
+        mEdtPassWord = view.findViewById(R.id.edtPassword);
+        mBtnLogin.setOnClickListener(this);
+        mBtnSignUp.setOnClickListener(this);
     }
 
     @Override
@@ -56,17 +54,17 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                 fragmentTransaction.setCustomAnimations(R.anim.right_to_left1, R.anim.right_to_left2, R.anim.left_to_right1, R.anim.left_to_right2);
                 fragmentTransaction.add(R.id.fragment_container, new SignUpFragment());
-                fragmentTransaction.addToBackStack(new Fragment().getClass().getSimpleName());
+                fragmentTransaction.addToBackStack(SignUpFragment.class.getSimpleName());
                 fragmentTransaction.commit();
                 break;
             }
             case R.id.btnLogin: {
-                String mEmail = mEditTextEmail.getText().toString();
-                String mPassWord = mEditTextPassWord.getText().toString();
-                if (validate.isValidEmail(mEmail) && validate.isValidPassword(mPassWord)) {
-                    Intent intent = new Intent(getActivity(), ShowInformationActivity.class);
-                    intent.putExtra(EMAIL, mEmail);
-                    intent.putExtra(PASSWORD, mPassWord);
+                String email = mEdtEmail.getText().toString();
+                String passWord = mEdtPassWord.getText().toString();
+                if (validate.isValidEmail(email) && validate.isValidPassword(passWord)) {
+                    Intent intent = new Intent(getActivity(), InformationActivity.class);
+                    intent.putExtra(EMAIL, email);
+                    intent.putExtra(PASSWORD, passWord);
                     startActivity(intent);
                 }
                 break;

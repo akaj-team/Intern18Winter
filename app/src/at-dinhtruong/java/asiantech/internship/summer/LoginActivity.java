@@ -9,14 +9,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
-    private TextView mTextViewTitleToolBar;
-    private ImageView mImageViewBack;
+    private TextView mTvTitleToolBar;
+    private ImageView mImgBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         initFragment();
+        initToolBar();
     }
 
     private void initFragment() {
@@ -26,15 +27,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
-    public void setTitleToolBar(String mTitleToolBar) {
-        mTextViewTitleToolBar = findViewById(R.id.toolBarTitle);
-        mTextViewTitleToolBar.setText(mTitleToolBar);
+    public void initToolBar() {
+        mTvTitleToolBar = findViewById(R.id.tvToolBarTitle);
+        mImgBack = findViewById(R.id.imgBack);
+        mImgBack.setOnClickListener(this);
     }
 
-    public void setButtonBack(int n) {
-        mImageViewBack = findViewById(R.id.imgBack);
-        mImageViewBack.setOnClickListener(this);
-        mImageViewBack.setImageResource(n);
+    public void setTitleToolBar(String titleToolBar) {
+        mTvTitleToolBar.setText(titleToolBar);
+    }
+
+    public void setButtonBack(int resId) {
+        mImgBack.setImageResource(resId);
     }
 
     @Override
