@@ -14,6 +14,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class EventAndListenerActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener {
+    private static final String EMAIL_PATTERN = "^([a-zA-Z0-9_\\-.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(]?)$";
+    private static final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-zA-Z]).{6,18}$";
+    private static final String USERNAME_PATTERN = "^.{6,18}$";
     private EditText mEdtUsername;
     private EditText mEdtPassword;
     private EditText mEdtEmail;
@@ -25,10 +28,10 @@ public class EventAndListenerActivity extends AppCompatActivity implements Compo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_and_listener);
-        init();
+        initViewsAndListener();
     }
 
-    private void init() {
+    private void initViewsAndListener() {
         mEdtUsername = findViewById(R.id.edtUsername);
         mEdtPassword = findViewById(R.id.edtPassword);
         mEdtEmail = findViewById(R.id.edtEmail);
@@ -55,54 +58,49 @@ public class EventAndListenerActivity extends AppCompatActivity implements Compo
 
         @Override
         public void afterTextChanged(Editable s) {
-            checkAll();
+            checkUserPassEmail();
         }
     };
 
     private boolean isValidUsername(String mUsername) {
         Pattern patternUsername;
         Matcher matcherUsername;
-        final String USERNAME_PATTERN = "^.{6,18}$";
         patternUsername = Pattern.compile(USERNAME_PATTERN);
         matcherUsername = patternUsername.matcher(mUsername);
         return matcherUsername.matches();
-
     }
 
-    private boolean isValidPassword(String mPassword) {
+    private boolean isValidPassword(String passWord) {
         Pattern patternPassword;
         Matcher matchePasswordr;
-        final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-zA-Z]).{6,18}$";
         patternPassword = Pattern.compile(PASSWORD_PATTERN);
-        matchePasswordr = patternPassword.matcher(mPassword);
+        matchePasswordr = patternPassword.matcher(passWord);
         return matchePasswordr.matches();
-
     }
 
-    private boolean isValidEmail(String mEmail) {
+    private boolean isValidEmail(String email) {
         Pattern patternEmail;
         Matcher matcherEmail;
-        String emailPattern = "^([a-zA-Z0-9_\\-.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(]?)$";
-        patternEmail = Pattern.compile(emailPattern);
-        matcherEmail = patternEmail.matcher(mEmail);
+        patternEmail = Pattern.compile(EMAIL_PATTERN);
+        matcherEmail = patternEmail.matcher(email);
         return matcherEmail.matches();
     }
 
-    private void checkAll() {
-        String mUsernameInput = mEdtUsername.getText().toString().trim();
-        String mPasswordInput = mEdtPassword.getText().toString().trim();
-        String mEmailInput = mEdtEmail.getText().toString().trim();
-        if (isValidUsername(mUsernameInput) && isValidPassword(mPasswordInput) && isValidEmail(mEmailInput) && (mRbMale.isChecked() || mRbFemale.isChecked())) {
+    private void checkUserPassEmail() {
+        String userNameInput = mEdtUsername.getText().toString().trim();
+        String passWordInput = mEdtPassword.getText().toString().trim();
+        String emailInput = mEdtEmail.getText().toString().trim();
+        if (isValidUsername(userNameInput) && isValidPassword(passWordInput) && isValidEmail(emailInput) && (mRbMale.isChecked() || mRbFemale.isChecked())) {
             mImgApply.setVisibility(View.VISIBLE);
-        } else if (!isValidUsername(mUsernameInput)) {
+        } else if (!isValidUsername(userNameInput)) {
             mImgApply.setVisibility(View.GONE);
-            mEdtUsername.setError("User Format Wrong!");
-        } else if (!isValidPassword(mPasswordInput)) {
+            mEdtUsername.setError(getString(R.string.userFormatWrong));
+        } else if (!isValidPassword(passWordInput)) {
             mImgApply.setVisibility(View.GONE);
-            mEdtPassword.setError("Password Format Wrong!");
-        } else if (!isValidEmail(mEmailInput)) {
+            mEdtPassword.setError(getString(R.string.passWordFormatWrong));
+        } else if (!isValidEmail(emailInput)) {
             mImgApply.setVisibility(View.GONE);
-            mEdtEmail.setError("Email Address Format Wrong!");
+            mEdtEmail.setError(getString(R.string.emailAddressFormatWrong));
         } else {
             mImgApply.setVisibility(View.GONE);
         }
@@ -110,6 +108,6 @@ public class EventAndListenerActivity extends AppCompatActivity implements Compo
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        checkAll();
+        checkUserPassEmail();
     }
 }

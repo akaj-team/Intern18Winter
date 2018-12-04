@@ -55,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/userName"
                 android:inputType="text"
-                android:autofillHints="" />
+                android:autofillHints="no" />
 
             <EditText
                 android:id="@+id/edtPassword"
@@ -63,17 +63,15 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/passWord"
                 android:inputType="textPassword"
-                tools:ignore="Autofill" />
+                android:autofillHints="no" />
 
             <EditText
                 android:id="@+id/edtEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/email"
-                android:importantForAutofill="no"
-                android:inputType="text"
-                tools:ignore="TextFields"
-                tools:targetApi="o" />
+                android:inputType="textEmailAddress"
+                android:autofillHints="no" />
 
             <RadioGroup
                 android:id="@+id/rgGender"

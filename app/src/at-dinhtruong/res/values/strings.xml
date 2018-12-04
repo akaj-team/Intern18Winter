@@ -1,11 +1,14 @@
 <resources>
     <string name="app_name">Intern18Summer</string>
-    <string name="user_name">Password</string>
-    <string name="sign_up_activity">SignUpActivity</string>
-    <string name="pass_word">Password</string>
+    <string name="signUpActivity">SignUpActivity</string>
+    <string name="userName">Username</string>
+    <string name="passWord">Password</string>
     <string name="email">Email</string>
     <string name="male">Male</string>
     <string name="female">Female</string>
-    <string name="email_subscriptions">Email subscriptions</string>
-    <string name="allow_email_from_other">Allow email from other</string>
+    <string name="emailSubscriptions">Email subscriptions</string>
+    <string name="allowEmailFromOther">Allow email from other</string>
+    <string name="userFormatWrong">User Format Wrong!</string>
+    <string name="passWordFormatWrong">Password Format Wrong!</string>
+    <string name="emailAddressFormatWrong">Email Address Format Wrong!</string>
 </resources>
