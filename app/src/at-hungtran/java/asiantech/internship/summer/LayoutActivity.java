@@ -31,7 +31,14 @@ public class LayoutActivity extends AppCompatActivity {
             "RBC News",
             "BBC World"
     };
-
+    int[] color = {
+            R.color.colorBg,
+            R.color.colorBgWhite,
+            R.color.colorBg,
+            R.color.colorBgWhite,
+            R.color.colorBg,
+            R.color.colorBgWhite
+    };
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
