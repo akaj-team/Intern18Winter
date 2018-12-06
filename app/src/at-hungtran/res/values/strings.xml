@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Intern18Summer</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
+     TODO: Remove or change this placeholder text
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="tran_van_hung">Tran van hung</string>
     <string name="_0_like">0 like</string>
