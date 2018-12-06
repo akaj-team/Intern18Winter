@@ -42,7 +42,6 @@ public class RecyclerViewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_recycler_view, container, false);
         mLoading = view.findViewById(R.id.progressBar);
-        //mLoading.setProgressBarIndeterminateVisibility(true);
         initView();
         return view;
     }
