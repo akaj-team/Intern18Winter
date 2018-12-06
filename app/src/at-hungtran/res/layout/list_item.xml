@@ -1,54 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="30dp"
+    android:orientation="vertical"
+    tools:ignore="MissingDefaultResource">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/ic_avt"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_weight="1"
-            android:id="@+id/avt"
-            android:src="@drawable/ic_launcher_background"/>
+            android:src="@drawable/ic_launcher_background" />
+
         <TextView
+            android:id="@+id/tv_name"
             android:layout_width="wrap_content"
-            android:layout_weight="6"
             android:layout_height="wrap_content"
-            android:text="Tran van hung"
             android:layout_gravity="center"
             android:layout_marginLeft="10dp"
-            android:textStyle="bold"
-            android:textColor="#020202"/>
+            android:layout_weight="6"
+            android:text="@string/tran_van_hung"
+            android:textColor="#020202"
+            android:textStyle="bold" />
+
         <ImageView
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginRight="30dp"
-            android:src="@drawable/ic_more_horiz_black_24dp"/>
+            android:layout_weight="1"
+            android:src="@drawable/ic_more_horiz_black_24dp" />
     </LinearLayout>
+
     <ImageView
+        android:id="@+id/img_image"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="300dp"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="20dp"
-        android:layout_marginLeft="10dp"
-        android:src="@drawable/img_nature"/>
-    <Button
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="20dp"
-        android:background="@drawable/ic_favorite_border_black_24dp"/>
+        android:src="@drawable/img_nature" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btn_like"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/ic_favorite_border_black_24dp"
+            tools:ignore="ButtonStyle,InvalidId" />
+
+        <Button
+            android:id="@+id/btn_cmt"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/ic_chat_bubble_outline_black_24dp"
+            tools:ignore="ButtonStyle,InvalidId" />
+
+        <Button
+            android:id="@+id/btn_share"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/ic_send_black_24dp"
+            tools:ignore="ButtonStyle,InvalidId" />
+    </LinearLayout>
+
     <TextView
+        android:drawableLeft="@drawable/ic_favorite_black_24dp"
+        android:id="@+id/tv_like"
         android:layout_width="wrap_content"
-        android:layout_weight="6"
         android:layout_height="wrap_content"
-        android:text="Tran van hung"
-        android:layout_marginLeft="20dp"
-        android:textStyle="bold"
-        android:textColor="#020202"/>
+        android:layout_marginLeft="25dp"
+        android:text="@string/_0_like" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="@string/tran_van_hung"
+            android:textColor="#020202"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="20dp"
+            android:text="@string/hello_the_gioi" />
+    </LinearLayout>
 </LinearLayout>
