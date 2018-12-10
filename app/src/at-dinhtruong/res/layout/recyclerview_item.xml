@@ -10,7 +10,7 @@
         android:id="@+id/tvDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/a_city_living_under_the_shadows"
+        android:text="@string/aCityLivingUnderTheShadows"
         android:textColor="@color/colorBlack"
         android:textSize="@dimen/font_size_17sp" />
 
@@ -35,7 +35,7 @@
             android:layout_marginLeft="@dimen/textview_margin_left_15dp"
             android:layout_weight="3"
             android:gravity="center_vertical"
-            android:text="@string/rbc_news"
+            android:text="@string/rBCNews"
             android:textColor="@color/colorPrimaryDark" />
     </LinearLayout>
 </RelativeLayout>

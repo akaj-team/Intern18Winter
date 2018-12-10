@@ -8,7 +8,7 @@ import android.widget.Button;
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private Button mButtonViewGroup;
+    private Button mBtnViewGroup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,8 +18,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initView() {
-        mButtonViewGroup = findViewById(R.id.btnViewGroup);
-        mButtonViewGroup.setOnClickListener(this);
+        mBtnViewGroup = findViewById(R.id.btnViewGroup);
+        mBtnViewGroup.setOnClickListener(this);
     }
 
     @Override
