@@ -1,22 +1,20 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearlayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="110dp"
     android:gravity="center"
     android:orientation="vertical"
-    android:padding="8dp"
+    android:padding="15dp"
     tools:ignore="MissingDefaultResource">
 
     <TextView
-        android:id="@+id/tv"
-        android:layout_width="wrap_content"
+        android:id="@+id/tvTitle"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="15dp"
         android:layout_marginBottom="20dp"
-        app:fontFamily="Arial" />
+        android:fontFamily="Arial" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -29,12 +27,11 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:gravity="center"
-            android:paddingStart="10dp"
             android:paddingLeft="10dp"
             tools:ignore="RtlSymmetry" />
 
         <TextView
-            android:id="@+id/tv1"
+            android:id="@+id/tvPoster"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"

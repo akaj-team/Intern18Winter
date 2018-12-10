@@ -62,4 +62,5 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     apply from: "../ci-java.gradle"
     implementation 'de.hdodenhof:circleimageview:2.1.0'
+    implementation 'com.android.support:recyclerview-v7:27.1.1'
 }

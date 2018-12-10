@@ -3,33 +3,38 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:ignore="MissingDefaultResource"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:ignore="MissingDefaultResource">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        tools:ignore="UselessParent">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
                 android:background="@mipmap/bg_header">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     tools:ignore="UselessParent">
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
-                        android:layout_marginTop="15dp">
+                        android:layout_marginTop="12dp">
 
                         <ImageView
                             android:layout_width="0dp"
                             android:layout_height="25dp"
-                            android:layout_marginStart="15dp"
                             android:layout_marginLeft="15dp"
                             android:layout_weight="1"
                             android:contentDescription="@string/todo"
@@ -48,15 +53,15 @@
                         <ImageView
                             android:layout_width="0dp"
                             android:layout_height="25dp"
-                            android:layout_marginEnd="15dp"
                             android:layout_marginRight="15dp"
                             android:layout_weight="1"
                             android:contentDescription="@string/todo"
                             android:src="@mipmap/ic_dot" />
                     </LinearLayout>
+
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="2dp"
+                        android:layout_height="1dp"
                         android:background="@android:color/background_light" />
                 </LinearLayout>
 
@@ -105,10 +110,10 @@
                     android:src="@mipmap/ic_dot1" />
             </LinearLayout>
         </RelativeLayout>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_centerHorizontal="true"
             android:textColor="@android:color/black">
 
             <TextView
@@ -130,6 +135,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
                     android:contentDescription="@string/todo"
+                    android:layout_marginRight="5dp"
                     android:src="@mipmap/ic_pin" />
 
                 <TextView
@@ -174,24 +180,37 @@
                 android:text="@string/news" />
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="3dp"
-            android:background="@android:color/darker_gray" />
-
-        <GridView
-            android:id="@+id/gridView"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:numColumns="2" />
+            android:orientation="horizontal">
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="4"
+                android:background="@android:color/darker_gray" />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="3dp"
+                android:layout_weight="3"
+                android:background="@color/blue" />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="4"
+                android:background="@android:color/darker_gray" />
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:layout_alignParentBottom="true"
-            android:gravity="center"
             android:layout_gravity="center"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <TextView
@@ -205,8 +224,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="center"
                 android:contentDescription="@string/todo"
+                android:gravity="center"
                 android:src="@mipmap/ic_loadding" />
 
             <TextView

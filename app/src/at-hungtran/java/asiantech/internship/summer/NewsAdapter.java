@@ -1,55 +1,59 @@
 package asiantech.internship.summer;
 
-import android.content.Context;
+import android.graphics.Color;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class NewsAdapter extends BaseAdapter {
-    private Context mContext;
-    private String[] mValues;
-    private String[] mValues1;
-    private int[] mImages;
-    private View mView;
+import java.util.List;
 
-    NewsAdapter(Context mContext, String[] mValues, String[] mValues1, int[] mImages) {
-        this.mContext = mContext;
-        this.mValues = mValues;
-        this.mValues1 = mValues1;
-        this.mImages = mImages;
+import de.hdodenhof.circleimageview.CircleImageView;
+
+public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder> {
+    private List<Data> data;
+
+    NewsAdapter(List<Data> data) {
+        this.data = data;
+    }
+
+    @NonNull
+    @Override
+    public NewsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+        View itemView = layoutInflater.inflate(R.layout.single_item, parent, false);
+        return new NewsViewHolder(itemView);
     }
 
     @Override
-    public int getCount() {
-        return mValues.length;
+    public void onBindViewHolder(@NonNull NewsViewHolder holder, int position) {
+        holder.linearLayout.setBackgroundColor(Color.parseColor(data.get(position).getmColor()));
+        holder.tvTitle.setText(data.get(position).getmTitle());
+        holder.ciImgIcon.setImageResource(data.get(position).getmImageIcon());
+        holder.tvPoster.setText(data.get(position).getmPoster());
     }
 
     @Override
-    public Object getItem(int position) {
-        return null;
+    public int getItemCount() {
+        return data.size();
     }
 
-    @Override
-    public long getItemId(int position) {
-        return 0;
-    }
+    class NewsViewHolder extends RecyclerView.ViewHolder {
+        LinearLayout linearLayout;
+        TextView tvTitle;
+        CircleImageView ciImgIcon;
+        TextView tvPoster;
 
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        LayoutInflater layoutInflater = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        if (convertView == null) {
-            mView = new View(mContext);
-            mView = layoutInflater.inflate(R.layout.single_item, parent, false);
-            ImageView imgIcon = mView.findViewById(R.id.imgIcon);
-            TextView tvDecription = mView.findViewById(R.id.tv);
-            TextView tvTitle = mView.findViewById(R.id.tv1);
-            imgIcon.setImageResource(mImages[position]);
-            tvDecription.setText(mValues[position]);
-            tvTitle.setText(mValues1[position]);
+        NewsViewHolder(View itemView) {
+            super(itemView);
+            linearLayout = itemView.findViewById(R.id.linearlayout);
+            tvTitle = itemView.findViewById(R.id.tvTitle);
+            ciImgIcon = itemView.findViewById(R.id.imgIcon);
+            tvPoster = itemView.findViewById(R.id.tvPoster);
+            this.setIsRecyclable(false);
         }
-        return mView;
     }
 }
