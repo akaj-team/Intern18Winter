@@ -13,8 +13,11 @@ import android.widget.EditText;
 import android.widget.Toast;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 public class SignUpFragment extends Fragment {
+    private static String emailPattern = "^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4})(\\]?)$";
+    private static String passPattern = "^[a-zA-Z0-9]{7,}$";
+    private static Pattern patternInput;
+    private static Matcher matcherInput;
     private Button mBtnSignUp;
     private EditText mEdtEmail;
     private EditText mEdtPassword;
@@ -26,40 +29,40 @@ public class SignUpFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_signup, container, false);
-        LoginFragment loginFragment = new LoginFragment();
-        mEdtEmail = view.findViewById(R.id.edt_inputEmail);
-        mEdtPassword = view.findViewById(R.id.edt_inputPass);
-        mEdtConfirmPassword = view.findViewById(R.id.edt_confirmPass);
-        mBtnSignUp = view.findViewById(R.id.btn_signUp);
+        mEdtEmail = view.findViewById(R.id.edtInputEmail);
+        mEdtPassword = view.findViewById(R.id.edtInputPass);
+        mEdtConfirmPassword = view.findViewById(R.id.edtConfirmPass);
+        mBtnSignUp = view.findViewById(R.id.btnSignUp);
+        handleEvent();
+        return view;
+    }
+    private static boolean isMail(final String email){
+        patternInput = Pattern.compile(emailPattern);
+        matcherInput = patternInput.matcher(email);
+        return matcherInput.matches();
+    }
+    private static boolean isPassword(final String password){
+        patternInput = Pattern.compile(passPattern);
+        matcherInput = patternInput.matcher(password);
+        return matcherInput.matches();
+    }
+    private void handleEvent(){
         mBtnSignUp.setOnClickListener(v -> {
             mValueEmail = mEdtEmail.getText().toString();
             mValuePassword = mEdtPassword.getText().toString();
             mValueConfirmPassword = mEdtConfirmPassword.getText().toString();
-            if(isMail(mValueEmail) && isPassword(mValuePassword) && mValuePassword.equals(mValueConfirmPassword)){
-                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.fragment_content, loginFragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
-            }else{
-                Toast.makeText(getActivity(), "Please check again", Toast.LENGTH_SHORT).show();
-            }
+            checkInputSignUp();
         });
-        return view;
     }
-    private static boolean isMail(final String mEmail){
-        String emailPattern = "^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4})(\\]?)$";
-        Pattern patternEmail;
-        Matcher matcherEmail;
-        patternEmail = Pattern.compile(emailPattern);
-        matcherEmail = patternEmail.matcher(mEmail);
-        return matcherEmail.matches();
-    }
-    private static boolean isPassword(final String mPassword){
-        String passwordPattern = "^[a-zA-Z0-9]{7,}$";
-        Pattern patternPassword;
-        Matcher matcherPassword;
-        patternPassword = Pattern.compile(passwordPattern);
-        matcherPassword = patternPassword.matcher(mPassword);
-        return matcherPassword.matches();
+    private void checkInputSignUp(){
+        LoginFragment loginFragment = new LoginFragment();
+        if(isMail(mValueEmail) && isPassword(mValuePassword) && mValuePassword.equals(mValueConfirmPassword)){
+            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.frContent, loginFragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+        }else{
+            Toast.makeText(getActivity(), R.string.checkInputSignUp, Toast.LENGTH_SHORT).show();
+        }
     }
 }

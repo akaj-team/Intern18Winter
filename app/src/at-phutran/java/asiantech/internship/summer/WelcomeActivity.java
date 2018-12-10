@@ -4,8 +4,9 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
-
 public class WelcomeActivity extends AppCompatActivity {
+    private static final String EMAIL_VALUE = "textEmail";
+    private static final String PASSWORD_VALUE = "textPassword";
     private TextView mTvEmail;
     private TextView mTvPassword;
     private String mValueEmail;
@@ -17,8 +18,8 @@ public class WelcomeActivity extends AppCompatActivity {
         mTvEmail = findViewById(R.id.tvEmail);
         mTvPassword = findViewById(R.id.tvPassword);
         Intent intent = getIntent();
-        mValueEmail = intent.getStringExtra("textEmail");
-        mValuePassword = intent.getStringExtra("textPassword");
+        mValueEmail = intent.getStringExtra(EMAIL_VALUE);
+        mValuePassword = intent.getStringExtra(PASSWORD_VALUE);
         mTvEmail.setText(mValueEmail);
         mTvPassword.setText(mValuePassword);
     }

@@ -7,7 +7,7 @@
     android:background="@color/colorPurple"
     android:gravity="center" >
     <EditText
-        android:id="@+id/edt_inputEmail"
+        android:id="@+id/edtInputEmail"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:hint="@string/inputEmail"
@@ -15,7 +15,7 @@
         android:padding="8dp"
         android:background="@drawable/shape"/>
     <EditText
-        android:id="@+id/edt_inputPass"
+        android:id="@+id/edtInputPass"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -24,8 +24,7 @@
         android:hint="@string/inputPass"
         android:background="@drawable/shape"/>
     <Button
-        android:id="@+id/btn_signUp"
-
+        android:id="@+id/btnSignUp"
         style="@style/MyButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -34,7 +33,7 @@
         android:background="@drawable/shape_button"
         android:textColor="@color/colorWhite" />
     <Button
-        android:id="@+id/btn_login"
+        android:id="@+id/btnLogin"
         android:textAllCaps="false"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
