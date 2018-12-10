@@ -1,26 +1,36 @@
 package asiantech.internship.summer;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class SignUpActivity extends AppCompatActivity {
+    private static Matcher matcherEmail;
+    private static Pattern patternEmail;
+    private static String emailPattern = "^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4})(\\]?)$";
     private int mCheck = 0;
     private boolean mCheckUser;
     private boolean mCheckPass;
     private boolean mCheckEmail;
     private boolean mCheckButton = false;
-    protected EditText mEdtUser;
-    protected EditText mEdtPass;
-    protected EditText mEdtEmail;
-    protected Button mBtnCheck;
+    private EditText mEdtUser;
+    private EditText mEdtPass;
+    private EditText mEdtEmail;
+    private Button mBtnCheck;
+
+    private static boolean isValidEmail(String mEmail) {
+        patternEmail = Pattern.compile(emailPattern);
+        matcherEmail = patternEmail.matcher(mEmail);
+        return matcherEmail.matches();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +40,8 @@ public class SignUpActivity extends AppCompatActivity {
         mEdtUser = findViewById(R.id.edtUser);
         mEdtPass = findViewById(R.id.edtPass);
         mEdtEmail = findViewById(R.id.edtEmail);
-        mBtnCheck = findViewById(R.id.btn_check);
-        unShow();
+        mBtnCheck = findViewById(R.id.btnCheck);
+        unShowButtonApply();
         mEdtUser.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -44,12 +54,12 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 if (mEdtUser.getText().length() < 6) {
-                    mEdtUser.setError("Vui lòng nhập ít nhất 6 kí tự");
+                    mEdtUser.setError(getString(R.string.errorInput));
                     mCheckUser = false;
-                    unShow();
-                }else{
+                    unShowButtonApply();
+                } else {
                     mCheckUser = true;
-                    signUpFull();
+                    chechInputFullInformation();
                 }
             }
         });
@@ -73,66 +83,64 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
+
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
             }
+
             @Override
             public void afterTextChanged(Editable s) {
-                if(isValidEmail(mEdtEmail.getText().toString())){
+                if (isValidEmail(mEdtEmail.getText().toString())) {
                     mCheckEmail = true;
-                    signUpFull();
-                }else{
+                    chechInputFullInformation();
+                } else {
                     mCheckEmail = false;
-                    unShow();
-                    mEdtEmail.setError("Lỗi cú pháp email");
+                    unShowButtonApply();
+                    mEdtEmail.setError(getString(R.string.errorInputEmail));
                 }
             }
         });
     }
 
-    private void show(){
+    private void showButtonApply() {
         mBtnCheck.setVisibility(View.VISIBLE);
     }
-    private void unShow(){
+
+    private void unShowButtonApply() {
         mBtnCheck.setVisibility(View.GONE);
     }
-    private void checkInputPass(){
+
+    private void checkInputPass() {
         if (mEdtPass.getText().length() < 6) {
-            mEdtPass.setError("Vui lòng nhập ít nhất 6 kí tự");
+            mEdtPass.setError(getString(R.string.errorInput));
             mCheckPass = false;
-            unShow();
-        }else {
+            unShowButtonApply();
+        } else {
             for (int i = 0; i < mEdtPass.getText().length(); i++) {
                 if ((int) mEdtPass.getText().charAt(i) >= 48 && (int) mEdtPass.getText().charAt(i) <= 57) {
                     mCheck += 1;
                 }
             }
             if (mCheck == 0 || mCheck == mEdtPass.getText().length()) {
-                mEdtPass.setError("Vui lòng nhập kí tự và số");
-                unShow();
+                mEdtPass.setError(getString(R.string.errorInputPassword));
+                unShowButtonApply();
                 mCheckPass = false;
-            }else{
+            } else {
                 mCheckPass = true;
-                signUpFull();
+                chechInputFullInformation();
                 mCheck = 0;
             }
         }
     }
-    private void signUpFull(){
-        if(mCheckUser && mCheckPass && mCheckEmail && mCheckButton){
-            show();
+
+    private void chechInputFullInformation() {
+        if (mCheckUser && mCheckPass && mCheckEmail && mCheckButton) {
+            showButtonApply();
         }
     }
+
     public void onRadioButtonClicked(View view) {
         mCheckButton = true;
-        signUpFull();
-    }
-    private static boolean isValidEmail(final String mEmail) {
-        Pattern patternEmail;
-        Matcher matcherEmail;
-        String emailPattern = "^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4})(\\]?)$";
-        patternEmail = Pattern.compile(emailPattern);
-        matcherEmail = patternEmail.matcher(mEmail);
-        return matcherEmail.matches();
+        chechInputFullInformation();
     }
 }
