@@ -34,12 +34,12 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     }
 
     private void init(View view) {
-        Button mBtnSignUp = view.findViewById(R.id.btnSignup);
-        Button mBtnLogin = view.findViewById(R.id.btnLogin);
+        Button btnSignUp = view.findViewById(R.id.btnSignup);
+        Button btnLogin = view.findViewById(R.id.btnLogin);
         mEdtEmail = view.findViewById(R.id.edtEmail);
         mEdtPassWord = view.findViewById(R.id.edtPassword);
-        mBtnLogin.setOnClickListener(this);
-        mBtnSignUp.setOnClickListener(this);
+        btnLogin.setOnClickListener(this);
+        btnSignUp.setOnClickListener(this);
     }
 
     @Override
