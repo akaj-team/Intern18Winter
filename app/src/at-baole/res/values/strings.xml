@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">Intern18Summer</string>
+    <string name="app_name">DrawerLayout Activity</string>
+    <string name="Email">lequocbao@gmail.com</string>
+    <string name="Inbox">Inbox</string>
+    <string name="Outbox">Outbox</string>
+    <string name="Trash">Trash</string>
+    <string name="Spam">Spam</string>
+
 </resources>
