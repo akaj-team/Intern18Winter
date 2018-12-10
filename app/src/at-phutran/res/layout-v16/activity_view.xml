@@ -159,7 +159,7 @@
         <GridView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/gv1"
+            android:id="@+id/gvContent"
             android:numColumns="2"
             android:gravity="center"
             android:columnWidth="100dp">
@@ -174,21 +174,14 @@
                 android:layout_height="wrap_content"
                 android:text="@string/loading"
                 android:textColor="@color/colorGray"/>
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:src="@drawable/ic_loadding"
-                android:padding="5dp"
-                android:contentDescription="@string/todo" />
+            <ProgressBar
+                android:layout_width="30dp"
+                android:layout_height="30dp" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/content"
                 android:textColor="@color/colorGray"/>
         </LinearLayout>
-
     </LinearLayout>
-
-
-
 </RelativeLayout>

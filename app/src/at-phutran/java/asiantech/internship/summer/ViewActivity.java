@@ -6,45 +6,26 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.GridView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ViewActivity extends AppCompatActivity {
 
-    GridView gridView;
-
-    String[] values = {
-            "A City Living Under The Shawdow",
-            "One Problem for Democratic Leaders",
-            "The Golden Secret to Better Breakfast",
-            "How to Plan Your First Ski Vaction",
-            "How Social Isolation Is Killing Us",
-            "Use Labels to Sort Messages in Facebook"
-    };
-
-
-    int[] images ={
-            R.drawable.ic_avt,
-            R.drawable.ic_avt1,
-            R.drawable.ic_avt2,
-            R.drawable.ic_avt3,
-            R.drawable.ic_avt,
-            R.drawable.ic_avt2
-    };
-    String[] values1 = {
-            "RBC News",
-            "NY Times",
-            "BBC World",
-            "NBC Nightly",
-            "RBC News",
-            "BBC World"
-    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_view);
-
-        gridView = findViewById(R.id.gv1);
-        GridAdapter gridAdapter = new GridAdapter(this, values, images, values1);
-        gridView.setAdapter(gridAdapter);
+        List<News> listNews = new ArrayList<>();
+        listNews.add(new News("A City Living Under The Shawdow", R.drawable.ic_avt, "RBC News"));
+        listNews.add(new News("One Problem for Democratic Leaders", R.drawable.ic_avt1, "NY Times"));
+        listNews.add(new News("The Golden Secret to Better Breakfast", R.drawable.ic_avt2, "BBC World"));
+        listNews.add(new News("How to Plan Your First Ski Vaction", R.drawable.ic_avt3, "NBC Nightly"));
+        listNews.add(new News("How Social Isolation Is Killing Us", R.drawable.ic_avt, "RBC News"));
+        listNews.add(new News("Use Labels to Sort Messages in Facebook", R.drawable.ic_avt2, "BBC World"));
+        GridView mGridView = findViewById(R.id.gvContent);
+        NewsAdapter newsAdapter = new NewsAdapter(this, listNews);
+        mGridView.setAdapter(newsAdapter);
     }
 }
