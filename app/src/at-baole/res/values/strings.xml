@@ -1,3 +1,27 @@
 <resources>
-    <string name="app_name">Intern18Summer</string>
+    <string name="app_name">SignUpActivity</string>
+    <string name="todo">TODO</string>
+    <!--- list -->
+    <string name="list">ListBaiTap</string>
+    <string name="e1">W1-D3-View and Group View</string>
+    <!--- MiddleScreen -->
+    <string name="beat">Beatrice Maxwell</string>
+    <string name="profile">Profile</string>
+    <string name="bookmarks">Bookmarks</string>
+    <string name="post">Posts</string>
+    <string name="news">News</string>
+    <string name="slovakia">Slovakia</string>
+    <!--- EndScreen -->
+    <string name="content">content</string>
+    <string name="loading">loading</string>
+    <string name="male">male</string>
+    <string name="female">female</string>
+    <string name="EmailSub">Email subscriptions</string>
+    <string name="AllowEmail">Allow email from other</string>
+    <string name="SignUpActivity">SignUpActivity</string>
+    <string name="UsernameError">Username must contain at least 6 letters</string>
+    <string name="PasswordError1">Password must contain at least 6 letters</string>
+    <string name="PasswordError2">Password must contain at least one character and one number</string>
+    <string name="InvalidEmail">Invalid Email</string>
+    <string name="SignUpSuccessfully">Sign Up Successfully</string>
 </resources>
