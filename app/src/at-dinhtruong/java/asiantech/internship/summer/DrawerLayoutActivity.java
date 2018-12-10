@@ -154,16 +154,16 @@ public class DrawerLayoutActivity extends AppCompatActivity implements ItemAdapt
     private void onCaptureImageResult(Intent data) {
         Uri selectedImageURI = data.getData();
         Item item = items.get(0);
-        item.setmIcon(Integer.parseInt(convertImage2Base64()));
+        //item.setmIcon(Integer.parseInt(convertImage2Base64()));
         mItemAdapter.updateList(items);
         mItemAdapter.notifyDataSetChanged();
     }
 
-    public String convertImage2Base64() {
+    /*public String convertImage2Base64() {
         Bitmap bitmap = ((BitmapDrawable) selectedImageWork.getDrawable()).getBitmap();
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 90, stream);
         byte[] image = stream.toByteArray();
         return ("data:image/jpeg;base64," + Base64.encodeToString(image, 0));
-    }
+    }*/
 }
