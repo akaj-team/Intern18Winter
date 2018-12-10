@@ -16,9 +16,30 @@ import java.util.regex.Pattern;
 
 @SuppressLint("Registered")
 public class LoginActivity extends AppCompatActivity {
+    private static final String USERNAME_PATTERN = "^(?=.*[[0-9]a-zA-Z]).{6,18}$";
+    private static final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-zA-Z]).{6,18}$";
+    private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+    private Pattern mPattern;
+    private Matcher mMatcher;
     private EditText mEdtUser;
     private EditText mEdtPwd;
     private EditText mEdtEmail;
+    private TextWatcher mTextWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            checkUsernamePasswordandEmail();
+        }
+    };
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,69 +58,41 @@ public class LoginActivity extends AppCompatActivity {
         checkUsernamePasswordandEmail();
     }
 
-    private TextWatcher mTextWatcher = new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-        }
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-            checkUsernamePasswordandEmail();
-        }
-    };
-
-    void checkUsernamePasswordandEmail() {
+    private void checkUsernamePasswordandEmail() {
         Button btnLogin = findViewById(R.id.btn);
 
-        String mUsername = mEdtUser.getText().toString();
-        String mPassword = mEdtPwd.getText().toString();
-        String mEmail = mEdtEmail.getText().toString();
+        String username = mEdtUser.getText().toString();
+        String password = mEdtPwd.getText().toString();
+        String email = mEdtEmail.getText().toString();
         mEdtPwd.setTransformationMethod(PasswordTransformationMethod.getInstance());
 
-        if (!isValidUsername(mUsername) || !isValidPassword(mPassword) || !isValidEmail(mEmail)) {
+        if (!isValidUsername(username) || !isValidPassword(password) || !isValidEmail(email)) {
             btnLogin.setVisibility(View.GONE);
         } else {
             btnLogin.setVisibility(View.VISIBLE);
         }
     }
 
-    boolean isValidUsername(String mUsername) {
+    private boolean isValidUsername(String mUsername) {
+        mPattern = Pattern.compile(USERNAME_PATTERN);
+        mMatcher = mPattern.matcher(mUsername);
 
-        Pattern pattern;
-        Matcher matcher;
-        final String PASSWORD_PATTERN = "^(?=.*[[0-9]a-zA-Z]).{6,18}$";
-        pattern = Pattern.compile(PASSWORD_PATTERN);
-        matcher = pattern.matcher(mUsername);
-
-        return matcher.matches();
+        return mMatcher.matches();
 
     }
 
-    boolean isValidPassword(String mPassword) {
+    private boolean isValidPassword(String mPassword) {
+        mPattern = Pattern.compile(PASSWORD_PATTERN);
+        mMatcher = mPattern.matcher(mPassword);
 
-        Pattern pattern;
-        Matcher matcher;
-        final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-zA-Z]).{6,18}$";
-        pattern = Pattern.compile(PASSWORD_PATTERN);
-        matcher = pattern.matcher(mPassword);
-
-        return matcher.matches();
+        return mMatcher.matches();
 
     }
 
-    boolean isValidEmail(String mEmail) {
-        Pattern pattern;
-        Matcher matcher;
-        final String EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-        pattern = Pattern.compile(EMAIL_PATTERN);
-        matcher = pattern.matcher(mEmail);
+    private boolean isValidEmail(String mEmail) {
+        mPattern = Pattern.compile(EMAIL_PATTERN);
+        mMatcher = mPattern.matcher(mEmail);
 
-        return matcher.matches();
+        return mMatcher.matches();
     }
 }

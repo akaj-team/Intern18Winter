@@ -16,8 +16,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
             android:layout_weight="7"
-            android:text="@string/signupactivity"
-            android:textColor="#ffffff"
+            android:text="@string/signupActivity"
+            android:textColor="@color/colorWhite"
             android:textSize="20sp" />
 
         <Button
@@ -130,7 +130,7 @@
             android:text="@string/allow_email_from_other" />
 
         <Switch
-            android:id="@+id/on_off_switch1"
+            android:id="@+id/on_off_switch_1"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_weight="1"
