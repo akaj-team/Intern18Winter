@@ -13,9 +13,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class SignUpActivity extends AppCompatActivity {
-    private static Matcher matcherEmail;
-    private static Pattern patternEmail;
-    private static String emailPattern = "^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4})(\\]?)$";
+    private static final int NUMBER_ZERO_IN_DECIMARL = 48;
+    private static final int NUMBER_NINE_IN_DECIMARL = 57;
+    private static final int LENGHT_MIN = 6;
+    private static String mEmailPattern = "^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4})(\\]?)$";
     private int mCheck = 0;
     private boolean mCheckUser;
     private boolean mCheckPass;
@@ -26,9 +27,9 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText mEdtEmail;
     private Button mBtnCheck;
 
-    private static boolean isValidEmail(String mEmail) {
-        patternEmail = Pattern.compile(emailPattern);
-        matcherEmail = patternEmail.matcher(mEmail);
+    private static boolean isValidEmail(String email) {
+        Pattern patternEmail = Pattern.compile(mEmailPattern);
+        Matcher matcherEmail = patternEmail.matcher(email);
         return matcherEmail.matches();
     }
 
@@ -53,7 +54,7 @@ public class SignUpActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (mEdtUser.getText().length() < 6) {
+                if (mEdtUser.getText().length() < LENGHT_MIN) {
                     mEdtUser.setError(getString(R.string.errorInput));
                     mCheckUser = false;
                     unShowButtonApply();
@@ -111,13 +112,13 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void checkInputPass() {
-        if (mEdtPass.getText().length() < 6) {
+        if (mEdtPass.getText().length() < LENGHT_MIN) {
             mEdtPass.setError(getString(R.string.errorInput));
             mCheckPass = false;
             unShowButtonApply();
         } else {
             for (int i = 0; i < mEdtPass.getText().length(); i++) {
-                if ((int) mEdtPass.getText().charAt(i) >= 48 && (int) mEdtPass.getText().charAt(i) <= 57) {
+                if ((int) mEdtPass.getText().charAt(i) >= NUMBER_ZERO_IN_DECIMARL && (int) mEdtPass.getText().charAt(i) <= NUMBER_NINE_IN_DECIMARL) {
                     mCheck += 1;
                 }
             }
