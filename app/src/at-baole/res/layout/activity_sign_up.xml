@@ -16,7 +16,7 @@
             android:layout_gravity="center"
             android:layout_weight="9"
             android:paddingLeft="10dp"
-            android:text="@string/SignUpActivity"
+            android:text="@string/signUpActivity"
             android:textColor="@color/colorYellow"
             android:textSize="20sp" />
 
@@ -103,7 +103,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="5"
-                android:text="@string/EmailSub"
+                android:text="@string/emailSub"
                 android:textSize="18sp" />
 
             <ToggleButton
@@ -122,7 +122,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="5"
-                android:text="@string/AllowEmail"
+                android:text="@string/allowEmail"
                 android:textSize="18sp" />
 
             <ToggleButton

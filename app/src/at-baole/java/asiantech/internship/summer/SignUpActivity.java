@@ -21,10 +21,6 @@ public class SignUpActivity extends AppCompatActivity {
     private RadioButton mRbMale;
     private RadioButton mRbFemale;
     private ImageButton mImgBtnApply;
-    private String mUsernameError = "Username must contain at least 6 letters";
-    private String mPasswordError1 = "Password must contain at least 6 letters";
-    private String mPasswordError2 = "Password must contain at least one character and one number";
-    private String mInvalidEmail = "Invalid Email";
     private String mPasswordPattern = "(?=.*?[a-z])(?=.*?[0-9]).{6,}";
     private String mEmailPattern = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
@@ -105,7 +101,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     public void checkUsernameLength() {
         if (mEdtUsername.getText().length() < MIN_LENGTH) {
-            mEdtUsername.setError(mUsernameError);
+            mEdtUsername.setError(getString(R.string.usernameError));
             mEdtUsername.requestFocus();
         } else {
             mEdtUsername.setError(null);
@@ -114,14 +110,14 @@ public class SignUpActivity extends AppCompatActivity {
 
     public void checkPasswordLength() {
         if (mEdtPassword.getText().length() < MIN_LENGTH) {
-            mEdtPassword.setError(mPasswordError1);
+            mEdtPassword.setError(getString(R.string.passwordError1));
         }
     }
 
     public void checkPasswordFormat() {
         if (mEdtPassword.getText().length() >= MIN_LENGTH) {
             if (!validatePassword(mEdtPassword.getText().toString().trim())) {
-                mEdtPassword.setError(mPasswordError2);
+                mEdtPassword.setError(getString(R.string.passwordError2));
                 mEdtPassword.requestFocus();
             } else {
                 mEdtPassword.setError(null);
@@ -131,7 +127,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     public void checkEmailFormat() {
         if (!validateEmail(mEdtEmail.getText().toString().trim())) {
-            mEdtEmail.setError(mInvalidEmail);
+            mEdtEmail.setError(getString(R.string.invalidEmail));
             mEdtEmail.requestFocus();
         } else {
             mEdtEmail.setError(null);
@@ -140,7 +136,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     public void onClickApplyButton() {
         mImgBtnApply.setOnClickListener(view ->
-                Toast.makeText(SignUpActivity.this, R.string.SignUpSuccessfully, Toast.LENGTH_LONG).show());
+                Toast.makeText(SignUpActivity.this, R.string.signUpSuccessfully, Toast.LENGTH_LONG).show());
     }
 
     //isValidInformation() method checks all the necessary conditions in order for Button Apply to be enabled
