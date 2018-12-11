@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:textSize="15sp"
         android:id="@+id/tvContent"
-        android:gravity="center"
+        android:gravity="center_vertical"
         android:padding="10dp"/>
     <LinearLayout
         android:layout_width="match_parent"
