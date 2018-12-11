@@ -7,9 +7,9 @@
     <string name="password">Password</string>
     <string name="confirmPassword">Confirm Password</string>
     <string name="logInSuccessfully">Log In Successfully</string>
-    <string name="incorrectEmail">Incorrect e-mail address format</string>
-    <string name="passwordError1">Password must contain at least 7 letters</string>
-    <string name="passwordError2">Password must contain only characters and numbers</string>
+    <string name="invalidEmail">Incorrect e-mail address format</string>
+    <string name="password7Letters">Password must contain at least 7 letters</string>
+    <string name="passwordOnlyCharAndNum">Password must contain only characters and numbers</string>
     <string name="signUpSuccessully">Sign Up Successfully</string>
     <string name="confirmPasswordError">Confirm Password not match</string>
     <string name="backToScreen">Click the button to return to the main screen of your phone</string>

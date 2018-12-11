@@ -17,16 +17,15 @@ import java.util.regex.Pattern;
 
 public class LoginFragment extends Fragment {
 
-    private EditText mEdtEmail;
-    private EditText mEdtPassword;
-    private Button mBtnSignUp;
-    private Button mBtnLogIn;
     private static final int MIN_LENGTH = 6;
     private static final String EMAIL_KEY = "Email";
     private static final String PASSWORD_KEY = "Password";
     private static final String PASSWORD_PATTERN = "^[A-Za-z0-9]{6,}$";
     private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-
+    private EditText mEdtEmail;
+    private EditText mEdtPassword;
+    private Button mBtnSignUp;
+    private Button mBtnLogIn;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -75,21 +74,24 @@ public class LoginFragment extends Fragment {
         if (mEdtPassword.getText().length() > MIN_LENGTH
                 && validatePassword(mEdtPassword.getText().toString())
                 && validateEmail(mEdtEmail.getText().toString())) {
-
-            String email = mEdtEmail.getText().toString();
-            String password = mEdtPassword.getText().toString();
-            Intent intent = new Intent(getActivity(), InformationActivity.class);
-            intent.putExtra(EMAIL_KEY, email);
-            intent.putExtra(PASSWORD_KEY, password);
-            startActivity(intent);
+            sendIntent();
             Toast.makeText(getActivity(), R.string.logInSuccessfully, Toast.LENGTH_LONG).show();
         } else if (!validateEmail(mEdtEmail.getText().toString())) {
-            Toast.makeText(getActivity(), R.string.incorrectEmail, Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), R.string.invalidEmail, Toast.LENGTH_LONG).show();
         } else if (mEdtPassword.getText().length() <= MIN_LENGTH) {
-            Toast.makeText(getActivity(), R.string.passwordError1, Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), R.string.password7Letters, Toast.LENGTH_LONG).show();
         } else if (!validatePassword(mEdtPassword.getText().toString())) {
-            Toast.makeText(getActivity(), R.string.passwordError2, Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), R.string.passwordOnlyCharAndNum, Toast.LENGTH_LONG).show();
         }
+    }
+
+    public void sendIntent() {
+        String email = mEdtEmail.getText().toString();
+        String password = mEdtPassword.getText().toString();
+        Intent intent = new Intent(getActivity(), InformationActivity.class);
+        intent.putExtra(EMAIL_KEY, email);
+        intent.putExtra(PASSWORD_KEY, password);
+        startActivity(intent);
     }
 
     private boolean validateEmail(String email) {

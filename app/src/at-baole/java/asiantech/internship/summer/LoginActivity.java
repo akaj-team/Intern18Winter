@@ -18,13 +18,13 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        fragmentInit();
+        initFragment();
         mTvToolBar = findViewById(R.id.tvToolBar);
         mBtnBack = findViewById(R.id.btnBack);
         backFragment();
     }
 
-    public void fragmentInit(){
+    public void initFragment(){
         Fragment loginFragment = new LoginFragment();
         FragmentManager loginFragmentManager = getSupportFragmentManager();
         FragmentTransaction loginFragmentTransaction = loginFragmentManager.beginTransaction();

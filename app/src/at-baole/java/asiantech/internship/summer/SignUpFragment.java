@@ -14,14 +14,13 @@ import java.util.regex.Pattern;
 
 public class SignUpFragment extends Fragment {
 
+    private static final int MIN_LENGTH = 6;
+    private static final String PASSWORD_PATTERN = "^[A-Za-z0-9]{6,}$";
+    private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
     private EditText mEdtEmail;
     private EditText mEdtPassword;
     private EditText mEdtConfirmPassword;
     private Button mBtnSignUp;
-    private static final int MIN_LENGTH = 6;
-    private static final String PASSWORD_PATTERN = "^[A-Za-z0-9]{6,}$";
-    private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,11 +47,11 @@ public class SignUpFragment extends Fragment {
                 && mEdtConfirmPassword.getText().toString().equals(mEdtPassword.getText().toString())) {
             Toast.makeText(getActivity(), R.string.signUpSuccessully, Toast.LENGTH_LONG).show();
         } else if (!validateEmail(mEdtEmail.getText().toString())) {
-            Toast.makeText(getActivity(), R.string.incorrectEmail, Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), R.string.invalidEmail, Toast.LENGTH_LONG).show();
         } else if (mEdtPassword.getText().length() <= MIN_LENGTH) {
-            Toast.makeText(getActivity(), R.string.passwordError1, Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), R.string.password7Letters, Toast.LENGTH_LONG).show();
         } else if (!validatePassword(mEdtPassword.getText().toString())) {
-            Toast.makeText(getActivity(), R.string.passwordError2, Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), R.string.passwordOnlyCharAndNum, Toast.LENGTH_LONG).show();
         } else if (!mEdtConfirmPassword.getText().toString().equals(mEdtPassword.getText().toString())) {
             Toast.makeText(getActivity(), R.string.confirmPasswordError, Toast.LENGTH_LONG).show();
         }
