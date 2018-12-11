@@ -99,7 +99,7 @@ public class SignUpActivity extends AppCompatActivity {
         });
     }
 
-    public void checkUsernameLength() {
+    private void checkUsernameLength() {
         if (mEdtUsername.getText().length() < MIN_LENGTH) {
             mEdtUsername.setError(getString(R.string.username6Letters));
             mEdtUsername.requestFocus();
@@ -108,13 +108,13 @@ public class SignUpActivity extends AppCompatActivity {
         }
     }
 
-    public void checkPasswordLength() {
+    private void checkPasswordLength() {
         if (mEdtPassword.getText().length() < MIN_LENGTH) {
             mEdtPassword.setError(getString(R.string.password6Letters));
         }
     }
 
-    public void checkPasswordFormat() {
+    private void checkPasswordFormat() {
         if (mEdtPassword.getText().length() >= MIN_LENGTH) {
             if (!validatePassword(mEdtPassword.getText().toString().trim())) {
                 mEdtPassword.setError(getString(R.string.password1char1num));
@@ -125,7 +125,7 @@ public class SignUpActivity extends AppCompatActivity {
         }
     }
 
-    public void checkEmailFormat() {
+    private void checkEmailFormat() {
         if (!validateEmail(mEdtEmail.getText().toString().trim())) {
             mEdtEmail.setError(getString(R.string.invalidEmail));
             mEdtEmail.requestFocus();
@@ -134,7 +134,7 @@ public class SignUpActivity extends AppCompatActivity {
         }
     }
 
-    public void onClickApplyButton() {
+    private void onClickApplyButton() {
         mImgBtnApply.setOnClickListener(view ->
                 Toast.makeText(SignUpActivity.this, R.string.signUpSuccessfully, Toast.LENGTH_LONG).show());
     }
