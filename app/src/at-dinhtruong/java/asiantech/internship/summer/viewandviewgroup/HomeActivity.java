@@ -1,4 +1,4 @@
-package asiantech.internship.summer;
+package asiantech.internship.summer.viewandviewgroup;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,9 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
-public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
+import asiantech.internship.summer.R;
 
-    private Button mBtnViewGroup;
+public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,8 +18,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initView() {
-        mBtnViewGroup = findViewById(R.id.btnViewGroup);
-        mBtnViewGroup.setOnClickListener(this);
+        Button btnViewGroup = findViewById(R.id.btnViewGroup);
+        btnViewGroup.setOnClickListener(this);
     }
 
     @Override

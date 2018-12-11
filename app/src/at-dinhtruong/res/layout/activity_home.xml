@@ -6,13 +6,13 @@
     android:background="@color/colorWhite"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".HomeActivity">
+    tools:context=".viewandviewgroup.HomeActivity">
 
     <Button
         android:id="@+id/btnViewGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/button_margin_10dp"
+        android:layout_margin="10dp"
         android:text="@string/view" />
 
 </LinearLayout>

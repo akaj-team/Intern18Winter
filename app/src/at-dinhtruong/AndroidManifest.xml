@@ -12,13 +12,14 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
         <activity
-            android:name=".HomeActivity"
+            android:name=".viewandviewgroup.HomeActivity"
             android:theme="@style/Theme.AppCompat.Light">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ViewAndViewGroupActivity" />
+        <activity android:name=".viewandviewgroup.ViewAndViewGroupActivity" />
     </application>
+
 </manifest>

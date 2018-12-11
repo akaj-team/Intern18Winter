@@ -1,4 +1,4 @@
-package asiantech.internship.summer;
+package asiantech.internship.summer.viewandviewgroup;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,10 +8,11 @@ import android.support.v7.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-import asiantech.internship.summer.Model.Paper;
-import asiantech.internship.summer.ViewHolder.PaperAdapter;
+import asiantech.internship.summer.R;
+import asiantech.internship.summer.model.Paper;
 
 public class ViewAndViewGroupActivity extends AppCompatActivity {
+    public static final int NUMBER_OF_COLUMNS = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,8 +24,7 @@ public class ViewAndViewGroupActivity extends AppCompatActivity {
     public void initView() {
         RecyclerView recyclerView = findViewById(R.id.recycleViewFirm);
         recyclerView.setHasFixedSize(true);
-        int numberOfColumns = 2;
-        recyclerView.setLayoutManager(new GridLayoutManager(this, numberOfColumns));
+        recyclerView.setLayoutManager(new GridLayoutManager(this, NUMBER_OF_COLUMNS));
         List<Paper> listPaper = new ArrayList<>();
         listPaper.add(new Paper("A City Living Under the Shadow", R.drawable.ic_nbc, "RBC News", "#f4f2f2"));
         listPaper.add(new Paper("One Problem for Democaratic Leaders", R.drawable.ic_newyork, "NY Times", "#ffffff"));

@@ -1,4 +1,4 @@
-package asiantech.internship.summer.ViewHolder;
+package asiantech.internship.summer.viewandviewgroup;
 
 import android.graphics.Color;
 import android.support.annotation.NonNull;
@@ -12,14 +12,14 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import asiantech.internship.summer.Model.Paper;
 import asiantech.internship.summer.R;
+import asiantech.internship.summer.model.Paper;
 
 public class PaperAdapter extends RecyclerView.Adapter<PaperAdapter.PaperViewHolder> {
-    private List<Paper> paperList;
+    private List<Paper> mPapers;
 
     public PaperAdapter(List<Paper> dataFirm) {
-        this.paperList = dataFirm;
+        this.mPapers = dataFirm;
     }
 
     @NonNull
@@ -32,33 +32,33 @@ public class PaperAdapter extends RecyclerView.Adapter<PaperAdapter.PaperViewHol
 
     @Override
     public void onBindViewHolder(@NonNull PaperViewHolder viewHolder, int position) {
-        viewHolder.initData(paperList.get(position));
+        viewHolder.initData(mPapers.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return paperList.size();
+        return mPapers.size();
     }
 
     class PaperViewHolder extends RecyclerView.ViewHolder {
-        TextView mDescription;
-        TextView mNameFirm;
-        ImageView mIcon;
-        RelativeLayout mRlCustomPaper;
+        private TextView mTvDescription;
+        private TextView mTvNameFirm;
+        private ImageView mImgIcon;
+        private RelativeLayout mRlCustomPaper;
 
         PaperViewHolder(@NonNull View itemView) {
             super(itemView);
-            mDescription = itemView.findViewById(R.id.tvDescription);
-            mIcon = itemView.findViewById(R.id.imgIcon);
-            mNameFirm = itemView.findViewById(R.id.tvFirmName);
+            mTvDescription = itemView.findViewById(R.id.tvDescription);
+            mImgIcon = itemView.findViewById(R.id.imgIcon);
+            mTvNameFirm = itemView.findViewById(R.id.tvFirmName);
             mRlCustomPaper = itemView.findViewById(R.id.rlCustomPaper);
         }
 
         private void initData(Paper paper) {
-            mDescription.setText(paper.getmDescription());
-            mIcon.setImageResource(paper.getmIcon());
-            mNameFirm.setText(paper.getmNameFirm());
-            mRlCustomPaper.setBackgroundColor(Color.parseColor(paper.getmColor()));
+            mTvDescription.setText(paper.getDescription());
+            mImgIcon.setImageResource(paper.getIcon());
+            mTvNameFirm.setText(paper.getNameFirm());
+            mRlCustomPaper.setBackgroundColor(Color.parseColor(paper.getColor()));
         }
     }
 }
