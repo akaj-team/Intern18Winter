@@ -28,5 +28,4 @@ public class Paper {
     public String getColor() {
         return mColor;
     }
-
 }
