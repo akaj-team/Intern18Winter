@@ -18,7 +18,7 @@ import asiantech.internship.summer.model.Paper;
 public class PaperAdapter extends RecyclerView.Adapter<PaperAdapter.PaperViewHolder> {
     private List<Paper> mPapers;
 
-    public PaperAdapter(List<Paper> dataFirm) {
+    PaperAdapter(List<Paper> dataFirm) {
         this.mPapers = dataFirm;
     }
 
