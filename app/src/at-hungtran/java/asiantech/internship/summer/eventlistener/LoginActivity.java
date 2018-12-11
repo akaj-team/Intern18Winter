@@ -1,4 +1,4 @@
-package asiantech.internship.summer;
+package asiantech.internship.summer.eventlistener;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -13,6 +13,8 @@ import android.widget.EditText;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import asiantech.internship.summer.R;
 
 @SuppressLint("Registered")
 public class LoginActivity extends AppCompatActivity {
@@ -59,7 +61,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void checkUsernamePasswordandEmail() {
-        Button btnLogin = findViewById(R.id.btn);
+        Button btnLogin = findViewById(R.id.btnLogin);
 
         String username = mEdtUser.getText().toString();
         String password = mEdtPwd.getText().toString();
@@ -73,25 +75,25 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private boolean isValidUsername(String mUsername) {
+    private boolean isValidUsername(String userName) {
         mPattern = Pattern.compile(USERNAME_PATTERN);
-        mMatcher = mPattern.matcher(mUsername);
+        mMatcher = mPattern.matcher(userName);
 
         return mMatcher.matches();
 
     }
 
-    private boolean isValidPassword(String mPassword) {
+    private boolean isValidPassword(String password) {
         mPattern = Pattern.compile(PASSWORD_PATTERN);
-        mMatcher = mPattern.matcher(mPassword);
+        mMatcher = mPattern.matcher(password);
 
         return mMatcher.matches();
 
     }
 
-    private boolean isValidEmail(String mEmail) {
+    private boolean isValidEmail(String email) {
         mPattern = Pattern.compile(EMAIL_PATTERN);
-        mMatcher = mPattern.matcher(mEmail);
+        mMatcher = mPattern.matcher(email);
 
         return mMatcher.matches();
     }
