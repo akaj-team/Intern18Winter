@@ -16,7 +16,7 @@
         android:background="@drawable/border"
         android:hint="@string/email"
         android:paddingLeft="20dp"
-        android:textColor="#FFF"
+        android:textColor="@color/colorWhite"
         tools:ignore="Autofill,TextFields" />
 
     <EditText
@@ -29,7 +29,7 @@
         android:hint="@string/password"
         android:inputType="textPassword"
         android:paddingLeft="20dp"
-        android:textColor="#FFF"
+        android:textColor="@color/colorWhite"
         tools:ignore="Autofill,HardcodedText" />
 
     <Button
@@ -41,7 +41,7 @@
         android:background="@color/colorPrimary"
         android:text="@string/singup"
         android:textAllCaps="false"
-        android:textColor="#FFF"
+        android:textColor="@color/colorWhite"
         android:textSize="15dp"
         android:textStyle="italic" />
 
@@ -53,7 +53,7 @@
         android:layout_marginTop="50dp"
         android:background="@color/colorPrimary"
         android:text="@string/login"
-        android:textColor="#FFF"
+        android:textColor="@color/colorWhite"
         android:textSize="30dp" />
 
 </LinearLayout>

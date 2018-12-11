@@ -7,20 +7,20 @@
     tools:context="asiantech.internship.summer.SignUpFragment">
 
     <EditText
-        android:id="@+id/edtSUEmail"
+        android:id="@+id/edtEmail"
         android:layout_width="200dp"
         android:layout_height="50dp"
         android:layout_gravity="center"
         android:layout_marginTop="100dp"
+        android:autofillHints=""
         android:background="@drawable/border"
         android:hint="@string/email"
-        android:importantForAutofill="no"
         android:paddingLeft="20dp"
-        android:textColor="#FFF"
+        android:textColor="@color/colorWhite"
         tools:ignore="TextFields,UnusedAttribute" />
 
     <EditText
-        android:id="@+id/edtSUPwd"
+        android:id="@+id/edtPwd"
         android:layout_width="200dp"
         android:layout_height="50dp"
         android:layout_gravity="center"
@@ -29,11 +29,11 @@
         android:hint="@string/password"
         android:inputType="textPassword"
         android:paddingLeft="20dp"
-        android:textColor="#FFF"
+        android:textColor="@color/colorWhite"
         tools:ignore="Autofill" />
 
     <EditText
-        android:id="@+id/edtSURePwd"
+        android:id="@+id/edtRePwd"
         android:layout_width="200dp"
         android:layout_height="50dp"
         android:layout_gravity="center"
@@ -42,18 +42,18 @@
         android:hint="@string/confirm_password"
         android:inputType="textPassword"
         android:paddingLeft="20dp"
-        android:textColor="#FFF"
+        android:textColor="@color/colorWhite"
         tools:ignore="Autofill,TextFields" />
 
     <Button
-        android:id="@+id/btnSUSignUp"
+        android:id="@+id/btnSignUp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="50dp"
         android:background="@color/colorPrimary"
         android:text="@string/sign_up"
-        android:textColor="#FFF"
+        android:textColor="@color/colorWhite"
         android:textSize="30dp" />
 
 </LinearLayout>

@@ -9,4 +9,5 @@
     <string name="email">Email</string>
     <string name="singup">Singup?</string>
     <string name="password">Password</string>
+    <string name="please_check_email_password">Please check your email and password</string>
 </resources>

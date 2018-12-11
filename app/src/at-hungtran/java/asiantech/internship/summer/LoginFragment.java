@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,67 +15,69 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class LoginFragment extends Fragment {
+    private static final String KEY_EMAIL = "email";
+    private static final String KEY_PASS = "password";
+    private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+    private static final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-zA-Z]).{6,18}$";
+    Matcher mMatcher;
     private EditText mEdtEmail;
     private EditText mEdtPwd;
+    private Pattern mPattern;
+    private Button mBtnSignUp;
+    private Button mBtnLogin;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Log.d("xx", "onCreateView: ");
         View view = inflater.inflate(R.layout.fragment_login, container, false);
         initView(view);
+        onClickSignUp();
+        onClickLogin();
         return view;
     }
 
     private void initView(View view) {
-        Button btnSignUp = view.findViewById(R.id.btnSignUp);
-        Button mBtnLogin = view.findViewById(R.id.btnLogin);
+        mBtnSignUp = view.findViewById(R.id.btnSignUp);
+        mBtnLogin = view.findViewById(R.id.btnLogin);
         mEdtPwd = view.findViewById(R.id.edtPwd);
         mEdtEmail = view.findViewById(R.id.edtEmail);
-        btnSignUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ((LogActivity) getActivity()).replaceFragmemnt();
-            }
+    }
+
+    private void onClickSignUp() {
+        mBtnSignUp.setOnClickListener(view -> {
+            ((LogActivity) getActivity()).replaceFragment();
         });
-        mBtnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (checkEmailPassword()) {
-                    Intent i = new Intent(getActivity(), ViewActivity.class);
-                    i.putExtra("email", mEdtEmail.getText().toString());
-                    i.putExtra("password", mEdtPwd.getText().toString());
-                    startActivity(i);
-                } else {
-                    Toast.makeText(getActivity(), "Please check your email and password",
-                            Toast.LENGTH_SHORT).show();
-                }
+    }
+
+    private void onClickLogin() {
+        mBtnLogin.setOnClickListener(view -> {
+            if (checkEmailPassword()) {
+                Intent i = new Intent(getActivity(), InfomationActivity.class);
+                i.putExtra(KEY_EMAIL, mEdtEmail.getText().toString());
+                i.putExtra(KEY_PASS, mEdtPwd.getText().toString());
+                startActivity(i);
+            } else {
+                Toast.makeText(getActivity(), getString(R.string.please_check_email_password),
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private boolean checkEmailPassword() {
-        Button btnLogin = getView().findViewById(R.id.btnLogin);
         String mPassword = mEdtPwd.getText().toString();
         String mEmail = mEdtEmail.getText().toString();
         return isValidPassword(mPassword) && isValidEmail(mEmail);
     }
 
     private boolean isValidEmail(String mEmail) {
-        Pattern pattern;
-        Matcher matcher;
-        final String EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-        pattern = Pattern.compile(EMAIL_PATTERN);
-        matcher = pattern.matcher(mEmail);
-        return matcher.matches();
+        mPattern = Pattern.compile(EMAIL_PATTERN);
+        mMatcher = mPattern.matcher(mEmail);
+        return mMatcher.matches();
     }
 
     private boolean isValidPassword(String mPassword) {
-        Pattern pattern;
-        Matcher matcher;
-        final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-zA-Z]).{6,18}$";
-        pattern = Pattern.compile(PASSWORD_PATTERN);
-        matcher = pattern.matcher(mPassword);
-        return matcher.matches();
+        mPattern = Pattern.compile(PASSWORD_PATTERN);
+        mMatcher = mPattern.matcher(mPassword);
+        return mMatcher.matches();
     }
 }
