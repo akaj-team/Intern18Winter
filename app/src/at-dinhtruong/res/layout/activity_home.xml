@@ -14,5 +14,11 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:text="@string/view" />
+    <Button
+        android:id="@+id/btnEventAndListener"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="@string/eventAndListener" />
 
 </LinearLayout>

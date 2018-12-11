@@ -3,14 +3,17 @@
     <color name="colorPrimary">#a3a3a6</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="colorGray">#b9b8b8</color>
+    <color name="colorGray">#c6c4c4</color>
+    <color name="colorGrayWhile">#e2e1e1</color>
+    <color name="colorBlack">#080808</color>
+    <color name="colorGrayLight">#b9b8b8</color>
     <color name="colorGrayBlack">#9e9d9d</color>
     <color name="colorGrayWhite">#f4f2f2</color>
     <color name="colorButtonGreen">#1bd81e</color>
     <color name="colorButtonBlue">#1b86d8</color>
     <color name="colorBlue">#1b86d8</color>
     <color name="colorWhite">#ffffff</color>
-    <color name="colorBlack">#000000</color>
+    <color name="colorBlackLight">#000000</color>
     <color name="tabtextColor">#ffffff</color>
     <color name="tabindicatorColor">#000000</color>
 </resources>

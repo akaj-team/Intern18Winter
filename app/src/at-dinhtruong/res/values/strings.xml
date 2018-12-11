@@ -1,5 +1,16 @@
 <resources>
     <string name="app_name">Intern18Summer</string>
+    <string name="signUpActivity">SignUpActivity</string>
+    <string name="userName">Username</string>
+    <string name="passWord">Password</string>
+    <string name="email">Email</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="emailSubscriptions">Email subscriptions</string>
+    <string name="allowEmailFromOther">Allow email from other</string>
+    <string name="userFormatWrong">User Format Wrong!</string>
+    <string name="passWordFormatWrong">Password Format Wrong!</string>
+    <string name="emailAddressFormatWrong">Email Address Format Wrong!</string>
     <string name="actionSettings">Settings</string>
     <string name="sectionFormat">Hello World from section: %1$d</string>
     <string name="profile">Profile</string>
@@ -26,4 +37,5 @@
     <string name="nYTimes">NY Times</string>
     <string name="bBCWorld">BBC World</string>
     <string name="nBCNightly">NBC Nightly</string>
+    <string name="eventAndListener">Event And Listener</string>
 </resources>
