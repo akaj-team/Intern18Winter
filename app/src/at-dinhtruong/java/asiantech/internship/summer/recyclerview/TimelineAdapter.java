@@ -1,4 +1,4 @@
-package asiantech.internship.summer;
+package asiantech.internship.summer.recyclerview;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import asiantech.internship.summer.R;
 import asiantech.internship.summer.models.TimelineItem;
 
 public class TimelineAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
