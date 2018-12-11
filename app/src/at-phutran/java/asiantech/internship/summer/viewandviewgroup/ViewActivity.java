@@ -9,8 +9,8 @@ import android.widget.GridView;
 import java.util.ArrayList;
 import java.util.List;
 
-import asiantech.internship.summer.model.News;
 import asiantech.internship.summer.R;
+import asiantech.internship.summer.model.News;
 
 public class ViewActivity extends AppCompatActivity {
 

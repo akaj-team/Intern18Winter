@@ -1,35 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/llItem"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/llItem"
-    android:padding="8dp"
     android:gravity="center|bottom"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="8dp">
+
     <TextView
-        android:textStyle="bold"
-        android:fontFamily="cursive"
+        android:id="@+id/tvContent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="15sp"
-        android:id="@+id/tvContent"
+        android:fontFamily="cursive"
         android:gravity="center_vertical"
-        android:padding="10dp"/>
+        android:padding="10dp"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/circleImage"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:padding="5dp" />
+
         <TextView
             android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/colorBlue"/>
+            android:textColor="@color/colorBlue" />
     </LinearLayout>
 </LinearLayout>
