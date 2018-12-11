@@ -26,7 +26,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/bg_btn_login" />
-
     </LinearLayout>
 
     <ImageView
@@ -90,7 +89,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/female" />
-
     </RadioGroup>
 
     <LinearLayout
@@ -107,7 +105,6 @@
             android:text="@string/email_subscriptions" />
 
         <Switch
-            android:id="@+id/on_off_switch"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_weight="1"
@@ -130,7 +127,6 @@
             android:text="@string/allow_email_from_other" />
 
         <Switch
-            android:id="@+id/on_off_switch_1"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_weight="1"
