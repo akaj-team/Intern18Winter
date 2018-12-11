@@ -4,11 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="asiantech.internship.summer.RecyclerViewActivity">
+    tools:context="asiantech.internship.summer.RecyclerView.RecyclerViewActivity">
 
     <fragment
         android:id="@+id/details_fragment"
-        class="asiantech.internship.summer.RecyclerViewFragment"
+        class="asiantech.internship.summer.RecyclerView.RecyclerViewFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 </LinearLayout>

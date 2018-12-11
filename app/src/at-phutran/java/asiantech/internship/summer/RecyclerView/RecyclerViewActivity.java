@@ -1,7 +1,9 @@
-package asiantech.internship.summer;
+package asiantech.internship.summer.RecyclerView;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+
+import asiantech.internship.summer.R;
 
 public class RecyclerViewActivity extends AppCompatActivity {
     @Override
