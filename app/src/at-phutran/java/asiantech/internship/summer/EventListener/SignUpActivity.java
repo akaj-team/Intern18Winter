@@ -1,4 +1,4 @@
-package asiantech.internship.summer;
+package asiantech.internship.summer.EventListener;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -12,11 +12,13 @@ import android.widget.EditText;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import asiantech.internship.summer.R;
+
 public class SignUpActivity extends AppCompatActivity {
     private static final int NUMBER_ZERO_IN_DECIMARL = 48;
     private static final int NUMBER_NINE_IN_DECIMARL = 57;
     private static final int LENGHT_MIN = 6;
-    private static String mEmailPattern = "^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4})(\\]?)$";
+    private static final String EMAIL_PATTERN = "^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4})(\\]?)$";
     private int mCheck = 0;
     private boolean mCheckUser;
     private boolean mCheckPass;
@@ -28,7 +30,7 @@ public class SignUpActivity extends AppCompatActivity {
     private Button mBtnCheck;
 
     private static boolean isValidEmail(String email) {
-        Pattern patternEmail = Pattern.compile(mEmailPattern);
+        Pattern patternEmail = Pattern.compile(EMAIL_PATTERN);
         Matcher matcherEmail = patternEmail.matcher(email);
         return matcherEmail.matches();
     }
