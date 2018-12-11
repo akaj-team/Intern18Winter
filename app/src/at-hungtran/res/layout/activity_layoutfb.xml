@@ -16,7 +16,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
                 android:scaleType="centerCrop"
-                android:src="@mipmap/bg_header" />
+                android:src="@drawable/bg_header" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -24,21 +24,22 @@
                 android:orientation="vertical">
 
                 <LinearLayout
+                    android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_marginTop="12dp">
 
                     <ImageView
-                        android:layout_width="0dp"
-                        android:layout_height="25dp"
-                        android:layout_marginLeft="15dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
                         android:layout_weight="1"
                         android:contentDescription="@string/todo"
-                        android:src="@mipmap/ic_pasted" />
+                        android:src="@drawable/ic_pasted" />
 
                     <TextView
                         android:layout_width="0dp"
-                        android:layout_height="25dp"
+                        android:layout_height="wrap_content"
                         android:layout_weight="7"
                         android:contentDescription="@string/todo"
                         android:gravity="center"
@@ -47,12 +48,12 @@
                         android:textSize="20sp" />
 
                     <ImageView
-                        android:layout_width="0dp"
-                        android:layout_height="25dp"
-                        android:layout_marginRight="15dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
                         android:layout_weight="1"
                         android:contentDescription="@string/todo"
-                        android:src="@mipmap/ic_dot" />
+                        android:src="@drawable/ic_dot" />
                 </LinearLayout>
 
                 <View
@@ -79,13 +80,13 @@
                     android:paddingTop="5dp"
                     android:paddingRight="10dp"
                     android:paddingBottom="5dp"
-                    android:src="@mipmap/ic_check" />
+                    android:src="@drawable/ic_check" />
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:layout_width="0dp"
                     android:layout_height="100dp"
                     android:layout_weight="6"
-                    android:src="@mipmap/img_avatar" />
+                    android:src="@drawable/img_avatar" />
 
                 <ImageView
                     android:layout_width="0dp"
@@ -100,7 +101,7 @@
                     android:paddingTop="5dp"
                     android:paddingRight="10dp"
                     android:paddingBottom="5dp"
-                    android:src="@mipmap/ic_dot1" />
+                    android:src="@drawable/ic_dot1" />
             </LinearLayout>
         </FrameLayout>
 
@@ -121,7 +122,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/pin"
+                android:drawableLeft="@drawable/ic_pin"
                 android:drawablePadding="10dp"
                 android:text="@string/slovakia" />
         </LinearLayout>
@@ -164,6 +165,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="bottom"
             android:orientation="horizontal">
 
             <View
@@ -210,7 +212,7 @@
                 android:layout_weight="1"
                 android:contentDescription="@string/todo"
                 android:gravity="center"
-                android:src="@mipmap/ic_loadding" />
+                android:src="@drawable/ic_loadding" />
 
             <TextView
                 android:layout_width="0dp"
