@@ -11,62 +11,62 @@ public class TimelineItem {
     private String mImage;
     private String mDescription;
 
-    public int getmCountLike() {
+    public int getCountLike() {
         return mCountLike;
     }
 
-    public void setmCountLike(int mCountLike) {
-        this.mCountLike = mCountLike;
+    public void setCountLike(int countLike) {
+        this.mCountLike = countLike;
     }
 
-    public String getmAvatar() {
+    public String getAvatar() {
         return mAvatar;
     }
 
-    public void setmAvatar(String mAvatar) {
-        this.mAvatar = mAvatar;
+    public void setAvatar(String avatar) {
+        this.mAvatar = avatar;
     }
 
-    public String getmName() {
+    public String getName() {
         return mName;
     }
 
-    public void setmName(String mName) {
-        this.mName = mName;
+    public void setName(String name) {
+        this.mName = name;
     }
 
-    public String getmImage() {
+    public String getImage() {
         return mImage;
     }
 
-    public void setmImage(String mImage) {
-        this.mImage = mImage;
+    public void setImage(String image) {
+        this.mImage = image;
     }
 
-    public String getmDescription() {
+    public String getDescription() {
         return mDescription;
     }
 
-    public void setmDescription(String mDescription) {
-        this.mDescription = mDescription;
+    public void setDescription(String description) {
+        this.mDescription = description;
     }
 
-    public TimelineItem(int mCountLike, String mAvatar, String mName, String mImage, String mDescription) {
-        this.mCountLike = mCountLike;
-        this.mAvatar = mAvatar;
-        this.mName = mName;
-        this.mImage = mImage;
-        this.mDescription = mDescription;
+    public TimelineItem(int countLike, String avatar, String name, String image, String description) {
+        this.mCountLike = countLike;
+        this.mAvatar = avatar;
+        this.mName = name;
+        this.mImage = image;
+        this.mDescription = description;
     }
 
     public static List<TimelineItem> createTimelines() {
         Random random = new Random();
-        List<TimelineItem> timeLines = new ArrayList<>();
+        List<TimelineItem> timelineItems = new ArrayList<>();
         for (int i = 1; i < 11; i++) {
-            int mRandomAvatar = random.nextInt(10) + 1;
-            int mRandomImage = random.nextInt(10) + 1;
-            timeLines.add(new TimelineItem(0, "img_avatar" + mRandomAvatar, "Nguyen Van " + i, "img_image" + mRandomImage, " Đây là tất cả phần mô tả cho nội dung thứ " + i));
+            int randomAvatar = random.nextInt(10) + 1;
+            int randomImage = random.nextInt(10) + 1;
+            timelineItems.add(new TimelineItem(0, "img_avatar" + randomAvatar, "Nguyen Van " + i, "img_image" + randomImage, " Đây là tất cả phần mô tả cho nội dung thứ " + i));
         }
-        return timeLines;
+        return timelineItems;
     }
 }

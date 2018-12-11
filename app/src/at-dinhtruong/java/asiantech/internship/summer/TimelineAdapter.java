@@ -3,7 +3,6 @@ package asiantech.internship.summer;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -12,22 +11,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import java.util.List;
-
 import asiantech.internship.summer.models.TimelineItem;
 
 public class TimelineAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private List<TimelineItem> timelines;
+    private static final int VIEW_TYPE_ITEM = 0;
+    private static final int VIEW_TYPE_LOADING = 1;
+    private List<TimelineItem> timeLines;
     private Context mContext;
-    private final int VIEW_TYPE_ITEM = 0;
-    private final int VIEW_TYPE_LOADING = 1;
-    private OnLoadMoreListener onLoadMoreListener;
     private boolean isLoading;
-    private int mChildCount;
-    private int mTotalItemCount;
-    private int mFirstVisible;
-    private String mCountLike;
+    private onClickItem mOnClickItem;
 
     private class ViewHolderLoading extends RecyclerView.ViewHolder {
         private ProgressBar progressBar;
@@ -59,30 +52,18 @@ public class TimelineAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public int getItemCount() {
-        return isLoading ? timelines.size() + 1 : timelines.size();
+        return isLoading ? timeLines.size() + 1 : timeLines.size();
     }
 
     @Override
     public int getItemViewType(int position) {
-        return position == timelines.size() ? VIEW_TYPE_LOADING : VIEW_TYPE_ITEM;
+        return position == timeLines.size() ? VIEW_TYPE_LOADING : VIEW_TYPE_ITEM;
     }
 
-    TimelineAdapter(Context context, List<TimelineItem> timelines, RecyclerView recyclerView) {
-        this.timelines = timelines;
+    TimelineAdapter(Context context, List<TimelineItem> timeLines, onClickItem onClickItem) {
+        this.timeLines = timeLines;
         this.mContext = context;
-        final LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                mTotalItemCount = linearLayoutManager.getItemCount();
-                mChildCount = linearLayoutManager.getChildCount();
-                mFirstVisible = linearLayoutManager.findFirstVisibleItemPosition();
-                if (mFirstVisible + mChildCount == mTotalItemCount) {
-                    onLoadMoreListener.onLoadMore();
-                }
-            }
-        });
+        this.mOnClickItem = onClickItem;
     }
 
     @NonNull
@@ -92,44 +73,37 @@ public class TimelineAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         if (viewType == VIEW_TYPE_ITEM) {
             View itView = layoutInflater.inflate(R.layout.fragment_recycler_view_pager, viewGroup, false);
             return new TimelineViewHolder(itView);
-        } else if (viewType == VIEW_TYPE_LOADING) {
-            View itView = layoutInflater.inflate(R.layout.item_progressbar, viewGroup, false);
-            return new ViewHolderLoading(itView);
         }
-        return null;
+        View itView = layoutInflater.inflate(R.layout.item_progressbar, viewGroup, false);
+        return new ViewHolderLoading(itView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof TimelineViewHolder) {
-            TimelineItem timelineItem = timelines.get(position);
+            TimelineItem timeLineItem = timeLines.get(position);
             TimelineViewHolder timelineViewHolder = (TimelineViewHolder) holder;
             Drawable drawableAvatar = mContext.getResources().getDrawable(mContext.getResources()
-                    .getIdentifier(timelineItem.getmAvatar(), "drawable", mContext.getPackageName()));
+                    .getIdentifier(timeLineItem.getAvatar(), "drawable", mContext.getPackageName()));
             Drawable drawableImage = mContext.getResources().getDrawable(mContext.getResources()
-                    .getIdentifier(timelineItem.getmImage(), "drawable", mContext.getPackageName()));
+                    .getIdentifier(timeLineItem.getImage(), "drawable", mContext.getPackageName()));
             timelineViewHolder.mAvatar.setImageDrawable(drawableAvatar);
             timelineViewHolder.mImage.setImageDrawable(drawableImage);
-            timelineViewHolder.mName.setText(timelineItem.getmName());
-            if (timelineItem.getmCountLike() == 0) {
+            timelineViewHolder.mName.setText(timeLineItem.getName());
+            String mCountLike;
+            if (timeLineItem.getCountLike() == 0) {
                 timelineViewHolder.mCountLike.setText("");
-            } else if (timelineItem.getmCountLike() == 1) {
-                mCountLike = timelineItem.getmCountLike() + mContext.getString(R.string.like);
+            } else if (timeLineItem.getCountLike() == 1) {
+                mCountLike = " " + timeLineItem.getCountLike() + " " +mContext.getString(R.string.like);
                 timelineViewHolder.mCountLike.setText(mCountLike);
             } else {
-                mCountLike = timelineItem.getmCountLike() + mContext.getString(R.string.likes);
+                mCountLike = " " +timeLineItem.getCountLike() + " " +  mContext.getString(R.string.likes);
                 timelineViewHolder.mCountLike.setText(mCountLike);
             }
-            timelineViewHolder.mDescription.setText(Html.fromHtml("<b>" + timelineItem.getmName() + "</b>" + "  " + timelineItem.getmDescription()));
+            timelineViewHolder.mDescription.setText(Html.fromHtml("<b>" + timeLineItem.getName() + "</b>" + "  " + timeLineItem.getDescription()));
             timelineViewHolder.mFavourite.setOnClickListener(view -> {
-                timelineItem.setmCountLike(timelineItem.getmCountLike() + 1);
-                if (timelineItem.getmCountLike() < 2) {
-                    mCountLike = timelineItem.getmCountLike() + mContext.getString(R.string.like);
-                    timelineViewHolder.mCountLike.setText(mCountLike);
-                } else {
-                    mCountLike = timelineItem.getmCountLike() + mContext.getString(R.string.likes);
-                    timelineViewHolder.mCountLike.setText(mCountLike);
-                }
+                mOnClickItem.onSelectItem(position);
+                notifyDataSetChanged();
             });
 
         } else if (holder instanceof ViewHolderLoading) {
@@ -138,29 +112,25 @@ public class TimelineAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
     }
 
-    public void setOnLoadMoreListener(OnLoadMoreListener mOnLoadMoreListener) {
-        this.onLoadMoreListener = mOnLoadMoreListener;
-    }
-
-    public void setLoaded(Boolean value) {
+    void setLoaded(Boolean value) {
         isLoading = value;
     }
-
-    public interface OnLoadMoreListener {
-        void onLoadMore();
-    }
-
     public void add(int position, TimelineItem timelineItem) {
-        timelines.add(position, timelineItem);
+        timeLines.add(position, timelineItem);
         notifyItemInserted(position);
     }
-    public void clear() {
-        timelines.clear();
+
+    void clear() {
+        timeLines.clear();
         notifyDataSetChanged();
     }
 
-    public void addAll(List<TimelineItem> list) {
-        timelines.addAll(list);
+    void addAll(List<TimelineItem> list) {
+        timeLines.addAll(list);
         notifyDataSetChanged();
+    }
+
+    public interface onClickItem {
+        void onSelectItem(int position);
     }
 }

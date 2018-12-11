@@ -17,8 +17,13 @@ import java.util.Random;
 
 import asiantech.internship.summer.models.TimelineItem;
 
-public class PagerFragment extends Fragment {
-    private boolean mIsLoadmore = false;
+
+public class PagerFragment extends Fragment implements TimelineAdapter.onClickItem {
+    private boolean mIsLoadmore = true;
+    private List<TimelineItem> timelineItems;
+    private int mTotalItemCount;
+    private int mChildCount;
+    private int mFirstVisible;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,37 +43,28 @@ public class PagerFragment extends Fragment {
         mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(linearLayoutManager);
-        List<TimelineItem> timelineItems = TimelineItem.createTimelines();
-        TimelineAdapter timelineAdapter = new TimelineAdapter(getActivity(), timelineItems, mRecyclerView);
+        timelineItems = TimelineItem.createTimelines();
+        TimelineAdapter timelineAdapter = new TimelineAdapter(getActivity(), timelineItems, this);
         mRecyclerView.setAdapter(timelineAdapter);
-        timelineAdapter.setOnLoadMoreListener(() -> {
-            if (mIsLoadmore) {
-                return;
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
             }
-            mIsLoadmore = true;
-            timelineAdapter.setLoaded(true);
-            timelineAdapter.notifyDataSetChanged();
-            new Thread(() -> {
-                try {
-                    Thread.sleep(3000);
-                    int mIndex = timelineItems.size() + 1;
-                    int mEnd = mIndex + 10;
-                    Random random = new Random();
-                    for (int i = mIndex; i < mEnd; i++) {
-                        int mRandomAvatar = random.nextInt(10) + 1;
-                        int mRandomImage = random.nextInt(10) + 1;
-                        timelineItems.add(new TimelineItem(0, "img_avatar" + mRandomAvatar, "Nguyen Van " + i, "img_image" + mRandomImage, "Noi dung thu " + i));
-                    }
-                    new Handler(Looper.getMainLooper()).post(() -> {
-                        mIsLoadmore = false;
-                        timelineAdapter.setLoaded(false);
-                        timelineAdapter.notifyDataSetChanged();
-                    });
-                } catch (InterruptedException ignored) {
 
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                mTotalItemCount = linearLayoutManager.getItemCount();
+                mChildCount = linearLayoutManager.getChildCount();
+                mFirstVisible = linearLayoutManager.findFirstVisibleItemPosition();
+                if (mFirstVisible + mChildCount == mTotalItemCount && mIsLoadmore) {
+                    mIsLoadmore = false;
+                    timelineAdapter.setLoaded(true);
+                    timelineAdapter.notifyDataSetChanged();
+                    addItemLoadmore(timelineAdapter);
                 }
-            }) {
-            }.start();
+            }
         });
         SwipeRefreshLayout swipeContainer = view.findViewById(R.id.swipeContainer);
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -83,5 +79,35 @@ public class PagerFragment extends Fragment {
                 swipeContainer.setRefreshing(false);
             }
         });
+    }
+
+    private void addItemLoadmore(TimelineAdapter timelineAdapter) {
+        new Thread(() -> {
+            try {
+                Thread.sleep(3000);
+                int mIndex = timelineItems.size() + 1;
+                int mEnd = mIndex + 10;
+                Random random = new Random();
+                for (int i = mIndex; i < mEnd; i++) {
+                    int randomAvatar = random.nextInt(10) + 1;
+                    int randomImage = random.nextInt(10) + 1;
+                    timelineItems.add(new TimelineItem(0, "img_avatar" + randomAvatar, "Nguyen Van " + i, "img_image" + randomImage, "Noi dung thu " + i));
+                }
+                new Handler(Looper.getMainLooper()).post(() -> {
+                    mIsLoadmore = true;
+                    timelineAdapter.setLoaded(false);
+                    timelineAdapter.notifyDataSetChanged();
+                });
+            } catch (InterruptedException ignored) {
+
+            }
+        }) {
+        }.start();
+    }
+
+    @Override
+    public void onSelectItem(int position) {
+        TimelineItem timelineItem = timelineItems.get(position);
+        timelineItem.setCountLike(timelineItem.getCountLike() + 1);
     }
 }
