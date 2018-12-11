@@ -6,20 +6,20 @@ import android.widget.GridView;
 
 public class ViewActivity extends AppCompatActivity {
     String[] title = {
-            "A City Living Under The Shadow",
-            "One Problem for Democratic Leaders",
-            "The Golden Secret to Better Breakfast",
-            "How to Plan Your First Ski Vacation",
-            "How Social Isolation Is Killing Us",
-            "Use Labels to Sort Messages in Facebook"
+            String.valueOf(R.string.title1),
+            String.valueOf(R.string.title2),
+            String.valueOf(R.string.title3),
+            String.valueOf(R.string.title4),
+            String.valueOf(R.string.title5),
+            String.valueOf(R.string.title6),
     };
     String[] poster = {
-            "RBC News",
-            "NY Times",
-            "BBC World",
-            "NBC Nightly",
-            "RBC News",
-            "BBC World"
+            String.valueOf(R.string.publisher1),
+            String.valueOf(R.string.publisher2),
+            String.valueOf(R.string.publisher3),
+            String.valueOf(R.string.publisher4),
+            String.valueOf(R.string.publisher1),
+            String.valueOf(R.string.publisher3),
     };
     int[] iconPublisher = {
             R.drawable.ic_rbc_news_1,
