@@ -21,27 +21,15 @@ public class Data {
         this.mTitle = title;
     }
 
-    public void setImageIcon(int imageIcon) {
-        this.mImageIcon = imageIcon;
-    }
-
-    public void setPoster(String poster) {
-        this.mPoster = poster;
-    }
-
     public String getColor() {
         return mColor;
     }
 
-    public void setColor(String color) {
-        this.mColor = color;
-    }
-
-    public int getmImageIcon() {
+    public int getImageIcon() {
         return mImageIcon;
     }
 
-    public String getmPoster() {
+    public String getPoster() {
         return mPoster;
     }
 }

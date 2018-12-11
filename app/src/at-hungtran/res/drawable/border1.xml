@@ -3,9 +3,9 @@
     android:shape="rectangle">
 
     <!-- Set background-->
-    <solid android:color="#1659df"></solid>
+    <solid android:color="#1659df"/>
 
     <!-- And this is the radius of the circle at the four corners -->
-    <corners android:radius="10dp"></corners>
+    <corners android:radius="10dp"/>
     
 </shape>

@@ -34,8 +34,8 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
     public void onBindViewHolder(@NonNull NewsViewHolder holder, int position) {
         holder.mLinearLayout.setBackgroundColor(Color.parseColor(mData.get(position).getColor()));
         holder.mTvTitle.setText(mData.get(position).getTitle());
-        holder.mImgIcon.setImageResource(mData.get(position).getmImageIcon());
-        holder.mTvPoster.setText(mData.get(position).getmPoster());
+        holder.mImgIcon.setImageResource(mData.get(position).getImageIcon());
+        holder.mTvPoster.setText(mData.get(position).getPoster());
     }
 
     @Override
