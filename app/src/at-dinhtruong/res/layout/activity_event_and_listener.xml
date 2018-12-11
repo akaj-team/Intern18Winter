@@ -55,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/userName"
                 android:inputType="text"
-                android:autofillHints="" />
+                android:autofillHints="@string/userName" />
 
             <EditText
                 android:id="@+id/edtPassword"
