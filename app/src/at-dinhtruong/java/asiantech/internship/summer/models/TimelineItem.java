@@ -23,10 +23,6 @@ public class TimelineItem {
         return mAvatar;
     }
 
-    public void setAvatar(String avatar) {
-        this.mAvatar = avatar;
-    }
-
     public String getName() {
         return mName;
     }
