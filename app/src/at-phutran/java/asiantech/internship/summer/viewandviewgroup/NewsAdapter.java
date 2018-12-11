@@ -1,4 +1,4 @@
-package asiantech.internship.summer.ViewAndGroupView;
+package asiantech.internship.summer.viewandviewgroup;
 
 import android.content.Context;
 import android.view.LayoutInflater;

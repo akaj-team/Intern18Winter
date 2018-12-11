@@ -9,9 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ViewAndGroupView.ViewActivity"
+        <activity android:name=".viewandviewgroup.ViewActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
-        <activity android:name=".ViewAndGroupView.ListActivity">
+        <activity android:name=".viewandviewgroup.ListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
