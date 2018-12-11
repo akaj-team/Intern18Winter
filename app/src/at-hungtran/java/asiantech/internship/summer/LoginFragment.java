@@ -44,9 +44,7 @@ public class LoginFragment extends Fragment {
     }
 
     private void onClickSignUp() {
-        mBtnSignUp.setOnClickListener(view -> {
-            ((LogActivity) getActivity()).replaceFragment();
-        });
+        mBtnSignUp.setOnClickListener(view -> ((LoginActivity) getActivity()).replaceFragment());
     }
 
     private void onClickLogin() {
@@ -57,7 +55,7 @@ public class LoginFragment extends Fragment {
                 i.putExtra(KEY_PASS, mEdtPwd.getText().toString());
                 startActivity(i);
             } else {
-                Toast.makeText(getActivity(), getString(R.string.please_check_email_password),
+                Toast.makeText(getActivity(), getString(R.string.pleasecheckemailpassword),
                         Toast.LENGTH_SHORT).show();
             }
         });

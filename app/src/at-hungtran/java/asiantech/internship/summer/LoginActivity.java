@@ -9,14 +9,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class LogActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
     private Button mBtnBack;
     private TextView mTvToolBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_log);
+        setContentView(R.layout.activity_login);
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.frContainer, new LoginFragment());
         fragmentTransaction.commit();
@@ -32,7 +32,7 @@ public class LogActivity extends AppCompatActivity {
         fragmentTransaction.setCustomAnimations(R.anim.anim_right_to_left,
                 R.anim.slide_out_left, R.anim.anim_left_to_right,
                 R.anim.slide_out_right);
-        setTextForToolBar(getString(R.string.sign_up));
+        setTextForToolBar(getString(R.string.signup));
         mBtnBack.setVisibility(View.VISIBLE);
         fragmentTransaction.replace(R.id.frContainer, new SignUpFragment());
         fragmentTransaction.addToBackStack(null);
@@ -49,9 +49,7 @@ public class LogActivity extends AppCompatActivity {
     }
 
     public void backFragment() {
-        mBtnBack.setOnClickListener(view -> {
-            onBackPressed();
-        });
+        mBtnBack.setOnClickListener(view -> onBackPressed());
     }
 
     @Override
@@ -59,10 +57,10 @@ public class LogActivity extends AppCompatActivity {
         super.onBackPressed();
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.frContainer);
         if (fragment instanceof LoginFragment) {
-            setTextForToolBar("LOGIN");
+            setTextForToolBar(getString(R.string.loginuppercase));
             mBtnBack.setVisibility(View.GONE);
         } else {
-            setTextForToolBar("SIGN UP");
+            setTextForToolBar(getString(R.string.signup));
             mBtnBack.setVisibility(View.VISIBLE);
         }
     }
