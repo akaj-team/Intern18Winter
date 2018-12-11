@@ -8,26 +8,26 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import java.util.ArrayList;
+
 import java.util.List;
 
 import asiantech.internship.summer.Model.User;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHoder> {
-    private String mLikes = "likes";
-    private String mLike = "like";
     private List<User> mListUsers;
+    private OnclickLike mOnclickLike;
     private Context mContext;
 
-    public RecyclerViewAdapter(List<User> mListUsers, Context mContext) {
+    public RecyclerViewAdapter(List<User> mListUsers, Context mContext, OnclickLike mOnclickLike) {
         this.mListUsers = mListUsers;
         this.mContext = mContext;
+        this.mOnclickLike = mOnclickLike;
     }
 
     @Override
     public ViewHoder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View view = layoutInflater.inflate(R.layout.item_row, parent,false);
+        View view = layoutInflater.inflate(R.layout.item_row, parent, false);
         return new ViewHoder(view);
     }
 
@@ -36,15 +36,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.mImageViewUser.setImageResource(mListUsers.get(position).getAvatar());
         holder.mUsername.setText(mListUsers.get(position).getUsername());
         holder.mImageCook.setImageResource(mListUsers.get(position).getImage());
-        holder.mButton.setOnClickListener(view -> {
-            mListUsers.get(position).setCountLike(mListUsers.get(position).getCountLike() + 1);
-            if(mListUsers.get(position).getCountLike() == 1){
-                holder.mCountLikes.setText(mListUsers.get(position).getCountLike() + " " + mLike);
-            }else{
-                holder.mCountLikes.setText(mListUsers.get(position).getCountLike() + " " + mLikes);
-            }
-
-        });
+        handleEvent(holder, position);
         holder.mUserComment.setText(mListUsers.get(position).getUsername());
         holder.mComment.setText(mListUsers.get(position).getComment());
     }
@@ -54,7 +46,17 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return mListUsers.size();
     }
 
-    public class ViewHoder extends RecyclerView.ViewHolder{
+    private void handleEvent(ViewHoder holder, int position) {
+        holder.mButton.setOnClickListener(view -> {
+            mOnclickLike.sumCountLike(position, holder.mCountLikes);
+        });
+    }
+
+    public interface OnclickLike {
+        void sumCountLike(int position, TextView mCountLikes);
+    }
+
+    public class ViewHoder extends RecyclerView.ViewHolder {
         private Button mButton;
         private ImageView mImageViewUser;
         private TextView mUsername;
@@ -62,6 +64,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         private TextView mCountLikes;
         private TextView mComment;
         private ImageView mImageCook;
+
         public ViewHoder(View itemView) {
             super(itemView);
             mButton = itemView.findViewById(R.id.btnLike);

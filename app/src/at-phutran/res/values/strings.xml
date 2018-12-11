@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Intern18Summer</string>
-    <string name="username">Trần Thị</string>
-    <string name="comment">nhìn đói quá</string>
+    <string name="username">Trần Thị Thanh</string>
+    <string name="comment">Xinh quá đi</string>
+    <string name="like">like</string>
+    <string name="likes">likes</string>
 </resources>

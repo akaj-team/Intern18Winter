@@ -10,12 +10,11 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,48 +22,45 @@ import java.util.Random;
 
 import asiantech.internship.summer.Model.User;
 
-public class RecyclerViewFragment extends Fragment {
-    RecyclerView recyclerView;
-    View view;
+public class RecyclerViewFragment extends Fragment implements RecyclerViewAdapter.OnclickLike {
+    private static final int SUMLIKE = 0;
+    private static final int SUMITEM = 10;
+    private RecyclerView mRecyclerView;
+    private View mView;
     private Boolean isScroll = true;
     private ProgressBar mLoading;
-    private int mCurrentItems, mTotalItems;
-    private int mScrollOutItems;
+    private int mCurrentItems, mTotalItems, mScrollOutItems;;
     private int mRandom, mImage;
-    private int mLikeSum = 0;
-    private int mSumItem = 10;
-    private String mUsername = "Trần Thị Thanh ";
-    private String mComment = "Xinh quá đi";
     private List<User> users;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_recycler_view, container, false);
-        mLoading = view.findViewById(R.id.progressBar);
+        mView = inflater.inflate(R.layout.fragment_recycler_view, container, false);
+        mLoading = mView.findViewById(R.id.progressBar);
         initView();
-        return view;
+        return mView;
     }
 
     public void initView() {
-        recyclerView = view.findViewById(R.id.recyclerView);
-        recyclerView.setHasFixedSize(true);
+        mRecyclerView = mView.findViewById(R.id.recyclerView);
+        mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
-        recyclerView.setLayoutManager(linearLayoutManager);
+        mRecyclerView.setLayoutManager(linearLayoutManager);
         //line
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mRecyclerView.getContext(), DividerItemDecoration.VERTICAL);
         Drawable drawable = ContextCompat.getDrawable(((RecyclerViewActivity) getActivity()).getApplicationContext(), R.drawable.custom_divider);
         dividerItemDecoration.setDrawable(drawable);
-        recyclerView.addItemDecoration(dividerItemDecoration);
+        mRecyclerView.addItemDecoration(dividerItemDecoration);
         //listUser
         users = new ArrayList<>();
-        for (int i = 0; i < mSumItem; i++) {
-            users.add(new User(mUsername + (i + 1), R.drawable.img_avt2, inputRandomImage(), mLikeSum, mComment));
+        for (int i = 0; i < SUMITEM; i++) {
+            users.add(new User(getString(R.string.username) + (i + 1), R.drawable.img_avt2, inputRandomImage(), SUMLIKE, getString(R.string.comment)));
         }
-        RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(users, ((RecyclerViewActivity) getActivity()).getApplicationContext());
-        recyclerView.setAdapter(recyclerViewAdapter);
+        RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(users, ((RecyclerViewActivity) getActivity()).getApplicationContext(), this);
+        mRecyclerView.setAdapter(recyclerViewAdapter);
 
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
@@ -79,11 +75,7 @@ public class RecyclerViewFragment extends Fragment {
                 if (isScroll && (mScrollOutItems + mCurrentItems == mTotalItems)) {
                     isScroll = false;
                     addDataMore();
-                    Log.i("xxxxx", "onScrolled: " + users.size());
                 }
-                Log.i("xxxxx", "mCurrentItems: " + mCurrentItems);
-                Log.i("xxxxx", "mScrollOutItems: " + mScrollOutItems);
-                Log.i("xxxxx", "mTotalItems: " + mTotalItems);
             }
         });
 
@@ -131,19 +123,29 @@ public class RecyclerViewFragment extends Fragment {
         new Thread(() -> {
             try {
                 Thread.sleep(1500);
-                for (int i = mTotalItems; i < mTotalItems + mSumItem; i++) {
-                    users.add(new User(mUsername + (i + 1), R.drawable.img_avt2, inputRandomImage(), mLikeSum, mComment));
+                for (int i = mTotalItems; i < mTotalItems + SUMITEM; i++) {
+                    users.add(new User(getString(R.string.username) + (i + 1), R.drawable.img_avt2, inputRandomImage(), SUMLIKE, getString(R.string.comment)));
                 }
                 new Handler(Looper.getMainLooper()).post(new Runnable() {
                     @Override
                     public void run() {
                         isScroll = true;
                         mLoading.setVisibility(View.GONE);
-                        recyclerView.getAdapter().notifyDataSetChanged();
+                        mRecyclerView.getAdapter().notifyDataSetChanged();
                     }
                 });
             } catch (InterruptedException ex) {
             }
         }).start();
+    }
+
+    @Override
+    public void sumCountLike(int position, TextView textViewCountLike) {
+        users.get(position).setCountLike(users.get(position).getCountLike() + 1);
+        if (users.get(position).getCountLike() == 1) {
+            textViewCountLike.setText(users.get(position).getCountLike() + getString(R.string.like));
+        } else {
+            textViewCountLike.setText(users.get(position).getCountLike() + getString(R.string.likes));
+        }
     }
 }
