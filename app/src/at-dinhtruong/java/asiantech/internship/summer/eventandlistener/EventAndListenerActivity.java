@@ -1,4 +1,4 @@
-package asiantech.internship.summer;
+package asiantech.internship.summer.eventandlistener;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,6 +12,8 @@ import android.widget.RadioButton;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import asiantech.internship.summer.R;
 
 public class EventAndListenerActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener {
     private static final String EMAIL_PATTERN = "^([a-zA-Z0-9_\\-.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(]?)$";
@@ -62,27 +64,21 @@ public class EventAndListenerActivity extends AppCompatActivity implements Compo
         }
     };
 
-    private boolean isValidUsername(String mUsername) {
-        Pattern patternUsername;
-        Matcher matcherUsername;
-        patternUsername = Pattern.compile(USERNAME_PATTERN);
-        matcherUsername = patternUsername.matcher(mUsername);
+    private boolean isValidUsername(String userName) {
+        Pattern patternUsername = Pattern.compile(USERNAME_PATTERN);
+        Matcher matcherUsername = patternUsername.matcher(userName);
         return matcherUsername.matches();
     }
 
     private boolean isValidPassword(String passWord) {
-        Pattern patternPassword;
-        Matcher matchePasswordr;
-        patternPassword = Pattern.compile(PASSWORD_PATTERN);
-        matchePasswordr = patternPassword.matcher(passWord);
-        return matchePasswordr.matches();
+        Pattern patternPassword = Pattern.compile(PASSWORD_PATTERN);
+        Matcher matchePassword = patternPassword.matcher(passWord);
+        return matchePassword.matches();
     }
 
     private boolean isValidEmail(String email) {
-        Pattern patternEmail;
-        Matcher matcherEmail;
-        patternEmail = Pattern.compile(EMAIL_PATTERN);
-        matcherEmail = patternEmail.matcher(email);
+        Pattern patternEmail = Pattern.compile(EMAIL_PATTERN);
+        Matcher matcherEmail = patternEmail.matcher(email);
         return matcherEmail.matches();
     }
 

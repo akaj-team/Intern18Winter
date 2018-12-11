@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorGrayWhile"
     android:orientation="vertical"
-    tools:context="asiantech.internship.summer.EventAndListenerActivity"
+    tools:context="asiantech.internship.summer.eventandlistener.EventAndListenerActivity"
     tools:ignore="MissingDefaultResource">
 
     <android.support.v7.widget.ActionMenuView
