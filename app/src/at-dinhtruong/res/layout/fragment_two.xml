@@ -1,0 +1,51 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:gravity="center">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/edtInternal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Internal"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btnInternal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Internal" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/edtExternal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="External"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btnExternal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="External" />
+    </LinearLayout>
+
+
+</LinearLayout>
