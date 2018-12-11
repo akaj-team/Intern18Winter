@@ -9,23 +9,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class GridAdapter extends BaseAdapter {
-    private final String[] mTitle;
-    private final String[] mPoster;
-    private final int[] mIcons;
-    private Context mContext;
-    private View mView;
-    private LayoutInflater mLayoutInflater;
+    private String[] mTitles;
+    private String[] mPosters;
+    private int[] mIcons;
 
-    public GridAdapter(Context context, String[] title, String[] poster, int[] icon) {
-        this.mContext = context;
-        this.mTitle = title;
-        this.mPoster = poster;
+    public GridAdapter(String[] title, String[] poster, int[] icon) {
+        this.mTitles = title;
+        this.mPosters = poster;
         this.mIcons = icon;
     }
 
     @Override
     public int getCount() {
-        return mTitle.length;
+        return mTitles.length;
     }
 
     @Override
@@ -40,17 +36,18 @@ public class GridAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        mLayoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater layoutInflater = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        View view = null;
         if (convertView == null) {
-            mView = new View(mContext);
-            mView = mLayoutInflater.inflate(R.layout.activity_grid_adapter, null);
-            ImageView imageView = mView.findViewById(R.id.imgPublisher);
-            TextView textView1 = mView.findViewById(R.id.tvTitle);
-            TextView textView2 = mView.findViewById(R.id.tvPoster);
+            view = layoutInflater.inflate(R.layout.activity_grid_adapter, null);
+            ImageView imageView = view.findViewById(R.id.imgPublisher);
+            TextView mTvTitle = view.findViewById(R.id.tvTitle);
+            TextView mTvPoster = view.findViewById(R.id.tvPoster);
             imageView.setImageResource(mIcons[position]);
-            textView1.setText(mTitle[position]);
-            textView2.setText(mPoster[position]);
+            mTvTitle.setText(mTitles[position]);
+            mTvPoster.setText(mPosters[position]);
         }
-        return mView;
+        return view;
     }
 }

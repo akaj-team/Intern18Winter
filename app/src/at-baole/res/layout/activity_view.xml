@@ -11,24 +11,24 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="20dp">
+            android:layout_height="30dp"
+            android:gravity="center">
 
             <ImageView
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:src="@drawable/ic_arrow" />
 
             <ImageView
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="8"
                 android:src="@drawable/ic_profile" />
 
             <ImageView
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:src="@drawable/ic_dot" />
         </LinearLayout>
@@ -82,28 +82,19 @@
             android:fontFamily="monospace"
             android:gravity="center"
             android:text="@string/bMaxwell"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textColor="@color/colorBlack"
+            android:textSize="20sp" />
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_marginTop="180dp"
-        android:gravity="center">
-
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/ic_pin" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="casual"
-            android:text="@string/slovakia"
-            android:textSize="16sp" />
-    </LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="190dp"
+        android:drawableLeft="@drawable/ic_pin"
+        android:drawablePadding="10dp"
+        android:gravity="center"
+        android:text="@string/slovakia" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -118,7 +109,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="235dp">
 
         <TextView
@@ -136,7 +127,7 @@
             android:gravity="center"
             android:text="@string/bookmarks"
             android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textColor="@color/colorBlack" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -149,7 +140,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="5dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="265dp">
 
         <ImageView

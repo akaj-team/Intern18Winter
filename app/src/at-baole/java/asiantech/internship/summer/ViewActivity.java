@@ -5,23 +5,25 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.GridView;
 
 public class ViewActivity extends AppCompatActivity {
-    String[] title = {
-            String.valueOf(R.string.title1),
-            String.valueOf(R.string.title2),
-            String.valueOf(R.string.title3),
-            String.valueOf(R.string.title4),
-            String.valueOf(R.string.title5),
-            String.valueOf(R.string.title6),
+    String[] mTitles = {
+
+            "A City Living Under The Shadow",
+            "One Problem for Democratic Leaders",
+            "The Golden Secret to Better Breakfast",
+            "How to Plan Your First Ski Vacation",
+            "How Social Isolation Is Killing Us",
+            "Use Labels to Sort Messages in Facebook"
     };
-    String[] poster = {
-            String.valueOf(R.string.publisher1),
-            String.valueOf(R.string.publisher2),
-            String.valueOf(R.string.publisher3),
-            String.valueOf(R.string.publisher4),
-            String.valueOf(R.string.publisher1),
-            String.valueOf(R.string.publisher3),
+    String[] mPosters = {
+
+            "RBC News",
+            "NY Times",
+            "BBC World",
+            "NBC Nightly",
+            "RBC News",
+            "BBC World"
     };
-    int[] iconPublisher = {
+    int[] mIconPublishers = {
             R.drawable.ic_rbc_news_1,
             R.drawable.ic_ny_times,
             R.drawable.ic_bbc_world_1,
@@ -30,14 +32,13 @@ public class ViewActivity extends AppCompatActivity {
             R.drawable.ic_bbc_world_2
     };
 
-    private GridView mGvArticles;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        GridView mGvArticles;
         setContentView(R.layout.activity_view);
         mGvArticles = findViewById(R.id.gvArticle);
-        GridAdapter gridAdapter = new GridAdapter(this, title, poster, iconPublisher);
+        GridAdapter gridAdapter = new GridAdapter(mTitles, mPosters, mIconPublishers);
         mGvArticles.setAdapter(gridAdapter);
     }
 }
