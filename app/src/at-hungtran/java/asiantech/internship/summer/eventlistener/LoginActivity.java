@@ -26,6 +26,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText mEdtUser;
     private EditText mEdtPwd;
     private EditText mEdtEmail;
+    private Button mBtnLogin;
     private TextWatcher mTextWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -50,28 +51,28 @@ public class LoginActivity extends AppCompatActivity {
         mEdtUser = findViewById(R.id.edtUser);
         mEdtPwd = findViewById(R.id.edtPwd);
         mEdtEmail = findViewById(R.id.edtEmail);
+        mBtnLogin = findViewById(R.id.btnLogin);
 
         // set listeners
         mEdtUser.addTextChangedListener(mTextWatcher);
         mEdtPwd.addTextChangedListener(mTextWatcher);
         mEdtEmail.addTextChangedListener(mTextWatcher);
 
+        mEdtPwd.setTransformationMethod(PasswordTransformationMethod.getInstance());
         // run once to disable if empty
         checkUsernamePasswordandEmail();
+
     }
 
     private void checkUsernamePasswordandEmail() {
-        Button btnLogin = findViewById(R.id.btnLogin);
-
         String username = mEdtUser.getText().toString();
         String password = mEdtPwd.getText().toString();
         String email = mEdtEmail.getText().toString();
-        mEdtPwd.setTransformationMethod(PasswordTransformationMethod.getInstance());
 
         if (!isValidUsername(username) || !isValidPassword(password) || !isValidEmail(email)) {
-            btnLogin.setVisibility(View.GONE);
+            mBtnLogin.setVisibility(View.GONE);
         } else {
-            btnLogin.setVisibility(View.VISIBLE);
+            mBtnLogin.setVisibility(View.VISIBLE);
         }
     }
 

@@ -102,7 +102,7 @@
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_weight="3"
-            android:text="@string/email_subscriptions" />
+            android:text="@string/emailSubscriptions" />
 
         <Switch
             android:layout_width="0dp"
@@ -124,7 +124,7 @@
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_weight="3"
-            android:text="@string/allow_email_from_other" />
+            android:text="@string/allowEmailFromOther" />
 
         <Switch
             android:layout_width="0dp"
