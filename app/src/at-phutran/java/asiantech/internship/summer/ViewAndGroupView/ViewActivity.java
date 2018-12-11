@@ -1,4 +1,4 @@
-package asiantech.internship.summer;
+package asiantech.internship.summer.ViewAndGroupView;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +8,9 @@ import android.widget.GridView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import asiantech.internship.summer.model.News;
+import asiantech.internship.summer.R;
 
 public class ViewActivity extends AppCompatActivity {
 

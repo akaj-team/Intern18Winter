@@ -1,4 +1,4 @@
-package asiantech.internship.summer;
+package asiantech.internship.summer.ViewAndGroupView;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import asiantech.internship.summer.R;
+import asiantech.internship.summer.model.News;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class NewsAdapter extends BaseAdapter {
@@ -44,11 +46,11 @@ public class NewsAdapter extends BaseAdapter {
         if (convertView == null) {
             mView = mLayoutInflater.inflate(R.layout.single_item, null);
             CircleImageView circleImageView = mView.findViewById(R.id.circleImage);
-            TextView textView = mView.findViewById(R.id.tvContent);
-            TextView textView1 = mView.findViewById(R.id.tvTitle);
-            textView.setText(mDataNews.getmContent());
-            circleImageView.setImageResource(mDataNews.getmImage());
-            textView1.setText(mDataNews.getmTitle());
+            TextView tvContent = mView.findViewById(R.id.tvContent);
+            TextView tvTitle = mView.findViewById(R.id.tvTitle);
+            tvContent.setText(mDataNews.getContent());
+            circleImageView.setImageResource(mDataNews.getImage());
+            tvTitle.setText(mDataNews.getTitle());
         }
         return mView;
     }
