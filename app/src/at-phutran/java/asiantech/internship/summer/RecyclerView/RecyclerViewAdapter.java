@@ -44,7 +44,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             holder.mTvCountLikes.setText(user.getCountLike() + " " + mContext.getString(R.string.likes));
         }
         holder.mTvUsername.setText(mListUsers.get(position).getUsername());
-        holder.mComment.setText(mListUsers.get(position).getComment());
+        holder.mTvComment.setText(mListUsers.get(position).getComment());
     }
 
     @Override
@@ -62,7 +62,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         private TextView mTvUsername;
         private TextView mTvUserComment;
         private TextView mTvCountLikes;
-        private TextView mComment;
+        private TextView mTvComment;
         private ImageView mImageCook;
         ViewHolder(View itemView) {
             super(itemView);
@@ -72,7 +72,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             mImageCook = itemView.findViewById(R.id.imgCook);
             mTvCountLikes = itemView.findViewById(R.id.tvCountLike);
             mTvUserComment = itemView.findViewById(R.id.tvUserComment);
-            mComment = itemView.findViewById(R.id.tvComment);
+            mTvComment = itemView.findViewById(R.id.tvComment);
             this.setIsRecyclable(false);
             handleEvent();
         }
