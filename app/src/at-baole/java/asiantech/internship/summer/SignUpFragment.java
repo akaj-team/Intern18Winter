@@ -19,8 +19,9 @@ public class SignUpFragment extends Fragment {
     private EditText mEdtConfirmPassword;
     private Button mBtnSignUp;
     private static final int MIN_LENGTH = 6;
-    private String mEmailPattern = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-    private String mPasswordPattern = "^[A-Za-z0-9]{6,}$";
+    private static final String PASSWORD_PATTERN = "^[A-Za-z0-9]{6,}$";
+    private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -58,13 +59,13 @@ public class SignUpFragment extends Fragment {
     }
 
     private boolean validateEmail(String email) {
-        Pattern pattern = Pattern.compile(mEmailPattern);
+        Pattern pattern = Pattern.compile(EMAIL_PATTERN);
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
     }
 
     private boolean validatePassword(String password) {
-        Pattern pattern = Pattern.compile(mPasswordPattern);
+        Pattern pattern = Pattern.compile(PASSWORD_PATTERN);
         Matcher matcher = pattern.matcher(password);
         return matcher.matches();
     }
