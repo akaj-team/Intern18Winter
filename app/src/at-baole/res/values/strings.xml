@@ -5,9 +5,9 @@
     <string name="emailSub">Email subscriptions</string>
     <string name="allowEmail">Allow email from other</string>
     <string name="signUpActivity">SignUpActivity</string>
-    <string name="usernameError">Username must contain at least 6 letters</string>
-    <string name="passwordError1">Password must contain at least 6 letters</string>
-    <string name="passwordError2">Password must contain at least one character and one number</string>
+    <string name="username6Letters">Username must contain at least 6 letters</string>
+    <string name="password6Letters">Password must contain at least 6 letters</string>
+    <string name="password1char1num">Password must contain at least one character and one number</string>
     <string name="invalidEmail">Invalid Email</string>
     <string name="signUpSuccessfully">Sign Up Successfully</string>
 </resources>

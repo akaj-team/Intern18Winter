@@ -15,14 +15,14 @@ import java.util.regex.Pattern;
 public class SignUpActivity extends AppCompatActivity {
 
     private static final int MIN_LENGTH = 6;
+    private static final String PASSWORD_PATTERN = "(?=.*?[a-z])(?=.*?[0-9]).{6,}";
+    private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
     private EditText mEdtUsername;
     private EditText mEdtPassword;
     private EditText mEdtEmail;
     private RadioButton mRbMale;
     private RadioButton mRbFemale;
     private ImageButton mImgBtnApply;
-    private static final String PASSWORD_PATTERN = "(?=.*?[a-z])(?=.*?[0-9]).{6,}";
-    private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,7 +101,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     public void checkUsernameLength() {
         if (mEdtUsername.getText().length() < MIN_LENGTH) {
-            mEdtUsername.setError(getString(R.string.usernameError));
+            mEdtUsername.setError(getString(R.string.username6Letters));
             mEdtUsername.requestFocus();
         } else {
             mEdtUsername.setError(null);
@@ -110,14 +110,14 @@ public class SignUpActivity extends AppCompatActivity {
 
     public void checkPasswordLength() {
         if (mEdtPassword.getText().length() < MIN_LENGTH) {
-            mEdtPassword.setError(getString(R.string.passwordError1));
+            mEdtPassword.setError(getString(R.string.password6Letters));
         }
     }
 
     public void checkPasswordFormat() {
         if (mEdtPassword.getText().length() >= MIN_LENGTH) {
             if (!validatePassword(mEdtPassword.getText().toString().trim())) {
-                mEdtPassword.setError(getString(R.string.passwordError2));
+                mEdtPassword.setError(getString(R.string.password1char1num));
                 mEdtPassword.requestFocus();
             } else {
                 mEdtPassword.setError(null);
