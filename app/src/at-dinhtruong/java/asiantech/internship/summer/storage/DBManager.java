@@ -55,8 +55,8 @@ public class DBManager extends SQLiteOpenHelper {
     public void addEmployee(Employee employee) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(COMPANY_ID, employee.getmCompanyId());
-        values.put(NAME_EMPLOYEE, employee.getmNameEmployee());
+        values.put(COMPANY_ID, employee.getCompanyId());
+        values.put(NAME_EMPLOYEE, employee.getNameEmployee());
         db.insert(TABLE_EMPLOYEE, null, values);
         db.close();
     }
@@ -77,8 +77,8 @@ public class DBManager extends SQLiteOpenHelper {
     public int Update(Employee employee) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(NAME_EMPLOYEE, employee.getmNameEmployee());
-        return db.update(TABLE_EMPLOYEE, values, ID_EMPLOYEE + "=?", new String[]{String.valueOf(employee.getmIdEmployee())});
+        values.put(NAME_EMPLOYEE, employee.getNameEmployee());
+        return db.update(TABLE_EMPLOYEE, values, ID_EMPLOYEE + "=?", new String[]{String.valueOf(employee.getIdEmployee())});
     }
 
     public List<Employee> getAllEmployee() {
@@ -89,9 +89,9 @@ public class DBManager extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 Employee employee = new Employee();
-                employee.setmIdEmployee(cursor.getInt(0));
-                employee.setmCompanyId(cursor.getInt(1));
-                employee.setmNameEmployee(cursor.getString(2));
+                employee.setIdEmployee(cursor.getInt(0));
+                employee.setCompanyId(cursor.getInt(1));
+                employee.setNameEmployee(cursor.getString(2));
                 employees.add(employee);
             } while (cursor.moveToNext());
         }
@@ -109,9 +109,9 @@ public class DBManager extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 Employee employee = new Employee();
-                employee.setmIdEmployee(cursor.getInt(0));
-                employee.setmCompanyId(cursor.getInt(1));
-                employee.setmNameEmployee(cursor.getString(2));
+                employee.setIdEmployee(cursor.getInt(0));
+                employee.setCompanyId(cursor.getInt(1));
+                employee.setNameEmployee(cursor.getString(2));
                 employees.add(employee);
             } while (cursor.moveToNext());
         }
@@ -124,7 +124,7 @@ public class DBManager extends SQLiteOpenHelper {
     public void deleteEmployee(Employee employee) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_EMPLOYEE, ID_EMPLOYEE + " = ?",
-                new String[]{String.valueOf(employee.getmIdEmployee())});
+                new String[]{String.valueOf(employee.getIdEmployee())});
         db.close();
     }
 
@@ -145,8 +145,8 @@ public class DBManager extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 Company company = new Company();
-                company.setmIdCompany(cursor.getInt(0));
-                company.setmNameCompany(cursor.getString(1));
+                company.setIdCompany(cursor.getInt(0));
+                company.setNameCompany(cursor.getString(1));
                 companies.add(company);
             } while (cursor.moveToNext());
         }
@@ -167,7 +167,7 @@ public class DBManager extends SQLiteOpenHelper {
     public void addCompany(Company company) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(NAME_COMPANY, company.getmNameCompany());
+        values.put(NAME_COMPANY, company.getNameCompany());
         db.insert(TABLE_COMPANY, null, values);
         db.close();
     }

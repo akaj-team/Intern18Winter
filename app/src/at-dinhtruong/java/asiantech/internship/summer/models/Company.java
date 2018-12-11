@@ -4,25 +4,20 @@ public class Company {
     private int mIdCompany;
     private String mNameCompany;
 
-    public int getmIdCompany() {
+    public int getIdCompany() {
         return mIdCompany;
     }
 
-    public void setmIdCompany(int mIdCompany) {
-        this.mIdCompany = mIdCompany;
+    public void setIdCompany(int idCompany) {
+        this.mIdCompany = idCompany;
     }
 
-    public String getmNameCompany() {
+    public String getNameCompany() {
         return mNameCompany;
     }
 
-    public void setmNameCompany(String mNameCompany) {
-        this.mNameCompany = mNameCompany;
-    }
-
-    public Company(int mIdCompany, String mNameKompany) {
-        this.mIdCompany = mIdCompany;
-        this.mNameCompany = mNameKompany;
+    public void setNameCompany(String nameCompany) {
+        this.mNameCompany = nameCompany;
     }
 
     public Company(String mNameCompany) {

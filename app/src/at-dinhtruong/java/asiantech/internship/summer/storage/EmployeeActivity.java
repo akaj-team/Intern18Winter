@@ -54,9 +54,9 @@ public class EmployeeActivity extends AppCompatActivity implements EmployeeAdapt
     @Override
     public void onSelectEmployee(int idEmployee) {
         Employee employee = mDbManager.getEmployeeById(idEmployee);
-        Log.d("xxxxx", "onSelectEmployee: " + employee.getmIdEmployee() + employee.getmNameEmployee());
-        mEdtIdEmployee.setText(String.valueOf(employee.getmIdEmployee()));
-        mEdtNameEmployee.setText(employee.getmNameEmployee());
+        Log.d("xxxxx", "onSelectEmployee: " + employee.getIdEmployee() + employee.getNameEmployee());
+        mEdtIdEmployee.setText(String.valueOf(employee.getIdEmployee()));
+        mEdtNameEmployee.setText(employee.getNameEmployee());
     }
 
     @Override

@@ -12,7 +12,7 @@ import android.widget.EditText;
 
 import asiantech.internship.summer.R;
 
-public class OneFragment extends Fragment {
+public class SharePreferenceFragment extends Fragment {
     private EditText mEdtUserName;
     private EditText mEdtPassWord;
     private Button mBtnLogin;
@@ -24,7 +24,7 @@ public class OneFragment extends Fragment {
     private final String PASS_WORD = "passWord";
     private final String DATA_USER = "dataUser";
 
-    public OneFragment() {
+    public SharePreferenceFragment() {
     }
 
     @Override

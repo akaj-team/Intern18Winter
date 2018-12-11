@@ -21,7 +21,7 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.Employ
     @Override
     public EmployeeAdapter.EmployeeViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(viewGroup.getContext());
-        View itView = layoutInflater.inflate(R.layout.my_text_view, viewGroup, false);
+        View itView = layoutInflater.inflate(R.layout.custom_view_item, viewGroup, false);
         return new EmployeeViewHolder(itView);
     }
 
@@ -29,11 +29,11 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.Employ
     public void onBindViewHolder(@NonNull EmployeeAdapter.EmployeeViewHolder holder, final int position) {
         final Employee employee = employees.get(position);
         EmployeeViewHolder employeeViewHolder = holder;
-        employeeViewHolder.mTvEmployee.setText(employee.getmNameEmployee());
+        employeeViewHolder.mTvEmployee.setText(employee.getNameEmployee());
         employeeViewHolder.mTvEmployee.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mOnClickEmployee.onSelectEmployee(employee.getmIdEmployee());
+                mOnClickEmployee.onSelectEmployee(employee.getIdEmployee());
             }
         });
 
@@ -44,7 +44,7 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.Employ
 
         public EmployeeViewHolder(View itemView) {
             super(itemView);
-            mTvEmployee = itemView.findViewById(R.id.my_text_view);
+            mTvEmployee = itemView.findViewById(R.id.custom_view_item);
         }
     }
 

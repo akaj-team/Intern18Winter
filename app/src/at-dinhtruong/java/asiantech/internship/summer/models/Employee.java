@@ -5,39 +5,39 @@ public class Employee {
     private int mCompanyId;
     private String mNameEmployee;
 
-    public int getmIdEmployee() {
+    public int getIdEmployee() {
         return mIdEmployee;
     }
 
-    public void setmIdEmployee(int mIdEmployee) {
-        this.mIdEmployee = mIdEmployee;
+    public void setIdEmployee(int idEmployee) {
+        this.mIdEmployee = idEmployee;
     }
 
-    public int getmCompanyId() {
+    public int getCompanyId() {
         return mCompanyId;
     }
 
-    public void setmCompanyId(int mCompanyId) {
-        this.mCompanyId = mCompanyId;
+    public void setCompanyId(int companyId) {
+        this.mCompanyId = companyId;
     }
 
-    public String getmNameEmployee() {
+    public String getNameEmployee() {
         return mNameEmployee;
     }
 
-    public void setmNameEmployee(String mNameEmployee) {
-        this.mNameEmployee = mNameEmployee;
+    public void setNameEmployee(String nameEmployee) {
+        this.mNameEmployee = nameEmployee;
     }
 
-    public Employee(int mIdEmployee, int mIdKompany, String mNameEmployee) {
-        this.mIdEmployee = mIdEmployee;
-        this.mCompanyId = mIdKompany;
-        this.mNameEmployee = mNameEmployee;
+    public Employee(int idEmployee, int idCompany, String nameEmployee) {
+        this.mIdEmployee = idEmployee;
+        this.mCompanyId = idCompany;
+        this.mNameEmployee = nameEmployee;
     }
 
-    public Employee(int mCompanyId, String mNameEmployee) {
-        this.mCompanyId = mCompanyId;
-        this.mNameEmployee = mNameEmployee;
+    public Employee(int companyId, String nameEmployee) {
+        this.mCompanyId = companyId;
+        this.mNameEmployee = nameEmployee;
     }
 
     public Employee() {

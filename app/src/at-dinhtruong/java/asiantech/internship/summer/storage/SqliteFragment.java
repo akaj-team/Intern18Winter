@@ -15,10 +15,10 @@ import java.util.List;
 import asiantech.internship.summer.R;
 import asiantech.internship.summer.models.Company;
 
-public class ThreeFragment extends Fragment implements CompanyAdapter.onClickItem {
+public class SqliteFragment extends Fragment implements CompanyAdapter.onClickItem {
     private DBManager mDbManager;
 
-    public ThreeFragment() {
+    public SqliteFragment() {
     }
 
     @Override
@@ -30,7 +30,7 @@ public class ThreeFragment extends Fragment implements CompanyAdapter.onClickIte
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_three, container, false);
+        View view = inflater.inflate(R.layout.fragment_sqlite, container, false);
         initCompany(view);
         return view;
     }
@@ -42,7 +42,7 @@ public class ThreeFragment extends Fragment implements CompanyAdapter.onClickIte
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mDbManager.createDefaultCompany();
         List<Company> companies = mDbManager.getAllCompany();
-        CompanyAdapter companyAdapter = new CompanyAdapter(getActivity(), companies, mRecyclerView,this);
+        CompanyAdapter companyAdapter = new CompanyAdapter(companies,this);
         mRecyclerView.setAdapter(companyAdapter);
     }
 

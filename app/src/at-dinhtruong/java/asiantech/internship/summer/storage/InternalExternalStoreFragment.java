@@ -26,7 +26,7 @@ import java.io.OutputStreamWriter;
 
 import asiantech.internship.summer.R;
 
-public class TwoFragment extends Fragment implements View.OnClickListener {
+public class InternalExternalStoreFragment extends Fragment implements View.OnClickListener {
     private Button mBtnInternal;
     private Button mBtnExternal;
     private EditText mEdtInternal;
@@ -39,7 +39,7 @@ public class TwoFragment extends Fragment implements View.OnClickListener {
     private final String fileName = "note.txt";
     File myInternalFile;
 
-    public TwoFragment() {
+    public InternalExternalStoreFragment() {
 
     }
 
@@ -55,7 +55,7 @@ public class TwoFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_two, container, false);
+        View view = inflater.inflate(R.layout.fragment_internal_extarnal_store, container, false);
         initView(view);
         return view;
     }

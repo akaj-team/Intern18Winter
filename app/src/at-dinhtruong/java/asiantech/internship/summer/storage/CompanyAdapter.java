@@ -1,7 +1,6 @@
 package asiantech.internship.summer.storage;
 
 import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,21 +13,21 @@ import asiantech.internship.summer.R;
 import asiantech.internship.summer.models.Company;
 
 public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.CompanyViewHolder> {
-    private List<Company> companies;
-    public onClickItem onClickItem;
+    private List<Company> mCompanies;
+    public onClickItem mOnClickItem;
 
     public class CompanyViewHolder extends RecyclerView.ViewHolder {
         public TextView mTvNameCompany;
 
         public CompanyViewHolder(View v) {
             super(v);
-            mTvNameCompany = v.findViewById(R.id.my_text_view);
+            mTvNameCompany = v.findViewById(R.id.custom_view_item);
         }
     }
 
-    public CompanyAdapter(FragmentActivity activity, List<Company> companies, RecyclerView mRecyclerView, onClickItem onClickItem) {
-        this.companies = companies;
-        this.onClickItem = onClickItem;
+    public CompanyAdapter(List<Company> companies, onClickItem onClickItem) {
+        this.mCompanies = companies;
+        this.mOnClickItem = onClickItem;
 
     }
 
@@ -36,29 +35,23 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.CompanyV
     public CompanyAdapter.CompanyViewHolder onCreateViewHolder(ViewGroup parent,
                                                                int viewType) {
         TextView v = (TextView) LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.my_text_view, parent, false);
-
+                .inflate(R.layout.custom_view_item, parent, false);
         CompanyViewHolder vh = new CompanyViewHolder(v);
         return vh;
     }
 
     @Override
     public void onBindViewHolder(@NonNull CompanyViewHolder holder, final int position) {
-        Company company = companies.get(position);
-        final int idCompany = company.getmIdCompany();
+        Company company = mCompanies.get(position);
+        final int idCompany = company.getIdCompany();
         CompanyViewHolder companyViewHolder = holder;
-        companyViewHolder.mTvNameCompany.setText(company.getmNameCompany());
-        companyViewHolder.mTvNameCompany.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onClickItem.onSelectItem(idCompany);
-            }
-        });
+        companyViewHolder.mTvNameCompany.setText(company.getNameCompany());
+        companyViewHolder.mTvNameCompany.setOnClickListener(view -> mOnClickItem.onSelectItem(idCompany));
     }
 
     @Override
     public int getItemCount() {
-        return companies.size();
+        return mCompanies.size();
     }
 
     public interface onClickItem {
