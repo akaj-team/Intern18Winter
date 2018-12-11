@@ -1,4 +1,4 @@
-package asiantech.internship.summer;
+package asiantech.internship.summer.view;
 
 import android.graphics.Color;
 import android.support.annotation.NonNull;
@@ -11,13 +11,15 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import asiantech.internship.summer.R;
+import asiantech.internship.summer.model.Data;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder> {
-    private List<Data> data;
+    private List<Data> mData;
 
     NewsAdapter(List<Data> data) {
-        this.data = data;
+        this.mData = data;
     }
 
     @NonNull
@@ -30,30 +32,29 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull NewsViewHolder holder, int position) {
-        holder.linearLayout.setBackgroundColor(Color.parseColor(data.get(position).getmColor()));
-        holder.tvTitle.setText(data.get(position).getmTitle());
-        holder.ciImgIcon.setImageResource(data.get(position).getmImageIcon());
-        holder.tvPoster.setText(data.get(position).getmPoster());
+        holder.mLinearLayout.setBackgroundColor(Color.parseColor(mData.get(position).getColor()));
+        holder.mTvTitle.setText(mData.get(position).getTitle());
+        holder.mImgIcon.setImageResource(mData.get(position).getmImageIcon());
+        holder.mTvPoster.setText(mData.get(position).getmPoster());
     }
 
     @Override
     public int getItemCount() {
-        return data.size();
+        return mData.size();
     }
 
     class NewsViewHolder extends RecyclerView.ViewHolder {
-        LinearLayout linearLayout;
-        TextView tvTitle;
-        CircleImageView ciImgIcon;
-        TextView tvPoster;
+        private LinearLayout mLinearLayout;
+        private TextView mTvTitle;
+        private CircleImageView mImgIcon;
+        private TextView mTvPoster;
 
         NewsViewHolder(View itemView) {
             super(itemView);
-            linearLayout = itemView.findViewById(R.id.linearlayout);
-            tvTitle = itemView.findViewById(R.id.tvTitle);
-            ciImgIcon = itemView.findViewById(R.id.imgIcon);
-            tvPoster = itemView.findViewById(R.id.tvPoster);
-            this.setIsRecyclable(false);
+            mLinearLayout = itemView.findViewById(R.id.linearlayout);
+            mTvTitle = itemView.findViewById(R.id.tvTitle);
+            mImgIcon = itemView.findViewById(R.id.imgIcon);
+            mTvPoster = itemView.findViewById(R.id.tvPoster);
         }
     }
 }
