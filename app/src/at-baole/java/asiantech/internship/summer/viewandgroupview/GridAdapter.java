@@ -47,11 +47,11 @@ public class GridAdapter extends BaseAdapter {
             ImageView imageView = view.findViewById(R.id.imgPublisher);
             TextView mTvTitle = view.findViewById(R.id.tvTitle);
             TextView mTvPoster = view.findViewById(R.id.tvPoster);
-            RelativeLayout relativeLayout = view.findViewById(R.id.llRoot);
+            RelativeLayout rlRoot = view.findViewById(R.id.rlRoot);
             imageView.setImageResource(mIcons[position]);
             mTvTitle.setText(mTitles[position]);
             mTvPoster.setText(mPosters[position]);
-            relativeLayout.setBackgroundColor(Color.parseColor(mColors[position]));
+            rlRoot.setBackgroundColor(Color.parseColor(mColors[position]));
         }
         return view;
     }

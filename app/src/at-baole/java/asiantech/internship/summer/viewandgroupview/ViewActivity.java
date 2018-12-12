@@ -7,25 +7,7 @@ import android.widget.GridView;
 import asiantech.internship.summer.R;
 
 public class ViewActivity extends AppCompatActivity {
-    String[] mTitles = {
-
-            "A City Living Under The Shadow",
-            "One Problem for Democratic Leaders",
-            "The Golden Secret to Better Breakfast",
-            "How to Plan Your First Ski Vacation",
-            "How Social Isolation Is Killing Us",
-            "Use Labels to Sort Messages in Facebook"
-    };
-    String[] mPosters = {
-
-            "RBC News",
-            "NY Times",
-            "BBC World",
-            "NBC Nightly",
-            "RBC News",
-            "BBC World"
-    };
-    int[] mIconPublishers = {
+    private int[] mIconPublishers = {
             R.drawable.ic_rbc_news_1,
             R.drawable.ic_ny_times,
             R.drawable.ic_bbc_world_1,
@@ -33,14 +15,29 @@ public class ViewActivity extends AppCompatActivity {
             R.drawable.ic_rbc_news_2,
             R.drawable.ic_bbc_world_2
     };
-
-    String[] mColors = {
+    private String[] mColors = {
             "#e1dfdf",
             "#f9f9f9",
             "#f9f9f9",
             "#e1dfdf",
             "#e1dfdf",
             "#f9f9f9"
+    };
+    private String[] mTitles = {
+            "A City Living Under The Shadow",
+            "One Problem for Democratic Leaders",
+            "The Golden Secret to Better Breakfast",
+            "How to Plan Your First Ski Vacation",
+            "How Social Isolation Is Killing Us",
+            "Use Labels to Sort Messages in Facebook"
+    };
+    private String[] mPosters = {
+            "RBC News",
+            "NY Times",
+            "BBC World",
+            "NBC Nightly",
+            "RBC News",
+            "BBC World"
     };
 
     @Override
