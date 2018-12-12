@@ -1,8 +1,10 @@
-package asiantech.internship.summer;
+package asiantech.internship.summer.viewandgroupview;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.GridView;
+
+import asiantech.internship.summer.R;
 
 public class ViewActivity extends AppCompatActivity {
     String[] mTitles = {
@@ -32,13 +34,21 @@ public class ViewActivity extends AppCompatActivity {
             R.drawable.ic_bbc_world_2
     };
 
+    String[] mColors = {
+            "#e1dfdf",
+            "#f9f9f9",
+            "#f9f9f9",
+            "#e1dfdf",
+            "#e1dfdf",
+            "#f9f9f9"
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        GridView mGvArticles;
         setContentView(R.layout.activity_view);
-        mGvArticles = findViewById(R.id.gvArticle);
-        GridAdapter gridAdapter = new GridAdapter(mTitles, mPosters, mIconPublishers);
-        mGvArticles.setAdapter(gridAdapter);
+        GridView gvArticles = findViewById(R.id.gvArticle);
+        GridAdapter gridAdapter = new GridAdapter(mTitles, mPosters, mIconPublishers, mColors);
+        gvArticles.setAdapter(gridAdapter);
     }
 }

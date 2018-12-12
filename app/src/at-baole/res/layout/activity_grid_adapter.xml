@@ -1,7 +1,7 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="200dp"
-    android:orientation="vertical">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/llRoot"
+    android:layout_width="match_parent"
+    android:layout_height="150dp">
 
     <TextView
         android:id="@+id/tvTitle"
@@ -15,10 +15,11 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
         android:gravity="center"
         android:orientation="horizontal"
-        android:paddingLeft="20dp"
-        android:paddingTop="10dp">
+        android:paddingLeft="20dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/imgPublisher"
@@ -31,4 +32,4 @@
             android:layout_height="wrap_content"
             android:paddingLeft="5dp" />
     </LinearLayout>
-</LinearLayout>
+</RelativeLayout>

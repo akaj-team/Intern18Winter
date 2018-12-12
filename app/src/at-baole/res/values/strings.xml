@@ -1,5 +1,15 @@
 <resources>
-    <string name="app_name">View And GroupView</string>
+    <string name="male">male</string>
+    <string name="female">female</string>
+    <string name="emailSub">Email subscriptions</string>
+    <string name="allowEmail">Allow email from other</string>
+    <string name="signUpActivity">SignUpActivity</string>
+    <string name="username6Letters">Username must contain at least 6 letters</string>
+    <string name="password6Letters">Password must contain at least 6 letters</string>
+    <string name="password1char1num">Password must contain at least one character and one number</string>
+    <string name="invalidEmail">Invalid Email</string>
+    <string name="signUpSuccessfully">Sign Up Successfully</string>
+    <string name="app_name">Inter18Winter</string>
     <string name="bMaxwell">Beatrice Maxwell</string>
     <string name="profile">Profile</string>
     <string name="bookmarks">Bookmarks</string>
