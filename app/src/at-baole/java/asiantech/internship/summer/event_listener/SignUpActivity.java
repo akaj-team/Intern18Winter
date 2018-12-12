@@ -1,4 +1,4 @@
-package asiantech.internship.summer;
+package asiantech.internship.summer.event_listener;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +11,8 @@ import android.widget.Toast;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import asiantech.internship.summer.R;
 
 public class SignUpActivity extends AppCompatActivity {
 
