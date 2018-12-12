@@ -1,3 +1,26 @@
 <resources>
-    <string name="app_name">Intern18Summer</string>
+    <string name="male">male</string>
+    <string name="female">female</string>
+    <string name="emailSub">Email subscriptions</string>
+    <string name="allowEmail">Allow email from other</string>
+    <string name="signUpActivity">SignUpActivity</string>
+    <string name="username6Letters">Username must contain at least 6 letters</string>
+    <string name="password6Letters">Password must contain at least 6 letters</string>
+    <string name="password1char1num">Password must contain at least one character and one number</string>
+    <string name="invalidEmail">Invalid Email</string>
+    <string name="signUpSuccessfully">Sign Up Successfully</string>
+    <string name="app_name">Inter18Winter</string>
+    <string name="bMaxwell">Beatrice Maxwell</string>
+    <string name="profile">Profile</string>
+    <string name="bookmarks">Bookmarks</string>
+    <string name="post">Posts</string>
+    <string name="news">News</string>
+    <string name="slovakia">Slovakia</string>
+    <string name="content">content</string>
+    <string name="loading">loading</string>
+    <string name="liked">Liked</string>
+    <string name="likes">likes</string>
+    <string name="zerolike">%s like</string>
+    <string name="username">LE QUOC BAO</string>
+    <string name="comment">It is very delicious</string>
 </resources>
