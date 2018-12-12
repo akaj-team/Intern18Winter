@@ -33,7 +33,6 @@ public class HomeActivity extends AppCompatActivity {
         data.add(new Data("How to Plan Your First Ski Vacation", R.drawable.ic_avt3, "NBC Nightly", "#e1dfdf"));
         data.add(new Data("How Social Isolation Is Killing Us", R.drawable.ic_avt4, "RBC News", "#e1dfdf"));
         data.add(new Data("The Labels to Sort Messages in Facebook", R.drawable.ic_avt5, "BBC World", "#f9f9f9"));
-        mNewsAdapter = new NewsAdapter(data);
-        recyclerView.setAdapter(mNewsAdapter);
+        recyclerView.setAdapter(new NewsAdapter(data));
     }
 }
