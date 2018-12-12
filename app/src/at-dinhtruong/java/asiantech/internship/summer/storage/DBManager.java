@@ -64,7 +64,7 @@ public class DBManager extends SQLiteOpenHelper {
     public Employee getEmployeeById(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(TABLE_EMPLOYEE, new String[]{ID_EMPLOYEE,
-                        COMPANY_ID,NAME_EMPLOYEE}, ID_EMPLOYEE + "=?",
+                        COMPANY_ID, NAME_EMPLOYEE}, ID_EMPLOYEE + "=?",
                 new String[]{String.valueOf(id)}, null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
@@ -74,7 +74,7 @@ public class DBManager extends SQLiteOpenHelper {
         return employee;
     }
 
-    public int Update(Employee employee) {
+    public int UpdateEmployee(Employee employee) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(NAME_EMPLOYEE, employee.getNameEmployee());
@@ -179,7 +179,7 @@ public class DBManager extends SQLiteOpenHelper {
             for (int i = 1; i <= 20; i++) {
                 Random rd = new Random();
                 int idCompany = rd.nextInt(6) + 1;
-                this.addEmployee(new Employee(idCompany, "Nhan vien " + i));
+                this.addEmployee(new Employee(idCompany, "Nhân viên " + i));
             }
         }
     }
@@ -193,7 +193,12 @@ public class DBManager extends SQLiteOpenHelper {
             this.addCompany(new Company("Công ty 4"));
             this.addCompany(new Company("Công ty 5"));
         } else {
-            Log.d("xxxxxxxxxxxxx", "OK ");
         }
+    }
+
+    private int onRandomNumber() {
+        Random random = new Random();
+        int numberRandom = random.nextInt(6) + 1;
+        return numberRandom;
     }
 }

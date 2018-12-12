@@ -39,7 +39,6 @@ public class Employee {
         this.mCompanyId = companyId;
         this.mNameEmployee = nameEmployee;
     }
-
     public Employee() {
     }
 }

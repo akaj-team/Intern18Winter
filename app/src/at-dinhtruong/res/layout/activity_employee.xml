@@ -18,9 +18,10 @@
             android:id="@+id/edtIdEmployee"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginBottom="10dp"
             android:layout_weight="1"
-            android:hint="Mã Nhân Viên"
+            android:focusable="false"
+            android:hint="@string/maNhanVien"
+            android:inputType="text"
             android:padding="5dp" />
 
         <EditText
@@ -28,7 +29,8 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:hint="Tên Nhân Viên" />
+            android:hint="@string/tenNhanVien"
+            android:inputType="text" />
 
     </LinearLayout>
 
@@ -41,21 +43,21 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Update" />
+            android:text="@string/update" />
 
         <Button
             android:id="@+id/btnInsert"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Insert" />
+            android:text="@string/insert" />
 
         <Button
             android:id="@+id/btnDelete"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Delete" />
+            android:text="@string/delete" />
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView

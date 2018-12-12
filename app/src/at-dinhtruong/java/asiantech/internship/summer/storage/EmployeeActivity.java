@@ -24,6 +24,7 @@ public class EmployeeActivity extends AppCompatActivity implements EmployeeAdapt
     private Button mBtnUpdate;
     private Button mBtnDelete;
     private RecyclerView mRecyclerView;
+    private EmployeeAdapter mEmployeeAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,28 +40,60 @@ public class EmployeeActivity extends AppCompatActivity implements EmployeeAdapt
         mRecyclerView = findViewById(R.id.recyclerViewEmployee);
         mEdtIdEmployee = findViewById(R.id.edtIdEmployee);
         mEdtNameEmployee = findViewById(R.id.edtNameEmployee);
-       /* mBtnUpdate.setOnClickListener(this);
+        mBtnUpdate = findViewById(R.id.btnUpdate);
+        mBtnDelete = findViewById(R.id.btnDelete);
+        mBtnInsert = findViewById(R.id.btnInsert);
+        mBtnUpdate.setOnClickListener(this);
         mBtnDelete.setOnClickListener(this);
-        mBtnInsert.setOnClickListener(this);*/
+        mBtnInsert.setOnClickListener(this);
         mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(linearLayoutManager);
-        mDbManager.createDefaultEmployee();
+        List<Employee> employees = mDbManager.getAllEmployee();
+        if (employees.size() == 0) {
+            mDbManager.createDefaultEmployee();
+        }
         List<Employee> employeesById = mDbManager.getAllEmployeeById(mIdCompany);
-        EmployeeAdapter employeeAdapter = new EmployeeAdapter(employeesById, mRecyclerView, this);
-        mRecyclerView.setAdapter(employeeAdapter);
+        mEmployeeAdapter = new EmployeeAdapter(employeesById, mRecyclerView, this);
+        mRecyclerView.setAdapter(mEmployeeAdapter);
     }
 
     @Override
     public void onSelectEmployee(int idEmployee) {
         Employee employee = mDbManager.getEmployeeById(idEmployee);
-        Log.d("xxxxx", "onSelectEmployee: " + employee.getIdEmployee() + employee.getNameEmployee());
         mEdtIdEmployee.setText(String.valueOf(employee.getIdEmployee()));
         mEdtNameEmployee.setText(employee.getNameEmployee());
     }
 
     @Override
     public void onClick(View view) {
-
+        String idEmployeeString = mEdtIdEmployee.getText().toString();
+        String nameEmployee = mEdtNameEmployee.getText().toString();
+        int idEmployee = 0;
+        if (!idEmployeeString.equals("")) {
+            idEmployee = Integer.parseInt(mEdtIdEmployee.getText().toString());
+        }
+        Employee employee = new Employee(idEmployee, mIdCompany, nameEmployee);
+        switch (view.getId()) {
+            case R.id.btnUpdate: {
+                if (mDbManager.UpdateEmployee(employee) > 0) {
+                    mEmployeeAdapter.notifyDataSetChanged();
+                } else {
+                    Log.d("xxxx-xxxx", "onClick: " + "false" + idEmployee + "---" + nameEmployee);
+                }
+                mEmployeeAdapter.notifyDataSetChanged();
+                break;
+            }
+            case R.id.btnInsert: {
+                mDbManager.addEmployee(employee);
+                mEmployeeAdapter.notifyDataSetChanged();
+                break;
+            }
+            case R.id.btnDelete: {
+                mDbManager.deleteEmployee(employee);
+                mEmployeeAdapter.notifyDataSetChanged();
+                break;
+            }
+        }
     }
 }

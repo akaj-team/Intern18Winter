@@ -8,16 +8,14 @@ import android.support.v7.app.AppCompatActivity;
 import asiantech.internship.summer.R;
 
 public class FileStoreActivity extends AppCompatActivity {
-    private TabLayout mTlFileStore;
-    private ViewPager mViewPagerFileStore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_file_store);
-        mViewPagerFileStore = findViewById(R.id.viewpager);
+        ViewPager mViewPagerFileStore = findViewById(R.id.viewpager);
         setupViewPager(mViewPagerFileStore);
-        mTlFileStore = findViewById(R.id.tabs);
+        TabLayout mTlFileStore = findViewById(R.id.tabs);
         mTlFileStore.setupWithViewPager(mViewPagerFileStore);
 
 
@@ -25,9 +23,9 @@ public class FileStoreActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new SharePreferenceFragment(), "ONE");
-        adapter.addFragment(new InternalExternalStoreFragment(), "TWO");
-        adapter.addFragment(new SqliteFragment(), "THREE");
+        adapter.addFragment(new SharePreferenceFragment(), "SHARE PREFERENCE");
+        adapter.addFragment(new InternalExternalStoreFragment(), "INTERNAL AND EXTERNAL");
+        adapter.addFragment(new SqliteFragment(), "SQLITE");
         viewPager.setAdapter(adapter);
     }
 
