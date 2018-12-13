@@ -1,14 +1,16 @@
 package asiantech.internship.summer.model;
 
 public class News {
-    private String mContent;
     private int mImage;
+    private String mColor;
     private String mTitle;
+    private String mContent;
 
-    public News(String content, int image, String title) {
-        this.mContent = content;
-        this.mImage = image;
-        this.mTitle = title;
+    public News(String Content, int Image, String Title, String Color) {
+        this.mImage = Image;
+        this.mColor = Color;
+        this.mTitle = Title;
+        this.mContent = Content;
     }
 
     public String getContent() {
@@ -21,5 +23,9 @@ public class News {
 
     public String getTitle() {
         return mTitle;
+    }
+
+    public String getColor() {
+        return mColor;
     }
 }

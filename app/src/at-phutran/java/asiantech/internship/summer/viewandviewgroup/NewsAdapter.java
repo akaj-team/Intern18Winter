@@ -50,9 +50,7 @@ public class NewsAdapter extends BaseAdapter {
             tvContent.setText(mDataNews.getContent());
             circleImageView.setImageResource(mDataNews.getImage());
             tvTitle.setText(mDataNews.getTitle());
-            if(position % 4 == 0 || (position + 1) % 4 == 0){
-                llContent.setBackgroundColor(Color.GRAY);
-            }
+            llContent.setBackgroundColor(Color.parseColor(mDataNews.getColor()));
         }
         return view;
     }

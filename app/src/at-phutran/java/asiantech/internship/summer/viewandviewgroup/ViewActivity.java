@@ -17,12 +17,12 @@ public class ViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view);
         List<News> listNews = new ArrayList<>();
-        listNews.add(new News("A City Living Under The Shawdow", R.drawable.ic_avt, "RBC News"));
-        listNews.add(new News("One Problem for Democratic Leaders", R.drawable.ic_avt1, "NY Times"));
-        listNews.add(new News("The Golden Secret to Better Breakfast", R.drawable.ic_avt2, "BBC World"));
-        listNews.add(new News("How to Plan Your First Ski Vaction", R.drawable.ic_avt3, "NBC Nightly"));
-        listNews.add(new News("How Social Isolation Is Killing Us", R.drawable.ic_avt, "RBC News"));
-        listNews.add(new News("Use Labels to Sort Messages in Facebook", R.drawable.ic_avt2, "BBC World"));
+        listNews.add(new News("A City Living Under The Shawdow", R.drawable.ic_avt, "RBC News", "#C0C0C0"));
+        listNews.add(new News("One Problem for Democratic Leaders", R.drawable.ic_avt1, "NY Times", "#FFFFFF"));
+        listNews.add(new News("The Golden Secret to Better Breakfast", R.drawable.ic_avt2, "BBC World", "#FFFFFF"));
+        listNews.add(new News("How to Plan Your First Ski Vaction", R.drawable.ic_avt3, "NBC Nightly", "#C0C0C0"));
+        listNews.add(new News("How Social Isolation Is Killing Us", R.drawable.ic_avt, "RBC News", "#C0C0C0"));
+        listNews.add(new News("Use Labels to Sort Messages in Facebook", R.drawable.ic_avt2, "BBC World", "#FFFFFF"));
         GridView gridView = findViewById(R.id.gvContent);
         NewsAdapter newsAdapter = new NewsAdapter(listNews);
         gridView.setAdapter(newsAdapter);
