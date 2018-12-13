@@ -5,16 +5,17 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-
-import asiantech.internship.summer.recyclerview.RecyclerViewActivity;
-import asiantech.internship.summer.eventlistener.SignUpActivity;
 import asiantech.internship.summer.R;
+import asiantech.internship.summer.eventlistener.SignUpActivity;
+import asiantech.internship.summer.fragment.LoginActivity;
+import asiantech.internship.summer.recyclerview.RecyclerViewActivity;
 
 public class ListActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button mBtnView;
     private Button mBtnListener;
     private Button mBtnRecyclerView;
+    private Button mBtnFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,9 +23,11 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_list);
         mBtnView = findViewById(R.id.btnExercise1);
         mBtnListener = findViewById(R.id.btnExercise2);
+        mBtnFragment = findViewById(R.id.btnExercise3);
         mBtnRecyclerView = findViewById(R.id.btnExercise4);
         mBtnView.setOnClickListener(this);
         mBtnListener.setOnClickListener(this);
+        mBtnFragment.setOnClickListener(this);
         mBtnRecyclerView.setOnClickListener(this);
     }
 
@@ -38,6 +41,10 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
             }
             case R.id.btnExercise2: {
                 Intent intent = new Intent(ListActivity.this, SignUpActivity.class);
+                startActivity(intent);
+            }
+            case R.id.btnExercise3: {
+                Intent intent = new Intent(ListActivity.this, LoginActivity.class);
                 startActivity(intent);
             }
             case R.id.btnExercise4: {

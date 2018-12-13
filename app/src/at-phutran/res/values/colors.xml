@@ -8,6 +8,8 @@
     <color name="colorBlue">#2c81f1</color>
     <color name="colorGreen">#05b941</color>
     <color name="colorGray">#bbbebc</color>
+    <color name="colorPurple">#868EC6</color>
+    <color name="colorGrey">#BDC1DB</color>
     <color name="colorDark">#D8D8D8</color>
     <color name="colorYellow">#FFDFE211</color>
 </resources>

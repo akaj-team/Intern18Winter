@@ -1,4 +1,4 @@
-package asiantech.internship.summer.model;
+package asiantech.internship.summer.models;
 
 public class Paper {
     private String mDescription;
