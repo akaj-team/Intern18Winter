@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Intern18Summer</string>
+    <string name="todo">TODO</string>
+    <string name="allowEmailFromOther">Allow_email_from_other</string>
+    <string name="emailSubscriptions">Email Subscriptions</string>
+    <string name="female">Female</string>
+    <string name="male">Male</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="username">Username</string>
+    <string name="apply">Apply</string>
+    <string name="signupActivity">SignUpActivity</string>
 </resources>

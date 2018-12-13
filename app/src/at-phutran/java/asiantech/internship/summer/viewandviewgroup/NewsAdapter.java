@@ -17,7 +17,7 @@ public class NewsAdapter extends BaseAdapter {
 
     private List<News> mListNews;
     private Context mContext;
-    private View mView;
+    private View mItemView;
 
     NewsAdapter(Context mContext, List<News> listNews) {
         this.mContext = mContext;
@@ -44,14 +44,14 @@ public class NewsAdapter extends BaseAdapter {
         News mDataNews = mListNews.get(position);
         LayoutInflater mLayoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         if (convertView == null) {
-            mView = mLayoutInflater.inflate(R.layout.single_item, null);
-            CircleImageView circleImageView = mView.findViewById(R.id.circleImage);
-            TextView tvContent = mView.findViewById(R.id.tvContent);
-            TextView tvTitle = mView.findViewById(R.id.tvTitle);
+            mItemView = mLayoutInflater.inflate(R.layout.single_item, null);
+            CircleImageView circleImageView = mItemView.findViewById(R.id.circleImage);
+            TextView tvContent = mItemView.findViewById(R.id.tvContent);
+            TextView tvTitle = mItemView.findViewById(R.id.tvTitle);
             tvContent.setText(mDataNews.getContent());
             circleImageView.setImageResource(mDataNews.getImage());
             tvTitle.setText(mDataNews.getTitle());
         }
-        return mView;
+        return mItemView;
     }
 }

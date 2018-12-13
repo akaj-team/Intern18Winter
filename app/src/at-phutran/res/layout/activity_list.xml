@@ -8,10 +8,18 @@
     tools:context=".viewandviewgroup.ListActivity">
 
     <Button
-        android:id="@+id/btnView"
+        android:id="@+id/btnExercise1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:background="@color/colorGreen"
-        android:text="@string/e1" />
+        android:text="@string/exercise1" />
+
+    <Button
+        android:id="@+id/btnExercise2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:background="@color/colorGreen"
+        android:text="@string/exercise2" />
 </LinearLayout>
