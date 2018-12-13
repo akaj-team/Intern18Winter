@@ -164,7 +164,7 @@ public class TimelineFragment extends Fragment implements RecyclerViewAdapter.On
                 mPicture = R.drawable.img_food_1;
                 break;
             case 2:
-                mPicture = R.drawable.img_food_2;
+                mPicture = R.drawable.img_food_test;
                 break;
             case 3:
                 mPicture = R.drawable.img_food_3;
