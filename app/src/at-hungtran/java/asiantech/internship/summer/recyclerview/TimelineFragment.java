@@ -13,44 +13,41 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import asiantech.internship.summer.R;
 import asiantech.internship.summer.model.TimelineItem;
 
 public class TimelineFragment extends Fragment {
-    private static final String COMMENTS = "チャン ヴァン フン ";
-    private static final String NAME = "Le Thi Quynh Chau ";
-    View view;
-    ArrayList<TimelineItem> timelineItems = new ArrayList<>();
+    private static final String COMMENT = "チャン ヴァン フン ";
+    private static final String NAME_OF_PEOPLE = "Le Thi Quynh Chau ";
+    List<TimelineItem> mTimelineItems = new ArrayList<>();
     RecyclerView recyclerView;
-    private Boolean isScroll = true;
-    private ProgressBar mLoading;
-    private int mCurrentItems, mTotalItems;
+    private Boolean mIsScroll = true;
+    private ProgressBar mProgressBarLoading;
+    private int mCurrentItem;
+    private int mTotalItem;
     private int mScrollOutItems;
-    private int mRand;
-    private int mImage;
     private int mLike = 0;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_timeline, container, false);
-        mLoading = view.findViewById(R.id.progress_bar);
-        initView();
+        View view = inflater.inflate(R.layout.fragment_timeline, container, false);
+        mProgressBarLoading = view.findViewById(R.id.progress_bar);
+        initView(view);
         return view;
     }
 
-    public void initView() {
+    public void initView(View view) {
         recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-        for (int i = 0; i < 10; i++) {
-            timelineItems.add(new TimelineItem(inputRandomImgAvt(), NAME + (i + 1), inputRandomImage(), COMMENTS + (i + 1), mLike, NAME + (i + 1)));
-        }
-        TimelineAdapter timelineAdapter = new TimelineAdapter(timelineItems, getActivity());
+        createTimelineItem();
+        TimelineAdapter timelineAdapter = new TimelineAdapter(mTimelineItems, getActivity());
         recyclerView.setAdapter(timelineAdapter);
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -61,109 +58,99 @@ public class TimelineFragment extends Fragment {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                mCurrentItems = layoutManager.getChildCount();
-                mTotalItems = layoutManager.getItemCount();
+                mCurrentItem = layoutManager.getChildCount();
+                mTotalItem = layoutManager.getItemCount();
                 mScrollOutItems = layoutManager.findFirstVisibleItemPosition();
-                if (isScroll && (mScrollOutItems + mCurrentItems == mTotalItems)) {
-                    isScroll = false;
-                    addDataMore();
+                if (mIsScroll && (mScrollOutItems + mCurrentItem == mTotalItem)) {
+                    mIsScroll = false;
+                    loadMoreData();
                 }
             }
         });
     }
 
-    private int inputRandomImage() {
+    private int getRandomImageId() {
         Random random = new Random();
-        mRand = random.nextInt(10) + 1;
-        switch (mRand) {
+        int rand = random.nextInt(10) + 1;
+        switch (rand) {
             case 1:
-                mImage = R.drawable.img_nature_11;
-                break;
+                return R.drawable.img_nature_11;
             case 2:
-                mImage = R.drawable.img_itachi;
-                break;
+                return R.drawable.img_itachi;
             case 3:
-                mImage = R.drawable.img_violet_evergarden;
-                break;
+                return R.drawable.img_violet_evergarden;
             case 4:
-                mImage = R.drawable.img_nature_4;
-                break;
+                return R.drawable.img_nature_4;
             case 5:
-                mImage = R.drawable.img_violet;
-                break;
+                return R.drawable.img_violet;
             case 6:
-                mImage = R.drawable.img_nature_7;
-                break;
+                return R.drawable.img_nature_7;
             case 7:
-                mImage = R.drawable.img_nature_8;
-                break;
+                return R.drawable.img_nature_8;
             case 8:
-                mImage = R.drawable.img_nature_6;
-                break;
+                return R.drawable.img_nature_6;
             case 9:
-                mImage = R.drawable.img_nature_1;
-                break;
+                return R.drawable.img_nature_1;
             default:
-                mImage = R.drawable.img_nature_4;
+                return R.drawable.img_nature_4;
         }
-        return mImage;
     }
 
     private int inputRandomImgAvt() {
         Random random = new Random();
-        mRand = random.nextInt(10) + 1;
-        switch (mRand) {
+        int rand = random.nextInt(10) + 1;
+        switch (rand) {
             case 1:
-                mImage = R.drawable.img_nature_11;
-                break;
+                return R.drawable.img_nature_11;
             case 2:
-                mImage = R.drawable.img_itachi;
-                break;
+                return R.drawable.img_itachi;
             case 3:
-                mImage = R.drawable.img_violet_evergarden;
-                break;
+                return R.drawable.img_violet_evergarden;
             case 4:
-                mImage = R.drawable.img_nature_1;
-                break;
+                return R.drawable.img_nature_4;
             case 5:
-                mImage = R.drawable.img_violet;
-                break;
+                return R.drawable.img_violet;
             case 6:
-                mImage = R.drawable.img_nature_7;
-                break;
+                return R.drawable.img_nature_7;
             case 7:
-                mImage = R.drawable.img_nature_8;
-                break;
+                return R.drawable.img_nature_8;
             case 8:
-                mImage = R.drawable.img_nature_3;
-                break;
+                return R.drawable.img_nature_6;
             case 9:
-                mImage = R.drawable.img_nature_4;
-                break;
+                return R.drawable.img_nature_1;
             default:
-                mImage = R.drawable.img_nature_6;
+                return R.drawable.img_nature_4;
         }
-        return mImage;
     }
 
-    private void addDataMore() {
-        mLoading.setVisibility(View.VISIBLE);
+    private void loadMoreData() {
+        mProgressBarLoading.setVisibility(View.VISIBLE);
         new Thread(() -> {
             try {
                 Thread.sleep(2000);
-                for (int i = mTotalItems; i < mTotalItems + 10; i++) {
-                    timelineItems.add(new TimelineItem(inputRandomImgAvt(), NAME + (i + 1), inputRandomImage(), COMMENTS + (i + 1), mLike, NAME + (i + 1)));
-                }
+                createTimelineItemLoadMore();
                 new Handler(Looper.getMainLooper()).post(new Runnable() {
                     @Override
                     public void run() {
-                        isScroll = true;
-                        mLoading.setVisibility(View.GONE);
+                        mIsScroll = true;
+                        mProgressBarLoading.setVisibility(View.GONE);
                         recyclerView.getAdapter().notifyDataSetChanged();
                     }
                 });
             } catch (InterruptedException ignored) {
             }
         }).start();
+    }
+
+    private void createTimelineItem() {
+        for (int i = 0; i < 10; i++) {
+            mTimelineItems.add(new TimelineItem(inputRandomImgAvt(), NAME_OF_PEOPLE + (i + 1), getRandomImageId(), COMMENT + (i + 1), mLike, NAME_OF_PEOPLE + (i + 1)));
+        }
+    }
+
+    private void createTimelineItemLoadMore() {
+        for (int i = mTotalItem; i < mTotalItem + 10; i++) {
+            mTimelineItems.add(new TimelineItem(inputRandomImgAvt(), NAME_OF_PEOPLE + (i + 1), getRandomImageId(), COMMENT + (i + 1), mLike, NAME_OF_PEOPLE + (i + 1)));
+        }
     }
 }

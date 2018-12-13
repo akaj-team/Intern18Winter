@@ -32,20 +32,21 @@ public class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.Timeli
 
     @Override
     public void onBindViewHolder(@NonNull TimelineViewHolder holder, int position) {
-        holder.mImgAvt.setImageResource(mTimelineItems.get(position).getImageAvt());
-        holder.mTvName.setText(mTimelineItems.get(position).getName());
-        holder.mImgImage.setImageResource(mTimelineItems.get(position).getImage());
+        TimelineItem item = mTimelineItems.get(position);
+        holder.mImgAvt.setImageResource(item.getImageAvt());
+        holder.mTvName.setText(item.getName());
+        holder.mImgImage.setImageResource(item.getImage());
 
         holder.mImgBtnLike.setOnClickListener(view -> {
-            mTimelineItems.get(position).setLike(mTimelineItems.get(position).getLike() + 1);
+            mTimelineItems.get(position).setLike(item.getLike() + 1);
             if (mTimelineItems.get(position).getLike() == 1) {
-                holder.mTvLike.setText(holder.itemView.getContext().getString(R.string.like, mTimelineItems.get(position).getLike()));
+                holder.mTvLike.setText(holder.itemView.getContext().getString(R.string.like, item.getLike()));
             } else {
-                holder.mTvLike.setText(holder.itemView.getContext().getString(R.string.likes, mTimelineItems.get(position).getLike()));
+                holder.mTvLike.setText(holder.itemView.getContext().getString(R.string.likes, item.getLike()));
             }
         });
-        holder.mTvCommenterName.setText(mTimelineItems.get(position).getCommenterName());
-        holder.mTvDescription.setText(mTimelineItems.get(position).getDescription());
+        holder.mTvCommenterName.setText(item.getCommenterName());
+        holder.mTvDescription.setText(item.getDescription());
     }
 
     @Override
