@@ -9,4 +9,10 @@
     <string name="external">External</string>
     <string name="updateSuccessfully">Update Successfully!</string>
     <string name="updateFailed">Update Failed!</string>
+    <string name="userName">Username</string>
+    <string name="passWord">Password</string>
+    <string name="login">Login</string>
+    <string name="sharePreference">SHARE PREFERENCE</string>
+    <string name="internalAndExternal">INTERNAL AND EXTERNAL</string>
+    <string name="loginSuccessful">Login successful!</string>
 </resources>

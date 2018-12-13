@@ -22,7 +22,8 @@
             android:focusable="false"
             android:hint="@string/maNhanVien"
             android:inputType="text"
-            android:padding="5dp" />
+            android:padding="5dp"
+            tools:ignore="Autofill" />
 
         <EditText
             android:id="@+id/edtNameEmployee"
@@ -30,7 +31,8 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:hint="@string/tenNhanVien"
-            android:inputType="text" />
+            android:inputType="text"
+            tools:ignore="Autofill" />
 
     </LinearLayout>
 
@@ -43,29 +45,32 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/update" />
+            android:enabled="false"
+            android:text="@string/update"
+            tools:ignore="ButtonStyle" />
 
         <Button
             android:id="@+id/btnInsert"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/insert" />
+            android:text="@string/insert"
+            tools:ignore="ButtonStyle" />
 
         <Button
             android:id="@+id/btnDelete"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/delete" />
+            android:enabled="false"
+            android:text="@string/delete"
+            tools:ignore="ButtonStyle" />
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerViewEmployee"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-
-    </android.support.v7.widget.RecyclerView>
+        android:orientation="vertical" />
 
 </LinearLayout>

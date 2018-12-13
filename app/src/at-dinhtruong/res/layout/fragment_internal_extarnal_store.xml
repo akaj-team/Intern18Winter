@@ -1,7 +1,8 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:baselineAligned="false"
     android:gravity="center"
     android:orientation="horizontal">
 
@@ -17,7 +18,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/internal"
-            android:textStyle="bold" />
+            android:inputType="text"
+            android:textStyle="bold"
+            tools:ignore="Autofill" />
 
         <Button
             android:id="@+id/btnInternal"
@@ -38,7 +41,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/external"
-            android:textStyle="bold" />
+            android:inputType="text"
+            android:textStyle="bold"
+            tools:ignore="Autofill" />
 
         <Button
             android:id="@+id/btnExternal"
@@ -46,6 +51,5 @@
             android:layout_height="wrap_content"
             android:text="@string/external" />
     </LinearLayout>
-
 
 </LinearLayout>

@@ -14,43 +14,44 @@ import asiantech.internship.summer.models.Company;
 
 public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.CompanyViewHolder> {
     private List<Company> mCompanies;
-    public onClickItem mOnClickItem;
+    private onClickItem mOnClickItem;
 
-    public class CompanyViewHolder extends RecyclerView.ViewHolder {
-        public TextView mTvNameCompany;
-
-        public CompanyViewHolder(View v) {
-            super(v);
-            mTvNameCompany = v.findViewById(R.id.custom_view_item);
-        }
-    }
-
-    public CompanyAdapter(List<Company> companies, onClickItem onClickItem) {
+    CompanyAdapter(List<Company> companies, onClickItem onClickItem) {
         this.mCompanies = companies;
         this.mOnClickItem = onClickItem;
-
     }
 
+    @NonNull
     @Override
-    public CompanyAdapter.CompanyViewHolder onCreateViewHolder(ViewGroup viewGroup,
-                                                               int viewType) {
+    public CompanyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(viewGroup.getContext());
-        View itView = layoutInflater.inflate(R.layout.custom_view_item, viewGroup, false);
+        View itView = layoutInflater.inflate(R.layout.item_company_employee, viewGroup, false);
         return new CompanyViewHolder(itView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CompanyViewHolder holder, final int position) {
-        Company company = mCompanies.get(position);
-        final int idCompany = company.getIdCompany();
-        CompanyViewHolder companyViewHolder = holder;
-        companyViewHolder.mTvNameCompany.setText(company.getNameCompany());
-        companyViewHolder.mTvNameCompany.setOnClickListener(view -> mOnClickItem.onSelectItem(idCompany));
+    public void onBindViewHolder(@NonNull CompanyViewHolder holder, int position) {
+        holder.initDataCompany(mCompanies.get(position));
     }
 
     @Override
     public int getItemCount() {
         return mCompanies.size();
+    }
+
+    class CompanyViewHolder extends RecyclerView.ViewHolder {
+        private TextView mTvNameCompany;
+
+        CompanyViewHolder(View v) {
+            super(v);
+            mTvNameCompany = v.findViewById(R.id.custom_view_item);
+            mTvNameCompany.setOnClickListener(view ->
+                    mOnClickItem.onSelectItem(mCompanies.get(getAdapterPosition()).getIdCompany()));
+        }
+
+        private void initDataCompany(Company company) {
+            mTvNameCompany.setText(company.getNameCompany());
+        }
     }
 
     public interface onClickItem {

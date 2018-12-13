@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,11 +23,8 @@ public class DBManager extends SQLiteOpenHelper {
     private static final String NAME_EMPLOYEE = "name_employee";
     private static final String COMPANY_ID = "company_id";
 
-    private Context context;
-
     public DBManager(Context context) {
         super(context, DATABASE_NAME, null, 1);
-        this.context = context;
     }
 
     @Override
@@ -178,7 +174,7 @@ public class DBManager extends SQLiteOpenHelper {
         if (count == 0) {
             for (int i = 1; i <= 20; i++) {
                 Random rd = new Random();
-                int idCompany = rd.nextInt(6) + 1;
+                int idCompany = rd.nextInt(5) + 1;
                 this.addEmployee(new Employee(idCompany, "Nhân viên " + i));
             }
         }
@@ -192,13 +188,7 @@ public class DBManager extends SQLiteOpenHelper {
             this.addCompany(new Company("Công ty 3"));
             this.addCompany(new Company("Công ty 4"));
             this.addCompany(new Company("Công ty 5"));
-        } else {
         }
     }
-
-    private int onRandomNumber() {
-        Random random = new Random();
-        int numberRandom = random.nextInt(6) + 1;
-        return numberRandom;
-    }
 }
+

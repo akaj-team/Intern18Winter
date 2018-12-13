@@ -21,30 +21,23 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.Employ
     @Override
     public EmployeeAdapter.EmployeeViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(viewGroup.getContext());
-        View itView = layoutInflater.inflate(R.layout.custom_view_item, viewGroup, false);
+        View itView = layoutInflater.inflate(R.layout.item_company_employee, viewGroup, false);
         return new EmployeeViewHolder(itView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull EmployeeAdapter.EmployeeViewHolder holder, final int position) {
         final Employee employee = employees.get(position);
-        EmployeeViewHolder employeeViewHolder = holder;
-        employeeViewHolder.mTvEmployee.setText(employee.getNameEmployee());
-        employeeViewHolder.mTvEmployee.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mOnClickEmployee.onSelectEmployee(employee.getIdEmployee());
-            }
-        });
-
+        holder.mTvEmployee.setText(employee.getNameEmployee());
     }
 
     public class EmployeeViewHolder extends RecyclerView.ViewHolder {
         private TextView mTvEmployee;
 
-        public EmployeeViewHolder(View itemView) {
+        EmployeeViewHolder(View itemView) {
             super(itemView);
             mTvEmployee = itemView.findViewById(R.id.custom_view_item);
+            mTvEmployee.setOnClickListener(view -> mOnClickEmployee.onSelectEmployee(employees.get(getAdapterPosition()).getIdEmployee()));
         }
     }
 
@@ -53,7 +46,7 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.Employ
         return employees.size();
     }
 
-    EmployeeAdapter(List<Employee> employees, RecyclerView recyclerView, onClickEmployee onClickEmployee) {
+    EmployeeAdapter(List<Employee> employees, onClickEmployee onClickEmployee) {
         this.employees = employees;
         this.mOnClickEmployee = onClickEmployee;
 

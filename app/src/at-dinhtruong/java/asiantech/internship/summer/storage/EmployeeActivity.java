@@ -5,10 +5,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -20,11 +20,9 @@ public class EmployeeActivity extends AppCompatActivity implements EmployeeAdapt
     private int mIdCompany;
     private EditText mEdtIdEmployee;
     private EditText mEdtNameEmployee;
-    private Button mBtnInsert;
+    private EmployeeAdapter mEmployeeAdapter;
     private Button mBtnUpdate;
     private Button mBtnDelete;
-    private RecyclerView mRecyclerView;
-    private EmployeeAdapter mEmployeeAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,25 +35,25 @@ public class EmployeeActivity extends AppCompatActivity implements EmployeeAdapt
     }
 
     private void initEmployee() {
-        mRecyclerView = findViewById(R.id.recyclerViewEmployee);
+        RecyclerView recyclerView = findViewById(R.id.recyclerViewEmployee);
         mEdtIdEmployee = findViewById(R.id.edtIdEmployee);
         mEdtNameEmployee = findViewById(R.id.edtNameEmployee);
         mBtnUpdate = findViewById(R.id.btnUpdate);
         mBtnDelete = findViewById(R.id.btnDelete);
-        mBtnInsert = findViewById(R.id.btnInsert);
+        Button btnInsert = findViewById(R.id.btnInsert);
         mBtnUpdate.setOnClickListener(this);
         mBtnDelete.setOnClickListener(this);
-        mBtnInsert.setOnClickListener(this);
-        mRecyclerView.setHasFixedSize(true);
+        btnInsert.setOnClickListener(this);
+        recyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        mRecyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setLayoutManager(linearLayoutManager);
         List<Employee> employees = mDbManager.getAllEmployee();
         if (employees.size() == 0) {
             mDbManager.createDefaultEmployee();
         }
         List<Employee> employeesById = mDbManager.getAllEmployeeById(mIdCompany);
-        mEmployeeAdapter = new EmployeeAdapter(employeesById, mRecyclerView, this);
-        mRecyclerView.setAdapter(mEmployeeAdapter);
+        mEmployeeAdapter = new EmployeeAdapter(employeesById, this);
+        recyclerView.setAdapter(mEmployeeAdapter);
     }
 
     @Override
@@ -63,6 +61,8 @@ public class EmployeeActivity extends AppCompatActivity implements EmployeeAdapt
         Employee employee = mDbManager.getEmployeeById(idEmployee);
         mEdtIdEmployee.setText(String.valueOf(employee.getIdEmployee()));
         mEdtNameEmployee.setText(employee.getNameEmployee());
+        mBtnUpdate.setEnabled(true);
+        mBtnDelete.setEnabled(true);
     }
 
     @Override
@@ -76,17 +76,23 @@ public class EmployeeActivity extends AppCompatActivity implements EmployeeAdapt
         Employee employee = new Employee(idEmployee, mIdCompany, nameEmployee);
         switch (view.getId()) {
             case R.id.btnUpdate: {
-                if (mDbManager.UpdateEmployee(employee) > 0) {
+                if (nameEmployee.equals("")) {
+                    Toast.makeText(getApplicationContext(), "Please fill the employee name!", Toast.LENGTH_LONG).show();
+                } else if (!nameEmployee.equals("") && mDbManager.UpdateEmployee(employee) > 0) {
                     mEmployeeAdapter.notifyDataSetChanged();
                 } else {
-                    Log.d("xxxx-xxxx", "onClick: " + "false" + idEmployee + "---" + nameEmployee);
+                    Toast.makeText(getApplicationContext(), "Update Error!", Toast.LENGTH_LONG).show();
                 }
                 mEmployeeAdapter.notifyDataSetChanged();
                 break;
             }
             case R.id.btnInsert: {
-                mDbManager.addEmployee(employee);
-                mEmployeeAdapter.notifyDataSetChanged();
+                if (nameEmployee.equals("")) {
+                    Toast.makeText(getApplicationContext(), "Please fill the employee name!", Toast.LENGTH_LONG).show();
+                } else {
+                    mDbManager.addEmployee(employee);
+                    mEmployeeAdapter.notifyDataSetChanged();
+                }
                 break;
             }
             case R.id.btnDelete: {

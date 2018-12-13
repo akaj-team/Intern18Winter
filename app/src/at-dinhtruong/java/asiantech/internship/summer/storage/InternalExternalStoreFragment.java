@@ -6,6 +6,7 @@ import android.content.ContextWrapper;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -23,12 +24,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.util.Objects;
 
 import asiantech.internship.summer.R;
 
 public class InternalExternalStoreFragment extends Fragment implements View.OnClickListener {
-    private Button mBtnInternal;
-    private Button mBtnExternal;
     private EditText mEdtInternal;
     private EditText mEdtExternal;
     private final String FILE_NAME = "internalStorage.txt";
@@ -47,13 +47,13 @@ public class InternalExternalStoreFragment extends Fragment implements View.OnCl
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ContextWrapper contextWrapper = new ContextWrapper(
-                getActivity().getApplicationContext());
+                Objects.requireNonNull(getActivity()).getApplicationContext());
         File directory = contextWrapper.getDir(FILE_PATH, Context.MODE_PRIVATE);
         myInternalFile = new File(directory, FILE_NAME);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_internal_extarnal_store, container, false);
         initView(view);
@@ -63,18 +63,23 @@ public class InternalExternalStoreFragment extends Fragment implements View.OnCl
     private void initView(View view) {
         mEdtInternal = view.findViewById(R.id.edtInternal);
         mEdtExternal = view.findViewById(R.id.edtExternal);
-        mBtnInternal = view.findViewById(R.id.btnInternal);
-        mBtnInternal.setOnClickListener(this);
-        mBtnExternal = view.findViewById(R.id.btnExternal);
-        mBtnExternal.setOnClickListener(this);
-        String myData = readInternalFile();
-        if (!myData.equals("")) {
-            mEdtInternal.setText(myData);
+        Button btnInternal = view.findViewById(R.id.btnInternal);
+        Button btnExternal = view.findViewById(R.id.btnExternal);
+        btnInternal.setOnClickListener(this);
+        btnExternal.setOnClickListener(this);
+        String myDataInternal = readInternalFile();
+        if (!myDataInternal.equals("")) {
+            mEdtInternal.setText(myDataInternal);
         } else {
             mEdtInternal.setText("");
         }
-        readExternalFile();
-
+        askPermissionAndReadFile();
+        String myDataExternal = readExternalFile();
+        if (!myDataExternal.equals("")) {
+            mEdtExternal.setText(myDataExternal);
+        } else {
+            mEdtExternal.setText("");
+        }
     }
 
     @Override
@@ -106,13 +111,10 @@ public class InternalExternalStoreFragment extends Fragment implements View.OnCl
         }
     }
 
-    // Với Android Level >= 23 hỏi người dùng cho phép các quyền với thiết bị
     private boolean askPermission(int requestId, String permissionName) {
         if (android.os.Build.VERSION.SDK_INT >= 23) {
-            // Kiểm tra quyền
-            int permission = ActivityCompat.checkSelfPermission(getActivity(), permissionName);
+            int permission = ActivityCompat.checkSelfPermission(Objects.requireNonNull(getActivity()), permissionName);
             if (permission != PackageManager.PERMISSION_GRANTED) {
-                // Nếu không có quyền,nhắc người dùng cho phép.
                 this.requestPermissions(
                         new String[]{permissionName},
                         requestId
@@ -123,10 +125,9 @@ public class InternalExternalStoreFragment extends Fragment implements View.OnCl
         return true;
     }
 
-    // Khi yêu cầu hỏi người dùng được trả về (Chấp nhận hoặc không chấp nhận).
     @Override
     public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
+                                           @NonNull String permissions[], @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (grantResults.length > 0) {
             switch (requestCode) {
@@ -142,7 +143,7 @@ public class InternalExternalStoreFragment extends Fragment implements View.OnCl
                 }
             }
         } else {
-            Toast.makeText(getActivity().getApplicationContext(), "Permission Cancelled!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(), "Permission Cancelled!", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -158,51 +159,47 @@ public class InternalExternalStoreFragment extends Fragment implements View.OnCl
             myOutWriter.append(data);
             myOutWriter.close();
             fOut.close();
-            Toast.makeText(getActivity().getApplicationContext(), fileName + " saved", Toast.LENGTH_LONG).show();
+            Toast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(), fileName + " saved", Toast.LENGTH_LONG).show();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private void readExternalFile() {
+    private String readExternalFile() {
         File extStore = Environment.getExternalStorageDirectory();
         String path = extStore.getAbsolutePath() + "/" + fileName;
-        String s = "";
+        String s;
         String fileContent = "";
         try {
             File myFile = new File(path);
             FileInputStream fIn = new FileInputStream(myFile);
             BufferedReader myReader = new BufferedReader(
                     new InputStreamReader(fIn));
-
             while ((s = myReader.readLine()) != null) {
-                //fileContent += s + "\n";
                 fileContent += s;
             }
             myReader.close();
-            mEdtExternal.setText(fileContent);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Toast.makeText(getActivity().getApplicationContext(), fileContent, Toast.LENGTH_LONG).show();
+        return fileContent;
     }
 
     private String readInternalFile() {
-        String myData = "";
+        StringBuilder myData = new StringBuilder();
         try {
-            FileInputStream fis = new FileInputStream(myInternalFile);
-            DataInputStream in = new DataInputStream(fis);
-            BufferedReader br = new BufferedReader(
-                    new InputStreamReader(in));
+            FileInputStream fileInputStream = new FileInputStream(myInternalFile);
+            DataInputStream dataInputStream = new DataInputStream(fileInputStream);
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(dataInputStream));
             String strLine;
-            while ((strLine = br.readLine()) != null) {
-                myData = myData + strLine;
+            while (null != (strLine = bufferedReader.readLine())) {
+                myData.append(strLine);
             }
-            in.close();
+            dataInputStream.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return myData;
+        return myData.toString();
     }
 
     private void writeInternalFile() {

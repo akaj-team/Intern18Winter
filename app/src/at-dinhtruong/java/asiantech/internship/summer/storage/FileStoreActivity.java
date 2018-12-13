@@ -13,21 +13,17 @@ public class FileStoreActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_file_store);
-        ViewPager mViewPagerFileStore = findViewById(R.id.viewpager);
-        setupViewPager(mViewPagerFileStore);
-        TabLayout mTlFileStore = findViewById(R.id.tabs);
-        mTlFileStore.setupWithViewPager(mViewPagerFileStore);
-
-
+        ViewPager viewPagerFileStore = findViewById(R.id.viewpager);
+        setupViewPager(viewPagerFileStore);
+        TabLayout tlFileStore = findViewById(R.id.tabs);
+        tlFileStore.setupWithViewPager(viewPagerFileStore);
     }
 
     private void setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new SharePreferenceFragment(), "SHARE PREFERENCE");
-        adapter.addFragment(new InternalExternalStoreFragment(), "INTERNAL AND EXTERNAL");
-        adapter.addFragment(new SqliteFragment(), "SQLITE");
-        viewPager.setAdapter(adapter);
+        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+        viewPagerAdapter.addFragment(new SharePreferenceFragment(), getString(R.string.sharePreference));
+        viewPagerAdapter.addFragment(new InternalExternalStoreFragment(), getString(R.string.internalAndExternal));
+        viewPagerAdapter.addFragment(new SqliteFragment(), getString(R.string.sQLite));
+        viewPager.setAdapter(viewPagerAdapter);
     }
-
-
 }
