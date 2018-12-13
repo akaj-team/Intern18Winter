@@ -82,7 +82,12 @@ public class DrawerLayoutActivity extends AppCompatActivity implements ItemAdapt
         builder.setTitle(R.string.addPhoto);
         builder.setItems(itemsDialog, (dialog, item) -> {
             if (itemsDialog[item].equals(TAKE_PHOTO)) {
-                cameraIntent();
+                if (requestPermission() == false) {
+                    Toast.makeText(DrawerLayoutActivity.this, getString(R.string.permissionAccepted), Toast.LENGTH_SHORT)
+                            .show();
+                } else {
+                    cameraIntent();
+                }
             } else if (itemsDialog[item].equals(CHOOSE_FROM_LIBRARY)) {
                 galleryIntent();
             } else if (itemsDialog[item].equals(CANCEL)) {

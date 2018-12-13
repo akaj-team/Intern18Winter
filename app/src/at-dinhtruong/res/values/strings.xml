@@ -56,7 +56,9 @@
     <string name="chooseFromLibrary">Choose from Library</string>
     <string name="cancel">Cancel</string>
     <string name="permissionDenied">Permission Denied</string>
+    <string name="permissionAccepted">Permission Accepted</string>
     <string name="data">data</string>
     <string name="selectPicture">Select Picture</string>
     <string name="addPhoto">Add Photo!</string>
+    <string name="drawerLayout">DrawerLayout</string>
 </resources>

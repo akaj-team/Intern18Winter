@@ -58,7 +58,7 @@ public class Item {
 
     public static List<Item> createItem() {
         List<Item> items = new ArrayList<>();
-        items.add(new Item(R.drawable.img_avatar, "dinh.truong@asiantech.vn", false, null, null));
+        items.add(new Item(R.drawable.img_avatar_drawer_layout, "dinh.truong@asiantech.vn", false, null, null));
         items.add(new Item(R.drawable.bg_inbox, "Inbox", false, null, null));
         items.add(new Item(R.drawable.bg_outbox, "Outbox", false, null, null));
         items.add(new Item(R.drawable.bg_trash, "Trash", false, null, null));

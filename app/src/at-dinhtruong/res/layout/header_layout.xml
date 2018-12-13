@@ -3,7 +3,7 @@
     android:id="@+id/rlHeader"
     android:layout_width="match_parent"
     android:layout_height="170dp"
-    android:background="@drawable/bg_header"
+    android:background="@drawable/bg_header_drawer_layout"
     android:orientation="vertical"
     android:padding="15dp">
 
@@ -11,7 +11,7 @@
         android:id="@+id/imgAvatar"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:src="@drawable/img_avatar" />
+        android:src="@drawable/img_avatar_drawer_layout" />
 
     <TextView
         android:id="@+id/tvEmail"

@@ -33,5 +33,11 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:text="@string/recyclerView" />
+    <Button
+        android:id="@+id/btnDrawerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="@string/drawerLayout" />
 
 </LinearLayout>
