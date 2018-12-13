@@ -52,20 +52,22 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         private static final String LIKE_SINGULAR = "like";
         private static final String LIKE_PLURAL = "likes";
         private ImageView mImgAvatar;
-        private TextView mUsername;
+        private TextView mTvUsername;
         private ImageView mImgPictures;
-        private TextView mCountLike;
+        private TextView mTvCountLike;
         private ImageButton mImgBtnLike;
-        private TextView mComment;
+        private TextView mTvCommenter;
+        private TextView mTvComment;
 
         private TimelineViewHolder(View itemView) {
             super(itemView);
             mImgAvatar = itemView.findViewById(R.id.imgAvatar);
-            mUsername = itemView.findViewById(R.id.tvUsername);
+            mTvUsername = itemView.findViewById(R.id.tvUsername);
             mImgPictures = itemView.findViewById(R.id.imgPicture);
-            mCountLike = itemView.findViewById(R.id.tvCountLike);
+            mTvCountLike = itemView.findViewById(R.id.tvCountLike);
             mImgBtnLike = itemView.findViewById(R.id.imgBtnLike);
-            mComment = itemView.findViewById(R.id.tvComment);
+            mTvCommenter = itemView.findViewById(R.id.tvCommenter);
+            mTvComment = itemView.findViewById(R.id.tvComment);
             this.setIsRecyclable(false);
             mImgBtnLike.setOnClickListener(view -> mListener.onClickLike(getAdapterPosition()));
         }
@@ -75,13 +77,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             TimelineItem item = mItems.get(position);
             if (item != null) {
                 mImgAvatar.setImageResource(item.getAvatar());
-                mUsername.setText(item.getUsername());
+                mTvUsername.setText(item.getUsername());
                 mImgPictures.setImageResource(item.getPicture());
-                mComment.setText(item.getComment());
+                mTvCommenter.setText(item.getCommenter());
+                mTvComment.setText(item.getComment());
                 if (mItems.get(position).getCountLike() < 2) {
-                    mCountLike.setText(item.getCountLike() + " " + LIKE_SINGULAR);
+                    mTvCountLike.setText(item.getCountLike() + " " + LIKE_SINGULAR);
                 } else {
-                    mCountLike.setText(item.getCountLike() + " " + LIKE_PLURAL);
+                    mTvCountLike.setText(item.getCountLike() + " " + LIKE_PLURAL);
                 }
             }
         }

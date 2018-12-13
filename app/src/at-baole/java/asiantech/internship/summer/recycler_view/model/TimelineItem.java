@@ -4,14 +4,17 @@ public class TimelineItem {
     private int mAvatar;
     private int mPicture;
     private int mCountLike;
-    private String mComment;
     private String mUsername;
+    private String mCommenter;
+    private String mComment;
 
-    public TimelineItem(int avatar, String username, int picture, int countLike, String comment) {
+
+    public TimelineItem(int avatar, String username, int picture, int countLike, String commenter, String comment) {
         this.mAvatar = avatar;
         this.mUsername = username;
         this.mPicture = picture;
         this.mCountLike = countLike;
+        this.mCommenter = commenter;
         this.mComment = comment;
     }
 
@@ -45,6 +48,14 @@ public class TimelineItem {
 
     public void setCountLike(int countLike) {
         this.mCountLike = countLike;
+    }
+
+    public String getCommenter() {
+        return mCommenter;
+    }
+
+    public void setCommenter(String commenter) {
+        this.mCommenter = commenter;
     }
 
     public String getComment() {

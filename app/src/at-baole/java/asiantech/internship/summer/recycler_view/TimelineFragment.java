@@ -91,7 +91,7 @@ public class TimelineFragment extends Fragment implements RecyclerViewAdapter.On
     public void setData() {
         mItems = new ArrayList<>();
         for (int i = 0; i < mTotalItem; i++) {
-            mItems.add(new TimelineItem(setAvatar(), getString(R.string.username), setPicture(), mCountLike, getString(R.string.comment)));
+            mItems.add(new TimelineItem(setAvatar(), getString(R.string.username) + " " + (i + 1), setPicture(), mCountLike, getString(R.string.username) +  " " + (i + 1), getString(R.string.comment)));
         }
     }
 
@@ -105,7 +105,7 @@ public class TimelineFragment extends Fragment implements RecyclerViewAdapter.On
             try {
                 Thread.sleep(2000);
                 for (int i = mSumItem; i < mSumItem + mTotalItem; i++) {
-                    mItems.add(new TimelineItem(setAvatar(), getString(R.string.username), setPicture(), mCountLike, getString(R.string.comment)));
+                    mItems.add(new TimelineItem(setAvatar(), getString(R.string.username) + " " + (i + 1), setPicture(), mCountLike, getString(R.string.username) + " " + (i + 1), getString(R.string.comment)));
                 }
                 new Handler(Looper.getMainLooper()).post(() -> {
                     isScrolled = true;
@@ -164,7 +164,7 @@ public class TimelineFragment extends Fragment implements RecyclerViewAdapter.On
                 mPicture = R.drawable.img_food_1;
                 break;
             case 2:
-                mPicture = R.drawable.img_food_test;
+                mPicture = R.drawable.img_food_2;
                 break;
             case 3:
                 mPicture = R.drawable.img_food_3;
@@ -193,6 +193,4 @@ public class TimelineFragment extends Fragment implements RecyclerViewAdapter.On
         }
         return mPicture;
     }
-
-
 }
