@@ -1,4 +1,4 @@
-package asiantech.internship.summer.model;
+package asiantech.internship.summer.models;
 
 import android.graphics.Bitmap;
 import android.net.Uri;

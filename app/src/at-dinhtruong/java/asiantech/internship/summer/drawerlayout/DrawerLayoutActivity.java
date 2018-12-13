@@ -27,7 +27,7 @@ import android.widget.Toast;
 import java.util.List;
 import java.util.Objects;
 
-import asiantech.internship.summer.model.Item;
+import asiantech.internship.summer.models.Item;
 import asiantech.internship.summer.R;
 
 public class DrawerLayoutActivity extends AppCompatActivity implements ItemAdapter.IMethodCaller {
@@ -124,7 +124,7 @@ public class DrawerLayoutActivity extends AppCompatActivity implements ItemAdapt
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
             case REQUEST_CODE_ASK_PERMISSIONS:
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {

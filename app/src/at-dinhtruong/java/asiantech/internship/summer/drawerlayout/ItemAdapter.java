@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import asiantech.internship.summer.model.Item;
+import asiantech.internship.summer.models.Item;
 import asiantech.internship.summer.R;
 import de.hdodenhof.circleimageview.CircleImageView;
 
