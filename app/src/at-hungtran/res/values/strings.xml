@@ -1,7 +1,16 @@
 <resources>
     <string name="app_name">Intern18Summer</string>
+    <string name="beatrice_maxwell">Beatrice Maxwell</string>
+    <string name="slovakia">Slovakia</string>
+    <string name="posts">Posts</string>
+    <string name="bookmarks">Bookmarks</string>
+    <string name="news">News</string>
+    <string name="loadding">loadding</string>
+    <string name="content">content</string>
+    <string name="viewgroup">W1-D3 View and ViewGroup</string>
+    <string name="profile">Profile</string>
     <string name="todo">TODO</string>
-    <string name="allowEmailFromOther">Allow_email_from_other</string>
+    <string name="allowEmailFromOther">Allow email from other</string>
     <string name="emailSubscriptions">Email Subscriptions</string>
     <string name="female">Female</string>
     <string name="male">Male</string>
