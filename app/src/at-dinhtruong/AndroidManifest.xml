@@ -21,7 +21,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".viewandviewgroup.ViewAndViewGroupActivity" />
-        <activity android:name=".eventandlistener.EventAndListenerActivity"/>
+        <activity android:name=".eventandlistener.EventAndListenerActivity" />
+        <activity android:name=".activityandfragment.LoginActivity" />
+        <activity android:name=".activityandfragment.InformationActivity" />
     </application>
 
 </manifest>
