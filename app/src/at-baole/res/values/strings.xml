@@ -19,6 +19,7 @@
     <string name="content">content</string>
     <string name="loading">loading</string>
     <string name="liked">Liked</string>
+    <string name="like">like</string>
     <string name="likes">likes</string>
     <string name="zerolike">%s like</string>
     <string name="username">LE QUOC BAO</string>

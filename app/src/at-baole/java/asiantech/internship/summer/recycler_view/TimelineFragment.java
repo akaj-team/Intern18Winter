@@ -24,7 +24,7 @@ public class TimelineFragment extends Fragment implements RecyclerViewAdapter.On
     private int mAvatar;
     private int mPicture;
     private int mSumItem;
-    private int mCountLike;
+    private int mCountLike = 0;
     private int mCurrentItem;
     private int mScrolledItem;
     private int mTotalItem = 10;
@@ -84,7 +84,7 @@ public class TimelineFragment extends Fragment implements RecyclerViewAdapter.On
     @Override
     public void onClickLike(int position) {
         Toast.makeText(getContext(), R.string.liked, Toast.LENGTH_LONG).show();
-        mItems.get(position).setmCountLike(mItems.get(position).getmCountLike() + 1);
+        mItems.get(position).setCountLike(mItems.get(position).getCountLike() + 1);
         mAdapter.notifyDataSetChanged();
     }
 

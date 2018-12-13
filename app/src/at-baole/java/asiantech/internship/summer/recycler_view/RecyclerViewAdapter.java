@@ -1,5 +1,6 @@
 package asiantech.internship.summer.recycler_view;
 
+import android.annotation.SuppressLint;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,7 +19,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private List<TimelineItem> mItems;
     private OnItemListener mListener;
 
-    public RecyclerViewAdapter(List<TimelineItem> listUsers, OnItemListener listener) {
+
+    RecyclerViewAdapter(List<TimelineItem> listUsers, OnItemListener listener) {
         this.mItems = listUsers;
         this.mListener = listener;
     }
@@ -46,7 +48,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         void onClickLike(int position);
     }
 
-    public class TimelineViewHolder extends RecyclerView.ViewHolder {
+    class TimelineViewHolder extends RecyclerView.ViewHolder {
+        private static final String LIKE_SINGULAR = "like";
+        private static final String LIKE_PLURAL = "likes";
         private ImageView mImgAvatar;
         private TextView mUsername;
         private ImageView mImgPictures;
@@ -66,14 +70,19 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             mImgBtnLike.setOnClickListener(view -> mListener.onClickLike(getAdapterPosition()));
         }
 
+        @SuppressLint("SetTextI18n")
         private void bindView(int position) {
             TimelineItem item = mItems.get(position);
             if (item != null) {
-                mImgAvatar.setImageResource(item.getmAvatar());
-                mUsername.setText(item.getmUsername());
-                mImgPictures.setImageResource(item.getmPicture());
-                mComment.setText(item.getmComment());
-                mCountLike.setText(itemView.getContext().getString(R.string.zerolike, item.getmCountLike()));
+                mImgAvatar.setImageResource(item.getAvatar());
+                mUsername.setText(item.getUsername());
+                mImgPictures.setImageResource(item.getPicture());
+                mComment.setText(item.getComment());
+                if (mItems.get(position).getCountLike() < 2) {
+                    mCountLike.setText(item.getCountLike() + " " + LIKE_SINGULAR);
+                } else {
+                    mCountLike.setText(item.getCountLike() + " " + LIKE_PLURAL);
+                }
             }
         }
     }

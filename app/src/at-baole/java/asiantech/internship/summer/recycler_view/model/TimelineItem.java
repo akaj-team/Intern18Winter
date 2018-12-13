@@ -15,43 +15,43 @@ public class TimelineItem {
         this.mComment = comment;
     }
 
-    public int getmAvatar() {
+    public int getAvatar() {
         return mAvatar;
     }
 
-    public void setmAvatar(int avatar) {
+    public void setAvatar(int avatar) {
         this.mAvatar = avatar;
     }
 
-    public String getmUsername() {
+    public String getUsername() {
         return mUsername;
     }
 
-    public void setmUsername(String username) {
+    public void setUsername(String username) {
         this.mUsername = username;
     }
 
-    public int getmPicture() {
+    public int getPicture() {
         return mPicture;
     }
 
-    public void setmPicture(int picture) {
+    public void setPicture(int picture) {
         this.mPicture = picture;
     }
 
-    public int getmCountLike() {
+    public int getCountLike() {
         return mCountLike;
     }
 
-    public void setmCountLike(int countLike) {
+    public void setCountLike(int countLike) {
         this.mCountLike = countLike;
     }
 
-    public String getmComment() {
+    public String getComment() {
         return mComment;
     }
 
-    public void setmComment(String comment) {
+    public void setComment(String comment) {
         this.mComment = comment;
     }
 }
