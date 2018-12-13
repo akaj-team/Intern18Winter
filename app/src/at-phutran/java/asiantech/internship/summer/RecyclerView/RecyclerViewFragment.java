@@ -24,7 +24,6 @@ import asiantech.internship.summer.R;
 
 public class RecyclerViewFragment extends Fragment implements RecyclerViewAdapter.OnclickLike {
     private static final int NUM_OF_LIKE_DEFAULT = 0;
-    private static final int START_ONE_PAGE = 0;
     private static final int NUM_OF_ITEM_IN_ONE_PAGE = 10;
     private RecyclerView mRecyclerView;
     private Boolean isScroll = true;
@@ -34,8 +33,8 @@ public class RecyclerViewFragment extends Fragment implements RecyclerViewAdapte
     private int mScrollOutItem;
     private int mRandom;
     private int mImage;
-    private List<User> users;
-    private RecyclerViewAdapter recyclerViewAdapter;
+    private List<User> mUsers;
+    private RecyclerViewAdapter mRecyclerViewAdapter;
 
     @Nullable
     @Override
@@ -57,10 +56,10 @@ public class RecyclerViewFragment extends Fragment implements RecyclerViewAdapte
         dividerItemDecoration.setDrawable(drawable);
         mRecyclerView.addItemDecoration(dividerItemDecoration);
         //listUser
-        users = new ArrayList<>();
-        inputData(START_ONE_PAGE, NUM_OF_ITEM_IN_ONE_PAGE);
-        recyclerViewAdapter = new RecyclerViewAdapter(users, ((RecyclerViewActivity) getActivity()).getApplicationContext(), this);
-        mRecyclerView.setAdapter(recyclerViewAdapter);
+        mUsers = new ArrayList<>();
+        creatData();
+        mRecyclerViewAdapter = new RecyclerViewAdapter(mUsers, ((RecyclerViewActivity) getActivity()).getApplicationContext(), this);
+        mRecyclerView.setAdapter(mRecyclerViewAdapter);
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -75,7 +74,7 @@ public class RecyclerViewFragment extends Fragment implements RecyclerViewAdapte
                 mScrollOutItem = linearLayoutManager.findFirstVisibleItemPosition();
                 if (isScroll && (mScrollOutItem + mCurrentItem == mTotalItem)) {
                     isScroll = false;
-                    addDataMore();
+                    loadMoreData();
                 }
             }
         });
@@ -118,12 +117,12 @@ public class RecyclerViewFragment extends Fragment implements RecyclerViewAdapte
         return mImage;
     }
 
-    private void addDataMore() {
+    private void loadMoreData() {
         mLoading.setVisibility(View.VISIBLE);
         new Thread(() -> {
             try {
                 Thread.sleep(1500);
-                inputData(mTotalItem, mTotalItem + NUM_OF_ITEM_IN_ONE_PAGE);
+                creatData();
                 new Handler(Looper.getMainLooper()).post(new Runnable() {
                     @Override
                     public void run() {
@@ -139,14 +138,16 @@ public class RecyclerViewFragment extends Fragment implements RecyclerViewAdapte
 
     @Override
     public void sumCountLike(int position) {
-        User user = users.get(position);
+        User user = mUsers.get(position);
         user.setCountLike(user.getCountLike() + 1);
-        recyclerViewAdapter.notifyDataSetChanged();
+        mRecyclerViewAdapter.notifyDataSetChanged();
     }
 
-    private void inputData(int firstNumber, int lastNumber) {
-        for (int i = firstNumber; i < lastNumber; i++) {
-            users.add(new User(getString(R.string.username) + (i + 1), R.drawable.img_avt2, inputRandomImage(), NUM_OF_LIKE_DEFAULT, getString(R.string.comment)));
+    private void creatData() {
+        int fromIndex = mUsers.size();
+        int toIndex = fromIndex + NUM_OF_ITEM_IN_ONE_PAGE;
+        for (int i = fromIndex; i < toIndex; i++) {
+            mUsers.add(new User(getString(R.string.username) + (i + 1), R.drawable.img_avt2, inputRandomImage(), NUM_OF_LIKE_DEFAULT, getString(R.string.comment)));
         }
     }
 }
