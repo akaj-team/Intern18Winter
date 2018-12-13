@@ -46,4 +46,5 @@
     <string name="confirmPassword">Confirm Password</string>
     <string name="emailFormatWrong">Email Format Wrong!</string>
     <string name="activityAndFragment">Activity And Fragment</string>
+    <string name="compose">Compose</string>
 </resources>

@@ -4,7 +4,7 @@
     <item
         android:id="@+id/icBack"
         android:icon="@drawable/ic_arrow_back_black_36dp"
-        android:title="Compose"
-        app:showAsAction="ifRoom"></item>
+        android:title="@string/compose"
+        app:showAsAction="ifRoom" />
 
 </menu>
