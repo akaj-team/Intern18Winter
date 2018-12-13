@@ -27,6 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:text="@string/activityAndFragment" />
+
     <Button
         android:id="@+id/btnRecyclerView"
         android:layout_width="match_parent"

@@ -1,4 +1,4 @@
-package asiantech.internship.summer.viewandgroupview;
+package asiantech.internship.summer.view_and_groupview;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
