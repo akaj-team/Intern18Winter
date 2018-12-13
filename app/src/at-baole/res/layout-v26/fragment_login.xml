@@ -1,52 +1,54 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/llLogin"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorLightBlue"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context="asiantech.internship.summer.activity_fragment.SignUpFragment">
+    tools:context="asiantech.internship.summer.activity_fragment.LoginActivity">
 
     <EditText
         android:id="@+id/edtEmail"
         android:layout_width="250dp"
         android:layout_height="60dp"
+        android:autofillHints="@string/email"
         android:background="@drawable/shape"
         android:hint="@string/email"
         android:inputType="textEmailAddress"
-        android:textColorHint="@color/colorWhite"
-        tools:ignore="Autofill, TextFields" />
+        android:textColorHint="@color/colorWhite" />
 
     <EditText
         android:id="@+id/edtPassword"
         android:layout_width="250dp"
         android:layout_height="60dp"
         android:layout_marginTop="20dp"
+        android:autofillHints="@string/password"
         android:background="@drawable/shape"
         android:hint="@string/password"
         android:inputType="textPassword"
-        android:textColorHint="@color/colorWhite"
-        tools:ignore="Autofill, TextFields" />
-
-    <EditText
-        android:id="@+id/edtConfirmPassword"
-        android:layout_width="250dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/shape"
-        android:hint="@string/confirmPassword"
-        android:inputType="textPassword"
-        android:textColorHint="@color/colorWhite"
-        tools:ignore="Autofill, TextFields"/>
+        android:textColorHint="@color/colorWhite" />
 
     <Button
         android:id="@+id/btnSignUp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="20dp"
         android:background="@color/colorLightBlue"
-        android:text="@string/capitalSignUp"
+        android:text="@string/btnSignUp"
+        android:textAllCaps="false"
         android:textColor="@color/colorWhite"
-        android:textSize="24dp" />
+        android:textSize="18sp"
+        android:textStyle="italic" />
+
+    <Button
+        android:id="@+id/btnLogIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:background="@color/colorLightBlue"
+        android:text="@string/logIn"
+        android:textColor="@color/colorWhite"
+        android:textSize="24sp" />
 
 </LinearLayout>

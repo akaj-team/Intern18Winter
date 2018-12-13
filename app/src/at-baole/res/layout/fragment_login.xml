@@ -12,22 +12,22 @@
         android:id="@+id/edtEmail"
         android:layout_width="250dp"
         android:layout_height="60dp"
-        android:autofillHints="@string/email"
         android:background="@drawable/shape"
         android:hint="@string/email"
         android:inputType="textEmailAddress"
-        android:textColorHint="@color/colorWhite" />
+        android:textColorHint="@color/colorWhite"
+        tools:ignore="Autofill, TextFields" />
 
     <EditText
         android:id="@+id/edtPassword"
         android:layout_width="250dp"
         android:layout_height="60dp"
         android:layout_marginTop="20dp"
-        android:autofillHints="@string/password"
         android:background="@drawable/shape"
         android:hint="@string/password"
         android:inputType="textPassword"
-        android:textColorHint="@color/colorWhite" />
+        android:textColorHint="@color/colorWhite"
+        tools:ignore="Autofill, TextFields" />
 
     <Button
         android:id="@+id/btnSignUp"
