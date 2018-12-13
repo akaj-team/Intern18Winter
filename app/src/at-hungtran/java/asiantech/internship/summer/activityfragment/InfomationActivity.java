@@ -1,9 +1,11 @@
-package asiantech.internship.summer;
+package asiantech.internship.summer.activityfragment;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
+
+import asiantech.internship.summer.R;
 
 public class InfomationActivity extends AppCompatActivity {
     private static final String KEY_EMAIL = "email";

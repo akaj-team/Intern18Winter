@@ -1,4 +1,4 @@
-package asiantech.internship.summer;
+package asiantech.internship.summer.activityfragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +13,10 @@ import android.widget.Toast;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import asiantech.internship.summer.R;
+import asiantech.internship.summer.activityfragment.InfomationActivity;
+import asiantech.internship.summer.activityfragment.LoginActivity;
 
 public class LoginFragment extends Fragment {
     private static final String KEY_EMAIL = "email";
@@ -67,15 +71,15 @@ public class LoginFragment extends Fragment {
         return isValidPassword(mPassword) && isValidEmail(mEmail);
     }
 
-    private boolean isValidEmail(String mEmail) {
+    private boolean isValidEmail(String email) {
         mPattern = Pattern.compile(EMAIL_PATTERN);
-        mMatcher = mPattern.matcher(mEmail);
+        mMatcher = mPattern.matcher(email);
         return mMatcher.matches();
     }
 
-    private boolean isValidPassword(String mPassword) {
+    private boolean isValidPassword(String password) {
         mPattern = Pattern.compile(PASSWORD_PATTERN);
-        mMatcher = mPattern.matcher(mPassword);
+        mMatcher = mPattern.matcher(password);
         return mMatcher.matches();
     }
 }

@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
     android:orientation="vertical"
-    tools:context="asiantech.internship.summer.SignUpFragment">
+    tools:context="asiantech.internship.summer.activityfragment.SignUpFragment">
 
     <TextView
         android:id="@+id/tvEmail"
@@ -17,7 +17,7 @@
         android:background="@drawable/border"
         android:gravity="center"
         android:paddingLeft="20dp"
-        android:textColor="#FFF"
+        android:textColor="@color/colorWhite"
         android:textSize="30sp" />
 
     <TextView
@@ -31,7 +31,7 @@
         android:background="@drawable/border"
         android:gravity="center"
         android:paddingLeft="20dp"
-        android:textColor="#FFF"
+        android:textColor="@color/colorWhite"
         android:textSize="30sp" />
 
 </LinearLayout>

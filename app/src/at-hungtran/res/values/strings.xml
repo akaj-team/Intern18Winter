@@ -6,7 +6,7 @@
     <string name="login">Login</string>
     <string name="loginuppercase">LOGIN</string>
     <string name="confirm_password">Confirm Password</string>
-    <string name="signup">SIGN UP</string>
+    <string name="signUp">SIGN UP</string>
     <string name="email">Email</string>
     <string name="singup">Singup?</string>
     <string name="password">Password</string>

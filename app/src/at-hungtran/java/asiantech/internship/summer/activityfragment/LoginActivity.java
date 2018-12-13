@@ -1,4 +1,4 @@
-package asiantech.internship.summer;
+package asiantech.internship.summer.activityfragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import asiantech.internship.summer.R;
 
 public class LoginActivity extends AppCompatActivity {
     private Button mBtnBack;
@@ -32,7 +34,7 @@ public class LoginActivity extends AppCompatActivity {
         fragmentTransaction.setCustomAnimations(R.anim.anim_right_to_left,
                 R.anim.slide_out_left, R.anim.anim_left_to_right,
                 R.anim.slide_out_right);
-        setTextForToolBar(getString(R.string.signup));
+        setTextForToolBar(getString(R.string.signUp));
         mBtnBack.setVisibility(View.VISIBLE);
         fragmentTransaction.replace(R.id.frContainer, new SignUpFragment());
         fragmentTransaction.addToBackStack(null);
@@ -60,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
             setTextForToolBar(getString(R.string.loginuppercase));
             mBtnBack.setVisibility(View.GONE);
         } else {
-            setTextForToolBar(getString(R.string.signup));
+            setTextForToolBar(getString(R.string.signUp));
             mBtnBack.setVisibility(View.VISIBLE);
         }
     }
