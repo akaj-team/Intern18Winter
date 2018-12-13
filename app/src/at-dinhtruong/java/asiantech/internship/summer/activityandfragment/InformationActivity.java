@@ -17,10 +17,10 @@ public class InformationActivity extends AppCompatActivity {
     }
 
     private void initInformation() {
-        TextView mTvEmail = findViewById(R.id.tvEmail);
-        TextView mTvPassword = findViewById(R.id.tvPassword);
+        TextView tvEmail = findViewById(R.id.tvEmail);
+        TextView tvPassword = findViewById(R.id.tvPassword);
         Intent intent = getIntent();
-        mTvEmail.setText(intent.getStringExtra(LoginFragment.EMAIL));
-        mTvPassword.setText(intent.getStringExtra(LoginFragment.PASSWORD));
+        tvEmail.setText(intent.getStringExtra(LoginFragment.EMAIL));
+        tvPassword.setText(intent.getStringExtra(LoginFragment.PASSWORD));
     }
 }
