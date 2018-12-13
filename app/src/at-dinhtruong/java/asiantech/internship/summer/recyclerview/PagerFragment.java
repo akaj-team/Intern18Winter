@@ -87,7 +87,6 @@ public class PagerFragment extends Fragment implements TimelineAdapter.onClickIt
         new Thread(() -> {
             try {
                 Thread.sleep(3000);
-                //int fromIndex = mTimelineItems.size() + 1;
                 int fromIndex = mTimelineItems.size();
                 int toIndex = fromIndex + NUM_OF_ITEM_ON_PAGE;
                 Random random = new Random();
@@ -111,6 +110,6 @@ public class PagerFragment extends Fragment implements TimelineAdapter.onClickIt
     @Override
     public void onSelectItem(int position) {
         TimelineItem timelineItem = mTimelineItems.get(position);
-        timelineItem.setCountLike(timelineItem.getCountLike() + 1);
+        timelineItem.setNumOfLike(timelineItem.getNumOfLike() + 1);
     }
 }

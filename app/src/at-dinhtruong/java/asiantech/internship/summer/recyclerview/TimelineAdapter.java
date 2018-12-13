@@ -102,15 +102,15 @@ public class TimelineAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             timelineViewHolder.mImgAvatar.setImageDrawable(drawableAvatar);
             timelineViewHolder.mImgImage.setImageDrawable(drawableImage);
             timelineViewHolder.mTvName.setText(timeLineItem.getName());
-            String mCountLike;
-            if (timeLineItem.getCountLike() == 0) {
+            String numOfLike;
+            if (timeLineItem.getNumOfLike() == 0) {
                 timelineViewHolder.mTvNumOfLike.setText(String.valueOf(0));
-            } else if (timeLineItem.getCountLike() == 1) {
-                mCountLike = " " + timeLineItem.getCountLike() + " " + mContext.getString(R.string.like);
-                timelineViewHolder.mTvNumOfLike.setText(mCountLike);
+            } else if (timeLineItem.getNumOfLike() == 1) {
+                numOfLike = " " + timeLineItem.getNumOfLike() + " " + mContext.getString(R.string.like);
+                timelineViewHolder.mTvNumOfLike.setText(numOfLike);
             } else {
-                mCountLike = " " + timeLineItem.getCountLike() + " " + mContext.getString(R.string.likes);
-                timelineViewHolder.mTvNumOfLike.setText(mCountLike);
+                numOfLike = " " + timeLineItem.getNumOfLike() + " " + mContext.getString(R.string.likes);
+                timelineViewHolder.mTvNumOfLike.setText(numOfLike);
             }
             timelineViewHolder.mTvDescription.setText(Html.fromHtml("<b>" + timeLineItem.getName() + "</b>" + "  " + timeLineItem.getDescription()));
 
@@ -120,8 +120,8 @@ public class TimelineAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
     }
 
-    void setLoaded(Boolean value) {
-        mIsLoading = value;
+    void setLoaded(Boolean check) {
+        mIsLoading = check;
     }
 
     public void add(int position, TimelineItem timelineItem) {
@@ -134,8 +134,8 @@ public class TimelineAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         notifyDataSetChanged();
     }
 
-    void addAll(List<TimelineItem> list) {
-        mTimelines.addAll(list);
+    void addAll(List<TimelineItem> timelineItems) {
+        mTimelines.addAll(timelineItems);
         notifyDataSetChanged();
     }
 

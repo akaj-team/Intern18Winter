@@ -5,18 +5,18 @@ import java.util.List;
 import java.util.Random;
 
 public class TimelineItem {
-    private int mCountLike;
+    private int mNumOfLike;
     private String mAvatar;
     private String mName;
     private String mImage;
     private String mDescription;
 
-    public int getCountLike() {
-        return mCountLike;
+    public int getNumOfLike() {
+        return mNumOfLike;
     }
 
-    public void setCountLike(int countLike) {
-        this.mCountLike = countLike;
+    public void setNumOfLike(int numOfLike) {
+        this.mNumOfLike = numOfLike;
     }
 
     public String getAvatar() {
@@ -47,8 +47,8 @@ public class TimelineItem {
         this.mDescription = description;
     }
 
-    public TimelineItem(int countLike, String avatar, String name, String image, String description) {
-        this.mCountLike = countLike;
+    public TimelineItem(int numOfLike, String avatar, String name, String image, String description) {
+        this.mNumOfLike = numOfLike;
         this.mAvatar = avatar;
         this.mName = name;
         this.mImage = image;
