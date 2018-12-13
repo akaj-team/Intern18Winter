@@ -28,23 +28,10 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void initFragment(){
-        Fragment loginFragment = new LoginFragment();
         FragmentManager loginFragmentManager = getSupportFragmentManager();
         FragmentTransaction loginFragmentTransaction = loginFragmentManager.beginTransaction();
-        loginFragmentTransaction.replace(R.id.llLogin, loginFragment);
-        loginFragmentTransaction.addToBackStack(null);
+        loginFragmentTransaction.replace(R.id.llLogin, new LoginFragment());
         loginFragmentTransaction.commit();
-    }
-
-    public void isInstanceOf(){
-        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.llLogin);
-        if (fragment instanceof LoginFragment) {
-            setTextToolBar(R.string.logIn);
-            mBtnBack.setVisibility(View.GONE);
-        } else {
-            setTextToolBar(R.string.backToScreen);
-            mBtnBack.setVisibility(View.VISIBLE);
-        }
     }
 
     public void onButton() {
@@ -66,4 +53,15 @@ public class LoginActivity extends AppCompatActivity {
         super.onBackPressed();
         isInstanceOf();
     }
+    public void isInstanceOf(){
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.llLogin);
+        if (fragment instanceof LoginFragment) {
+            setTextToolBar(R.string.logIn);
+            mBtnBack.setVisibility(View.GONE);
+        } else {
+            setTextToolBar(R.string.backToScreen);
+            mBtnBack.setVisibility(View.VISIBLE);
+        }
+    }
+
 }

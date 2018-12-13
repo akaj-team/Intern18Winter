@@ -13,6 +13,7 @@
             android:layout_height="60dp"
             android:background="@drawable/shape"
             android:hint="@string/email"
+            android:autofillHints="@string/email"
             android:inputType="textEmailAddress"
             android:textColorHint="@color/colorWhite" />
 
@@ -22,6 +23,7 @@
             android:layout_height="60dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/shape"
+            android:autofillHints="@string/password"
             android:hint="@string/password"
             android:inputType="textPassword"
             android:textColorHint="@color/colorWhite" />
@@ -34,6 +36,7 @@
             android:background="@drawable/shape"
             android:hint="@string/confirmPassword"
             android:inputType="textPassword"
+            android:autofillHints="@string/confirmPassword"
             android:textColorHint="@color/colorWhite" />
 
         <Button
