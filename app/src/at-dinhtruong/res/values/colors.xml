@@ -16,4 +16,8 @@
     <color name="colorBlackLight">#000000</color>
     <color name="tabtextColor">#ffffff</color>
     <color name="tabindicatorColor">#000000</color>
+    <color name="colorVioletBlue">#8A7EC4</color>
+    <color name="colorVioletWhile">#BCBED8</color>
+    <color name="colorOrange">#fd6512</color>
+    <color name="colorWhile">#ffffff</color>
 </resources>
