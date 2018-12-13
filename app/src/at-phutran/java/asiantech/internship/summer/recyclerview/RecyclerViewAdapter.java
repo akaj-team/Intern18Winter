@@ -39,9 +39,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.mTvUserComment.setText(mListUsers.get(position).getUsername());
         holder.mImageCook.setImageResource(mListUsers.get(position).getImage());
         if (user.getCountLike() <= 1) {
-            holder.mTvCountLikes.setText(user.getCountLike() + " " + mContext.getString(R.string.like));
+            holder.mTvCountLikes.setText(String.valueOf(user.getCountLike() +" " + mContext.getString(R.string.like)));
         } else {
-            holder.mTvCountLikes.setText(user.getCountLike() + " " + mContext.getString(R.string.likes));
+            holder.mTvCountLikes.setText(String.valueOf(user.getCountLike() + " " + mContext.getString(R.string.likes)));
         }
         holder.mTvUsername.setText(mListUsers.get(position).getUsername());
         holder.mTvComment.setText(mListUsers.get(position).getComment());
