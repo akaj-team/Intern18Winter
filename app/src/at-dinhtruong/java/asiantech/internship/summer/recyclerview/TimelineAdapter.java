@@ -50,10 +50,10 @@ public class TimelineAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             mTvName = itemView.findViewById(R.id.tvName);
             mImgImage = itemView.findViewById(R.id.imgImage);
             mImgFavourite = itemView.findViewById(R.id.imgFavourite);
-            FavouriteEvent();
+            favouriteEvent();
         }
 
-        private void FavouriteEvent() {
+        private void favouriteEvent() {
             mImgFavourite.setOnClickListener(view -> {
                 int position = getLayoutPosition();
                 mOnClickItem.onSelectItem(position);
