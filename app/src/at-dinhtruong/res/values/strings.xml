@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Intern18Summer</string>
+    <string name="takePhoto">Take Photo</string>
+    <string name="chooseFromLibrary">Choose from Library</string>
+    <string name="cancel">Cancel</string>
+    <string name="permissionDenied">Permission Denied</string>
+    <string name="data">data</string>
+    <string name="selectPicture">Select Picture</string>
 </resources>

@@ -1,4 +1,4 @@
-package asiantech.internship.summer;
+package asiantech.internship.summer.drawerlayout;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import asiantech.internship.summer.model.Item;
+import asiantech.internship.summer.R;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -22,12 +24,11 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private IMethodCaller iMethodCaller;
 
     public interface IMethodCaller {
-        void yourDesiredMethod();
+        void changeAvatarMethod(int adapterPosition);
+
+        void selectItemMethod(int position);
     }
-    public void updateList(List<Item> items) {
-        this.items = items;
-        notifyDataSetChanged();
-    }
+
     public ItemAdapter(List<Item> items, Context context, IMethodCaller iMethodCaller) {
         this.items = items;
         this.mContext = context;
@@ -56,21 +57,20 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         if (viewHolder instanceof ItemViewHoder) {
             Item item = items.get(position);
             ItemViewHoder itemViewHoder = (ItemViewHoder) viewHolder;
-            itemViewHoder.mImgIcon.setImageResource(item.getmIcon());
-            itemViewHoder.mTvContent.setText(item.getMcontent());
-            itemViewHoder.mLlItem.setOnClickListener(v -> {
-
-            });
-
+            itemViewHoder.mImgIcon.setImageResource(item.getIcon());
+            itemViewHoder.mTvContent.setText(item.getContent());
+            itemViewHoder.mTvContent.setTextColor(mContext.getResources().getColorStateList(R.color.color_content));
+            itemViewHoder.mLlItem.setSelected(item.getCheckSelected());
         } else if (viewHolder instanceof HeaderViewHolder) {
             HeaderViewHolder headerViewHolder = (HeaderViewHolder) viewHolder;
-            headerViewHolder.mImgAvatar.setImageResource(items.get(position).getmIcon());
-            headerViewHolder.mTvEmail.setText(items.get(position).getMcontent());
-            headerViewHolder.mImgAvatar.setOnClickListener(v -> {
-                        iMethodCaller.yourDesiredMethod();
-                        notifyDataSetChanged();
-                    }
-            );
+            headerViewHolder.mTvEmail.setText(items.get(position).getContent());
+            if (items.get(position).getAvatar() != null) {
+                headerViewHolder.mImgAvatar.setImageURI(items.get(position).getAvatar());
+            } else if (items.get(position).getAvatarBitmap() != null) {
+                headerViewHolder.mImgAvatar.setImageBitmap(items.get(position).getAvatarBitmap());
+            } else {
+                headerViewHolder.mImgAvatar.setImageResource(items.get(position).getIcon());
+            }
 
         }
     }
@@ -90,6 +90,11 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             mImgIcon = itemView.findViewById(R.id.imgIcon);
             mTvContent = itemView.findViewById(R.id.tvContent);
             mLlItem = itemView.findViewById(R.id.llItem);
+            mLlItem.setOnClickListener(v -> {
+                        iMethodCaller.selectItemMethod(getLayoutPosition());
+                        notifyDataSetChanged();
+                    }
+            );
         }
     }
 
@@ -101,6 +106,11 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             super(view);
             mImgAvatar = view.findViewById(R.id.imgAvatar);
             mTvEmail = view.findViewById(R.id.tvEmail);
+            mImgAvatar.setOnClickListener(v -> {
+                        iMethodCaller.changeAvatarMethod(getAdapterPosition());
+                        notifyDataSetChanged();
+                    }
+            );
 
         }
     }
