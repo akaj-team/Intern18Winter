@@ -6,7 +6,7 @@
     android:background="@color/colorLightBlue"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context="asiantech.internship.summer.InformationActivity">
+    tools:context="asiantech.internship.summer.activity_fragment.InformationActivity">
 
     <LinearLayout
         android:layout_width="300dp"

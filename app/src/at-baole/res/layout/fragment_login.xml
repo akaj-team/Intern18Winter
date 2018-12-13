@@ -6,7 +6,7 @@
     android:background="@color/colorLightBlue"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context="asiantech.internship.summer.LoginActivity">
+    tools:context="asiantech.internship.summer.activity_fragment.LoginActivity">
 
     <EditText
         android:id="@+id/edtEmail"
