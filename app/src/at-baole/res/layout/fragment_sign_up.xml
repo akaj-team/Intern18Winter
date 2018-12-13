@@ -1,0 +1,51 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorLightBlue"
+    android:gravity="center"
+    android:orientation="vertical" >
+
+    <EditText
+        android:id="@+id/edtEmail"
+        android:layout_width="250dp"
+        android:layout_height="60dp"
+        android:background="@drawable/shape"
+        android:hint="@string/email"
+        android:inputType="textEmailAddress"
+        android:textColorHint="@color/colorWhite"
+        tools:ignore="Autofill" />
+
+    <EditText
+        android:id="@+id/edtPassword"
+        android:layout_width="250dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/shape"
+        android:hint="@string/password"
+        android:inputType="textPassword"
+        android:textColorHint="@color/colorWhite"
+        tools:ignore="Autofill" />
+
+    <EditText
+        android:id="@+id/edtConfirmPassword"
+        android:layout_width="250dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/shape"
+        android:hint="@string/confirmPassword"
+        android:inputType="textPassword"
+        android:textColorHint="@color/colorWhite"
+        tools:ignore="Autofill"/>
+
+    <Button
+        android:id="@+id/btnSignUp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:background="@color/colorLightBlue"
+        android:text="@string/capitalSignUp"
+        android:textColor="@color/colorWhite"
+        android:textSize="24dp" />
+
+</LinearLayout>

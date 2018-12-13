@@ -7,7 +7,7 @@
     <string name="username6Letters">Username must contain at least 6 letters</string>
     <string name="password6Letters">Password must contain at least 6 letters</string>
     <string name="password1char1num">Password must contain at least one character and one number</string>
-    <string name="invalidEmail">Invalid Email</string>
+    <string name="invalidEmail">Incorrect e-mail address format</string>
     <string name="signUpSuccessfully">Sign Up Successfully</string>
     <string name="app_name">Inter18Winter</string>
     <string name="bMaxwell">Beatrice Maxwell</string>
@@ -18,6 +18,18 @@
     <string name="slovakia">Slovakia</string>
     <string name="content">content</string>
     <string name="loading">loading</string>
+    <string name="btnSignUp">Signup?</string>
+    <string name="capitalSignUp">SIGN UP</string>
+    <string name="logIn">LOGIN</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="confirmPassword">Confirm Password</string>
+    <string name="logInSuccessfully">Log In Successfully</string>
+    <string name="password7Letters">Password must contain at least 7 letters</string>
+    <string name="passwordOnlyCharAndNum">Password must contain only characters and numbers</string>
+    <string name="signUpSuccessully">Sign Up Successfully</string>
+    <string name="confirmPasswordError">Confirm Password not match</string>
+    <string name="backToScreen">Click the button to return to the main screen of your phone</string>
     <string name="liked">Liked</string>
     <string name="like">like</string>
     <string name="likes">likes</string>

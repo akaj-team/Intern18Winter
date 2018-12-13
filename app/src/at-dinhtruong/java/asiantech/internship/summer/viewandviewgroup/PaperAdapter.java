@@ -13,7 +13,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import asiantech.internship.summer.R;
-import asiantech.internship.summer.model.Paper;
+import asiantech.internship.summer.models.Paper;
 
 public class PaperAdapter extends RecyclerView.Adapter<PaperAdapter.PaperViewHolder> {
     private List<Paper> mPapers;

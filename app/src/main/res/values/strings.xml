@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Intern18Summer</string>
+    <string name="like">12 likes</string>
+    <string name="description">Text description</string>
 </resources>

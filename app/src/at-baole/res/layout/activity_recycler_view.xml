@@ -4,11 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="asiantech.internship.summer.recycler_view.RecyclerViewActivity">
+    tools:context="asiantech.internship.summer.recyclerview.RecyclerViewActivity">
 
     <fragment
         android:id="@+id/timelineFragment"
-        class="asiantech.internship.summer.recycler_view.TimelineFragment"
+        class="asiantech.internship.summer.recyclerview.TimelineFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
