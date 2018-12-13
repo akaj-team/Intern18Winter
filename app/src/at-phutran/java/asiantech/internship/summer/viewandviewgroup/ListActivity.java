@@ -42,14 +42,17 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btnExercise2: {
                 Intent intent = new Intent(ListActivity.this, SignUpActivity.class);
                 startActivity(intent);
+                break;
             }
             case R.id.btnExercise3: {
                 Intent intent = new Intent(ListActivity.this, LoginActivity.class);
                 startActivity(intent);
+                break;
             }
             case R.id.btnExercise4: {
                 Intent intent = new Intent(ListActivity.this, RecyclerViewActivity.class);
                 startActivity(intent);
+                break;
             }
         }
     }
