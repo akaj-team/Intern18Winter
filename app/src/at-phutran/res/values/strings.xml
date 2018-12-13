@@ -1,5 +1,17 @@
 <resources>
     <string name="app_name">Intern18Summer</string>
+    <string name="todo">TODO</string>
+    <string name="list">ListBaiTap</string>
+    <string name="exercise1">W1-D3-View and Group View</string>
+    <string name="beat">Beatrice Maxwell</string>
+    <string name="profile">Profile</string>
+    <string name="bookmarks">Bookmarks</string>
+    <string name="post">Posts</string>
+    <string name="news">News</string>
+    <string name="slovakia">Slovakia</string>
+    <string name="content">content</string>
+    <string name="loading">loading</string>
+    <string name="exercise2">Event - Listener</string>
     <string name="inputUser">Username</string>
     <string name="inputPassword">Password</string>
     <string name="inputEmail">Email</string>
