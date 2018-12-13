@@ -1,10 +1,11 @@
 package asiantech.internship.summer.viewandviewgroup;
 
-import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -16,11 +17,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class NewsAdapter extends BaseAdapter {
 
     private List<News> mListNews;
-    private Context mContext;
-    private View mItemView;
 
-    NewsAdapter(Context mContext, List<News> listNews) {
-        this.mContext = mContext;
+    NewsAdapter(List<News> listNews) {
         this.mListNews = listNews;
     }
 
@@ -42,16 +40,20 @@ public class NewsAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         News mDataNews = mListNews.get(position);
-        LayoutInflater mLayoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = convertView;
         if (convertView == null) {
-            mItemView = mLayoutInflater.inflate(R.layout.single_item, null);
-            CircleImageView circleImageView = mItemView.findViewById(R.id.circleImage);
-            TextView tvContent = mItemView.findViewById(R.id.tvContent);
-            TextView tvTitle = mItemView.findViewById(R.id.tvTitle);
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_item, parent, false);
+            CircleImageView circleImageView = view.findViewById(R.id.circleImage);
+            TextView tvContent = view.findViewById(R.id.tvContent);
+            TextView tvTitle = view.findViewById(R.id.tvTitle);
+            LinearLayout llContent = view.findViewById(R.id.llItem);
             tvContent.setText(mDataNews.getContent());
             circleImageView.setImageResource(mDataNews.getImage());
             tvTitle.setText(mDataNews.getTitle());
+            if(position % 4 == 0 || (position + 1) % 4 == 0){
+                llContent.setBackgroundColor(Color.GRAY);
+            }
         }
-        return mItemView;
+        return view;
     }
 }

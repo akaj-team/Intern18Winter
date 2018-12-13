@@ -4,23 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".viewandviewgroup.ViewActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="110dp"
-        android:background="@drawable/bg_background"></RelativeLayout>
+        android:background="@drawable/bg_background" />
 
     <LinearLayout
+        android:layout_above="@+id/llfooter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
             android:orientation="horizontal"
             android:weightSum="10">
 
@@ -50,16 +50,16 @@
                 android:src="@drawable/ic_dot" />
         </LinearLayout>
 
-        <ImageView
+        <View
+            android:layout_gravity="bottom"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/todo"
-            android:src="@drawable/img_line" />
+            android:layout_height="1dp"
+            android:background="#a2a2a2" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="8dp"
             android:gravity="center"
             android:orientation="horizontal"
             android:weightSum="6">
@@ -73,7 +73,7 @@
                 android:padding="7dp"
                 android:src="@drawable/ic_check" />
 
-            <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/profile_image"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
@@ -96,37 +96,28 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:gravity="center"
             android:text="@string/beat"
+            android:textColor="@color/colorBlack"
             android:textSize="15sp"
             android:textStyle="bold"
             app:fontFamily="casual" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:drawableLeft="@drawable/ic_pin"
+            android:drawablePadding="10dp"
             android:gravity="center"
-            android:orientation="horizontal"
-            tools:ignore="UseCompoundDrawables">
+            android:text="@string/slovakia" />
 
-            <ImageView
-                android:layout_width="25dp"
-                android:layout_height="15dp"
-                android:contentDescription="@string/todo"
-                android:src="@drawable/ic_pin" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/slovakia"
-                android:textColor="@color/colorGray" />
-        </LinearLayout>
-
-        <ImageView
+        <View
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/todo"
-            android:src="@drawable/img_line1" />
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:background="#a2a2a2" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -146,6 +137,7 @@
                 app:fontFamily="casual" />
 
             <TextView
+                android:textColor="@android:color/black"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -168,26 +160,38 @@
                 tools:targetApi="jelly_bean" />
         </LinearLayout>
 
-        <ImageView
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/todo"
-            android:src="@drawable/img_line1" />
+            android:layout_height="4dp">
+
+            <View
+                android:layout_gravity="bottom"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#a2a2a2" />
+
+            <View
+                android:layout_gravity="center_horizontal"
+                android:layout_width="100dp"
+                android:layout_height="4dp"
+                android:background="@android:color/holo_blue_bright" />
+        </FrameLayout>
 
         <GridView
             android:id="@+id/gvContent"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:columnWidth="100dp"
+            android:layout_height="match_parent"
             android:gravity="center"
             android:numColumns="2" />
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/llfooter"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center|bottom"
-        android:orientation="horizontal">
+        android:layout_height="30dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true">
 
         <TextView
             android:layout_width="wrap_content"

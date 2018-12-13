@@ -22,5 +22,4 @@ public class News {
     public String getTitle() {
         return mTitle;
     }
-
 }
