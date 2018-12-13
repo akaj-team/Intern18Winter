@@ -47,12 +47,9 @@
     <string name="emailFormatWrong">Email Format Wrong!</string>
     <string name="activityAndFragment">Activity And Fragment</string>
     <string name="compose">Compose</string>
-<<<<<<< HEAD
-=======
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="name">sayabaaa</string>
     <string name="like">like</string>
     <string name="likes">likes</string>
     <string name="recyclerView">RecyclerView</string>
->>>>>>> master
 </resources>
