@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import asiantech.internship.summer.R;
-import asiantech.internship.summer.model.Paper;
+import asiantech.internship.summer.models.Paper;
 
 public class ViewAndViewGroupActivity extends AppCompatActivity {
     public static final int NUMBER_OF_COLUMNS = 2;
