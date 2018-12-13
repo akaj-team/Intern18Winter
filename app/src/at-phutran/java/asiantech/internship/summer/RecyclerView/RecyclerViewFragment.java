@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import asiantech.internship.summer.Model.User;
+import asiantech.internship.summer.model.User;
 import asiantech.internship.summer.R;
 
 public class RecyclerViewFragment extends Fragment implements RecyclerViewAdapter.OnclickLike {

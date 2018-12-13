@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import asiantech.internship.summer.Model.User;
+import asiantech.internship.summer.model.User;
 import asiantech.internship.summer.R;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
