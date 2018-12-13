@@ -1,4 +1,4 @@
-package asiantech.internship.summer;
+package asiantech.internship.summer.recyclerview;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,6 +15,7 @@ import android.widget.ProgressBar;
 import java.util.ArrayList;
 import java.util.Random;
 
+import asiantech.internship.summer.R;
 import asiantech.internship.summer.model.TimelineItem;
 
 public class TimelineFragment extends Fragment {

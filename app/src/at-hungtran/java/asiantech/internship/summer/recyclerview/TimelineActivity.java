@@ -1,8 +1,10 @@
-package asiantech.internship.summer;
+package asiantech.internship.summer.recyclerview;
 
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import asiantech.internship.summer.R;
 
 public class TimelineActivity extends AppCompatActivity {
 

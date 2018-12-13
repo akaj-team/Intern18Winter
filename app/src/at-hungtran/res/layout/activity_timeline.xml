@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="asiantech.internship.summer.TimelineActivity">
+    tools:context="asiantech.internship.summer.recyclerview.TimelineActivity">
 
     <FrameLayout
         android:id="@+id/fragmentContainer"
