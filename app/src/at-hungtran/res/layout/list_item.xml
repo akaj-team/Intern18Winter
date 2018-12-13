@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="30dp"
-    android:orientation="vertical"
-    tools:ignore="MissingDefaultResource">
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,21 +12,21 @@
         android:orientation="horizontal">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/ic_avt"
+            android:id="@+id/icAvt"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_weight="1"
-            android:src="@drawable/ic_launcher_background" />
+            android:src="@drawable/img_itachi" />
 
         <TextView
-            android:id="@+id/tv_name"
+            android:id="@+id/tvName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="10dp"
             android:layout_weight="6"
-            android:text="@string/tran_van_hung"
-            android:textColor="#020202"
+            android:text="@string/ltqc"
+            android:textColor="@color/colorBlack"
             android:textStyle="bold" />
 
         <ImageView
@@ -40,53 +39,62 @@
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/img_image"
+        android:id="@+id/imgImage"
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="20dp"
-        android:src="@drawable/img_nature" />
+        android:src="@drawable/img_itachi_face" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical">
 
-        <Button
-            android:id="@+id/btn_like"
+        <ImageButton
+            android:id="@+id/imgBtnLike"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/ic_favorite_border_black_24dp"
-            tools:ignore="ButtonStyle,InvalidId" />
+            android:background="@drawable/ic_favorite_border_black_24dp" />
 
-        <Button
-            android:id="@+id/btn_cmt"
+        <ImageButton
+            android:id="@+id/imgBtnComment"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_marginLeft="5dp"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/ic_chat_bubble_outline_black_24dp"
-            tools:ignore="ButtonStyle,InvalidId" />
+            android:background="@drawable/ic_chat_bubble_outline_black_24dp" />
 
-        <Button
-            android:id="@+id/btn_share"
+        <ImageButton
+            android:id="@+id/imgBtnShare"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_marginLeft="5dp"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/ic_send_black_24dp"
-            tools:ignore="ButtonStyle,InvalidId" />
+            android:background="@drawable/ic_send_black_24dp" />
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/colorGrey" />
+
     <TextView
-        android:drawableLeft="@drawable/ic_favorite_black_24dp"
-        android:id="@+id/tv_like"
+        android:id="@+id/tvLike"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="25dp"
-        android:text="@string/_0_like" />
+        android:layout_marginBottom="10dp"
+        android:drawableLeft="@drawable/ic_favorite_black_24dp"
+        android:drawablePadding="5dp"
+        android:gravity="center_vertical"
+        android:text="@string/noLike"
+        android:textColor="@color/colorBlack"
+        android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -94,21 +102,21 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/tv_name"
+            android:id="@+id/tvCommenterName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:text="@string/tran_van_hung"
-            android:textColor="#020202"
+            android:text="@string/ltqc"
+            android:textColor="@color/colorBlack"
             android:textStyle="bold"
             tools:ignore="DuplicateIds" />
 
         <TextView
-            android:id="@+id/tv_description"
+            android:id="@+id/tvDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="20dp"
-            android:text="@string/hello_the_gioi" />
+            android:text="@string/helloWorld" />
     </LinearLayout>
 </LinearLayout>

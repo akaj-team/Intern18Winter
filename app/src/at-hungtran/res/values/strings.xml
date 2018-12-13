@@ -1,11 +1,9 @@
 <resources>
     <string name="app_name">Intern18Summer</string>
 
-    TODO: Remove or change this placeholder text
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="tran_van_hung">Tran van hung</string>
-    <string name="_0_like">0 like</string>
-    <string name="hello_the_gioi">hello the gioi :))</string>
+    <string name="ltqc">Le Thi Quynh Chau</string>
+    <string name="noLike"> 0 like</string>
+    <string name="helloWorld">hello world :))</string>
     <string name="like">%s like</string>
     <string name="likes">%s likes</string>
 </resources>

@@ -7,7 +7,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +18,11 @@ import java.util.Random;
 import asiantech.internship.summer.model.TimelineItem;
 
 public class TimelineFragment extends Fragment {
+    private static final String COMMENTS = "チャン ヴァン フン ";
+    private static final String NAME = "Le Thi Quynh Chau ";
     View view;
+    ArrayList<TimelineItem> timelineItems = new ArrayList<>();
+    RecyclerView recyclerView;
     private Boolean isScroll = true;
     private ProgressBar mLoading;
     private int mCurrentItems, mTotalItems;
@@ -27,8 +30,6 @@ public class TimelineFragment extends Fragment {
     private int mRand;
     private int mImage;
     private int mLike = 0;
-    ArrayList<TimelineItem> timelineItems = new ArrayList<>();
-    RecyclerView recyclerView;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -46,7 +47,7 @@ public class TimelineFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         for (int i = 0; i < 10; i++) {
-            timelineItems.add(new TimelineItem(inputRandomImgAvt(), "Hung", inputRandomImage(), "Ez", mLike));
+            timelineItems.add(new TimelineItem(inputRandomImgAvt(), NAME + (i + 1), inputRandomImage(), COMMENTS + (i + 1), mLike, NAME + (i + 1)));
         }
         TimelineAdapter timelineAdapter = new TimelineAdapter(timelineItems, getActivity());
         recyclerView.setAdapter(timelineAdapter);
@@ -62,7 +63,6 @@ public class TimelineFragment extends Fragment {
                 mCurrentItems = layoutManager.getChildCount();
                 mTotalItems = layoutManager.getItemCount();
                 mScrollOutItems = layoutManager.findFirstVisibleItemPosition();
-                Log.i("xxxxx", mCurrentItems + "---" + mScrollOutItems + "onScrolled: " + mTotalItems);
                 if (isScroll && (mScrollOutItems + mCurrentItems == mTotalItems)) {
                     isScroll = false;
                     addDataMore();
@@ -76,7 +76,7 @@ public class TimelineFragment extends Fragment {
         mRand = random.nextInt(10) + 1;
         switch (mRand) {
             case 1:
-                mImage = R.drawable.img_nature;
+                mImage = R.drawable.img_nature_11;
                 break;
             case 2:
                 mImage = R.drawable.img_itachi;
@@ -85,7 +85,7 @@ public class TimelineFragment extends Fragment {
                 mImage = R.drawable.img_violet_evergarden;
                 break;
             case 4:
-                mImage = R.drawable.img_nature_5;
+                mImage = R.drawable.img_nature_4;
                 break;
             case 5:
                 mImage = R.drawable.img_violet;
@@ -97,13 +97,13 @@ public class TimelineFragment extends Fragment {
                 mImage = R.drawable.img_nature_8;
                 break;
             case 8:
-                mImage = R.drawable.img_nature_9;
+                mImage = R.drawable.img_nature_6;
                 break;
             case 9:
-                mImage = R.drawable.img_nature;
+                mImage = R.drawable.img_nature_1;
                 break;
             default:
-                mImage = R.drawable.img_nature_5;
+                mImage = R.drawable.img_nature_4;
         }
         return mImage;
     }
@@ -113,7 +113,7 @@ public class TimelineFragment extends Fragment {
         mRand = random.nextInt(10) + 1;
         switch (mRand) {
             case 1:
-                mImage = R.drawable.img_nature;
+                mImage = R.drawable.img_nature_11;
                 break;
             case 2:
                 mImage = R.drawable.img_itachi;
@@ -122,7 +122,7 @@ public class TimelineFragment extends Fragment {
                 mImage = R.drawable.img_violet_evergarden;
                 break;
             case 4:
-                mImage = R.drawable.img_nature_5;
+                mImage = R.drawable.img_nature_1;
                 break;
             case 5:
                 mImage = R.drawable.img_violet;
@@ -134,13 +134,13 @@ public class TimelineFragment extends Fragment {
                 mImage = R.drawable.img_nature_8;
                 break;
             case 8:
-                mImage = R.drawable.img_nature_9;
+                mImage = R.drawable.img_nature_3;
                 break;
             case 9:
-                mImage = R.drawable.img_nature;
+                mImage = R.drawable.img_nature_4;
                 break;
             default:
-                mImage = R.drawable.img_nature_5;
+                mImage = R.drawable.img_nature_6;
         }
         return mImage;
     }
@@ -151,7 +151,7 @@ public class TimelineFragment extends Fragment {
             try {
                 Thread.sleep(2000);
                 for (int i = mTotalItems; i < mTotalItems + 10; i++) {
-                    timelineItems.add(new TimelineItem(inputRandomImgAvt(), "Hung" + (i + 1), inputRandomImage(), "Ez", mLike));
+                    timelineItems.add(new TimelineItem(inputRandomImgAvt(), NAME + (i + 1), inputRandomImage(), COMMENTS + (i + 1), mLike, NAME + (i + 1)));
                 }
                 new Handler(Looper.getMainLooper()).post(new Runnable() {
                     @Override
