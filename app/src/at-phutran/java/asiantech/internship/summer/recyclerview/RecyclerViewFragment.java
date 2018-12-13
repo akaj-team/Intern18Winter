@@ -1,4 +1,4 @@
-package asiantech.internship.summer.RecyclerView;
+package asiantech.internship.summer.recyclerview;
 
 import android.app.Fragment;
 import android.graphics.drawable.Drawable;

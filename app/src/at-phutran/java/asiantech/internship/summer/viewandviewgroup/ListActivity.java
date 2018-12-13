@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
-import asiantech.internship.summer.RecyclerView.RecyclerViewActivity;
+import asiantech.internship.summer.recyclerview.RecyclerViewActivity;
 import asiantech.internship.summer.eventlistener.SignUpActivity;
 import asiantech.internship.summer.R;
 

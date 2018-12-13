@@ -1,4 +1,4 @@
-package asiantech.internship.summer.RecyclerView;
+package asiantech.internship.summer.recyclerview;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

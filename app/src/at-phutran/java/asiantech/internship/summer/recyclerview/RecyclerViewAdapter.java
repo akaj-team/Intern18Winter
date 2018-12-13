@@ -1,4 +1,4 @@
-package asiantech.internship.summer.RecyclerView;
+package asiantech.internship.summer.recyclerview;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

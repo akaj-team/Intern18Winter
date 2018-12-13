@@ -19,7 +19,7 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity android:name=".eventlistener.SignUpActivity"
             android:label="@string/title" />
-        <activity android:name=".RecyclerView.RecyclerViewActivity"/>
+        <activity android:name=".recyclerview.RecyclerViewActivity"/>
     </application>
 
 </manifest>
