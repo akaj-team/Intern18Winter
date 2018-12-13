@@ -15,8 +15,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import asiantech.internship.summer.R;
-import asiantech.internship.summer.activityfragment.InfomationActivity;
-import asiantech.internship.summer.activityfragment.LoginActivity;
 
 public class LoginFragment extends Fragment {
     private static final String KEY_EMAIL = "email";
