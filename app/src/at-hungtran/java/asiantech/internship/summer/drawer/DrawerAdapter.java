@@ -1,9 +1,8 @@
-package asiantech.internship.summer;
+package asiantech.internship.summer.drawer;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,20 +12,20 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import asiantech.internship.summer.model.Object;
+import asiantech.internship.summer.R;
+import asiantech.internship.summer.model.DataDrawer;
 
 public class DrawerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_ITEM = 1;
     private static final int REQUEST_CAMERA = 1;
     private static final int SELECT_FILE = 2;
-    private onClick onclick;
-    private Context context;
-    private List<Object> objects;
+    private onClick mOnclick;
+    private List<DataDrawer> mDataDrawer;
 
-    DrawerAdapter(List<Object> objects, Context context, onClick onClick) {
-        this.objects = objects;
-        this.onclick = onClick;
+    DrawerAdapter(List<DataDrawer> dataDrawers, Context context, onClick onClick) {
+        this.mDataDrawer = dataDrawers;
+        this.mOnclick = onClick;
     }
 
     @NonNull
@@ -47,45 +46,40 @@ public class DrawerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof ItemViewHolder) {
-            ((ItemViewHolder) holder).mIconImage.setImageResource(objects.get(position).getmIconImage());
-            ((ItemViewHolder) holder).mCat.setText(objects.get(position).getmCat());
-            ((ItemViewHolder) holder).mLinearLayout.setSelected(objects.get(position).isChecked());
+            ((ItemViewHolder) holder).mIconImage.setImageResource(mDataDrawer.get(position).getIconImage());
+            ((ItemViewHolder) holder).mCat.setText(mDataDrawer.get(position).getCat());
+            ((ItemViewHolder) holder).mLinearLayout.setSelected(mDataDrawer.get(position).isChecked());
 
             ((ItemViewHolder) holder).mLinearLayout.setOnClickListener(view -> {
-                onclick.selectItem(position);
+                mOnclick.selectItem(position);
             });
 
         } else if (holder instanceof HeaderViewHolder) {
-            Object object = objects.get(0);
+            DataDrawer object = mDataDrawer.get(0);
 
-            if (objects.get(position).getAvatarUri() != null) {
-                Log.d("VVVV", "1");
+            if (mDataDrawer.get(position).getAvatarUri() != null) {
                 ((HeaderViewHolder) holder).mImgAvt.setImageURI(object.getAvatarUri());
             } else {
-                Log.d("VVVV", "2");
-                ((HeaderViewHolder) holder).mImgAvt.setImageResource(object.getmImgAvt());
+                ((HeaderViewHolder) holder).mImgAvt.setImageResource(object.getImgAvt());
             }
-
-//            ((HeaderViewHolder) holder).mImgAvt.setImageResource(object.getmImgAvt());
-            ((HeaderViewHolder) holder).mImgAvt.setOnClickListener(view -> {
-                onclick.avatarClick();
-
+            ((HeaderViewHolder) holder).mImgAvt.setOnClickListener(v -> {
+                mOnclick.avatarClick();
             });
-            ((HeaderViewHolder) holder).mGmail.setText(object.getmGmail());
-            ((HeaderViewHolder) holder).mImgCheck.setImageResource(object.getmImgCheck());
+            ((HeaderViewHolder) holder).mGmail.setText(object.getGmail());
+            ((HeaderViewHolder) holder).mImgCheck.setImageResource(object.getImgCheck());
         }
     }
 
     @Override
     public int getItemCount() {
-        return objects.size();
+        return mDataDrawer.size();
     }
 
     @Override
     public int getItemViewType(int position) {
-        if (position == 0)
+        if (position == 0) {
             return TYPE_HEADER;
-
+        }
         return TYPE_ITEM;
     }
 
@@ -102,9 +96,9 @@ public class DrawerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         HeaderViewHolder(View itemView) {
             super(itemView);
-            mImgAvt = itemView.findViewById(R.id.img_avt);
+            mImgAvt = itemView.findViewById(R.id.imgAvt);
             mGmail = itemView.findViewById(R.id.tvGmail);
-            mImgCheck = itemView.findViewById(R.id.ic_check);
+            mImgCheck = itemView.findViewById(R.id.icCheck);
             this.setIsRecyclable(false);
         }
     }
@@ -116,7 +110,7 @@ public class DrawerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         ItemViewHolder(View itemView) {
             super(itemView);
-            mIconImage = itemView.findViewById(R.id.ic_img);
+            mIconImage = itemView.findViewById(R.id.icImg);
             mCat = itemView.findViewById(R.id.tvCat);
             mLinearLayout = itemView.findViewById(R.id.linearlayout);
             this.setIsRecyclable(false);

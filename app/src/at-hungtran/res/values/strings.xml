@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">Intern18Summer</string>
-    <string name="navigation_drawer_open">Drawer Open</string>
-    <string name="navigation_drawer_close">Drawer Closed</string>
+    <string name="navigationDrawerOpen">Drawer Open</string>
+    <string name="navigationDrawerClose">Drawer Closed</string>
+    <string name="ltqc">le thi quynh chau</string>
+    <string name="gallery">Gallery</string>
+    <string name="camera">Camera</string>
 </resources>

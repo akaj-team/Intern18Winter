@@ -1,4 +1,4 @@
-package asiantech.internship.summer;
+package asiantech.internship.summer.drawer;
 
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -9,22 +9,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import asiantech.internship.summer.R;
+
 public class ChoosePhotoDialogFragment extends DialogFragment {
 
-    onItemClick chooseOne;
-    Button mBtnGallery;
-    Button mBtnCamera;
-
-    public void setOnHeadlineSelectedListener(DrawerLayoutActivity activity) {
-        chooseOne = activity;
-    }
-
+    private onItemClick mChooseOne;
 
     public static ChoosePhotoDialogFragment newInstance() {
         return new ChoosePhotoDialogFragment();
     }
 
-    View view;
+    public void setOnHeadlineSelectedListener(DrawerLayoutActivity activity) {
+        mChooseOne = activity;
+    }
 
     @Override
     public void onStart() {
@@ -40,20 +37,19 @@ public class ChoosePhotoDialogFragment extends DialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.choose_photo_dialog_fragment_layout, container, false);
-        mBtnGallery = view.findViewById(R.id.btnGallery);
-        mBtnGallery.setOnClickListener(new View.OnClickListener() {
+        View view = inflater.inflate(R.layout.choose_photo_dialog_fragment_layout, container, false);
+        Button btnGallery = view.findViewById(R.id.btnGallery);
+        btnGallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                chooseOne.itemClick(1);
+                mChooseOne.itemClick(1);
             }
         });
-        mBtnCamera = view.findViewById(R.id.btnCamera);
-        mBtnCamera.setOnClickListener(new View.OnClickListener() {
+        Button btnCamera = view.findViewById(R.id.btnCamera);
+        btnCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                chooseOne.itemClick(2);
+                mChooseOne.itemClick(2);
             }
         });
         return view;

@@ -1,4 +1,4 @@
-package asiantech.internship.summer;
+package asiantech.internship.summer.drawer;
 
 import android.app.FragmentTransaction;
 import android.content.Intent;
@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -13,29 +14,25 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import asiantech.internship.summer.model.Object;
+import asiantech.internship.summer.R;
+import asiantech.internship.summer.model.DataDrawer;
 
 import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAdapter.onClick, ChoosePhotoDialogFragment.onItemClick {
-    RecyclerView recyclerView;
-    DrawerAdapter drawerAdapter;
-    List<Object> objects = new ArrayList<>();
-    TextView mTvName;
-    Uri imageUri;
-    private DrawerLayout mDrawerLayout;
+    List<DataDrawer> mDataDrawer = new ArrayList<>();
+    private ChoosePhotoDialogFragment mDialogFragment;
+    private DrawerAdapter mDrawerAdapter;
     private ActionBarDrawerToggle mDrawerToggle;
     private float lastTranslate = 0.0f;
-    ChoosePhotoDialogFragment dialogFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,43 +43,43 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAda
     }
 
     public void initView() {
-        recyclerView = findViewById(R.id.recycler_view);
+        RecyclerView recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        objects.add(new Object(R.drawable.img_avt, "abudory96@gmail.com", R.drawable.ic_arrow_drop_down_black_24dp));
+        mDataDrawer.add(new DataDrawer(R.drawable.img_avt, "abudory96@gmail.com", R.drawable.ic_arrow_drop_down_black_24dp));
 
-        objects.add(new Object(R.drawable.ic_move_to_inbox_black_24dp, "Inbox"));
-        objects.add(new Object(R.drawable.ic_send_black_24dp, "Outbox"));
-        objects.add(new Object(R.drawable.ic_delete_black_24dp, "Trash"));
-        objects.add(new Object(R.drawable.ic_error_black_24dp, "Spam"));
-        drawerAdapter = new DrawerAdapter(objects, this, this);
-        recyclerView.setAdapter(drawerAdapter);
+        mDataDrawer.add(new DataDrawer(R.drawable.ic_move_to_inbox_black_24dp, "Inbox"));
+        mDataDrawer.add(new DataDrawer(R.drawable.ic_send_black_24dp, "Outbox"));
+        mDataDrawer.add(new DataDrawer(R.drawable.ic_delete_black_24dp, "Trash"));
+        mDataDrawer.add(new DataDrawer(R.drawable.ic_error_black_24dp, "Spam"));
+        mDrawerAdapter = new DrawerAdapter(mDataDrawer, this, this);
+        recyclerView.setAdapter(mDrawerAdapter);
     }
 
 
     @Override
     public void avatarClick() {
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-        dialogFragment = ChoosePhotoDialogFragment.newInstance();
-        dialogFragment.setOnHeadlineSelectedListener(this);
-        dialogFragment.show(ft, "dialog");
+        mDialogFragment = ChoosePhotoDialogFragment.newInstance();
+        mDialogFragment.setOnHeadlineSelectedListener(this);
+        mDialogFragment.show(ft, "dialog");
     }
 
 
     private void openGallery() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), 1234);
-        dialogFragment.dismiss();
+        Intent pickIntent = new Intent(Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(pickIntent, 1);
+        mDialogFragment.dismiss();
 
     }
 
     private void takePicture() {
-
+        Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(takePicture, 0);
+        mDialogFragment.dismiss();
     }
-
 
     @Override
     public void itemClick(int type) {
@@ -143,28 +140,28 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAda
             case 0:
                 if (resultCode == RESULT_OK) {
                     Uri selectedImage = imageReturnedIntent.getData();
-                    objects.get(0).setAvatarUri(selectedImage);
-                    drawerAdapter.notifyDataSetChanged();
+                    mDataDrawer.get(0).setAvatarUri(selectedImage);
+                    mDrawerAdapter.notifyDataSetChanged();
                 }
 
                 break;
-            case 1234:
+            case 1:
                 if (resultCode == RESULT_OK) {
                     Uri selectedImage = imageReturnedIntent.getData();
-                    objects.get(0).setAvatarUri(selectedImage);
-                    drawerAdapter.notifyDataSetChanged();
+                    mDataDrawer.get(0).setAvatarUri(selectedImage);
+                    mDrawerAdapter.notifyDataSetChanged();
                 }
                 break;
         }
     }
 
     public void drawerToggle() {
-        mDrawerLayout = findViewById(R.id.drawer_layout);
-        mTvName = findViewById(R.id.tvName);
+        DrawerLayout mDrawerLayout = findViewById(R.id.drawer_layout);
+        TextView mTvName = findViewById(R.id.tvName);
 
         mDrawerLayout.setScrimColor(Color.TRANSPARENT);
 
-        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.navigationDrawerOpen, R.string.navigationDrawerClose) {
 
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {
@@ -174,16 +171,14 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAda
             }
         };
         mDrawerLayout.addDrawerListener(actionBarDrawerToggle);
-        // ... more of your code
     }
 
     @Override
     public void selectItem(int position) {
-        for (Object item : objects) {
+        for (DataDrawer item : mDataDrawer) {
             item.setChecked(false);
         }
-        objects.get(position).setChecked(true);
-//        drawerAdapter.notifyItemChanged(position);
-        drawerAdapter.notifyDataSetChanged();
+        mDataDrawer.get(position).setChecked(true);
+        mDrawerAdapter.notifyDataSetChanged();
     }
 }
