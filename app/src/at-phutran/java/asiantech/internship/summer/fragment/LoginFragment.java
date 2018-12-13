@@ -14,12 +14,11 @@ import android.widget.EditText;
 import android.widget.Toast;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import asiantech.internship.summer.R;
 
 public class LoginFragment extends Fragment {
-    private static String EMAIL_PATTERN = "^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4})(\\]?)$";
-    private static String PASS_PATTERN = "^[a-zA-Z0-9]{7,}$";
+    private static final String EMAIL_PATTERN = "^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4})(\\]?)$";
+    private static final String PASS_PATTERN = "^[a-zA-Z0-9]{7,}$";
     private static final String EMAIL_KEY = "textEmail";
     private static final String PASSWORD_KEY = "textPassword";
     private Button mBtnSignUp;
@@ -27,16 +26,6 @@ public class LoginFragment extends Fragment {
     private EditText mEdtPass;
     private String mValueEmail;
     private String mValuePassword;
-    private static boolean isEmail(final String email) {
-        Pattern patternEmail = Pattern.compile(EMAIL_PATTERN);
-        Matcher matcherEmail = patternEmail.matcher(email);
-        return matcherEmail.matches();
-    }
-    private static boolean isPass(final String password) {
-        Pattern patternPassword = Pattern.compile(PASS_PATTERN);
-        Matcher matcherPassword = patternPassword.matcher(password);
-        return matcherPassword.matches();
-    }
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -79,5 +68,15 @@ public class LoginFragment extends Fragment {
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
         });
+    }
+    private static boolean isEmail(final String email) {
+        Pattern patternEmail = Pattern.compile(EMAIL_PATTERN);
+        Matcher matcherEmail = patternEmail.matcher(email);
+        return matcherEmail.matches();
+    }
+    private static boolean isPass(final String password) {
+        Pattern patternPassword = Pattern.compile(PASS_PATTERN);
+        Matcher matcherPassword = patternPassword.matcher(password);
+        return matcherPassword.matches();
     }
 }

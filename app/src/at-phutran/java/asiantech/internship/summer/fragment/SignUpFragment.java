@@ -13,12 +13,11 @@ import android.widget.EditText;
 import android.widget.Toast;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import asiantech.internship.summer.R;
 
 public class SignUpFragment extends Fragment {
-    private static String EMAIL_PATTERN = "^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4})(\\]?)$";
-    private static String PASS_PATTERN = "^[a-zA-Z0-9]{7,}$";
+    private static final String EMAIL_PATTERN = "^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4})(\\]?)$";
+    private static final String PASS_PATTERN = "^[a-zA-Z0-9]{7,}$";
     private Button mBtnSignUp;
     private EditText mEdtEmail;
     private EditText mEdtPassword;
@@ -36,16 +35,6 @@ public class SignUpFragment extends Fragment {
         mBtnSignUp = view.findViewById(R.id.btnSignUp);
         handleEvent();
         return view;
-    }
-    private static boolean isMail(final String email){
-        Pattern patternEmail = Pattern.compile(EMAIL_PATTERN);
-        Matcher matcherEmail = patternEmail.matcher(email);
-        return matcherEmail.matches();
-    }
-    private static boolean isPassword(final String password){
-        Pattern patternPassword = Pattern.compile(PASS_PATTERN);
-        Matcher matcherPassword = patternPassword.matcher(password);
-        return matcherPassword.matches();
     }
     private void handleEvent(){
         mBtnSignUp.setOnClickListener(v -> {
@@ -66,5 +55,15 @@ public class SignUpFragment extends Fragment {
         }else{
             Toast.makeText(getActivity(), R.string.checkInputSignUp, Toast.LENGTH_SHORT).show();
         }
+    }
+    private static boolean isMail(final String email){
+        Pattern patternEmail = Pattern.compile(EMAIL_PATTERN);
+        Matcher matcherEmail = patternEmail.matcher(email);
+        return matcherEmail.matches();
+    }
+    private static boolean isPassword(final String password){
+        Pattern patternPassword = Pattern.compile(PASS_PATTERN);
+        Matcher matcherPassword = patternPassword.matcher(password);
+        return matcherPassword.matches();
     }
 }
