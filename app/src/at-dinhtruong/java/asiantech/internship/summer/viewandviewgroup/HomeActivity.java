@@ -49,14 +49,11 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(intent);
                 break;
             }
-<<<<<<< HEAD
-=======
             case R.id.btnRecyclerView: {
                 Intent intent = new Intent(HomeActivity.this, RecyclerViewActivity.class);
                 startActivity(intent);
                 break;
             }
->>>>>>> master
             default:
                 break;
         }
