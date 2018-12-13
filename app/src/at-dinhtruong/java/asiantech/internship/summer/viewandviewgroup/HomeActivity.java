@@ -9,6 +9,7 @@ import android.widget.Button;
 import asiantech.internship.summer.R;
 import asiantech.internship.summer.activityandfragment.LoginActivity;
 import asiantech.internship.summer.eventandlistener.EventAndListenerActivity;
+import asiantech.internship.summer.recyclerview.RecyclerViewActivity;
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -23,9 +24,11 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         Button btnViewGroup = findViewById(R.id.btnViewGroup);
         Button btnEventAndListener = findViewById(R.id.btnEventAndListener);
         Button btnActivityAndFragment = findViewById(R.id.btnActivityAndFragment);
+        Button btnRecyclerView = findViewById(R.id.btnRecyclerView);
         btnViewGroup.setOnClickListener(this);
         btnEventAndListener.setOnClickListener(this);
         btnActivityAndFragment.setOnClickListener(this);
+        btnRecyclerView.setOnClickListener(this);
     }
 
     @Override
@@ -46,6 +49,14 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(intent);
                 break;
             }
+<<<<<<< HEAD
+=======
+            case R.id.btnRecyclerView: {
+                Intent intent = new Intent(HomeActivity.this, RecyclerViewActivity.class);
+                startActivity(intent);
+                break;
+            }
+>>>>>>> master
             default:
                 break;
         }
