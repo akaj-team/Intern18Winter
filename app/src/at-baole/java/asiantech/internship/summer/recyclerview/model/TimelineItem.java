@@ -22,10 +22,6 @@ public class TimelineItem {
         return mAvatar;
     }
 
-    public void setAvatar(int avatar) {
-        this.mAvatar = avatar;
-    }
-
     public String getUsername() {
         return mUsername;
     }
@@ -38,10 +34,6 @@ public class TimelineItem {
         return mPicture;
     }
 
-    public void setPicture(int picture) {
-        this.mPicture = picture;
-    }
-
     public int getCountLike() {
         return mCountLike;
     }
@@ -52,10 +44,6 @@ public class TimelineItem {
 
     public String getCommenter() {
         return mCommenter;
-    }
-
-    public void setCommenter(String commenter) {
-        this.mCommenter = commenter;
     }
 
     public String getComment() {

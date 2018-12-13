@@ -21,17 +21,14 @@ import asiantech.internship.summer.R;
 import asiantech.internship.summer.recyclerview.model.TimelineItem;
 
 public class TimelineFragment extends Fragment implements RecyclerViewAdapter.OnItemListener {
-    private int mAvatar;
-    private int mPicture;
     private int mSumItem;
     private int mCountLike = 0;
     private int mCurrentItem;
     private int mScrolledItem;
     private int mTotalItem = 10;
-    private View mView;
-    private ProgressBar mLoading;
+    private ProgressBar mProgressBarLoading;
     private boolean isScrolled = true;
-    private List<TimelineItem> mItems;
+    private List<TimelineItem> mTimelineItems;
     private RecyclerView mRecyclerView;
     private RecyclerViewAdapter mAdapter;
 
@@ -46,19 +43,19 @@ public class TimelineFragment extends Fragment implements RecyclerViewAdapter.On
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.fragment_timeline, container, false);
-        mLoading = mView.findViewById(R.id.progressBar);
+        View view = inflater.inflate(R.layout.fragment_timeline, container, false);
+        mRecyclerView = view.findViewById(R.id.recyclerView);
+        mProgressBarLoading = view.findViewById(R.id.progressBar);
         initView();
-        return mView;
+        return view;
     }
 
     public void initView() {
-        mRecyclerView = mView.findViewById(R.id.recyclerView);
         mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(linearLayoutManager);
         setData();
-        mAdapter = new RecyclerViewAdapter(mItems, this);
+        mAdapter = new RecyclerViewAdapter(mTimelineItems, this);
         mRecyclerView.setAdapter(mAdapter);
 
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -75,7 +72,7 @@ public class TimelineFragment extends Fragment implements RecyclerViewAdapter.On
                 mScrolledItem = linearLayoutManager.findFirstVisibleItemPosition();
                 if (isScrolled && (mScrolledItem + mCurrentItem == mSumItem)) {
                     isScrolled = false;
-                    loadMoreView();
+                    loadMoreData();
                 }
             }
         });
@@ -84,113 +81,88 @@ public class TimelineFragment extends Fragment implements RecyclerViewAdapter.On
     @Override
     public void onClickLike(int position) {
         Toast.makeText(getContext(), R.string.liked, Toast.LENGTH_LONG).show();
-        mItems.get(position).setCountLike(mItems.get(position).getCountLike() + 1);
+        mTimelineItems.get(position).setCountLike(mTimelineItems.get(position).getCountLike() + 1);
         mAdapter.notifyDataSetChanged();
     }
 
     public void setData() {
-        mItems = new ArrayList<>();
+        mTimelineItems = new ArrayList<>();
         for (int i = 0; i < mTotalItem; i++) {
-            mItems.add(new TimelineItem(setAvatar(), getString(R.string.username) + " " + (i + 1), setPicture(), mCountLike, getString(R.string.username) +  " " + (i + 1), getString(R.string.comment)));
+            mTimelineItems.add(new TimelineItem(getAvatarImageId(), getString(R.string.username) + " " + (i + 1), getImageFoodId(), mCountLike, getString(R.string.username) + " " + (i + 1), getString(R.string.comment)));
         }
     }
 
-    private void loadMoreView() {
-        mLoading.setVisibility(View.VISIBLE);
-        initThread();
-    }
-
-    private void initThread() {
+    private void loadMoreData() {
+        mProgressBarLoading.setVisibility(View.VISIBLE);
         new Thread(() -> {
             try {
                 Thread.sleep(2000);
                 for (int i = mSumItem; i < mSumItem + mTotalItem; i++) {
-                    mItems.add(new TimelineItem(setAvatar(), getString(R.string.username) + " " + (i + 1), setPicture(), mCountLike, getString(R.string.username) + " " + (i + 1), getString(R.string.comment)));
+                    mTimelineItems.add(new TimelineItem(getAvatarImageId(), getString(R.string.username) + " " + (i + 1), getImageFoodId(), mCountLike, getString(R.string.username) + " " + (i + 1), getString(R.string.comment)));
                 }
                 new Handler(Looper.getMainLooper()).post(() -> {
                     isScrolled = true;
-                    mLoading.setVisibility(View.GONE);
+                    mProgressBarLoading.setVisibility(View.GONE);
                     mRecyclerView.getAdapter().notifyDataSetChanged();
                 });
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            } catch (InterruptedException ignored) {
             }
         }).start();
     }
 
-    private int setAvatar() {
-        Random randomAvatar = new Random();
-        int mRandomAvatar = randomAvatar.nextInt(10);
-        switch (mRandomAvatar) {
+    private int getAvatarImageId() {
+        Random random = new Random();
+        int index = random.nextInt(10);
+        switch (index) {
             case 1:
-                mAvatar = R.drawable.img_avatar_1;
-                break;
+                return R.drawable.img_avatar_1;
             case 2:
-                mAvatar = R.drawable.img_avatar_2;
-                break;
+                return R.drawable.img_avatar_2;
             case 3:
-                mAvatar = R.drawable.img_avatar_3;
-                break;
+                return R.drawable.img_avatar_3;
             case 4:
-                mAvatar = R.drawable.img_avatar_4;
-                break;
+                return R.drawable.img_avatar_4;
             case 5:
-                mAvatar = R.drawable.img_avatar_5;
-                break;
+                return R.drawable.img_avatar_5;
             case 6:
-                mAvatar = R.drawable.img_avatar_6;
-                break;
+                return R.drawable.img_avatar_6;
             case 7:
-                mAvatar = R.drawable.img_avatar_7;
-                break;
+                return R.drawable.img_avatar_7;
             case 8:
-                mAvatar = R.drawable.img_avatar_8;
-                break;
+                return R.drawable.img_avatar_8;
             case 9:
-                mAvatar = R.drawable.img_avatar_9;
-                break;
+                return R.drawable.img_avatar_9;
             case 10:
-                mAvatar = R.drawable.img_avatar_10;
-                break;
+                return R.drawable.img_avatar_10;
         }
-        return mAvatar;
+        return index;
     }
 
-    private int setPicture() {
-        Random randomPicture = new Random();
-        int mRandomPicture = randomPicture.nextInt(10);
-        switch (mRandomPicture) {
+    private int getImageFoodId() {
+        Random random = new Random();
+        int index = random.nextInt(10);
+        switch (index) {
             case 1:
-                mPicture = R.drawable.img_food_1;
-                break;
+                return R.drawable.img_food_1;
             case 2:
-                mPicture = R.drawable.img_food_2;
-                break;
+                return R.drawable.img_food_2;
             case 3:
-                mPicture = R.drawable.img_food_3;
-                break;
+                return R.drawable.img_food_3;
             case 4:
-                mPicture = R.drawable.img_food_4;
-                break;
+                return R.drawable.img_food_4;
             case 5:
-                mPicture = R.drawable.img_food_5;
-                break;
+                return R.drawable.img_food_5;
             case 6:
-                mPicture = R.drawable.img_food_6;
-                break;
+                return R.drawable.img_food_6;
             case 7:
-                mPicture = R.drawable.img_food_7;
-                break;
+                return R.drawable.img_food_7;
             case 8:
-                mPicture = R.drawable.img_food_8;
-                break;
+                return R.drawable.img_food_8;
             case 9:
-                mPicture = R.drawable.img_food_9;
-                break;
+                return R.drawable.img_food_9;
             case 10:
-                mPicture = R.drawable.img_food_10;
-                break;
+                return R.drawable.img_food_10;
         }
-        return mPicture;
+        return index;
     }
 }

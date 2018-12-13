@@ -16,12 +16,12 @@ import asiantech.internship.summer.R;
 import asiantech.internship.summer.recyclerview.model.TimelineItem;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.TimelineViewHolder> {
-    private List<TimelineItem> mItems;
+    private List<TimelineItem> mTimelineItems;
     private OnItemListener mListener;
 
 
     RecyclerViewAdapter(List<TimelineItem> listUsers, OnItemListener listener) {
-        this.mItems = listUsers;
+        this.mTimelineItems = listUsers;
         this.mListener = listener;
     }
 
@@ -35,12 +35,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull TimelineViewHolder holder, int position) {
-        holder.bindView(position);
+        holder.bindView(mTimelineItems.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return mItems.size();
+        return mTimelineItems.size();
     }
 
 
@@ -49,8 +49,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     class TimelineViewHolder extends RecyclerView.ViewHolder {
-        private static final String LIKE_SINGULAR = "like";
-        private static final String LIKE_PLURAL = "likes";
+        private static final String TEXT_LIKE_SINGULAR = "like";
+        private static final String TEXT_LIKE_PLURAL = "likes";
         private ImageView mImgAvatar;
         private TextView mTvUsername;
         private ImageView mImgPictures;
@@ -73,18 +73,25 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         }
 
         @SuppressLint("SetTextI18n")
-        private void bindView(int position) {
-            TimelineItem item = mItems.get(position);
-            if (item != null) {
-                mImgAvatar.setImageResource(item.getAvatar());
-                mTvUsername.setText(item.getUsername());
-                mImgPictures.setImageResource(item.getPicture());
-                mTvCommenter.setText(item.getCommenter());
-                mTvComment.setText(item.getComment());
-                if (mItems.get(position).getCountLike() < 2) {
-                    mTvCountLike.setText(item.getCountLike() + " " + LIKE_SINGULAR);
+        private void bindView(TimelineItem timelineItem) {
+            int position = getLayoutPosition();
+            if (timelineItem == null) {
+                mImgAvatar.setImageResource(R.drawable.img_avatar_1);
+                mTvUsername.setText(null);
+                mImgPictures.setImageResource(timelineItem.getPicture());
+                mTvCommenter.setText(timelineItem.getCommenter());
+                mTvComment.setText(timelineItem.getComment());
+
+            } else {
+                mImgAvatar.setImageResource(timelineItem.getAvatar());
+                mTvUsername.setText(timelineItem.getUsername());
+                mImgPictures.setImageResource(timelineItem.getPicture());
+                mTvCommenter.setText(timelineItem.getCommenter());
+                mTvComment.setText(timelineItem.getComment());
+                if (mTimelineItems.get(position).getCountLike() < 2) {
+                    mTvCountLike.setText(timelineItem.getCountLike() + " " + TEXT_LIKE_SINGULAR);
                 } else {
-                    mTvCountLike.setText(item.getCountLike() + " " + LIKE_PLURAL);
+                    mTvCountLike.setText(timelineItem.getCountLike() + " " + TEXT_LIKE_PLURAL);
                 }
             }
         }
