@@ -23,7 +23,6 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void initView() {
-        NewsAdapter mNewsAdapter;
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(this, COLUMNS));
