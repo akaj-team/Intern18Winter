@@ -1,4 +1,4 @@
-package asiantech.internship.summer.EventListener;
+package asiantech.internship.summer.eventlistener;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
