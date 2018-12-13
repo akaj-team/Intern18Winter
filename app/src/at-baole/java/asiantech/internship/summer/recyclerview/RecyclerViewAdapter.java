@@ -77,7 +77,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             int position = getLayoutPosition();
             if (timelineItem == null) {
                 mImgAvatar.setImageResource(R.drawable.img_avatar_1);
-                mTvUsername.setText(null);
+                mTvUsername.setText(R.string.username);
                 mImgPictures.setImageResource(timelineItem.getPicture());
                 mTvCommenter.setText(timelineItem.getCommenter());
                 mTvComment.setText(timelineItem.getComment());
