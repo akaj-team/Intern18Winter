@@ -38,4 +38,13 @@
     <string name="bBCWorld">BBC World</string>
     <string name="nBCNightly">NBC Nightly</string>
     <string name="eventAndListener">Event And Listener</string>
+    <string name="passwordFormatWrong">Password format Wrong!</string>
+    <string name="confirmPasswordWrong">Confirm Password Wrong!</string>
+    <string name="signup">Signup</string>
+    <string name="login">Log in</string>
+    <string name="password">Password</string>
+    <string name="confirmPassword">Confirm Password</string>
+    <string name="emailFormatWrong">Email Format Wrong!</string>
+    <string name="activityAndFragment">Activity And Fragment</string>
+    <string name="compose">Compose</string>
 </resources>

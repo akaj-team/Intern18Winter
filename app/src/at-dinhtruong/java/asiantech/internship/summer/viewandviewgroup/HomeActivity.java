@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 
 import asiantech.internship.summer.R;
+import asiantech.internship.summer.activityandfragment.LoginActivity;
 import asiantech.internship.summer.eventandlistener.EventAndListenerActivity;
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
@@ -21,8 +22,10 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private void initView() {
         Button btnViewGroup = findViewById(R.id.btnViewGroup);
         Button btnEventAndListener = findViewById(R.id.btnEventAndListener);
+        Button btnActivityAndFragment = findViewById(R.id.btnActivityAndFragment);
         btnViewGroup.setOnClickListener(this);
         btnEventAndListener.setOnClickListener(this);
+        btnActivityAndFragment.setOnClickListener(this);
     }
 
     @Override
@@ -38,7 +41,13 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(intent);
                 break;
             }
-
+            case R.id.btnActivityAndFragment: {
+                Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
+                startActivity(intent);
+                break;
+            }
+            default:
+                break;
         }
     }
 }
