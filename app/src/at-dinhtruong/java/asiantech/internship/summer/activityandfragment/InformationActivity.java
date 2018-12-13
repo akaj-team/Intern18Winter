@@ -1,13 +1,13 @@
-package asiantech.internship.summer;
+package asiantech.internship.summer.activityandfragment;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import asiantech.internship.summer.R;
+
 public class InformationActivity extends AppCompatActivity {
-    private TextView mTvEmail;
-    private TextView mTvPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,8 +17,8 @@ public class InformationActivity extends AppCompatActivity {
     }
 
     private void initInformation() {
-        mTvEmail = findViewById(R.id.tvEmail);
-        mTvPassword = findViewById(R.id.tvPassword);
+        TextView mTvEmail = findViewById(R.id.tvEmail);
+        TextView mTvPassword = findViewById(R.id.tvPassword);
         Intent intent = getIntent();
         mTvEmail.setText(intent.getStringExtra(LoginFragment.EMAIL));
         mTvPassword.setText(intent.getStringExtra(LoginFragment.PASSWORD));

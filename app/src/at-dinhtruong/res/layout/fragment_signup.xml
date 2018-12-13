@@ -7,7 +7,7 @@
     android:background="@color/colorVioletBlue"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".LoginFragment">
+    tools:context=".activityandfragment.LoginFragment">
 
     <android.support.v7.widget.AppCompatEditText
         android:id="@+id/edtEmail"

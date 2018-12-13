@@ -1,4 +1,4 @@
-package asiantech.internship.summer;
+package asiantech.internship.summer.activityandfragment;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import asiantech.internship.summer.R;
 import asiantech.internship.summer.utils.Validate;
 
 public class SignUpFragment extends Fragment implements View.OnClickListener {
@@ -47,6 +48,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
                             ((LoginActivity) getActivity()).setTitleToolBar(getString(R.string.login));
                             ((LoginActivity) getActivity()).setButtonBack(0);
                         }
+                        assert getFragmentManager() != null;
                         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                         fragmentTransaction.setCustomAnimations(R.anim.right_to_left1, R.anim.right_to_left2);
                         fragmentTransaction.add(R.id.fragment_container, new LoginFragment());

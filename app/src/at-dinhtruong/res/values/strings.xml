@@ -3,7 +3,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="passwordFormatWrong">Password format Wrong!</string>
     <string name="confirmPasswordWrong">Confirm Password Wrong!</string>
-    <string name="signup">Signup?</string>
+    <string name="signup">Signup</string>
     <string name="login">Log in</string>
     <string name="email">Email</string>
     <string name="password">Password</string>

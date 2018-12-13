@@ -1,4 +1,4 @@
-package asiantech.internship.summer;
+package asiantech.internship.summer.activityandfragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import asiantech.internship.summer.R;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
     private TextView mTvTitleToolBar;
