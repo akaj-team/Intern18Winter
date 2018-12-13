@@ -20,6 +20,7 @@ import asiantech.internship.summer.models.TimelineItem;
 
 
 public class PagerFragment extends Fragment implements TimelineAdapter.onClickItem {
+    private static final int NUM_OF_ITEM_ON_PAGE = 10;
     private boolean mIsLoadmore = true;
     private List<TimelineItem> mTimelineItems;
     private int mTotalItemCount;
@@ -86,13 +87,14 @@ public class PagerFragment extends Fragment implements TimelineAdapter.onClickIt
         new Thread(() -> {
             try {
                 Thread.sleep(3000);
-                int index = mTimelineItems.size() + 1;
-                int end = index + 10;
+                //int fromIndex = mTimelineItems.size() + 1;
+                int fromIndex = mTimelineItems.size();
+                int toIndex = fromIndex + NUM_OF_ITEM_ON_PAGE;
                 Random random = new Random();
-                for (int i = index; i < end; i++) {
+                for (int i = fromIndex; i < toIndex; i++) {
                     int randomAvatar = random.nextInt(10) + 1;
                     int randomImage = random.nextInt(10) + 1;
-                    mTimelineItems.add(new TimelineItem(0, "img_avatar" + randomAvatar, "Nguyen Van " + i, "img_image" + randomImage, "Noi dung thu " + i));
+                    mTimelineItems.add(new TimelineItem(0, "img_avatar" + randomAvatar, "Nguyen Van " + (i + 1), "img_image" + randomImage, "Noi dung thu " + (i + 1)));
                 }
                 new Handler(Looper.getMainLooper()).post(() -> {
                     mIsLoadmore = true;
