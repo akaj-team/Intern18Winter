@@ -53,4 +53,8 @@
     <string name="outbox">Outbox</string>
     <string name="trash">Trash</string>
     <string name="spam">Spam</string>
+    <string name="data">data</string>
+    <string name="save">Image Saved!</string>
+    <string name="permission">All permissions are granted by user!</string>
+    <string name="error">Some Error!</string>
 </resources>

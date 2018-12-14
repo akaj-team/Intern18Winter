@@ -2,10 +2,12 @@ package asiantech.internship.summer.drawerlayout;
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -15,46 +17,40 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
-import com.karumi.dexter.listener.DexterError;
 import com.karumi.dexter.listener.PermissionRequest;
-import com.karumi.dexter.listener.PermissionRequestErrorListener;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import asiantech.internship.summer.MainActivity;
+import java.util.Objects;
 import asiantech.internship.summer.R;
 import asiantech.internship.summer.model.Data;
 
 public class DrawerLayoutActivity extends AppCompatActivity implements DrawerLayoutAdapter.Onclick{
 
-    private static final String TAG = MainActivity.class.getSimpleName();
-    private RecyclerView addHeaderRecyclerView;
-    private LinearLayout mLayout;
+    protected RecyclerView mAddHeaderRecyclerView;
     private LinearLayout mContent;
-    private DrawerLayout mDrawerLayout;
     private List<Data> mData;
-    private ImageView imageview;
-    private static final String IMAGE_DIRECTORY = "/demonuts";
     private static final int GALLERY = 1;
     private static final int CAMERA = 2;
+    private DrawerLayoutAdapter mDrawerLayoutAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawer_layout);
-        addHeaderRecyclerView = findViewById(R.id.recyclerViewContent);
+        mAddHeaderRecyclerView = findViewById(R.id.recyclerViewContent);
         //set width for drawer layout
-        mLayout = findViewById(R.id.llDrawerLayout);
+        LinearLayout mLayout = findViewById(R.id.llDrawerLayout);
         ViewGroup.LayoutParams params = mLayout.getLayoutParams();
         params.width = 4 * getWithScreen() / 5;
         mLayout.setLayoutParams(params);
         //Move content to side in Drawer Layout
-        mDrawerLayout = findViewById(R.id.drawerLayout);
+        DrawerLayout mDrawerLayout = findViewById(R.id.drawerLayout);
         mContent = findViewById(R.id.llContent);
         mDrawerLayout.setScrimColor(Color.TRANSPARENT);
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.anim.slide_in_left, R.anim.slide_in_right) {
@@ -68,19 +64,18 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerLay
         mDrawerLayout.addDrawerListener(actionBarDrawerToggle);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(DrawerLayoutActivity.this);
-        addHeaderRecyclerView.setLayoutManager(linearLayoutManager);
-        addHeaderRecyclerView.setHasFixedSize(true);
-        DrawerLayoutAdapter customAdapter = new DrawerLayoutAdapter(getDataSource(), this);
-        addHeaderRecyclerView.setAdapter(customAdapter);
-
+        mAddHeaderRecyclerView.setLayoutManager(linearLayoutManager);
+        mAddHeaderRecyclerView.setHasFixedSize(true);
+        mDrawerLayoutAdapter = new DrawerLayoutAdapter(getDataSource(), this);
+        mAddHeaderRecyclerView.setAdapter(mDrawerLayoutAdapter);
     }
     private List<Data> getDataSource(){
         mData = new ArrayList<>();
-        mData.add(new Data(R.drawable.img_avatar, getString(R.string.tranthithuthao)));
-        mData.add(new Data(R.drawable.ic_move_to_inbox_black_24dp, getString(R.string.inbox)));
-        mData.add(new Data(R.drawable.ic_send_black_24dp, getString(R.string.outbox)));
-        mData.add(new Data(R.drawable.ic_delete_black_24dp, getString(R.string.trash)));
-        mData.add(new Data(R.drawable.ic_error_black_24dp, getString(R.string.spam)));
+        mData.add(new Data(R.drawable.img_avatar, getString(R.string.tranthithuthao), null, null));
+        mData.add(new Data(R.drawable.ic_move_to_inbox_black_24dp, getString(R.string.inbox), null, null));
+        mData.add(new Data(R.drawable.ic_send_black_24dp, getString(R.string.outbox), null, null));
+        mData.add(new Data(R.drawable.ic_delete_black_24dp, getString(R.string.trash), null, null));
+        mData.add(new Data(R.drawable.ic_error_black_24dp, getString(R.string.spam), null, null));
         return mData;
     }
     private int getWithScreen(){
@@ -91,8 +86,7 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerLay
         } catch (NoSuchMethodError err) {
             display.getSize(size);
         }
-        int width = size.x;
-        return width;
+        return size.x;
     }
     @Override
     public void onclickAvatar(){
@@ -103,17 +97,14 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerLay
                 getString(R.string.gallery),
                 getString(R.string.camera) };
         pictureDialog.setItems(pictureDialogItems,
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        switch (which) {
-                            case 0:
-                                choosePhotoFromGallary();
-                                break;
-                            case 1:
-                                takePhotoFromCamera();
-                                break;
-                        }
+                (dialog, which) -> {
+                    switch (which) {
+                        case 0:
+                            choosePhotoFromGallary();
+                            break;
+                        case 1:
+                            takePhotoFromCamera();
+                            break;
                     }
                 });
         pictureDialog.show();
@@ -130,7 +121,39 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerLay
         startActivityForResult(intent, CAMERA);
     }
 
-    private void  requestMultiplePermissions(){
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == GALLERY) {
+            onSelectFromGalleryResult(data);
+        }if (requestCode == CAMERA){
+            onCaptureImageResult(data);
+        }
+    }
+    private void onSelectFromGalleryResult(Intent intent) {
+        Data data = mData.get(0);
+        Uri contentURI = intent.getData();
+        try {
+            Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), contentURI);
+
+            data.setAvatarBitmap(bitmap);
+            mDrawerLayoutAdapter.notifyDataSetChanged();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void onCaptureImageResult(Intent data) {
+        Bundle extras = data.getExtras();
+        Bitmap imageBitmap = (Bitmap) Objects.requireNonNull(extras).get(getString(R.string.data));
+        Toast.makeText(DrawerLayoutActivity.this, R.string.save, Toast.LENGTH_SHORT).show();
+        Data item = mData.get(0);
+        item.setAvatarBitmap(imageBitmap);
+        mDrawerLayoutAdapter.notifyDataSetChanged();
+    }
+
+    private void requestMultiplePermissions(){
         Dexter.withActivity(this)
                 .withPermissions(
                         Manifest.permission.CAMERA,
@@ -141,27 +164,15 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerLay
                     public void onPermissionsChecked(MultiplePermissionsReport report) {
                         // check if all permissions are granted
                         if (report.areAllPermissionsGranted()) {
-                            Toast.makeText(getApplicationContext(), "All permissions are granted by user!", Toast.LENGTH_SHORT).show();
-                        }
-
-                        // check for permanent denial of any permission
-                        if (report.isAnyPermissionPermanentlyDenied()) {
-                            // show alert dialog navigating to Settings
-                            //openSettingsDialog();
+                            Toast.makeText(getApplicationContext(), R.string.permission, Toast.LENGTH_SHORT).show();
                         }
                     }
-
                     @Override
                     public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
                         token.continuePermissionRequest();
                     }
                 }).
-                withErrorListener(new PermissionRequestErrorListener() {
-                    @Override
-                    public void onError(DexterError error) {
-                        Toast.makeText(getApplicationContext(), "Some Error! ", Toast.LENGTH_SHORT).show();
-                    }
-                })
+                withErrorListener(error -> Toast.makeText(getApplicationContext(), R.string.error, Toast.LENGTH_SHORT).show())
                 .onSameThread()
                 .check();
     }
@@ -169,8 +180,8 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerLay
     @Override
     public void changeSelect(int i) {
         for (Data item : mData) {
-            item.setmIsChecked(false);
+            item.setIsChecked(false);
         }
-        mData.get(i).setmIsChecked(true);
+        mData.get(i).setIsChecked(true);
     }
 }

@@ -1,38 +1,50 @@
 package asiantech.internship.summer.model;
 
+import android.graphics.Bitmap;
+import android.net.Uri;
+
 public class Data {
     private int mIcon;
     private String mContent;
     private boolean mIsChecked;
+    private Bitmap mAvatarBitmap;
+    private Uri mAvatar;
 
-    public Data() {
-    }
-
-    public Data(int mIcon, String mContent) {
+    public Data(int mIcon, String mContent, Bitmap mAvatarBitmap, Uri mAvatar) {
         this.mIcon = mIcon;
         this.mContent = mContent;
+        this.mAvatarBitmap = mAvatarBitmap;
+        this.mAvatar = mAvatar;
     }
-    public boolean getmIsChecked() {
+
+    public Uri getAvatar() {
+        return mAvatar;
+    }
+
+    public void setAvatar(Uri avatar) {
+        this.mAvatar = avatar;
+    }
+
+    public Bitmap getAvatarBitmap() {
+        return mAvatarBitmap;
+    }
+
+    public void setAvatarBitmap(Bitmap avatarBitmap) {
+        this.mAvatarBitmap = avatarBitmap;
+    }
+    public boolean getIsChecked() {
         return mIsChecked;
     }
 
-    public void setmIsChecked(Boolean mIsChecked) {
-        this.mIsChecked = mIsChecked;
+    public void setIsChecked(Boolean isChecked) {
+        this.mIsChecked = isChecked;
     }
 
-    public int getmIcon() {
+    public int getIcon() {
         return mIcon;
     }
 
-    public void setmIcon(int mIcon) {
-        this.mIcon = mIcon;
-    }
-
-    public String getmContent() {
+    public String getContent() {
         return mContent;
-    }
-
-    public void setmContent(String mContent) {
-        this.mContent = mContent;
     }
 }

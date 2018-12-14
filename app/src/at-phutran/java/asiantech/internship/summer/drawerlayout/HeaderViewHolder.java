@@ -7,10 +7,10 @@ import android.widget.TextView;
 
 import asiantech.internship.summer.R;
 
-public class HeaderViewHolder extends RecyclerView.ViewHolder {
-    public ImageView imageHeader;
-    public TextView headerTitle;
-    public HeaderViewHolder(View itemView) {
+class HeaderViewHolder extends RecyclerView.ViewHolder {
+    ImageView imageHeader;
+    TextView headerTitle;
+    HeaderViewHolder(View itemView) {
         super(itemView);
         imageHeader = itemView.findViewById(R.id.avatarCircleImageView);
         headerTitle = itemView.findViewById(R.id.tvTitle);
