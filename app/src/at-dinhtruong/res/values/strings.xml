@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Intern18Summer</string>
-    <string name="maNhanVien">Mã Nhân Viên</string>
-    <string name="tenNhanVien">Tên Nhân Viên</string>
+    <string name="maNhanVien">Employee ID</string>
+    <string name="tenNhanVien">Employee Name</string>
     <string name="update">Update</string>
     <string name="insert">Insert</string>
     <string name="delete">Delete</string>
@@ -15,4 +15,7 @@
     <string name="sharePreference">SHARE PREFERENCE</string>
     <string name="internalAndExternal">INTERNAL AND EXTERNAL</string>
     <string name="loginSuccessful">Login successful!</string>
+    <string name="sQLite">SQLITE</string>
+    <string name="pleaseFillTheEmployeeName">Please fill the employee name!</string>
+    <string name="updateError">Update Error!</string>
 </resources>

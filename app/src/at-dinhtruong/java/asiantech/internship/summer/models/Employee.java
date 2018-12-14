@@ -35,10 +35,6 @@ public class Employee {
         this.mNameEmployee = nameEmployee;
     }
 
-    public Employee(int companyId, String nameEmployee) {
-        this.mCompanyId = companyId;
-        this.mNameEmployee = nameEmployee;
-    }
     public Employee() {
     }
 }

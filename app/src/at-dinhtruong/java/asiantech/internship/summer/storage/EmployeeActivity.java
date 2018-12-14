@@ -23,6 +23,8 @@ public class EmployeeActivity extends AppCompatActivity implements EmployeeAdapt
     private EmployeeAdapter mEmployeeAdapter;
     private Button mBtnUpdate;
     private Button mBtnDelete;
+    private List<Employee> mEmployeesById;
+    private int mPositionItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,59 +49,73 @@ public class EmployeeActivity extends AppCompatActivity implements EmployeeAdapt
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
-        List<Employee> employees = mDbManager.getAllEmployee();
-        if (employees.size() == 0) {
-            mDbManager.createDefaultEmployee();
-        }
-        List<Employee> employeesById = mDbManager.getAllEmployeeById(mIdCompany);
-        mEmployeeAdapter = new EmployeeAdapter(employeesById, this);
+        mEmployeesById = mDbManager.getAllEmployeeById(mIdCompany);
+        mEdtIdEmployee.setText(String.valueOf(mEmployeesById.size() + 1));
+        mEmployeeAdapter = new EmployeeAdapter(mEmployeesById, this);
         recyclerView.setAdapter(mEmployeeAdapter);
     }
 
     @Override
-    public void onSelectEmployee(int idEmployee) {
-        Employee employee = mDbManager.getEmployeeById(idEmployee);
+    public void onSelectEmployee(int position) {
+        Employee employee = mDbManager.getEmployeeById(mEmployeesById.get(position).getIdEmployee(), mEmployeesById.get(position).getCompanyId());
         mEdtIdEmployee.setText(String.valueOf(employee.getIdEmployee()));
         mEdtNameEmployee.setText(employee.getNameEmployee());
         mBtnUpdate.setEnabled(true);
         mBtnDelete.setEnabled(true);
+        mPositionItem = position;
     }
 
     @Override
     public void onClick(View view) {
-        String idEmployeeString = mEdtIdEmployee.getText().toString();
-        String nameEmployee = mEdtNameEmployee.getText().toString();
-        int idEmployee = 0;
-        if (!idEmployeeString.equals("")) {
-            idEmployee = Integer.parseInt(mEdtIdEmployee.getText().toString());
-        }
-        Employee employee = new Employee(idEmployee, mIdCompany, nameEmployee);
+        Employee employee = getDataForUpdate();
         switch (view.getId()) {
             case R.id.btnUpdate: {
-                if (nameEmployee.equals("")) {
-                    Toast.makeText(getApplicationContext(), "Please fill the employee name!", Toast.LENGTH_LONG).show();
-                } else if (!nameEmployee.equals("") && mDbManager.UpdateEmployee(employee) > 0) {
+                if (employee.getNameEmployee().equals("")) {
+                    Toast.makeText(getApplicationContext(), R.string.pleaseFillTheEmployeeName, Toast.LENGTH_LONG).show();
+                } else if (!employee.getNameEmployee().equals("") && mDbManager.UpdateEmployee(employee) > 0) {
+                    mEmployeesById.get(mPositionItem).setNameEmployee(employee.getNameEmployee());
                     mEmployeeAdapter.notifyDataSetChanged();
                 } else {
-                    Toast.makeText(getApplicationContext(), "Update Error!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), R.string.updateError, Toast.LENGTH_LONG).show();
                 }
-                mEmployeeAdapter.notifyDataSetChanged();
+                mEdtIdEmployee.setText(String.valueOf(mEmployeesById.get(mEmployeesById.size() - 1).getIdEmployee() + 1));
+                mEdtNameEmployee.setText("");
                 break;
             }
             case R.id.btnInsert: {
+                int idEmployee;
+                if (mEmployeesById.size() == 0) {
+                    idEmployee = 1;
+                } else {
+                    idEmployee = mEmployeesById.get(mEmployeesById.size() - 1).getIdEmployee() + 1;
+                }
+                String nameEmployee = mEdtNameEmployee.getText().toString();
+                employee = new Employee(idEmployee, mIdCompany, nameEmployee);
                 if (nameEmployee.equals("")) {
-                    Toast.makeText(getApplicationContext(), "Please fill the employee name!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), R.string.pleaseFillTheEmployeeName, Toast.LENGTH_LONG).show();
                 } else {
                     mDbManager.addEmployee(employee);
+                    mEmployeesById.add(employee);
                     mEmployeeAdapter.notifyDataSetChanged();
+                    mEdtIdEmployee.setText(String.valueOf(mEmployeesById.get(mEmployeesById.size() - 1).getIdEmployee() + 1));
+                    mEdtNameEmployee.setText("");
                 }
                 break;
             }
             case R.id.btnDelete: {
                 mDbManager.deleteEmployee(employee);
+                mEmployeesById.remove(mPositionItem);
                 mEmployeeAdapter.notifyDataSetChanged();
+                mEdtIdEmployee.setText(String.valueOf(mEmployeesById.get(mEmployeesById.size() - 1).getIdEmployee() + 1));
+                mEdtNameEmployee.setText("");
                 break;
             }
         }
+    }
+
+    private Employee getDataForUpdate() {
+        String nameEmployee = mEdtNameEmployee.getText().toString();
+        int idEmployee = Integer.parseInt(mEdtIdEmployee.getText().toString());
+        return new Employee(idEmployee, mIdCompany, nameEmployee);
     }
 }

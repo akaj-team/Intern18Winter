@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import asiantech.internship.summer.models.Company;
 import asiantech.internship.summer.models.Employee;
@@ -23,7 +22,7 @@ public class DBManager extends SQLiteOpenHelper {
     private static final String NAME_EMPLOYEE = "name_employee";
     private static final String COMPANY_ID = "company_id";
 
-    public DBManager(Context context) {
+    DBManager(Context context) {
         super(context, DATABASE_NAME, null, 1);
     }
 
@@ -34,7 +33,7 @@ public class DBManager extends SQLiteOpenHelper {
                 NAME_COMPANY + " TEXT)";
         sqLiteDatabase.execSQL(sqlQueryCompany);
         String sqlQueryEmployee = "CREATE TABLE " + TABLE_EMPLOYEE + " (" +
-                ID_EMPLOYEE + " integer primary key AUTOINCREMENT, " + COMPANY_ID + " integer, " +
+                ID_EMPLOYEE + " integer, " + COMPANY_ID + " integer, " +
                 NAME_EMPLOYEE + " TEXT)";
         sqLiteDatabase.execSQL(sqlQueryEmployee);
     }
@@ -47,59 +46,42 @@ public class DBManager extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);
     }
 
-
-    public void addEmployee(Employee employee) {
+    void addEmployee(Employee employee) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
+        values.put(ID_EMPLOYEE, employee.getIdEmployee());
         values.put(COMPANY_ID, employee.getCompanyId());
         values.put(NAME_EMPLOYEE, employee.getNameEmployee());
         db.insert(TABLE_EMPLOYEE, null, values);
         db.close();
     }
 
-    public Employee getEmployeeById(int id) {
+    Employee getEmployeeById(int idEmployee, int companyID) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(TABLE_EMPLOYEE, new String[]{ID_EMPLOYEE,
-                        COMPANY_ID, NAME_EMPLOYEE}, ID_EMPLOYEE + "=?",
-                new String[]{String.valueOf(id)}, null, null, null, null);
+                        COMPANY_ID, NAME_EMPLOYEE}, ID_EMPLOYEE + "=?" + " AND " + COMPANY_ID + "=?",
+                new String[]{String.valueOf(idEmployee), String.valueOf(companyID)}, null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
+        assert cursor != null;
         Employee employee = new Employee(cursor.getInt(0), cursor.getInt(1), cursor.getString(2));
         cursor.close();
         db.close();
         return employee;
     }
 
-    public int UpdateEmployee(Employee employee) {
+    int UpdateEmployee(Employee employee) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(NAME_EMPLOYEE, employee.getNameEmployee());
-        return db.update(TABLE_EMPLOYEE, values, ID_EMPLOYEE + "=?", new String[]{String.valueOf(employee.getIdEmployee())});
+        return db.update(TABLE_EMPLOYEE, values, ID_EMPLOYEE + "=?" + " AND " + COMPANY_ID + "=?",
+                new String[]{String.valueOf(employee.getIdEmployee()), String.valueOf(employee.getCompanyId())});
     }
 
-    public List<Employee> getAllEmployee() {
-        List<Employee> employees = new ArrayList<>();
-        String selectQuery = "SELECT  * FROM " + TABLE_EMPLOYEE;
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);
-        if (cursor.moveToFirst()) {
-            do {
-                Employee employee = new Employee();
-                employee.setIdEmployee(cursor.getInt(0));
-                employee.setCompanyId(cursor.getInt(1));
-                employee.setNameEmployee(cursor.getString(2));
-                employees.add(employee);
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        db.close();
-        return employees;
-    }
 
-    public List<Employee> getAllEmployeeById(int idCompany) {
+    List<Employee> getAllEmployeeById(int idCompany) {
         List<Employee> employees = new ArrayList<>();
         String selectQuery = "SELECT  * FROM " + TABLE_EMPLOYEE + " WHERE COMPANY_ID = " + idCompany;
-
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()) {
@@ -117,23 +99,14 @@ public class DBManager extends SQLiteOpenHelper {
     }
 
 
-    public void deleteEmployee(Employee employee) {
+    void deleteEmployee(Employee employee) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_EMPLOYEE, ID_EMPLOYEE + " = ?",
                 new String[]{String.valueOf(employee.getIdEmployee())});
         db.close();
     }
 
-    public int getEmployeesCount() {
-        String countQuery = "SELECT  * FROM " + TABLE_EMPLOYEE;
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(countQuery, null);
-        int countEmployee = cursor.getCount();
-        cursor.close();
-        return countEmployee;
-    }
-
-    public List<Company> getAllCompany() {
+    List<Company> getAllCompany() {
         List<Company> companies = new ArrayList<>();
         String selectQuery = "SELECT  * FROM " + TABLE_COMPANY;
         SQLiteDatabase db = this.getWritableDatabase();
@@ -151,7 +124,7 @@ public class DBManager extends SQLiteOpenHelper {
         return companies;
     }
 
-    public int getCompaniesCount() {
+    private int getCompaniesCount() {
         String countQuery = "SELECT * FROM " + TABLE_COMPANY;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
@@ -160,7 +133,7 @@ public class DBManager extends SQLiteOpenHelper {
         return countCompaniew;
     }
 
-    public void addCompany(Company company) {
+    private void addCompany(Company company) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(NAME_COMPANY, company.getNameCompany());
@@ -168,19 +141,7 @@ public class DBManager extends SQLiteOpenHelper {
         db.close();
     }
 
-
-    public void createDefaultEmployee() {
-        int count = this.getEmployeesCount();
-        if (count == 0) {
-            for (int i = 1; i <= 20; i++) {
-                Random rd = new Random();
-                int idCompany = rd.nextInt(5) + 1;
-                this.addEmployee(new Employee(idCompany, "Nhân viên " + i));
-            }
-        }
-    }
-
-    public void createDefaultCompany() {
+    void createDefaultCompany() {
         int count = this.getCompaniesCount();
         if (count == 0) {
             this.addCompany(new Company("Công ty 1"));
@@ -191,4 +152,3 @@ public class DBManager extends SQLiteOpenHelper {
         }
     }
 }
-

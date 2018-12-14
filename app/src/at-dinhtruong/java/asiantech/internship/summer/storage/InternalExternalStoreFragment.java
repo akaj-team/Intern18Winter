@@ -31,25 +31,20 @@ import asiantech.internship.summer.R;
 public class InternalExternalStoreFragment extends Fragment implements View.OnClickListener {
     private EditText mEdtInternal;
     private EditText mEdtExternal;
-    private final String FILE_NAME = "internalStorage.txt";
-    private final String FILE_PATH = "ThuMucCuaToi";
     private static final int REQUEST_ID_READ_PERMISSION = 100;
     private static final int REQUEST_ID_WRITE_PERMISSION = 200;
-
-    private final String fileName = "note.txt";
-    File myInternalFile;
-
-    public InternalExternalStoreFragment() {
-
-    }
+    private final String FILE_NAME = "note.txt";
+    private File mMyInternalFile;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ContextWrapper contextWrapper = new ContextWrapper(
                 Objects.requireNonNull(getActivity()).getApplicationContext());
-        File directory = contextWrapper.getDir(FILE_PATH, Context.MODE_PRIVATE);
-        myInternalFile = new File(directory, FILE_NAME);
+        String filePath = "ThuMucCuaToi";
+        File directory = contextWrapper.getDir(filePath, Context.MODE_PRIVATE);
+        String fileNameInternal = "internalStorage.txt";
+        mMyInternalFile = new File(directory, fileNameInternal);
     }
 
     @Override
@@ -149,7 +144,7 @@ public class InternalExternalStoreFragment extends Fragment implements View.OnCl
 
     private void writeExternalFile() {
         File extStore = Environment.getExternalStorageDirectory();
-        String path = extStore.getAbsolutePath() + "/" + fileName;
+        String path = extStore.getAbsolutePath() + "/" + FILE_NAME;
         String data = mEdtExternal.getText().toString();
         try {
             File myFile = new File(path);
@@ -159,7 +154,7 @@ public class InternalExternalStoreFragment extends Fragment implements View.OnCl
             myOutWriter.append(data);
             myOutWriter.close();
             fOut.close();
-            Toast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(), fileName + " saved", Toast.LENGTH_LONG).show();
+            Toast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(), FILE_NAME + " saved", Toast.LENGTH_LONG).show();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -167,28 +162,28 @@ public class InternalExternalStoreFragment extends Fragment implements View.OnCl
 
     private String readExternalFile() {
         File extStore = Environment.getExternalStorageDirectory();
-        String path = extStore.getAbsolutePath() + "/" + fileName;
+        String path = extStore.getAbsolutePath() + "/" + FILE_NAME;
         String s;
-        String fileContent = "";
+        StringBuilder fileContent = new StringBuilder();
         try {
             File myFile = new File(path);
             FileInputStream fIn = new FileInputStream(myFile);
             BufferedReader myReader = new BufferedReader(
                     new InputStreamReader(fIn));
             while ((s = myReader.readLine()) != null) {
-                fileContent += s;
+                fileContent.append(s);
             }
             myReader.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return fileContent;
+        return fileContent.toString();
     }
 
     private String readInternalFile() {
         StringBuilder myData = new StringBuilder();
         try {
-            FileInputStream fileInputStream = new FileInputStream(myInternalFile);
+            FileInputStream fileInputStream = new FileInputStream(mMyInternalFile);
             DataInputStream dataInputStream = new DataInputStream(fileInputStream);
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(dataInputStream));
             String strLine;
@@ -204,7 +199,7 @@ public class InternalExternalStoreFragment extends Fragment implements View.OnCl
 
     private void writeInternalFile() {
         try {
-            FileOutputStream fos = new FileOutputStream(myInternalFile);
+            FileOutputStream fos = new FileOutputStream(mMyInternalFile);
             fos.write(mEdtInternal.getText().toString().getBytes());
             fos.close();
         } catch (IOException e) {

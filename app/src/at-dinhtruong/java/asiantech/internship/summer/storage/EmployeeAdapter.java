@@ -31,13 +31,14 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.Employ
         holder.mTvEmployee.setText(employee.getNameEmployee());
     }
 
-    public class EmployeeViewHolder extends RecyclerView.ViewHolder {
+    class EmployeeViewHolder extends RecyclerView.ViewHolder {
         private TextView mTvEmployee;
 
         EmployeeViewHolder(View itemView) {
             super(itemView);
             mTvEmployee = itemView.findViewById(R.id.custom_view_item);
-            mTvEmployee.setOnClickListener(view -> mOnClickEmployee.onSelectEmployee(employees.get(getAdapterPosition()).getIdEmployee()));
+            mTvEmployee.setOnClickListener(view ->
+                    mOnClickEmployee.onSelectEmployee(getAdapterPosition()));
         }
     }
 
@@ -53,7 +54,7 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.Employ
     }
 
     public interface onClickEmployee {
-        void onSelectEmployee(int idEmployee);
+        void onSelectEmployee(int position);
     }
 
 }
