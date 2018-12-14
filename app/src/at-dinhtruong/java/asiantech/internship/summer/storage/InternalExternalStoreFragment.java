@@ -168,13 +168,13 @@ public class InternalExternalStoreFragment extends Fragment implements View.OnCl
         StringBuilder fileContent = new StringBuilder();
         try {
             File myFile = new File(path);
-            FileInputStream fIn = new FileInputStream(myFile);
-            BufferedReader myReader = new BufferedReader(
-                    new InputStreamReader(fIn));
-            while ((s = myReader.readLine()) != null) {
+            FileInputStream fileInputStream = new FileInputStream(myFile);
+            BufferedReader bufferedReader = new BufferedReader(
+                    new InputStreamReader(fileInputStream));
+            while ((s = bufferedReader.readLine()) != null) {
                 fileContent.append(s);
             }
-            myReader.close();
+            bufferedReader.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

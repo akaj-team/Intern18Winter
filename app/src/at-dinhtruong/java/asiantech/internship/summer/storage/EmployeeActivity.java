@@ -107,7 +107,13 @@ public class EmployeeActivity extends AppCompatActivity implements EmployeeAdapt
                 mDbManager.deleteEmployee(employee);
                 mEmployeesById.remove(mPositionItem);
                 mEmployeeAdapter.notifyDataSetChanged();
-                mEdtIdEmployee.setText(String.valueOf(mEmployeesById.get(mEmployeesById.size() - 1).getIdEmployee() + 1));
+                int idEmployee;
+                if (mEmployeesById.size() == 0) {
+                    idEmployee = 1;
+                } else {
+                    idEmployee = mEmployeesById.get(mEmployeesById.size() - 1).getIdEmployee() + 1;
+                }
+                mEdtIdEmployee.setText(String.valueOf(idEmployee));
                 mEdtNameEmployee.setText("");
                 break;
             }

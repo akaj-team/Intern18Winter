@@ -12,7 +12,7 @@ public class FileStoreActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_file_store);
+        setContentView(R.layout.activity_file_storage);
         ViewPager viewPagerFileStore = findViewById(R.id.viewpager);
         setupViewPager(viewPagerFileStore);
         TabLayout tlFileStore = findViewById(R.id.tabs);

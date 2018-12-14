@@ -78,7 +78,6 @@ public class DBManager extends SQLiteOpenHelper {
                 new String[]{String.valueOf(employee.getIdEmployee()), String.valueOf(employee.getCompanyId())});
     }
 
-
     List<Employee> getAllEmployeeById(int idCompany) {
         List<Employee> employees = new ArrayList<>();
         String selectQuery = "SELECT  * FROM " + TABLE_EMPLOYEE + " WHERE COMPANY_ID = " + idCompany;
@@ -101,8 +100,9 @@ public class DBManager extends SQLiteOpenHelper {
 
     void deleteEmployee(Employee employee) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_EMPLOYEE, ID_EMPLOYEE + " = ?",
-                new String[]{String.valueOf(employee.getIdEmployee())});
+        db.delete(TABLE_EMPLOYEE, ID_EMPLOYEE + " = ?" + " AND " + COMPANY_ID + " = ? ",
+                new String[]{String.valueOf(employee.getIdEmployee()),
+                        String.valueOf(employee.getCompanyId())});
         db.close();
     }
 
