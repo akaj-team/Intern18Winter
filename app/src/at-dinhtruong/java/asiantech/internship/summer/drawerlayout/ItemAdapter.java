@@ -23,7 +23,7 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private IMethodCaller iMethodCaller;
 
     public interface IMethodCaller {
-        void changeAvatarMethod(int adapterPosition);
+        void changeAvatarMethod();
 
         void selectItemMethod(int position);
     }
@@ -107,7 +107,7 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             mImgAvatar = view.findViewById(R.id.imgAvatar);
             mTvEmail = view.findViewById(R.id.tvEmail);
             mImgAvatar.setOnClickListener(v -> {
-                        iMethodCaller.changeAvatarMethod(getAdapterPosition());
+                        iMethodCaller.changeAvatarMethod();
                         notifyDataSetChanged();
                     }
             );

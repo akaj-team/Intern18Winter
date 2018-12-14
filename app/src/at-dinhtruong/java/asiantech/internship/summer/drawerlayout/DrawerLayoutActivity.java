@@ -76,7 +76,7 @@ public class DrawerLayoutActivity extends AppCompatActivity implements ItemAdapt
     }
 
     @Override
-    public void changeAvatarMethod(int adapterPosition) {
+    public void changeAvatarMethod() {
         final CharSequence[] itemsDialog = {getString(R.string.takePhoto), getString(R.string.chooseFromLibrary), getString(R.string.cancel)};
         AlertDialog.Builder builder = new AlertDialog.Builder(DrawerLayoutActivity.this);
         builder.setTitle(R.string.addPhoto);
