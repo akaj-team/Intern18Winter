@@ -44,7 +44,6 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(intent);
                 break;
             }
-
             case R.id.btnExercise3: {
                 Intent intent = new Intent(ListActivity.this, LoginActivity.class);
                 startActivity(intent);
