@@ -50,9 +50,7 @@ public class DrawerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             ((ItemViewHolder) holder).mCat.setText(mDataDrawer.get(position).getCat());
             ((ItemViewHolder) holder).mLinearLayout.setSelected(mDataDrawer.get(position).isChecked());
 
-            ((ItemViewHolder) holder).mLinearLayout.setOnClickListener(view -> {
-                mOnclick.selectItem(position);
-            });
+            ((ItemViewHolder) holder).mLinearLayout.setOnClickListener(view -> mOnclick.selectItem(position));
 
         } else if (holder instanceof HeaderViewHolder) {
             DataDrawer object = mDataDrawer.get(0);
@@ -62,9 +60,7 @@ public class DrawerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             } else {
                 ((HeaderViewHolder) holder).mImgAvt.setImageResource(object.getImgAvt());
             }
-            ((HeaderViewHolder) holder).mImgAvt.setOnClickListener(v -> {
-                mOnclick.avatarClick();
-            });
+            ((HeaderViewHolder) holder).mImgAvt.setOnClickListener(v -> mOnclick.avatarClick());
             ((HeaderViewHolder) holder).mGmail.setText(object.getGmail());
             ((HeaderViewHolder) holder).mImgCheck.setImageResource(object.getImgCheck());
         }

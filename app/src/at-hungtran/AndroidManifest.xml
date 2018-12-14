@@ -18,8 +18,7 @@
 
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-
-        <activity android:name=".eventlistener.LoginActivity">
+        <activity android:name=".drawer.DrawerLayoutActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,7 +26,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.HomeActivity" />
-        <activity android:name=".drawer.DrawerLayoutActivity" />
+        <activity android:name=".eventlistener.LoginActivity"/>
 
         <provider
             android:name="android.support.v4.content.FileProvider"

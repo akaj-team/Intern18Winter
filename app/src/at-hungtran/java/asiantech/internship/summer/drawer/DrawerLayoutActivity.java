@@ -4,8 +4,11 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -14,9 +17,12 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Display;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,11 +34,18 @@ import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAdapter.onClick, ChoosePhotoDialogFragment.onItemClick {
+    private static final int CAMERA_REQUEST = 0;
+    private static final int GALLERY_REQUEST = 1;
+    private static final int READ_PERMISSION_REQUEST_CAMERA = 1111;
+    private static final int WRITE_PERMISSION_REQUEST_CAMERA = 1112;
+    private static final int READ_PERMISSION_REQUEST_GALLERY = 1113;
+    private static final int WRITE_PERMISSION_REQUEST_CALLERY = 11114;
     List<DataDrawer> mDataDrawer = new ArrayList<>();
     private ChoosePhotoDialogFragment mDialogFragment;
     private DrawerAdapter mDrawerAdapter;
     private ActionBarDrawerToggle mDrawerToggle;
     private float lastTranslate = 0.0f;
+    private Uri mUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,10 +53,21 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAda
         setContentView(R.layout.activity_drawer_layout);
         initView();
         drawerToggle();
+        displayWidth();
+    }
+
+    public int displayWidth() {
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        return size.x;
     }
 
     public void initView() {
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
+        ViewGroup.LayoutParams params = recyclerView.getLayoutParams();
+        params.width = 4 * displayWidth() / 5;
+        recyclerView.setLayoutParams(params);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -70,14 +94,19 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAda
     private void openGallery() {
         Intent pickIntent = new Intent(Intent.ACTION_PICK,
                 android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(pickIntent, 1);
+        startActivityForResult(pickIntent, GALLERY_REQUEST);
         mDialogFragment.dismiss();
 
     }
 
     private void takePicture() {
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
         Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(takePicture, 0);
+        File file = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "kakak.png");
+        mUri = Uri.fromFile(file);
+        takePicture.putExtra(MediaStore.EXTRA_OUTPUT, mUri);
+        startActivityForResult(takePicture, CAMERA_REQUEST);
         mDialogFragment.dismiss();
     }
 
@@ -90,7 +119,7 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAda
                 ActivityCompat.requestPermissions(
                         this,
                         new String[]{READ_EXTERNAL_STORAGE},
-                        1114
+                        READ_PERMISSION_REQUEST_GALLERY
                 );
                 return;
             }
@@ -101,7 +130,7 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAda
                 ActivityCompat.requestPermissions(
                         this,
                         new String[]{WRITE_EXTERNAL_STORAGE},
-                        1113
+                        WRITE_PERMISSION_REQUEST_CALLERY
                 );
                 return;
             }
@@ -114,7 +143,7 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAda
                 ActivityCompat.requestPermissions(
                         this,
                         new String[]{CAMERA},
-                        1111
+                        READ_PERMISSION_REQUEST_CAMERA
                 );
                 return;
             }
@@ -125,7 +154,7 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAda
                 ActivityCompat.requestPermissions(
                         this,
                         new String[]{WRITE_EXTERNAL_STORAGE},
-                        1112
+                        WRITE_PERMISSION_REQUEST_CAMERA
                 );
                 return;
             }
@@ -140,7 +169,7 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAda
             case 0:
                 if (resultCode == RESULT_OK) {
                     Uri selectedImage = imageReturnedIntent.getData();
-                    mDataDrawer.get(0).setAvatarUri(selectedImage);
+                    mDataDrawer.get(0).setAvatarUri(mUri);
                     mDrawerAdapter.notifyDataSetChanged();
                 }
 
