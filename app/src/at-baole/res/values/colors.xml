@@ -8,6 +8,7 @@
     <color name="colorGreen">#05b941</color>
     <color name="colorGray">#bbbebc</color>
     <color name="colorYellow">#ffff00</color>
+    <color name="colorGrey">#b3b3b3</color>
+    <color name="colorLightGrey">#e6e6e6</color>
     <color name="colorLightBlue">#9999ff</color>
-    <color name="colorGrey">#e6e6e6</color>
 </resources>
