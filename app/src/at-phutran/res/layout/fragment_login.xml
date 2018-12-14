@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -13,7 +14,9 @@
         android:hint="@string/inputEmail"
         android:textColorHint="@color/colorWhite"
         android:padding="8dp"
-        android:background="@drawable/shape"/>
+        android:background="@drawable/shape"
+        android:inputType="textEmailAddress"
+        tools:ignore="Autofill,TextFields" />
     <EditText
         android:id="@+id/edtInputPass"
         android:layout_width="200dp"
@@ -22,7 +25,9 @@
         android:padding="8dp"
         android:textColorHint="@color/colorWhite"
         android:hint="@string/inputPass"
-        android:background="@drawable/shape"/>
+        android:background="@drawable/shape"
+        android:inputType="textPassword"
+        tools:ignore="Autofill" />
     <Button
         android:id="@+id/btnSignUp"
         style="@style/MyButton"
