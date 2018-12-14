@@ -38,10 +38,11 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerLay
     private LinearLayout mLayout;
     private LinearLayout mContent;
     private DrawerLayout mDrawerLayout;
-    static List<Data> data;
+    private List<Data> mData;
     private ImageView imageview;
     private static final String IMAGE_DIRECTORY = "/demonuts";
-    private int GALLERY = 1, CAMERA = 2;
+    private static final int GALLERY = 1;
+    private static final int CAMERA = 2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,13 +75,13 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerLay
 
     }
     private List<Data> getDataSource(){
-        data = new ArrayList<>();
-        data.add(new Data(R.drawable.img_avatar, getString(R.string.tranthithuthao)));
-        data.add(new Data(R.drawable.ic_move_to_inbox_black_24dp, getString(R.string.inbox)));
-        data.add(new Data(R.drawable.ic_send_black_24dp, getString(R.string.outbox)));
-        data.add(new Data(R.drawable.ic_delete_black_24dp, getString(R.string.trash)));
-        data.add(new Data(R.drawable.ic_error_black_24dp, getString(R.string.spam)));
-        return data;
+        mData = new ArrayList<>();
+        mData.add(new Data(R.drawable.img_avatar, getString(R.string.tranthithuthao)));
+        mData.add(new Data(R.drawable.ic_move_to_inbox_black_24dp, getString(R.string.inbox)));
+        mData.add(new Data(R.drawable.ic_send_black_24dp, getString(R.string.outbox)));
+        mData.add(new Data(R.drawable.ic_delete_black_24dp, getString(R.string.trash)));
+        mData.add(new Data(R.drawable.ic_error_black_24dp, getString(R.string.spam)));
+        return mData;
     }
     private int getWithScreen(){
         Display display = getWindowManager().getDefaultDisplay();
@@ -167,9 +168,9 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerLay
 
     @Override
     public void changeSelect(int i) {
-        for (Data item : data) {
+        for (Data item : mData) {
             item.setmIsChecked(false);
         }
-        data.get(i).setmIsChecked(true);
+        mData.get(i).setmIsChecked(true);
     }
 }

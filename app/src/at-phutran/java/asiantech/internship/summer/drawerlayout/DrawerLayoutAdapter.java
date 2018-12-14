@@ -4,21 +4,18 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-
 import java.util.List;
-
 import asiantech.internship.summer.R;
 import asiantech.internship.summer.model.Data;
 
 public class DrawerLayoutAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_ITEM = 1;
-    private static Onclick onclick;
-    private static List<Data> items;
+    private Onclick mOnclick;
+    private List<Data> mItems;
     public DrawerLayoutAdapter(List<Data> itemObjects, Onclick onclick) {
-        this.onclick = onclick;
-        this.items = itemObjects;
+        this.mOnclick = onclick;
+        this.mItems = itemObjects;
     }
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -33,12 +30,12 @@ public class DrawerLayoutAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        Data mData = items.get(position);
+        Data mData = mItems.get(position);
         if(holder instanceof HeaderViewHolder){
             ((HeaderViewHolder) holder).imageHeader.setImageResource((mData.getmIcon()));
             ((HeaderViewHolder) holder).headerTitle.setText(mData.getmContent());
             ((HeaderViewHolder) holder).imageHeader.setOnClickListener(view -> {
-                onclick.onclickAvatar();
+                mOnclick.onclickAvatar();
 
             });
         }else if(holder instanceof ItemViewHolder){
@@ -46,18 +43,18 @@ public class DrawerLayoutAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             ((ItemViewHolder) holder).itemContent.setText(mData.getmContent());
             ((ItemViewHolder) holder).linearLayout.setSelected(mData.getmIsChecked());
             ((ItemViewHolder) holder).linearLayout.setOnClickListener(view -> {
-                onclick.changeSelect(position);
+                mOnclick.changeSelect(position);
                 notifyDataSetChanged();
             });
         }
     }
     private Data getItem(int position) {
-        return items.get(position);
+        return mItems.get(position);
     }
     @Override
     public int getItemCount() {
 
-        return items.size();
+        return mItems.size();
     }
     @Override
     public int getItemViewType(int position) {
