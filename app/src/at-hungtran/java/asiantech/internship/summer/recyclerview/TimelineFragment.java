@@ -29,7 +29,6 @@ public class TimelineFragment extends Fragment {
     private int mCurrentItem;
     private int mTotalItem;
     private int mScrollOutItems;
-    private int mLike = 0;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -128,7 +127,7 @@ public class TimelineFragment extends Fragment {
         new Thread(() -> {
             try {
                 Thread.sleep(2000);
-                createTimelineItemLoadMore();
+                createTimelineItem();
                 new Handler(Looper.getMainLooper()).post(new Runnable() {
                     @Override
                     public void run() {
@@ -143,14 +142,11 @@ public class TimelineFragment extends Fragment {
     }
 
     private void createTimelineItem() {
-        for (int i = 0; i < 10; i++) {
+        int size = mTimelineItems.size();
+        for (int i = size; i < size + 10; i++) {
+            int mLike = 0;
             mTimelineItems.add(new TimelineItem(inputRandomImgAvt(), NAME_OF_PEOPLE + (i + 1), getRandomImageId(), COMMENT + (i + 1), mLike, NAME_OF_PEOPLE + (i + 1)));
         }
     }
 
-    private void createTimelineItemLoadMore() {
-        for (int i = mTotalItem; i < mTotalItem + 10; i++) {
-            mTimelineItems.add(new TimelineItem(inputRandomImgAvt(), NAME_OF_PEOPLE + (i + 1), getRandomImageId(), COMMENT + (i + 1), mLike, NAME_OF_PEOPLE + (i + 1)));
-        }
-    }
 }
