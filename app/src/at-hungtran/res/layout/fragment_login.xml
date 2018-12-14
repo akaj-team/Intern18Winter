@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical"
+    tools:context="asiantech.internship.summer.activityfragment.LoginFragment">
+
+    <EditText
+        android:id="@+id/edtEmail"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="100dp"
+        android:background="@drawable/border_fragment"
+        android:hint="@string/email"
+        android:paddingLeft="20dp"
+        android:textColor="@color/colorWhite"
+        tools:ignore="Autofill,TextFields" />
+
+    <EditText
+        android:id="@+id/edtPwd"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/border_fragment"
+        android:hint="@string/password"
+        android:inputType="textPassword"
+        android:paddingLeft="20dp"
+        android:textColor="@color/colorWhite"
+        tools:ignore="Autofill,HardcodedText" />
+
+    <Button
+        android:id="@+id/btnSignUp"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:background="@color/colorPrimary"
+        android:text="@string/singup"
+        android:textAllCaps="false"
+        android:textColor="@color/colorWhite"
+        android:textSize="15dp"
+        android:textStyle="italic" />
+
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:background="@color/colorPrimary"
+        android:text="@string/login"
+        android:textColor="@color/colorWhite"
+        android:textSize="30dp" />
+
+</LinearLayout>

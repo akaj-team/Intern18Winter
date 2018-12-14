@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DrawerLayoutActivity">
+    tools:context=".drawerlayout.DrawerLayoutActivity">
     <LinearLayout
         android:id="@+id/llContent"
         android:layout_width="match_parent"
