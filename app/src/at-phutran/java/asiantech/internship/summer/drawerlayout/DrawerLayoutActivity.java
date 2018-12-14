@@ -112,12 +112,12 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerLay
 
     public void choosePhotoFromGallary() {
         Intent galleryIntent = new Intent(Intent.ACTION_PICK,
-                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(galleryIntent, GALLERY);
     }
 
     private void takePhotoFromCamera() {
-        Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(intent, CAMERA);
     }
 
@@ -126,7 +126,7 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerLay
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == GALLERY) {
             onSelectFromGalleryResult(data);
-        }if (requestCode == CAMERA){
+        }else{
             onCaptureImageResult(data);
         }
     }
@@ -135,11 +135,10 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerLay
         Uri contentURI = intent.getData();
         try {
             Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), contentURI);
-
             data.setAvatarBitmap(bitmap);
             mDrawerLayoutAdapter.notifyDataSetChanged();
         } catch (IOException e) {
-            e.printStackTrace();
+            Toast.makeText(this, R.string.error, Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -180,8 +179,8 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerLay
     @Override
     public void changeSelect(int i) {
         for (Data item : mData) {
-            item.setIsChecked(false);
+            item.setChecked(false);
         }
-        mData.get(i).setIsChecked(true);
+        mData.get(i).setChecked(true);
     }
 }
