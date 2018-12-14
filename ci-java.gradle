@@ -20,7 +20,7 @@ task findbugs(type: FindBugs, dependsOn: "assembleDebug") {
                 .withInputStream { i -> conf.withOutputStream { it << i } }
     }
     excludeFilter = conf
-    classes = files("$project.buildDir/intermediates/classes/")
+    classes = files("$project.buildDir/intermediates/javac/")
 
     source 'src'
     include '**/*.java'
