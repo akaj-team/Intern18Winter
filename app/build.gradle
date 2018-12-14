@@ -67,4 +67,5 @@ dependencies {
     apply from: "../ci-java.gradle"
     implementation 'com.android.support:support-v4:27.1.1'
     implementation 'com.android.support:cardview-v7:27.1.1'
+    implementation 'com.android.support:design:27.1.1'
 }
