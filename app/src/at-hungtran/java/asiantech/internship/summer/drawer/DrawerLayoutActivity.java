@@ -3,12 +3,11 @@ package asiantech.internship.summer.drawer;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -22,7 +21,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,7 +43,6 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAda
     private DrawerAdapter mDrawerAdapter;
     private ActionBarDrawerToggle mDrawerToggle;
     private float lastTranslate = 0.0f;
-    private Uri mUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,10 +70,10 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAda
         recyclerView.setLayoutManager(layoutManager);
         mDataDrawer.add(new DataDrawer(R.drawable.img_avt, "abudory96@gmail.com", R.drawable.ic_arrow_drop_down_black_24dp));
 
-        mDataDrawer.add(new DataDrawer(R.drawable.ic_move_to_inbox_black_24dp, "Inbox"));
-        mDataDrawer.add(new DataDrawer(R.drawable.ic_send_black_24dp, "Outbox"));
-        mDataDrawer.add(new DataDrawer(R.drawable.ic_delete_black_24dp, "Trash"));
-        mDataDrawer.add(new DataDrawer(R.drawable.ic_error_black_24dp, "Spam"));
+        mDataDrawer.add(new DataDrawer(R.drawable.ic_move_to_inbox_grey_24dp, "Inbox"));
+        mDataDrawer.add(new DataDrawer(R.drawable.ic_send_grey_24dp, "Outbox"));
+        mDataDrawer.add(new DataDrawer(R.drawable.ic_delete_grey_24dp, "Trash"));
+        mDataDrawer.add(new DataDrawer(R.drawable.ic_error_grey_24dp, "Spam"));
         mDrawerAdapter = new DrawerAdapter(mDataDrawer, this, this);
         recyclerView.setAdapter(mDrawerAdapter);
     }
@@ -100,12 +97,7 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAda
     }
 
     private void takePicture() {
-        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
-        StrictMode.setVmPolicy(builder.build());
         Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        File file = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "kakak.png");
-        mUri = Uri.fromFile(file);
-        takePicture.putExtra(MediaStore.EXTRA_OUTPUT, mUri);
         startActivityForResult(takePicture, CAMERA_REQUEST);
         mDialogFragment.dismiss();
     }
@@ -168,8 +160,10 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAda
         switch (requestCode) {
             case 0:
                 if (resultCode == RESULT_OK) {
-                    Uri selectedImage = imageReturnedIntent.getData();
-                    mDataDrawer.get(0).setAvatarUri(mUri);
+                    Bitmap image = (Bitmap) imageReturnedIntent.getExtras().get("data");
+                    DataDrawer dataDrawer = mDataDrawer.get(0);
+                    dataDrawer.setAvtBitmap(image);
+                    dataDrawer.setAvatarUri(null);
                     mDrawerAdapter.notifyDataSetChanged();
                 }
 

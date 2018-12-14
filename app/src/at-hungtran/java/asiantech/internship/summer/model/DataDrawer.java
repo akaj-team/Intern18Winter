@@ -1,5 +1,6 @@
 package asiantech.internship.summer.model;
 
+import android.graphics.Bitmap;
 import android.net.Uri;
 
 public class DataDrawer {
@@ -10,6 +11,7 @@ public class DataDrawer {
     private int mImgCheck;
     private boolean isChecked;
     private Uri mAvatarUri;
+    private Bitmap mAvtBitmap;
 
     public DataDrawer(int iconImage, String cat) {
         this.mIconImage = iconImage;
@@ -21,6 +23,10 @@ public class DataDrawer {
         this.mGmail = gmail;
         this.mImgCheck = imgCheck;
     }
+
+    public Bitmap getAvtBitmap() { return mAvtBitmap; }
+
+    public void setAvtBitmap(Bitmap avtBitmap) { this.mAvtBitmap = avtBitmap; }
 
     public Uri getAvatarUri() {
         return mAvatarUri;

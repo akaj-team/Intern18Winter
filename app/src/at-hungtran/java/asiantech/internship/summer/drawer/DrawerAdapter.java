@@ -57,6 +57,8 @@ public class DrawerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
             if (mDataDrawer.get(position).getAvatarUri() != null) {
                 ((HeaderViewHolder) holder).mImgAvt.setImageURI(object.getAvatarUri());
+            } else if (mDataDrawer.get(position).getAvtBitmap() != null) {
+                ((HeaderViewHolder) holder).mImgAvt.setImageBitmap(object.getAvtBitmap());
             } else {
                 ((HeaderViewHolder) holder).mImgAvt.setImageResource(object.getImgAvt());
             }
