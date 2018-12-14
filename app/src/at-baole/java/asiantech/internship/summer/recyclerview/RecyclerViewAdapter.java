@@ -74,13 +74,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         @SuppressLint("SetTextI18n")
         private void bindView(TimelineItem timelineItem) {
-            int position = getLayoutPosition();
             if (timelineItem == null) {
                 mImgAvatar.setImageResource(R.drawable.img_avatar_1);
                 mTvUsername.setText(R.string.username);
-                mImgPictures.setImageResource(timelineItem.getPicture());
-                mTvCommenter.setText(timelineItem.getCommenter());
-                mTvComment.setText(timelineItem.getComment());
+                mImgPictures.setImageResource(R.drawable.img_food_1);
+                mTvCommenter.setText(R.string.username);
+                mTvComment.setText(R.string.comment);
 
             } else {
                 mImgAvatar.setImageResource(timelineItem.getAvatar());
@@ -88,7 +87,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 mImgPictures.setImageResource(timelineItem.getPicture());
                 mTvCommenter.setText(timelineItem.getCommenter());
                 mTvComment.setText(timelineItem.getComment());
-                if (mTimelineItems.get(position).getCountLike() < 2) {
+                if (timelineItem.getCountLike() < 2) {
                     mTvCountLike.setText(timelineItem.getCountLike() + " " + TEXT_LIKE_SINGULAR);
                 } else {
                     mTvCountLike.setText(timelineItem.getCountLike() + " " + TEXT_LIKE_PLURAL);
