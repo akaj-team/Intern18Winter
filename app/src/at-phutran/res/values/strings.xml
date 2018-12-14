@@ -12,4 +12,7 @@
     <string name="internalStorage">Internal</string>
     <string name="externalStorage">External</string>
     <string name="clearData">reset</string>
+    <string name="user_key">username</string>
+    <string name="pass_key">password</string>
+    <string name="space" />
 </resources>

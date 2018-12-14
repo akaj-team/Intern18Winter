@@ -11,14 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-
+import java.util.Objects;
 import asiantech.internship.summer.R;
 
 public class SharePreferenceFragment extends Fragment {
     private EditText mEdtUsername;
     private EditText mEdtPassword;
-    private Button mBtnLogin;
-    private Button mBtnReset;
 
     @Nullable
     @Override
@@ -27,36 +25,25 @@ public class SharePreferenceFragment extends Fragment {
         View itemView = inflater.inflate(R.layout.fragment_share_preference, container, false);
         mEdtUsername = itemView.findViewById(R.id.edtInputUser);
         mEdtPassword = itemView.findViewById(R.id.edtInputPassword);
-        mBtnLogin = itemView.findViewById(R.id.btnLogin);
-        mBtnReset = itemView.findViewById(R.id.btnClearData);
+        Button mBtnLogin = itemView.findViewById(R.id.btnLogin);
         loginHistory();
-        mBtnLogin.setOnClickListener(view -> {
-            handleLogin();
-        });
-        mBtnReset.setOnClickListener(view -> {
-            handleClearData();
-        });
+        mBtnLogin.setOnClickListener(view -> handleLogin());
         return itemView;
     }
 
     public void handleLogin() {
-        SharedPreferences sharedPreferences = getActivity().getApplicationContext().getSharedPreferences("UserInfor", Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = Objects.requireNonNull(getActivity()).getApplicationContext().getSharedPreferences("UserInfor", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("username", mEdtUsername.getText().toString());
-        editor.putString("password", mEdtPassword.getText().toString());
+        editor.putString(getString(R.string.user_key), mEdtUsername.getText().toString());
+        editor.putString(getString(R.string.pass_key), mEdtPassword.getText().toString());
         editor.apply();
     }
 
     public void loginHistory() {
-        SharedPreferences sharedPreferences = getActivity().getApplicationContext().getSharedPreferences("UserInfor", Context.MODE_PRIVATE);
-        if (sharedPreferences.contains("username") || sharedPreferences.contains("password")) {
-            mEdtUsername.setText(sharedPreferences.getString("username", ""));
-            mEdtPassword.setText(sharedPreferences.getString("password", ""));
+        SharedPreferences sharedPreferences = Objects.requireNonNull(getActivity()).getApplicationContext().getSharedPreferences("UserInfor", Context.MODE_PRIVATE);
+        if (sharedPreferences.contains(getString(R.string.user_key)) || sharedPreferences.contains(getString(R.string.pass_key))) {
+            mEdtUsername.setText(sharedPreferences.getString(getString(R.string.user_key), getString(R.string.space)));
+            mEdtPassword.setText(sharedPreferences.getString(getString(R.string.pass_key), getString(R.string.space)));
         }
-    }
-
-    public void handleClearData() {
-        mEdtUsername.setText("");
-        mEdtPassword.setText("");
     }
 }

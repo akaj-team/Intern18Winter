@@ -1,61 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/username"
             android:textColor="@color/colorPrimary"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
+
         <EditText
             android:id="@+id/edtInputUser"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="2"
             android:hint="@string/inputUsername"
-            android:layout_weight="2"/>
+            android:inputType="text"
+            tools:ignore="Autofill" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/password"
             android:layout_weight="1"
+            android:text="@string/password"
             android:textColor="@color/colorPrimary"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
+
         <EditText
             android:id="@+id/edtInputPassword"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="2"
             android:hint="@string/inputPassword"
-            android:layout_weight="2" />
+            android:inputType="textPassword"
+            tools:ignore="Autofill" />
     </LinearLayout>
+
     <LinearLayout
-        android:layout_marginTop="50dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
         android:gravity="center_horizontal">
+
         <Button
             android:id="@+id/btnLogin"
-            android:layout_gravity="center"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:text="@string/login"
-            android:layout_weight="1"/>
-        <Button
-            android:id="@+id/btnClearData"
-            android:layout_gravity="center"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/clearData"/>
+            tools:ignore="ButtonStyle" />
     </LinearLayout>
 </LinearLayout>
