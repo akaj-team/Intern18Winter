@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
         android:layout_weight="8"
-        android:text="Inbox"
+        android:text="@string/inbox"
         android:textColor="@color/colorBlack" />
 
 </LinearLayout>

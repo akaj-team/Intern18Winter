@@ -20,7 +20,6 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<Item> items;
     private Context mContext;
     private final int VIEW_TYPE_HEADER = 0;
-    private final int VIEW_TYPE_ITEM = 1;
     private IMethodCaller iMethodCaller;
 
     public interface IMethodCaller {
@@ -29,7 +28,7 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         void selectItemMethod(int position);
     }
 
-    public ItemAdapter(List<Item> items, Context context, IMethodCaller iMethodCaller) {
+    ItemAdapter(List<Item> items, Context context, IMethodCaller iMethodCaller) {
         this.items = items;
         this.mContext = context;
         this.iMethodCaller = iMethodCaller;
@@ -37,7 +36,8 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public int getItemViewType(int position) {
-        return position == 0 ? VIEW_TYPE_HEADER : VIEW_TYPE_ITEM;
+        int viewTypeItem = 1;
+        return position == 0 ? VIEW_TYPE_HEADER : viewTypeItem;
     }
 
     @NonNull
