@@ -1,4 +1,4 @@
-package asiantech.internship.summer.viewandgroupview;
+package asiantech.internship.summer.view_and_groupview;
 
 import android.graphics.Color;
 import android.view.LayoutInflater;
