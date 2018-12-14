@@ -50,7 +50,7 @@ public class DrawerLayoutAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         } else if (holder instanceof ItemViewHolder) {
             ((ItemViewHolder) holder).itemImage.setImageResource(mData.getIcon());
             ((ItemViewHolder) holder).itemContent.setText(mData.getContent());
-            ((ItemViewHolder) holder).linearLayout.setSelected(mData.getChecked());
+            ((ItemViewHolder) holder).linearLayout.setSelected(mData.isChecked());
             ((ItemViewHolder) holder).linearLayout.setOnClickListener(view -> {
                 mOnclick.changeSelect(position);
                 notifyDataSetChanged();

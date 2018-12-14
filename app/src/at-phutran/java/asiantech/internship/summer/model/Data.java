@@ -32,7 +32,7 @@ public class Data {
     public void setAvatarBitmap(Bitmap avatarBitmap) {
         this.mAvatarBitmap = avatarBitmap;
     }
-    public boolean getChecked() {
+    public boolean isChecked() {
         return mIsChecked;
     }
 
