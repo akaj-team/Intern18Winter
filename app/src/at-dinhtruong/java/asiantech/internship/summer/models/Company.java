@@ -4,6 +4,13 @@ public class Company {
     private int mIdCompany;
     private String mNameCompany;
 
+    public Company(String mNameCompany) {
+        this.mNameCompany = mNameCompany;
+    }
+
+    public Company() {
+    }
+
     public int getIdCompany() {
         return mIdCompany;
     }
@@ -18,12 +25,5 @@ public class Company {
 
     public void setNameCompany(String nameCompany) {
         this.mNameCompany = nameCompany;
-    }
-
-    public Company(String mNameCompany) {
-        this.mNameCompany = mNameCompany;
-    }
-
-    public Company() {
     }
 }

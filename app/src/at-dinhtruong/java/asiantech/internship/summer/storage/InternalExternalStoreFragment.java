@@ -138,7 +138,8 @@ public class InternalExternalStoreFragment extends Fragment implements View.OnCl
                 }
             }
         } else {
-            Toast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(), "Permission Cancelled!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Objects.requireNonNull(getActivity())
+                    .getApplicationContext(), R.string.permissionCancelled, Toast.LENGTH_SHORT).show();
         }
     }
 

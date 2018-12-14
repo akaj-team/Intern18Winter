@@ -13,9 +13,8 @@ import asiantech.internship.summer.R;
 import asiantech.internship.summer.models.Employee;
 
 public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.EmployeeViewHolder> {
-    private List<Employee> employees;
+    private List<Employee> mEmployees;
     private onClickEmployee mOnClickEmployee;
-
 
     @NonNull
     @Override
@@ -27,7 +26,7 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.Employ
 
     @Override
     public void onBindViewHolder(@NonNull EmployeeAdapter.EmployeeViewHolder holder, final int position) {
-        final Employee employee = employees.get(position);
+        final Employee employee = mEmployees.get(position);
         holder.mTvEmployee.setText(employee.getNameEmployee());
     }
 
@@ -44,11 +43,11 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.Employ
 
     @Override
     public int getItemCount() {
-        return employees.size();
+        return mEmployees.size();
     }
 
     EmployeeAdapter(List<Employee> employees, onClickEmployee onClickEmployee) {
-        this.employees = employees;
+        this.mEmployees = employees;
         this.mOnClickEmployee = onClickEmployee;
 
     }

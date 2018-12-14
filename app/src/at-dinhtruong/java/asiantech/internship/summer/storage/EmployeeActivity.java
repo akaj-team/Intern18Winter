@@ -16,15 +16,16 @@ import asiantech.internship.summer.R;
 import asiantech.internship.summer.models.Employee;
 
 public class EmployeeActivity extends AppCompatActivity implements EmployeeAdapter.onClickEmployee, View.OnClickListener {
-    private DBManager mDbManager;
     private int mIdCompany;
+    private int mPositionItem;
+    private List<Employee> mEmployeesById;
     private EditText mEdtIdEmployee;
     private EditText mEdtNameEmployee;
     private EmployeeAdapter mEmployeeAdapter;
     private Button mBtnUpdate;
     private Button mBtnDelete;
-    private List<Employee> mEmployeesById;
-    private int mPositionItem;
+    private DBManager mDbManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +33,7 @@ public class EmployeeActivity extends AppCompatActivity implements EmployeeAdapt
         mDbManager = new DBManager(getApplicationContext());
         setContentView(R.layout.activity_employee);
         Intent intent = getIntent();
-        mIdCompany = intent.getIntExtra("idCompany", 0);
+        mIdCompany = intent.getIntExtra(SqliteFragment.ID_COMPANY, 0);
         initEmployee();
     }
 

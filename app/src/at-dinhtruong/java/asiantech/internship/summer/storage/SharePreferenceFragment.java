@@ -27,9 +27,6 @@ public class SharePreferenceFragment extends Fragment implements View.OnClickLis
     private final String PASS_WORD = "passWord";
     private final String DATA_USER = "dataUser";
 
-    public SharePreferenceFragment() {
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,12 +50,11 @@ public class SharePreferenceFragment extends Fragment implements View.OnClickLis
             mEdtPassWord.setText(mPassWordShare);
         }
         btnLogin.setOnClickListener(this);
-
     }
 
-
     private void saveData() {
-        SharedPreferences preferences = Objects.requireNonNull(this.getActivity()).getSharedPreferences(DATA_USER, Context.MODE_PRIVATE);
+        SharedPreferences preferences = Objects.requireNonNull(this.getActivity())
+                .getSharedPreferences(DATA_USER, Context.MODE_PRIVATE);
         SharedPreferences.Editor edit = preferences.edit();
         edit.putString(USER_NAME, mUserName);
         edit.putString(PASS_WORD, mPassWord);
@@ -66,7 +62,8 @@ public class SharePreferenceFragment extends Fragment implements View.OnClickLis
     }
 
     private void readData() {
-        SharedPreferences preferences = Objects.requireNonNull(this.getActivity()).getSharedPreferences(DATA_USER, Context.MODE_PRIVATE);
+        SharedPreferences preferences = Objects.requireNonNull(this.getActivity())
+                .getSharedPreferences(DATA_USER, Context.MODE_PRIVATE);
         mUserNameShare = preferences.getString(USER_NAME, "");
         mPassWordShare = preferences.getString(PASS_WORD, "");
     }

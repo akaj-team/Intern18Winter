@@ -5,6 +5,15 @@ public class Employee {
     private int mCompanyId;
     private String mNameEmployee;
 
+    public Employee(int idEmployee, int idCompany, String nameEmployee) {
+        this.mIdEmployee = idEmployee;
+        this.mCompanyId = idCompany;
+        this.mNameEmployee = nameEmployee;
+    }
+
+    public Employee() {
+    }
+
     public int getIdEmployee() {
         return mIdEmployee;
     }
@@ -29,12 +38,4 @@ public class Employee {
         this.mNameEmployee = nameEmployee;
     }
 
-    public Employee(int idEmployee, int idCompany, String nameEmployee) {
-        this.mIdEmployee = idEmployee;
-        this.mCompanyId = idCompany;
-        this.mNameEmployee = nameEmployee;
-    }
-
-    public Employee() {
-    }
 }

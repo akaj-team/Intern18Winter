@@ -18,4 +18,5 @@
     <string name="sQLite">SQLITE</string>
     <string name="pleaseFillTheEmployeeName">Please fill the employee name!</string>
     <string name="updateError">Update Error!</string>
+    <string name="permissionCancelled">Permission Cancelled!</string>
 </resources>
