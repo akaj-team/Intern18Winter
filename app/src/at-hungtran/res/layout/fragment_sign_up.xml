@@ -1,0 +1,59 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical"
+    tools:context="asiantech.internship.summer.activityfragment.SignUpFragment">
+
+    <EditText
+        android:id="@+id/edtEmail"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="100dp"
+        android:autofillHints=""
+        android:background="@drawable/border_fragment"
+        android:hint="@string/email"
+        android:paddingLeft="20dp"
+        android:textColor="@color/colorWhite"
+        tools:ignore="TextFields,UnusedAttribute" />
+
+    <EditText
+        android:id="@+id/edtPwd"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/border_fragment"
+        android:hint="@string/password"
+        android:inputType="textPassword"
+        android:paddingLeft="20dp"
+        android:textColor="@color/colorWhite"
+        tools:ignore="Autofill" />
+
+    <EditText
+        android:id="@+id/edtRePwd"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/border_fragment"
+        android:hint="@string/confirm_password"
+        android:inputType="textPassword"
+        android:paddingLeft="20dp"
+        android:textColor="@color/colorWhite"
+        tools:ignore="Autofill,TextFields" />
+
+    <Button
+        android:id="@+id/btnSignUp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:background="@color/colorPrimary"
+        android:text="@string/signUp"
+        android:textColor="@color/colorWhite"
+        android:textSize="30dp" />
+
+</LinearLayout>

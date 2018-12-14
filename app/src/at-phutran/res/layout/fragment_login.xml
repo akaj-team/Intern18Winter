@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorPurple"
+    android:gravity="center" >
+    <EditText
+        android:id="@+id/edtInputEmail"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/inputEmail"
+        android:textColorHint="@color/colorWhite"
+        android:padding="8dp"
+        android:background="@drawable/shape"
+        android:inputType="textEmailAddress"
+        tools:ignore="Autofill,TextFields" />
+    <EditText
+        android:id="@+id/edtInputPass"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:padding="8dp"
+        android:textColorHint="@color/colorWhite"
+        android:hint="@string/inputPass"
+        android:background="@drawable/shape"
+        android:inputType="textPassword"
+        tools:ignore="Autofill" />
+    <Button
+        android:id="@+id/btnSignUp"
+        style="@style/MyButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sign_up"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/shape_button"
+        android:textColor="@color/colorWhite" />
+    <Button
+        android:id="@+id/btnLogin"
+        android:textAllCaps="false"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/login"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/shape_button"
+        android:textColor="@color/colorWhite"
+        android:textSize="20sp"/>
+</LinearLayout>
