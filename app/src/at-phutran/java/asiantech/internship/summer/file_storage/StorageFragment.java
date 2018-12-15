@@ -50,31 +50,19 @@ public class StorageFragment extends Fragment implements View.OnClickListener {
     }
 
     public void saveInternalStorage() {
-        String text;
-        text = mEdtInternalStorage.getText().toString();
-        FileOutputStream fileOutputStream = null;
-        try {
-            fileOutputStream = Objects.requireNonNull(getActivity()).openFileOutput(FILENAME_INTERNAL, Context.MODE_PRIVATE);
-            fileOutputStream.write(text.getBytes());
+        mText = mEdtInternalStorage.getText().toString();
+        try (FileOutputStream fileOutputStream = Objects.requireNonNull(getActivity()).openFileOutput(FILENAME_INTERNAL, Context.MODE_PRIVATE)) {
+            fileOutputStream.write(mText.getBytes());
             mEdtInternalStorage.getText().clear();
             Toast.makeText(getActivity(), FILENAME_INTERNAL + " saved", Toast.LENGTH_LONG).show();
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            if (fileOutputStream != null) {
-                try {
-                    fileOutputStream.close();
-                } catch (IOException e) {
-//                    e.printStackTrace();
-                }
-            }
         }
     }
 
     public void loadInternalStorage() {
         try {
             mFileInputStream = Objects.requireNonNull(getActivity()).openFileInput(FILENAME_INTERNAL);
-//            InputStreamReader inputStreamReader = new InputStreamReader(mFileInputStream);
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(mFileInputStream));
             StringBuilder stringBuilder = new StringBuilder();
             String text;
@@ -89,7 +77,6 @@ public class StorageFragment extends Fragment implements View.OnClickListener {
                 try {
                     mFileInputStream.close();
                 } catch (IOException e) {
-//                    e.printStackTrace();
                 }
             }
         }
@@ -123,7 +110,6 @@ public class StorageFragment extends Fragment implements View.OnClickListener {
         String path = extStore.getAbsolutePath() + "/" + FILENAME_EXTERNAL;
         mText = mEdtExternalStorage.getText().toString();
         try {
-//            File myFile = new File(path);
             FileOutputStream fileOutputStream = new FileOutputStream(new File(path));
             OutputStreamWriter myOutWriter = new OutputStreamWriter(fileOutputStream);
             myOutWriter.append(mText);
@@ -131,7 +117,6 @@ public class StorageFragment extends Fragment implements View.OnClickListener {
             fileOutputStream.close();
             Toast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(), FILENAME_EXTERNAL + " saved", Toast.LENGTH_LONG).show();
         } catch (Exception e) {
-//            e.printStackTrace();
             Toast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(), FILENAME_EXTERNAL + " error", Toast.LENGTH_LONG).show();
         }
     }
@@ -142,7 +127,6 @@ public class StorageFragment extends Fragment implements View.OnClickListener {
         String text;
         StringBuilder fileContent = new StringBuilder();
         try {
-//            File myFile = new File(filePath);
             FileInputStream fIn = new FileInputStream(new File(filePath));
             BufferedReader myReader = new BufferedReader(
                     new InputStreamReader(fIn));
@@ -153,7 +137,6 @@ public class StorageFragment extends Fragment implements View.OnClickListener {
             myReader.close();
             this.mEdtExternalStorage.setText(fileContent.toString());
         } catch (IOException e) {
-//            e.printStackTrace();
         }
     }
 
