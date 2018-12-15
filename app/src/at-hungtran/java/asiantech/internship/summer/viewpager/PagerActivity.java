@@ -1,4 +1,4 @@
-package asiantech.internship.summer.recyclerview;
+package asiantech.internship.summer.viewpager;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;

@@ -1,4 +1,4 @@
-package asiantech.internship.summer.recyclerview;
+package asiantech.internship.summer.viewpager;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
