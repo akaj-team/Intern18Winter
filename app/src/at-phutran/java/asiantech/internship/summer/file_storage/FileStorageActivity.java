@@ -16,6 +16,7 @@ public class FileStorageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_file_storage);
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.commit();
         TabLayout mTabLayoutHeader = findViewById(R.id.tabLayoutHeader);
         mViewPagerContent = findViewById(R.id.viewPagerContent);
         PageAdapter mPageAdapter = new PageAdapter(getSupportFragmentManager(), mTabLayoutHeader.getTabCount());
