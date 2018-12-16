@@ -71,11 +71,11 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerLay
     }
     private List<Data> getDataSource(){
         mData = new ArrayList<>();
-        mData.add(new Data(R.drawable.img_avatar, getString(R.string.tranthithuthao), null, null));
-        mData.add(new Data(R.drawable.ic_move_to_inbox_black_24dp, getString(R.string.inbox), null, null));
-        mData.add(new Data(R.drawable.ic_send_black_24dp, getString(R.string.outbox), null, null));
-        mData.add(new Data(R.drawable.ic_delete_black_24dp, getString(R.string.trash), null, null));
-        mData.add(new Data(R.drawable.ic_error_black_24dp, getString(R.string.spam), null, null));
+        mData.add(new Data(R.drawable.img_avatar, getString(R.string.tranthithuthao), null));
+        mData.add(new Data(R.drawable.ic_move_to_inbox_black_24dp, getString(R.string.inbox), null));
+        mData.add(new Data(R.drawable.ic_send_black_24dp, getString(R.string.outbox), null));
+        mData.add(new Data(R.drawable.ic_delete_black_24dp, getString(R.string.trash), null));
+        mData.add(new Data(R.drawable.ic_error_black_24dp, getString(R.string.spam), null));
         return mData;
     }
     private int getWithScreen(){
@@ -182,5 +182,6 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerLay
             item.setChecked(false);
         }
         mData.get(i).setChecked(true);
+        mDrawerLayoutAdapter.notifyDataSetChanged();
     }
 }

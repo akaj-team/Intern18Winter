@@ -8,21 +8,11 @@ public class Data {
     private String mContent;
     private boolean mIsChecked;
     private Bitmap mAvatarBitmap;
-    private Uri mAvatar;
 
-    public Data(int mIcon, String mContent, Bitmap mAvatarBitmap, Uri mAvatar) {
+    public Data(int mIcon, String mContent, Bitmap mAvatarBitmap) {
         this.mIcon = mIcon;
         this.mContent = mContent;
         this.mAvatarBitmap = mAvatarBitmap;
-        this.mAvatar = mAvatar;
-    }
-
-    public Uri getAvatar() {
-        return mAvatar;
-    }
-
-    public void setAvatar(Uri avatar) {
-        this.mAvatar = avatar;
     }
 
     public Bitmap getAvatarBitmap() {

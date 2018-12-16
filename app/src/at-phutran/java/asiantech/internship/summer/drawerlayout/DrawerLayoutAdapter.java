@@ -45,7 +45,6 @@ public class DrawerLayoutAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             ((HeaderViewHolder) holder).headerTitle.setText(mData.getContent());
             ((HeaderViewHolder) holder).imageHeader.setOnClickListener(view -> {
                 mOnclick.onclickAvatar();
-                notifyDataSetChanged();
             });
         } else if (holder instanceof ItemViewHolder) {
             ((ItemViewHolder) holder).itemImage.setImageResource(mData.getIcon());
@@ -53,7 +52,6 @@ public class DrawerLayoutAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             ((ItemViewHolder) holder).linearLayout.setSelected(mData.isChecked());
             ((ItemViewHolder) holder).linearLayout.setOnClickListener(view -> {
                 mOnclick.changeSelect(position);
-                notifyDataSetChanged();
             });
         }
     }
