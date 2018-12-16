@@ -1,7 +1,6 @@
 package asiantech.internship.summer.model;
 
 import android.graphics.Bitmap;
-import android.net.Uri;
 
 public class Data {
     private int mIcon;
