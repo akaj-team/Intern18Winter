@@ -69,4 +69,6 @@
     <string name="updateError">Update Error!</string>
     <string name="permissionCancelled">Permission Cancelled!</string>
     <string name="fileStorage">File Storage</string>
+    <string name="saved">saved</string>
+    <string name="saveFileSuccessfully">Save file successfully!</string>
 </resources>

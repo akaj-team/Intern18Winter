@@ -24,7 +24,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.util.Objects;
 
 import asiantech.internship.summer.R;
 
@@ -40,7 +39,7 @@ public class InternalExternalStoreFragment extends Fragment implements View.OnCl
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ContextWrapper contextWrapper = new ContextWrapper(
-                Objects.requireNonNull(getActivity()).getApplicationContext());
+                getContext());
         String filePath = "ThuMucCuaToi";
         File directory = contextWrapper.getDir(filePath, Context.MODE_PRIVATE);
         String fileNameInternal = "internalStorage.txt";
@@ -107,8 +106,12 @@ public class InternalExternalStoreFragment extends Fragment implements View.OnCl
     }
 
     private boolean askPermission(int requestId, String permissionName) {
+        if (getContext() == null) {
+            return false;
+        }
+
         if (android.os.Build.VERSION.SDK_INT >= 23) {
-            int permission = ActivityCompat.checkSelfPermission(Objects.requireNonNull(getActivity()), permissionName);
+            int permission = ActivityCompat.checkSelfPermission(getContext(), permissionName);
             if (permission != PackageManager.PERMISSION_GRANTED) {
                 this.requestPermissions(
                         new String[]{permissionName},
@@ -121,8 +124,7 @@ public class InternalExternalStoreFragment extends Fragment implements View.OnCl
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           @NonNull String permissions[], @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (grantResults.length > 0) {
             switch (requestCode) {
@@ -138,8 +140,7 @@ public class InternalExternalStoreFragment extends Fragment implements View.OnCl
                 }
             }
         } else {
-            Toast.makeText(Objects.requireNonNull(getActivity())
-                    .getApplicationContext(), R.string.permissionCancelled, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), R.string.permissionCancelled, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -149,14 +150,13 @@ public class InternalExternalStoreFragment extends Fragment implements View.OnCl
         String data = mEdtExternal.getText().toString();
         try {
             File myFile = new File(path);
-            myFile.createNewFile();
             FileOutputStream fOut = new FileOutputStream(myFile);
             OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut);
             myOutWriter.append(data);
             myOutWriter.close();
             fOut.close();
-            Toast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(), FILE_NAME + " saved", Toast.LENGTH_LONG).show();
-        } catch (Exception e) {
+            Toast.makeText(getContext(), FILE_NAME + getString(R.string.saved), Toast.LENGTH_LONG).show();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -169,8 +169,7 @@ public class InternalExternalStoreFragment extends Fragment implements View.OnCl
         try {
             File myFile = new File(path);
             FileInputStream fileInputStream = new FileInputStream(myFile);
-            BufferedReader bufferedReader = new BufferedReader(
-                    new InputStreamReader(fileInputStream));
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
             while ((s = bufferedReader.readLine()) != null) {
                 fileContent.append(s);
             }
@@ -203,6 +202,7 @@ public class InternalExternalStoreFragment extends Fragment implements View.OnCl
             FileOutputStream fos = new FileOutputStream(mMyInternalFile);
             fos.write(mEdtInternal.getText().toString().getBytes());
             fos.close();
+            Toast.makeText(getContext(), R.string.saveFileSuccessfully, Toast.LENGTH_LONG).show();
         } catch (IOException e) {
             e.printStackTrace();
         }
