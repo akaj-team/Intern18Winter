@@ -12,15 +12,13 @@ import java.util.List;
 import asiantech.internship.summer.R;
 import asiantech.internship.summer.model.User;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>{
+public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHolder>{
     private List<User> mListUsers;
     private Context mContext;
-    private OnclickLike mOnclickLike;
 
-    RecyclerViewAdapter(List<User> listUsers, Context context, OnclickLike onclickLike) {
-        this.mListUsers = listUsers;
-        this.mContext = context;
-        this.mOnclickLike = onclickLike;
+    public FavoriteAdapter(List<User> mUsers, Context applicationContext) {
+        this.mListUsers = mUsers;
+        this.mContext = applicationContext;
     }
 
     @NonNull
@@ -40,9 +38,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.mImgLike.setSelected(user.isLike());
         holder.mTvUsername.setText(user.getUsername());
         holder.mTvComment.setText(user.getComment());
-        if(user.isLike()){
-            holder.mImgLike.setImageResource(R.drawable.ic_favorite_red_500_24dp);
-        }
     }
 
     @Override
@@ -66,20 +61,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             mTvUserComment = itemView.findViewById(R.id.tvUserComment);
             mTvComment = itemView.findViewById(R.id.tvComment);
             this.setIsRecyclable(false);
-            handleEvent();
-        }
-        private void handleEvent() {
-            mImgLike.setOnClickListener(view -> {
-                if (mOnclickLike == null) {
-                    return;
-                }
-                int position = getLayoutPosition();
-                mOnclickLike.eventLike(position);
-            });
         }
     }
-    public interface OnclickLike {
-        void eventLike(int position);
-    }
-
 }

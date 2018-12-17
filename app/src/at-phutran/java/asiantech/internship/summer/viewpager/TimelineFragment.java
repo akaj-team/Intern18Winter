@@ -15,11 +15,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
-
 import asiantech.internship.summer.R;
 import asiantech.internship.summer.model.User;
 
@@ -33,6 +32,7 @@ public class TimelineFragment extends Fragment implements RecyclerViewAdapter.On
     private int mTotalItem;
     private int mScrollOutItem;
     private List<User> mUsers;
+    public static List<User> sListFavourite = new ArrayList<>();
     private RecyclerViewAdapter mRecyclerViewAdapter;
     @Nullable
     @Override
@@ -45,14 +45,13 @@ public class TimelineFragment extends Fragment implements RecyclerViewAdapter.On
     }
 
     private void initView(View view) {
-
         mRecyclerView = view.findViewById(R.id.recyclerView);
         mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(linearLayoutManager);
         //line
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mRecyclerView.getContext(), DividerItemDecoration.VERTICAL);
-        Drawable drawable = ContextCompat.getDrawable(getActivity().getApplicationContext(), R.drawable.custom_divider);
+        Drawable drawable = ContextCompat.getDrawable(Objects.requireNonNull(getActivity()).getApplicationContext(), R.drawable.custom_divider);
         assert drawable != null;
         dividerItemDecoration.setDrawable(drawable);
         mRecyclerView.addItemDecoration(dividerItemDecoration);
@@ -136,9 +135,17 @@ public class TimelineFragment extends Fragment implements RecyclerViewAdapter.On
     }
 
     @Override
-    public void sumCountLike(int position) {
+    public void eventLike(int position) {
         User user = mUsers.get(position);
-        user.setCountLike(user.getCountLike() + 1);
+        if(user.isLike()){
+            user.setLike(false);
+            sListFavourite.remove(user);
+            FavouriteFragment.sFavoriteAdapter.notifyDataSetChanged();
+        }else{
+            user.setLike(true);
+            sListFavourite.add(0 ,user);
+            FavouriteFragment.sFavoriteAdapter.notifyDataSetChanged();
+        }
         mRecyclerViewAdapter.notifyDataSetChanged();
     }
 
