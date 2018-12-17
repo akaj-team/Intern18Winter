@@ -6,26 +6,26 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 public class TabLayoutAdapter extends FragmentPagerAdapter {
-    private String listTab[] = {"Fragment 1", "Fragment 2", "Fragment 3"};
-    private FirstFragment mFirstFragment;
-    private SecondFragment mSecondFragment;
-    private ThirdFragment mThirdFragment;
+    private String listTab[] = {"Share Preference", "Store", "Database"};
+    private SharePreferenceFragment mSharePreferenceFragment;
+    private StoreFragment mStoreFragment;
+    private DatabaseFragment mDatabaseFragment;
 
     TabLayoutAdapter(FragmentManager fm) {
         super(fm);
-        mFirstFragment = new FirstFragment();
-        mSecondFragment = new SecondFragment();
-        mThirdFragment = new ThirdFragment();
+        mSharePreferenceFragment = new SharePreferenceFragment();
+        mStoreFragment = new StoreFragment();
+        mDatabaseFragment = new DatabaseFragment();
     }
 
     @Override
     public Fragment getItem(int position) {
         if (position == 0) {
-            return mFirstFragment;
+            return mSharePreferenceFragment;
         } else if (position == 1) {
-            return mSecondFragment;
+            return mStoreFragment;
         } else if (position == 2) {
-            return mThirdFragment;
+            return mDatabaseFragment;
         }
         return null;
      }

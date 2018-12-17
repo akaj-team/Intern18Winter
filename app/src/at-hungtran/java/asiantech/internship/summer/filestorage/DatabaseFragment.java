@@ -10,10 +10,10 @@ import android.view.ViewGroup;
 
 import asiantech.internship.summer.R;
 
-public class SecondFragment extends Fragment {
+public class DatabaseFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_second, container, false);
+        return inflater.inflate(R.layout.fragment_database, container, false);
     }
 }

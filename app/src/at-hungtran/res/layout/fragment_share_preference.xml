@@ -14,23 +14,10 @@
         android:layout_height="40dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/border"/>
-    <LinearLayout
-        android:layout_width="match_parent"
+    <Button
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_marginTop="30dp">
-        <Button
-            android:id="@+id/btnInternal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="30dp"
-            android:text="INTERNAL"
-            />
-        <Button
-            android:id="@+id/btnExternal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="EXTERNAL"
-            />
-    </LinearLayout>
+        android:id="@+id/btnLoginShare"
+        android:text="Login"
+        android:layout_marginTop="20dp"/>
 </LinearLayout>
