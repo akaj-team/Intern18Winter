@@ -1,13 +1,15 @@
-package com.example.le.myapplication;
+package asiantech.internship.summer.drawerlayout;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.le.myapplication.model.Item;
+import asiantech.internship.summer.drawerlayout.model.Item;
 
 import java.util.List;
+
+import asiantech.internship.summer.R;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final String TAG = RecyclerAdapter.class.getSimpleName();

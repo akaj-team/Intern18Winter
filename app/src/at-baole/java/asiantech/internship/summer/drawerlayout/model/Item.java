@@ -1,4 +1,4 @@
-package com.example.le.myapplication.model;
+package asiantech.internship.summer.drawerlayout.model;
 
 public class Item {
     int mItemImage;

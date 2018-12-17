@@ -1,4 +1,4 @@
-package com.example.le.myapplication;
+package asiantech.internship.summer.drawerlayout;
 
 import android.Manifest;
 import android.content.DialogInterface;
@@ -17,7 +17,6 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.le.myapplication.model.Item;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -34,8 +33,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements RecyclerAdapter.OnItemListener {
-    private static final String TAG = MainActivity.class.getSimpleName();
+import asiantech.internship.summer.R;
+import asiantech.internship.summer.drawerlayout.model.Item;
+
+
+public class DrawerLayoutActivity extends AppCompatActivity implements RecyclerAdapter.OnItemListener {
+    private static final String TAG = DrawerLayoutActivity.class.getSimpleName();
     private static final String IMAGE_DIRECTORY = "Avatar Selection";
     private RecyclerView recyclerView;
     private int GALLERY = 1;
@@ -51,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerAdapter.O
 
     private void initView() {
         recyclerView = findViewById(R.id.add_header);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(MainActivity.this);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(DrawerLayoutActivity.this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
         RecyclerAdapter recyclerViewAdapter = new RecyclerAdapter(addData(), this);
@@ -97,12 +100,12 @@ public class MainActivity extends AppCompatActivity implements RecyclerAdapter.O
     }
 
     public void choosePhotosFromGallery() {
-        Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(galleryIntent, GALLERY);
     }
 
     public void capturePhotosFromCamera() {
-        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(cameraIntent, CAMERA);
     }
 
@@ -119,17 +122,17 @@ public class MainActivity extends AppCompatActivity implements RecyclerAdapter.O
                 try {
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), contentURI);
                     String path = saveImage(bitmap);
-                    Toast.makeText(MainActivity.this, "Image Saved", Toast.LENGTH_LONG).show();
+                    Toast.makeText(DrawerLayoutActivity.this, "Image Saved", Toast.LENGTH_LONG).show();
                     mImgAvatar.setImageBitmap(bitmap);
                 } catch (IOException e) {
-                    Toast.makeText(MainActivity.this, "Failed", Toast.LENGTH_LONG).show();
+                    Toast.makeText(DrawerLayoutActivity.this, "Failed", Toast.LENGTH_LONG).show();
                 }
             }
         } else if (requestCode == CAMERA) {
             Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
             mImgAvatar.setImageBitmap(thumbnail);
             saveImage(thumbnail);
-            Toast.makeText(MainActivity.this, "Image Saved", Toast.LENGTH_LONG).show();
+            Toast.makeText(DrawerLayoutActivity.this, "Image Saved", Toast.LENGTH_LONG).show();
         }
     }
 
