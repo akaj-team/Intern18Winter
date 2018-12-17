@@ -8,9 +8,10 @@ public class Data {
     private boolean mIsChecked;
     private Bitmap mAvatarBitmap;
 
-    public Data(int mIcon, String mContent, Bitmap mAvatarBitmap) {
+    public Data(int mIcon, String mContent, boolean mIsChecked, Bitmap mAvatarBitmap) {
         this.mIcon = mIcon;
         this.mContent = mContent;
+        this.mIsChecked = mIsChecked;
         this.mAvatarBitmap = mAvatarBitmap;
     }
 

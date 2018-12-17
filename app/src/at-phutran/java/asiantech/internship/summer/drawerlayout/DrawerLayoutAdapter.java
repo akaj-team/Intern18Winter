@@ -1,10 +1,14 @@
 package asiantech.internship.summer.drawerlayout;
 
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import java.util.List;
 import asiantech.internship.summer.R;
 import asiantech.internship.summer.model.Data;
@@ -43,16 +47,18 @@ public class DrawerLayoutAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 ((HeaderViewHolder) holder).imageHeader.setImageResource((mData.getIcon()));
             }
             ((HeaderViewHolder) holder).headerTitle.setText(mData.getContent());
-            ((HeaderViewHolder) holder).imageHeader.setOnClickListener(view -> {
-                mOnclick.onclickAvatar();
-            });
+            ((HeaderViewHolder) holder).imageHeader.setOnClickListener(view -> mOnclick.onclickAvatar());
         } else if (holder instanceof ItemViewHolder) {
             ((ItemViewHolder) holder).itemImage.setImageResource(mData.getIcon());
             ((ItemViewHolder) holder).itemContent.setText(mData.getContent());
             ((ItemViewHolder) holder).linearLayout.setSelected(mData.isChecked());
-            ((ItemViewHolder) holder).linearLayout.setOnClickListener(view -> {
-                mOnclick.changeSelect(position);
-            });
+            if (mData.isChecked()) {
+                ((ItemViewHolder) holder).itemContent.setTextColor(Color.BLUE);
+                ((ItemViewHolder) holder).itemImage.setColorFilter(Color.BLUE);
+            } else {
+                ((ItemViewHolder) holder).itemContent.setTextColor(Color.BLACK);
+                ((ItemViewHolder) holder).itemImage.setColorFilter(Color.BLACK);
+            }
         }
     }
 
@@ -74,6 +80,42 @@ public class DrawerLayoutAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     public interface Onclick {
         void onclickAvatar();
+
         void changeSelect(int i);
+    }
+
+    class HeaderViewHolder extends RecyclerView.ViewHolder {
+        ImageView imageHeader;
+        TextView headerTitle;
+
+        HeaderViewHolder(View itemView) {
+            super(itemView);
+            imageHeader = itemView.findViewById(R.id.avatarCircleImageView);
+            headerTitle = itemView.findViewById(R.id.tvTitle);
+        }
+    }
+
+    class ItemViewHolder extends RecyclerView.ViewHolder {
+        ImageView itemImage;
+        TextView itemContent;
+        LinearLayout linearLayout;
+
+        ItemViewHolder(View itemView) {
+            super(itemView);
+            itemImage = itemView.findViewById(R.id.imgIcon);
+            itemContent = itemView.findViewById(R.id.tvContent);
+            linearLayout = itemView.findViewById(R.id.llRow);
+            handleEvent();
+        }
+
+        private void handleEvent() {
+            itemContent.setOnClickListener(view -> {
+                if (mOnclick == null) {
+                    return;
+                }
+                int position = getLayoutPosition();
+                mOnclick.changeSelect(position);
+            });
+        }
     }
 }
