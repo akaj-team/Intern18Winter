@@ -42,22 +42,22 @@ public class DrawerLayoutAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         Data mData = mItems.get(position);
         if (holder instanceof HeaderViewHolder) {
             if (mData.getAvatarBitmap() != null) {
-                ((HeaderViewHolder) holder).imageHeader.setImageBitmap((mData.getAvatarBitmap()));
+                ((HeaderViewHolder) holder).imgAvatar.setImageBitmap((mData.getAvatarBitmap()));
             } else {
-                ((HeaderViewHolder) holder).imageHeader.setImageResource((mData.getIcon()));
+                ((HeaderViewHolder) holder).imgAvatar.setImageResource((mData.getIcon()));
             }
-            ((HeaderViewHolder) holder).headerTitle.setText(mData.getContent());
-            ((HeaderViewHolder) holder).imageHeader.setOnClickListener(view -> mOnclick.onclickAvatar());
+            ((HeaderViewHolder) holder).tvTitle.setText(mData.getContent());
+            ((HeaderViewHolder) holder).imgAvatar.setOnClickListener(view -> mOnclick.onclickAvatar());
         } else if (holder instanceof ItemViewHolder) {
-            ((ItemViewHolder) holder).itemImage.setImageResource(mData.getIcon());
-            ((ItemViewHolder) holder).itemContent.setText(mData.getContent());
-            ((ItemViewHolder) holder).linearLayout.setSelected(mData.isChecked());
+            ((ItemViewHolder) holder).imgIcon.setImageResource(mData.getIcon());
+            ((ItemViewHolder) holder).tvContent.setText(mData.getContent());
+//            ((ItemViewHolder) holder).linearLayout.setSelected(mData.isChecked());
             if (mData.isChecked()) {
-                ((ItemViewHolder) holder).itemContent.setTextColor(Color.BLUE);
-                ((ItemViewHolder) holder).itemImage.setColorFilter(Color.BLUE);
+                ((ItemViewHolder) holder).tvContent.setTextColor(Color.BLUE);
+                ((ItemViewHolder) holder).imgIcon.setColorFilter(Color.BLUE);
             } else {
-                ((ItemViewHolder) holder).itemContent.setTextColor(Color.BLACK);
-                ((ItemViewHolder) holder).itemImage.setColorFilter(Color.BLACK);
+                ((ItemViewHolder) holder).tvContent.setTextColor(Color.BLACK);
+                ((ItemViewHolder) holder).imgIcon.setColorFilter(Color.BLACK);
             }
         }
     }
@@ -85,31 +85,31 @@ public class DrawerLayoutAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     class HeaderViewHolder extends RecyclerView.ViewHolder {
-        ImageView imageHeader;
-        TextView headerTitle;
+        ImageView imgAvatar;
+        TextView tvTitle;
 
         HeaderViewHolder(View itemView) {
             super(itemView);
-            imageHeader = itemView.findViewById(R.id.avatarCircleImageView);
-            headerTitle = itemView.findViewById(R.id.tvTitle);
+            imgAvatar = itemView.findViewById(R.id.avatarCircleImageView);
+            tvTitle = itemView.findViewById(R.id.tvTitle);
         }
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder {
-        ImageView itemImage;
-        TextView itemContent;
-        LinearLayout linearLayout;
+        ImageView imgIcon;
+        TextView tvContent;
+        LinearLayout llItem;
 
         ItemViewHolder(View itemView) {
             super(itemView);
-            itemImage = itemView.findViewById(R.id.imgIcon);
-            itemContent = itemView.findViewById(R.id.tvContent);
-            linearLayout = itemView.findViewById(R.id.llRow);
+            imgIcon = itemView.findViewById(R.id.imgIcon);
+            tvContent = itemView.findViewById(R.id.tvContent);
+            llItem = itemView.findViewById(R.id.llItem);
             handleEvent();
         }
 
         private void handleEvent() {
-            itemContent.setOnClickListener(view -> {
+            llItem.setOnClickListener(view -> {
                 if (mOnclick == null) {
                     return;
                 }
