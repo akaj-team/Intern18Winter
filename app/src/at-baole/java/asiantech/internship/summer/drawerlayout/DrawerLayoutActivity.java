@@ -1,7 +1,6 @@
 package asiantech.internship.summer.drawerlayout;
 
 import android.Manifest;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.media.MediaScannerConnection;
@@ -20,9 +19,7 @@ import android.widget.Toast;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
-import com.karumi.dexter.listener.DexterError;
 import com.karumi.dexter.listener.PermissionRequest;
-import com.karumi.dexter.listener.PermissionRequestErrorListener;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
 import java.io.ByteArrayOutputStream;
@@ -32,28 +29,28 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Objects;
 
 import asiantech.internship.summer.R;
 import asiantech.internship.summer.drawerlayout.model.Item;
 
 
 public class DrawerLayoutActivity extends AppCompatActivity implements RecyclerAdapter.OnItemListener {
-    private static final String TAG = DrawerLayoutActivity.class.getSimpleName();
-    private static final String IMAGE_DIRECTORY = "Avatar Selection";
-    private RecyclerView recyclerView;
+    //private static final String TAG = DrawerLayoutActivity.class.getSimpleName();
     private int GALLERY = 1;
     private int CAMERA = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_drawer_layout);
         requestMultiplePermission();
         initView();
     }
 
     private void initView() {
-        recyclerView = findViewById(R.id.add_header);
+        RecyclerView recyclerView;
+        recyclerView = findViewById(R.id.recyclerViewHeader);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(DrawerLayoutActivity.this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
@@ -62,8 +59,8 @@ public class DrawerLayoutActivity extends AppCompatActivity implements RecyclerA
     }
 
     private List<Item> addData() {
-        List<Item> data = new ArrayList<Item>();
-        data.add(new Item(R.drawable.img_avatar_1, getString(R.string.email)));
+        List<Item> data = new ArrayList<>();
+        data.add(new Item(R.drawable.img_avatar_default, getString(R.string.drawerLayoutEmail)));
         data.add(new Item(R.drawable.ic_move_to_inbox_black_36dp, getString(R.string.inbox)));
         data.add(new Item(R.drawable.ic_send_black_36dp, getString(R.string.outbox)));
         data.add(new Item(R.drawable.ic_delete_black_36dp, getString(R.string.trash)));
@@ -78,22 +75,19 @@ public class DrawerLayoutActivity extends AppCompatActivity implements RecyclerA
 
     private void showPictureDialog() {
         AlertDialog.Builder pictureDialog = new AlertDialog.Builder(this);
-        pictureDialog.setTitle("Select Action");
+        pictureDialog.setTitle(R.string.selectAction);
         String pictureDIalogItems[] = {
-                "Select a photo from gallery",
-                "Capture a photo from camera"
+                getString(R.string.selectGallery),
+                getString(R.string.captureCamera)
         };
-        pictureDialog.setItems(pictureDIalogItems, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                switch (i) {
-                    case 0:
-                        choosePhotosFromGallery();
-                        break;
-                    case 1:
-                        capturePhotosFromCamera();
-                        break;
-                }
+        pictureDialog.setItems(pictureDIalogItems, (dialogInterface, i) -> {
+            switch (i) {
+                case 0:
+                    choosePhotosFromGallery();
+                    break;
+                case 1:
+                    capturePhotosFromCamera();
+                    break;
             }
         });
         pictureDialog.show();
@@ -113,7 +107,7 @@ public class DrawerLayoutActivity extends AppCompatActivity implements RecyclerA
         super.onActivityResult(requestCode, resultCode, data);
         ImageView mImgAvatar;
         mImgAvatar = findViewById(R.id.imgAvatar);
-        if (resultCode == this.RESULT_CANCELED) {
+        if (resultCode == RESULT_CANCELED) {
             return;
         }
         if (requestCode == GALLERY) {
@@ -121,40 +115,38 @@ public class DrawerLayoutActivity extends AppCompatActivity implements RecyclerA
                 Uri contentURI = data.getData();
                 try {
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), contentURI);
-                    String path = saveImage(bitmap);
-                    Toast.makeText(DrawerLayoutActivity.this, "Image Saved", Toast.LENGTH_LONG).show();
+                    //String path = saveImage(bitmap);
+                    Toast.makeText(DrawerLayoutActivity.this, getString(R.string.imageSaved), Toast.LENGTH_LONG).show();
                     mImgAvatar.setImageBitmap(bitmap);
                 } catch (IOException e) {
-                    Toast.makeText(DrawerLayoutActivity.this, "Failed", Toast.LENGTH_LONG).show();
+                    Toast.makeText(DrawerLayoutActivity.this, getString(R.string.saveImageFailed), Toast.LENGTH_LONG).show();
                 }
             }
         } else if (requestCode == CAMERA) {
-            Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
+            Bitmap thumbnail = (Bitmap) Objects.requireNonNull(data.getExtras()).get("data");
             mImgAvatar.setImageBitmap(thumbnail);
             saveImage(thumbnail);
-            Toast.makeText(DrawerLayoutActivity.this, "Image Saved", Toast.LENGTH_LONG).show();
+            Toast.makeText(DrawerLayoutActivity.this, getString(R.string.imageSaved), Toast.LENGTH_LONG).show();
         }
     }
 
-    public String saveImage(Bitmap myBitmap) {
+    public void saveImage(Bitmap myBitmap) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         myBitmap.compress(Bitmap.CompressFormat.PNG, 90, bytes);
-        File wallpaperDirectory = new File(Environment.getExternalStorageDirectory() + IMAGE_DIRECTORY);
+        File wallpaperDirectory = new File(Environment.getExternalStorageDirectory() + getString(R.string.imageDirectory));
         if (!wallpaperDirectory.exists()) {
             wallpaperDirectory.mkdirs();
         }
         try {
-            File f = new File(wallpaperDirectory, Calendar.getInstance().getTimeInMillis() + "png");
+            File f = new File(wallpaperDirectory, Calendar.getInstance().getTimeInMillis() + getString(R.string.imageExtension));
             f.createNewFile();
             FileOutputStream fo = new FileOutputStream(f);
             fo.write(bytes.toByteArray());
-            MediaScannerConnection.scanFile(this, new String[]{f.getPath()}, new String[]{"image/png"}, null);
+            MediaScannerConnection.scanFile(this, new String[]{f.getPath()}, new String[]{getString(R.string.imagePathPNG)}, null);
             fo.close();
-            Log.d("TAG", "File Saved::---&gt;" + f.getAbsolutePath());
-            return f.getAbsolutePath();
-        } catch (IOException e) {
+            f.getAbsolutePath();
+        } catch (IOException ignored) {
         }
-        return "";
     }
 
     private void requestMultiplePermission() {
@@ -167,25 +159,20 @@ public class DrawerLayoutActivity extends AppCompatActivity implements RecyclerA
                     @Override
                     public void onPermissionsChecked(MultiplePermissionsReport report) {
                         //Check if all permissions are granted
-                        if (report.areAllPermissionsGranted()) {
-                            Toast.makeText(getApplicationContext(), "All permissions are granted by user", Toast.LENGTH_LONG).show();
-                        }
-                        //Check for permanent denial of any permission
-                        if (report.isAnyPermissionPermanentlyDenied()) {
-                            // show alert dialog navigating to Settings
-                            //openSettingsDialog();
-                        }
+//                        if (report.areAllPermissionsGranted()) {
+//                            Toast.makeText(getApplicationContext(), "All permissions are granted by user", Toast.LENGTH_LONG).show();
+//                        }
+//                        //Check for permanent denial of any permission
+//                        if (report.isAnyPermissionPermanentlyDenied()) {
+//                            // show alert dialog navigating to Settings
+//                            //openSettingsDialog();
+//                        }
                     }
 
                     @Override
                     public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
                         token.continuePermissionRequest();
                     }
-                }).withErrorListener(new PermissionRequestErrorListener() {
-            @Override
-            public void onError(DexterError error) {
-                Toast.makeText(getApplicationContext(), "There is some error!", Toast.LENGTH_LONG).show();
-            }
-        }).onSameThread().check();
+                }).withErrorListener(error -> Toast.makeText(getApplicationContext(), getString(R.string.notifyError), Toast.LENGTH_LONG).show()).onSameThread().check();
     }
 }

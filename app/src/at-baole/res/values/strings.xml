@@ -41,5 +41,14 @@
     <string name="outbox">Outbox</string>
     <string name="trash">Trash</string>
     <string name="spam">Spam</string>
+    <string name="imageDirectory">Image Directory</string>
+    <string name="selectAction">Select Action</string>
+    <string name="selectGallery">Select a photo from gallery</string>
+    <string name="captureCamera">Capture a photo from camera</string>
+    <string name="imageSaved">Image Saved</string>
+    <string name="saveImageFailed">Failed to save images</string>
+    <string name="imageExtension">png</string>
+    <string name="imagePathPNG">image/png</string>
+    <string name="notifyError">There is some error</string>
 
 </resources>
