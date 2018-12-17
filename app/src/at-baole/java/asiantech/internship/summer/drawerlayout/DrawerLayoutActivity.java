@@ -1,6 +1,5 @@
 package asiantech.internship.summer.drawerlayout;
 
-import android.Manifest;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.media.MediaScannerConnection;
@@ -12,14 +11,9 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Toast;
-
-import com.karumi.dexter.Dexter;
-import com.karumi.dexter.MultiplePermissionsReport;
-import com.karumi.dexter.PermissionToken;
-import com.karumi.dexter.listener.PermissionRequest;
-import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -38,6 +32,9 @@ public class DrawerLayoutActivity extends AppCompatActivity implements RecyclerA
     //private static final String TAG = DrawerLayoutActivity.class.getSimpleName();
     private static final int GALLERY = 1;
     private static final int CAMERA = 2;
+    private List<Item> mItems;
+    private RecyclerAdapter mRecyclerAdapter;
+    private int positionSelected = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,28 +45,40 @@ public class DrawerLayoutActivity extends AppCompatActivity implements RecyclerA
     }
 
     private void initView() {
+        mockData();
         RecyclerView recyclerView;
         recyclerView = findViewById(R.id.recyclerViewHeader);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(DrawerLayoutActivity.this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
-        RecyclerAdapter recyclerViewAdapter = new RecyclerAdapter(addData(), this);
-        recyclerView.setAdapter(recyclerViewAdapter);
+        mRecyclerAdapter = new RecyclerAdapter(mItems, this);
+        recyclerView.setAdapter(mRecyclerAdapter);
     }
 
-    private List<Item> addData() {
-        List<Item> data = new ArrayList<>();
-        data.add(new Item(R.drawable.img_avatar_default, getString(R.string.drawerLayoutEmail)));
-        data.add(new Item(R.drawable.ic_move_to_inbox_black_36dp, getString(R.string.inbox)));
-        data.add(new Item(R.drawable.ic_send_black_36dp, getString(R.string.outbox)));
-        data.add(new Item(R.drawable.ic_delete_black_36dp, getString(R.string.trash)));
-        data.add(new Item(R.drawable.ic_warning_black_36dp, getString(R.string.spam)));
-        return data;
+    private void mockData() {
+        mItems = new ArrayList<>();
+        mItems.add(new Item(R.drawable.img_avatar_default, getString(R.string.drawerLayoutEmail), false));
+        mItems.add(new Item(R.drawable.bg_inbox, getString(R.string.inbox), false));
+        mItems.add(new Item(R.drawable.bg_outbox, getString(R.string.outbox), false));
+        mItems.add(new Item(R.drawable.bg_trash, getString(R.string.trash), false));
+        mItems.add(new Item(R.drawable.bg_warning, getString(R.string.spam), false));
     }
 
     @Override
     public void onClickAvatar() {
         showPictureDialog();
+    }
+
+    @Override
+    public void onClickItem(int position) {
+        if (positionSelected != -1) {
+            mItems.get(position).setIsSelected(false);
+            mRecyclerAdapter.notifyDataSetChanged();
+        }
+        Log.d("xxx", "onClickItem: "+position);
+        positionSelected = position;
+        mItems.get(position).setIsSelected(true);
+        mRecyclerAdapter.notifyDataSetChanged();
     }
 
     private void showPictureDialog() {
@@ -122,10 +131,10 @@ public class DrawerLayoutActivity extends AppCompatActivity implements RecyclerA
                 }
             }
         } else if (requestCode == CAMERA) {
-            Bitmap thumbnail = (Bitmap) Objects.requireNonNull(data.getExtras()).get("data");
+            Bitmap thumbnail = (Bitmap) Objects.requireNonNull(data.getExtras()).get(getString(R.string.data));
             mImgAvatar.setImageBitmap(thumbnail);
             saveImage(thumbnail);
-            Toast.makeText(DrawerLayoutActivity.this, getString(R.string.imageSaved), Toast.LENGTH_LONG).show();
+            Toast.makeText(DrawerLayoutActivity.this, R.string.imageSaved, Toast.LENGTH_LONG).show();
         }
     }
 

@@ -47,6 +47,7 @@
     <string name="captureCamera">Capture a photo from camera</string>
     <string name="imageSaved">Image Saved</string>
     <string name="saveImageFailed">Failed to save images</string>
+    <string name="data">data</string>
     <string name="imageExtension">png</string>
     <string name="imagePathPNG">image/png</string>
     <string name="notifyError">There is some error</string>
