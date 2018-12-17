@@ -15,25 +15,23 @@ import java.util.List;
 import asiantech.internship.summer.R;
 import asiantech.internship.summer.model.TimelineItem;
 
-public class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.TimelineViewHolder> {
+public class FavouriteAdapter extends RecyclerView.Adapter<FavouriteAdapter.FavouriteViewHolder> {
     private List<TimelineItem> mTimelineItems;
-    private onClick mOnClick;
 
-    TimelineAdapter(List<TimelineItem> timelineItems, Context context, onClick onClick) {
+    FavouriteAdapter(List<TimelineItem> timelineItems, Context context) {
         this.mTimelineItems = timelineItems;
-        this.mOnClick = onClick;
     }
 
     @NonNull
     @Override
-    public TimelineViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public FavouriteAdapter.FavouriteViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View itemView = layoutInflater.inflate(R.layout.list_item, parent, false);
-        return new TimelineViewHolder(itemView);
+        return new FavouriteAdapter.FavouriteViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull TimelineViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull FavouriteAdapter.FavouriteViewHolder holder, int position) {
         TimelineItem item = mTimelineItems.get(position);
         holder.mImgAvt.setImageResource(item.getImageAvt());
         holder.mTvName.setText(item.getName());
@@ -57,7 +55,7 @@ public class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.Timeli
         void likeClick(int position);
     }
 
-    class TimelineViewHolder extends RecyclerView.ViewHolder {
+    class FavouriteViewHolder extends RecyclerView.ViewHolder {
         private ImageView mImgAvt;
         private TextView mTvName;
         private ImageView mImgImage;
@@ -66,7 +64,7 @@ public class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.Timeli
         private TextView mTvLike;
         private TextView mTvCommenterName;
 
-        TimelineViewHolder(View itemView) {
+        FavouriteViewHolder(View itemView) {
             super(itemView);
             mImgAvt = itemView.findViewById(R.id.icAvt);
             mTvName = itemView.findViewById(R.id.tvName);
@@ -75,15 +73,7 @@ public class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.Timeli
             mTvDescription = itemView.findViewById(R.id.tvDescription);
             mTvLike = itemView.findViewById(R.id.tvLike);
             mTvCommenterName = itemView.findViewById(R.id.tvCommenterName);
-            favouriteEvent();
         }
 
-        private void favouriteEvent() {
-            mImgBtnLike.setOnClickListener(v -> {
-                int position = getLayoutPosition();
-                mOnClick.likeClick(position);
-                notifyDataSetChanged();
-            });
-        }
     }
 }

@@ -13,15 +13,17 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
 import asiantech.internship.summer.R;
 import asiantech.internship.summer.model.TimelineItem;
 
-public class TimelineFragment extends Fragment {
+public class TimelineFragment extends Fragment implements TimelineAdapter.onClick {
     private static final String COMMENT = "チャン ヴァン フン ";
     private static final String NAME_OF_PEOPLE = "Le Thi Quynh Chau ";
+    public TimelineAdapter mTimelineAdapter;
     List<TimelineItem> mTimelineItems = new ArrayList<>();
     RecyclerView recyclerView;
     private Boolean mIsScroll = true;
@@ -29,6 +31,7 @@ public class TimelineFragment extends Fragment {
     private int mCurrentItem;
     private int mTotalItem;
     private int mScrollOutItems;
+    private Boolean mChecked = true;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -45,9 +48,9 @@ public class TimelineFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-        createTimelineItem();
-        TimelineAdapter timelineAdapter = new TimelineAdapter(mTimelineItems, getActivity());
-        recyclerView.setAdapter(timelineAdapter);
+        mTimelineItems = createTimelineItem();
+        mTimelineAdapter = new TimelineAdapter(mTimelineItems, getActivity(), this);
+        recyclerView.setAdapter(mTimelineAdapter);
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -141,12 +144,28 @@ public class TimelineFragment extends Fragment {
         }).start();
     }
 
-    private void createTimelineItem() {
+    public List<TimelineItem> createTimelineItem() {
         int size = mTimelineItems.size();
         for (int i = size; i < size + 10; i++) {
             int mLike = 0;
             mTimelineItems.add(new TimelineItem(inputRandomImgAvt(), NAME_OF_PEOPLE + (i + 1), getRandomImageId(), COMMENT + (i + 1), mLike, NAME_OF_PEOPLE + (i + 1)));
         }
+        return mTimelineItems;
     }
 
+    @Override
+    public void likeClick(int position) {
+        TimelineItem timelineItem = mTimelineItems.get(position);
+        if (timelineItem.isIsChecked()) {
+            timelineItem.setLike(timelineItem.getLike() - 1);
+            PagerActivity.itemList.remove(timelineItem);
+            timelineItem.setIsChecked(false);
+        } else {
+            timelineItem.setIsChecked(true);
+            timelineItem.setLike(timelineItem.getLike() + 1);
+            PagerActivity.itemList.add(timelineItem);
+        }
+        mTimelineAdapter.notifyDataSetChanged();
+        FavouriteFragment.mFavouriteAdapter.notifyDataSetChanged();
+    }
 }

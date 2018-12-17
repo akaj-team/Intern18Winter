@@ -7,20 +7,25 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import asiantech.internship.summer.R;
+import asiantech.internship.summer.model.TimelineItem;
 
 @SuppressLint("Registered")
-public class PagerActivity extends AppCompatActivity{
+public class PagerActivity extends AppCompatActivity {
+    public static List<TimelineItem> itemList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_pager_layout);
 
-        Toolbar toolbar =  findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         TabLayout tabLayout = findViewById(R.id.tab_layout);
         ViewPager viewPager = findViewById(R.id.pager);
-
         if (toolbar != null) {
             setSupportActionBar(toolbar);
         }
@@ -28,4 +33,13 @@ public class PagerActivity extends AppCompatActivity{
         viewPager.setAdapter(new PagerAdapter(getSupportFragmentManager()));
         tabLayout.setupWithViewPager(viewPager);
     }
+   /* public static List<TimelineItem> listItem(){
+        List<TimelineItem> list = new ArrayList<>();
+        for (int i=0;i<=list.size();i++){
+            Collections.reverse(list);
+            list = itemList;
+            Collections.reverse(list);
+        }
+        return list;
+    }*/
 }

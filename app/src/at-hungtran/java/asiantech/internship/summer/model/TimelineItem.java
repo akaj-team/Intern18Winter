@@ -66,7 +66,11 @@ public class TimelineItem {
         this.mLike = like;
     }
 
-    public String getCommenterName() { return mCommenterName; }
+    public String getCommenterName() {
+        return mCommenterName;
+    }
 
-    public void setCommenterName(String commenterName) { this.mCommenterName = commenterName; }
+    public void setCommenterName(String commenterName) {
+        this.mCommenterName = commenterName;
+    }
 }
