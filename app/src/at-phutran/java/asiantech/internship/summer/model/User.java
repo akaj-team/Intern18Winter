@@ -6,7 +6,7 @@ public class User {
     private int mImage;
     private int mCountLike;
     private String mComment;
-    private boolean isLiked;
+    private boolean hasLiked;
 
     public User(String username, int avatar, int image, int countLike, String comment) {
         this.mUsername = username;
@@ -56,11 +56,19 @@ public class User {
         this.mComment = comment;
     }
 
-    public boolean isLiked() {
+    /*public boolean isLiked() {
         return isLiked;
     }
 
     public void setLiked(boolean favourite) {
         isLiked = favourite;
+    }*/
+
+    public boolean isHasLiked() {
+        return hasLiked;
+    }
+
+    public void setHasLiked(boolean hasLiked) {
+        this.hasLiked = hasLiked;
     }
 }

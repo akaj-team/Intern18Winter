@@ -11,7 +11,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,9 +22,10 @@ import java.util.Random;
 import asiantech.internship.summer.R;
 import asiantech.internship.summer.model.User;
 
-public class TimelineFragment extends Fragment implements RecyclerViewAdapter.OnclickLike{
+public class TimelineFragment extends Fragment implements RecyclerViewAdapter.OnclickLike {
     private static final int NUM_OF_LIKE_DEFAULT = 0;
     private static final int NUM_OF_ITEM_IN_ONE_PAGE = 10;
+    public List<User> sListFavourite;
     private RecyclerView mRecyclerView;
     private Boolean isScroll = true;
     private ProgressBar mLoading;
@@ -33,8 +33,8 @@ public class TimelineFragment extends Fragment implements RecyclerViewAdapter.On
     private int mTotalItem;
     private int mScrollOutItem;
     private List<User> mUsers;
-    public List<User> sListFavourite;
     private RecyclerViewAdapter mRecyclerViewAdapter;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -139,18 +139,18 @@ public class TimelineFragment extends Fragment implements RecyclerViewAdapter.On
     @Override
     public void eventLike(int position) {
         User user = mUsers.get(position);
-        if(user.isLiked()){
-            user.setLiked(false);
+        if (user.isHasLiked()) {
+            user.setHasLiked(false);
             sListFavourite.remove(user);
-            FavouriteFragment.sFavoriteAdapter.notifyDataSetChanged();
-        }else{
-            user.setLiked(true);
-            sListFavourite.add(0 ,user);
-            Log.i("xxx", "size: " + sListFavourite.size());
-            if(getActivity() instanceof ViewPagerActivity) {
-                ((ViewPagerActivity) getActivity()).getOnAddingFavoritesListener().onAdding(sListFavourite);
+            if (getActivity() instanceof ViewPagerActivity) {
+                ((ViewPagerActivity) getActivity()).getOnChangingFavoritesListener().onRemoving(sListFavourite);
             }
-            FavouriteFragment.sFavoriteAdapter.notifyDataSetChanged();
+        } else {
+            user.setHasLiked(true);
+            sListFavourite.add(0, user);
+            if (getActivity() instanceof ViewPagerActivity) {
+                ((ViewPagerActivity) getActivity()).getOnChangingFavoritesListener().onAdding(sListFavourite);
+            }
         }
         mRecyclerViewAdapter.notifyDataSetChanged();
     }
@@ -162,5 +162,4 @@ public class TimelineFragment extends Fragment implements RecyclerViewAdapter.On
             mUsers.add(new User(getString(R.string.username) + (i + 1), R.drawable.img_avt2, inputRandomImage(), NUM_OF_LIKE_DEFAULT, getString(R.string.comment)));
         }
     }
-
 }

@@ -30,7 +30,7 @@
     <ImageView
         android:id="@+id/imgCook"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="300dp"
         android:layout_gravity="center"
         android:layout_marginBottom="10dp"
         android:padding="10dp"
@@ -42,8 +42,7 @@
         <ImageView
             android:id="@+id/imgLike"
             android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="@drawable/ic_favorite_border_black_36dp" />
+            android:layout_height="30dp" />
         <ImageView
             android:layout_width="30dp"
             android:layout_height="30dp"

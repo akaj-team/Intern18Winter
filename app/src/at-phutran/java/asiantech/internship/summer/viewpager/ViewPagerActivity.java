@@ -9,7 +9,7 @@ import asiantech.internship.summer.R;
 
 public class ViewPagerActivity extends AppCompatActivity {
     private ViewPager mViewPagerContent;
-    private OnAddingFavoritesListener onAddingFavoritesListener;
+    private OnChangingFavoritesListener mOnChangingFavoritesListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,11 +47,11 @@ public class ViewPagerActivity extends AppCompatActivity {
         mViewPagerContent.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayoutHeader));
     }
 
-    public void setOnAddingFavoritesListener(OnAddingFavoritesListener onAddingFavoritesListener) {
-        this.onAddingFavoritesListener = onAddingFavoritesListener;
+    public void setOnChangingFavoritesListener(OnChangingFavoritesListener onChangingFavoritesListener) {
+        this.mOnChangingFavoritesListener = onChangingFavoritesListener;
     }
 
-    public OnAddingFavoritesListener getOnAddingFavoritesListener() {
-        return onAddingFavoritesListener;
+    public OnChangingFavoritesListener getOnChangingFavoritesListener() {
+        return mOnChangingFavoritesListener;
     }
 }

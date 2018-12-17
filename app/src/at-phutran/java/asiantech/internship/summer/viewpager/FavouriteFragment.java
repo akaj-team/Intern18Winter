@@ -10,19 +10,17 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import java.util.List;
 import java.util.Objects;
 import asiantech.internship.summer.R;
 import asiantech.internship.summer.model.User;
 
-public class FavouriteFragment extends Fragment implements OnAddingFavoritesListener {
+public class FavouriteFragment extends Fragment implements OnChangingFavoritesListener {
     @SuppressLint("StaticFieldLeak")
-    public static FavoriteAdapter sFavoriteAdapter;
+    private FavoriteAdapter mFavoriteAdapter;
     private RecyclerView mRecyclerView;
     @Nullable
     @Override
@@ -45,13 +43,19 @@ public class FavouriteFragment extends Fragment implements OnAddingFavoritesList
         dividerItemDecoration.setDrawable(drawable);
         mRecyclerView.addItemDecoration(dividerItemDecoration);
         if(getActivity() instanceof  ViewPagerActivity) {
-            ((ViewPagerActivity) getActivity()).setOnAddingFavoritesListener(this);
+            ((ViewPagerActivity) getActivity()).setOnChangingFavoritesListener(this);
         }
     }
 
     @Override
     public void onAdding(List<User> list) {
-        sFavoriteAdapter = new FavoriteAdapter(list , getActivity().getApplicationContext());
-        mRecyclerView.setAdapter(sFavoriteAdapter);
+        mFavoriteAdapter = new FavoriteAdapter(list , Objects.requireNonNull(getActivity()).getApplicationContext());
+        mRecyclerView.setAdapter(mFavoriteAdapter);
+    }
+
+    @Override
+    public void onRemoving(List<User> list) {
+        mFavoriteAdapter = new FavoriteAdapter(list , Objects.requireNonNull(getActivity()).getApplicationContext());
+        mRecyclerView.setAdapter(mFavoriteAdapter);
     }
 }

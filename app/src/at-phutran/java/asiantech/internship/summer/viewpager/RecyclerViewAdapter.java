@@ -37,11 +37,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.mImgAvatar.setImageResource(user.getAvatar());
         holder.mTvUserComment.setText(user.getUsername());
         holder.mImageCook.setImageResource(user.getImage());
-        holder.mImgLike.setSelected(user.isLiked());
+        holder.mImgLike.setSelected(user.isHasLiked());
         holder.mTvUsername.setText(user.getUsername());
         holder.mTvComment.setText(user.getComment());
-        if(user.isLiked()){
+        if(user.isHasLiked()){
             holder.mImgLike.setImageResource(R.drawable.ic_favorite_red_500_24dp);
+        }else{
+            holder.mImgLike.setImageResource(R.drawable.ic_favorite_black_24dp);
         }
     }
 
