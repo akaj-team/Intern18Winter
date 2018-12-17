@@ -8,13 +8,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -113,19 +110,19 @@ public class TimelimeFragment extends Fragment implements TimelinePagerAdapter.o
     @Override
     public void onSelectItem(int position) {
         TimelinePagerItem timelineItem = mTimelineItems.get(position);
-        boolean check = timelineItem.isCheckSelected();
-        if (check) {
-            timelineItem.setCheckSelected(false);
+        boolean checkSelected = timelineItem.isCheckSelected();
+        if (checkSelected) {
             if (getActivity() instanceof ViewPagerActivity) {
+                timelineItem.setCheckSelected(false);
                 ((ViewPagerActivity) getActivity()).getFavouriteItems().remove(timelineItem);
                 timelineItem.setNumOfLike(0);
                 ((ViewPagerActivity) getActivity()).getFavoriteAdapter().notifyDataSetChanged();
             }
         } else {
-            ((ViewPagerActivity) getActivity()).getFavouriteItems().add(0, timelineItem);
-            timelineItem.setCheckSelected(true);
-            timelineItem.setNumOfLike(1);
             if (getActivity() instanceof ViewPagerActivity) {
+                timelineItem.setCheckSelected(true);
+                timelineItem.setNumOfLike(1);
+                ((ViewPagerActivity) getActivity()).getFavouriteItems().add(0, timelineItem);
                 ((ViewPagerActivity) getActivity()).getFavoriteAdapter().notifyDataSetChanged();
             }
         }
