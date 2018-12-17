@@ -11,7 +11,18 @@ import asiantech.internship.summer.models.TimelinePagerItem;
 import java.util.List;
 
 public class ViewPagerActivity extends AppCompatActivity {
-    public static List<TimelinePagerItem> timelinePagerItems;
+
+    public static List<TimelinePagerItem> favouritePagerItems;
+
+    private FavouritePagerAdapter mFavouritePagerAdapter;
+
+    public FavouritePagerAdapter getFavoriteAdapter() {
+        return mFavouritePagerAdapter;
+    }
+
+    public void setFavouriteAdapter(FavouritePagerAdapter favouritePagerAdapter) {
+        this.mFavouritePagerAdapter = favouritePagerAdapter;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

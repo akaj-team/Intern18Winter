@@ -14,8 +14,6 @@ import java.util.ArrayList;
 import asiantech.internship.summer.R;
 
 public class FavouriteFragment extends Fragment {
-    public static FavouritePagerAdapter mFavouritePagerAdapter;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,12 +28,16 @@ public class FavouriteFragment extends Fragment {
     }
 
     private void initTimeline(View view) {
-        ViewPagerActivity.timelinePagerItems = new ArrayList<>();
+        ViewPagerActivity.favouritePagerItems = new ArrayList<>();
         RecyclerView recyclerView = view.findViewById(R.id.recyclerViewFavourite);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
-        mFavouritePagerAdapter = new FavouritePagerAdapter(getActivity(), ViewPagerActivity.timelinePagerItems);
-        recyclerView.setAdapter(mFavouritePagerAdapter);
+        if (getActivity() instanceof ViewPagerActivity) {
+            ((ViewPagerActivity) getActivity()).setFavouriteAdapter(
+                    new FavouritePagerAdapter(getContext(), ViewPagerActivity.favouritePagerItems));
+            recyclerView.setAdapter(((ViewPagerActivity) getActivity()).getFavoriteAdapter());
+        }
+
     }
 }

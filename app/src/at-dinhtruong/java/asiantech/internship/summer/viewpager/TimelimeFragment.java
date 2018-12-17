@@ -115,14 +115,18 @@ public class TimelimeFragment extends Fragment implements TimelinePagerAdapter.o
         boolean check = timelineItem.isCheckSelected();
         if (check) {
             timelineItem.setCheckSelected(false);
-            ViewPagerActivity.timelinePagerItems.remove(timelineItem);
+            ViewPagerActivity.favouritePagerItems.remove(timelineItem);
             timelineItem.setNumOfLike(0);
-            FavouriteFragment.mFavouritePagerAdapter.notifyDataSetChanged();
+            if (getActivity() instanceof ViewPagerActivity) {
+                ((ViewPagerActivity) getActivity()).getFavoriteAdapter().notifyDataSetChanged();
+            }
         } else {
-            ViewPagerActivity.timelinePagerItems.add(0, timelineItem);
+            ViewPagerActivity.favouritePagerItems.add(0, timelineItem);
             timelineItem.setCheckSelected(true);
             timelineItem.setNumOfLike(1);
-            FavouriteFragment.mFavouritePagerAdapter.notifyDataSetChanged();
+            if (getActivity() instanceof ViewPagerActivity) {
+                ((ViewPagerActivity) getActivity()).getFavoriteAdapter().notifyDataSetChanged();
+            }
         }
     }
 }
