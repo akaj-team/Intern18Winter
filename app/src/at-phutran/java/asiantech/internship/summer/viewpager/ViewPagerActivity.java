@@ -5,15 +5,11 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import asiantech.internship.summer.R;
-import asiantech.internship.summer.model.User;
 
 public class ViewPagerActivity extends AppCompatActivity {
     private ViewPager mViewPagerContent;
+    private OnAddingFavoritesListener onAddingFavoritesListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +29,8 @@ public class ViewPagerActivity extends AppCompatActivity {
                     fragmentTransaction.replace(R.id.viewPagerContent, new TimelineFragment());
                 }
                 else {
-                    fragmentTransaction.replace(R.id.viewPagerContent, new FavouriteFragment());
+                    FavouriteFragment favouriteFragment = new FavouriteFragment();
+                    fragmentTransaction.replace(R.id.viewPagerContent, favouriteFragment);
                 }
             }
 
@@ -48,5 +45,13 @@ public class ViewPagerActivity extends AppCompatActivity {
             }
         });
         mViewPagerContent.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayoutHeader));
+    }
+
+    public void setOnAddingFavoritesListener(OnAddingFavoritesListener onAddingFavoritesListener) {
+        this.onAddingFavoritesListener = onAddingFavoritesListener;
+    }
+
+    public OnAddingFavoritesListener getOnAddingFavoritesListener() {
+        return onAddingFavoritesListener;
     }
 }

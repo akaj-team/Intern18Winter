@@ -11,6 +11,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +33,7 @@ public class TimelineFragment extends Fragment implements RecyclerViewAdapter.On
     private int mTotalItem;
     private int mScrollOutItem;
     private List<User> mUsers;
-    public static List<User> sListFavourite;
+    public List<User> sListFavourite;
     private RecyclerViewAdapter mRecyclerViewAdapter;
     @Nullable
     @Override
@@ -138,14 +139,17 @@ public class TimelineFragment extends Fragment implements RecyclerViewAdapter.On
     @Override
     public void eventLike(int position) {
         User user = mUsers.get(position);
-        if(user.isFavourite()){
-            user.setFavourite(false);
+        if(user.isLiked()){
+            user.setLiked(false);
             sListFavourite.remove(user);
             FavouriteFragment.sFavoriteAdapter.notifyDataSetChanged();
         }else{
-            user.setFavourite(true);
+            user.setLiked(true);
             sListFavourite.add(0 ,user);
-
+            Log.i("xxx", "size: " + sListFavourite.size());
+            if(getActivity() instanceof ViewPagerActivity) {
+                ((ViewPagerActivity) getActivity()).getOnAddingFavoritesListener().onAdding(sListFavourite);
+            }
             FavouriteFragment.sFavoriteAdapter.notifyDataSetChanged();
         }
         mRecyclerViewAdapter.notifyDataSetChanged();
@@ -158,4 +162,5 @@ public class TimelineFragment extends Fragment implements RecyclerViewAdapter.On
             mUsers.add(new User(getString(R.string.username) + (i + 1), R.drawable.img_avt2, inputRandomImage(), NUM_OF_LIKE_DEFAULT, getString(R.string.comment)));
         }
     }
+
 }

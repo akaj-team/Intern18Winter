@@ -10,16 +10,20 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.util.List;
 import java.util.Objects;
 import asiantech.internship.summer.R;
+import asiantech.internship.summer.model.User;
 
-public class FavouriteFragment extends Fragment{
+public class FavouriteFragment extends Fragment implements OnAddingFavoritesListener {
     @SuppressLint("StaticFieldLeak")
     public static FavoriteAdapter sFavoriteAdapter;
-
+    private RecyclerView mRecyclerView;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -30,7 +34,7 @@ public class FavouriteFragment extends Fragment{
     }
 
     private void initView(View view) {
-        RecyclerView mRecyclerView = view.findViewById(R.id.recyclerView);
+        mRecyclerView = view.findViewById(R.id.recyclerView);
         mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(linearLayoutManager);
@@ -40,7 +44,14 @@ public class FavouriteFragment extends Fragment{
         assert drawable != null;
         dividerItemDecoration.setDrawable(drawable);
         mRecyclerView.addItemDecoration(dividerItemDecoration);
-        sFavoriteAdapter = new FavoriteAdapter(TimelineFragment.sListFavourite , getActivity().getApplicationContext());
+        if(getActivity() instanceof  ViewPagerActivity) {
+            ((ViewPagerActivity) getActivity()).setOnAddingFavoritesListener(this);
+        }
+    }
+
+    @Override
+    public void onAdding(List<User> list) {
+        sFavoriteAdapter = new FavoriteAdapter(list , getActivity().getApplicationContext());
         mRecyclerView.setAdapter(sFavoriteAdapter);
     }
 }
