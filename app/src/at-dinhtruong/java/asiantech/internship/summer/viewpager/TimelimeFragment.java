@@ -30,7 +30,6 @@ public class TimelimeFragment extends Fragment implements TimelinePagerAdapter.o
     private int mFirstVisible;
     private TimelinePagerAdapter mTimelineAdapter;
     private List<TimelinePagerItem> mTimelineItems;
-    private List<TimelinePagerItem> favouritePagerItems = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -117,23 +116,18 @@ public class TimelimeFragment extends Fragment implements TimelinePagerAdapter.o
         boolean check = timelineItem.isCheckSelected();
         if (check) {
             timelineItem.setCheckSelected(false);
-            favouritePagerItems.remove(timelineItem);
-            Log.d("xxxxxxx", "onSelectItem: "+favouritePagerItems.size());
-            timelineItem.setNumOfLike(0);
             if (getActivity() instanceof ViewPagerActivity) {
+                ((ViewPagerActivity) getActivity()).getFavouriteItems().remove(timelineItem);
+                timelineItem.setNumOfLike(0);
                 ((ViewPagerActivity) getActivity()).getFavoriteAdapter().notifyDataSetChanged();
             }
         } else {
-            favouritePagerItems.add(0, timelineItem);
+            ((ViewPagerActivity) getActivity()).getFavouriteItems().add(0, timelineItem);
             timelineItem.setCheckSelected(true);
             timelineItem.setNumOfLike(1);
             if (getActivity() instanceof ViewPagerActivity) {
                 ((ViewPagerActivity) getActivity()).getFavoriteAdapter().notifyDataSetChanged();
             }
         }
-       /* Fragment fragment = new Fragment();
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("listFavourite", (Serializable) favouritePagerItems);
-        fragment.setArguments(bundle);*/
     }
 }

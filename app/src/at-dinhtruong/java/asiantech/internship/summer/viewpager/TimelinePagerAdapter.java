@@ -83,7 +83,6 @@ public class TimelinePagerAdapter extends RecyclerView.Adapter<RecyclerView.View
         return position == mTimelines.size() ? VIEW_TYPE_LOADING : VIEW_TYPE_ITEM;
     }
 
-
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
