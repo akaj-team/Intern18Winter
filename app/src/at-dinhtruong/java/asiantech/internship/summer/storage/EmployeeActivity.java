@@ -73,7 +73,7 @@ public class EmployeeActivity extends AppCompatActivity implements EmployeeAdapt
             case R.id.btnUpdate: {
                 if (employee.getNameEmployee().equals("")) {
                     Toast.makeText(getApplicationContext(), R.string.pleaseFillTheEmployeeName, Toast.LENGTH_LONG).show();
-                } else if (!employee.getNameEmployee().equals("") && mDbManager.UpdateEmployee(employee) > 0) {
+                } else if (!employee.getNameEmployee().equals("") && mDbManager.updateEmployee(employee) > 0) {
                     mEmployeesById.get(mPositionItem).setNameEmployee(employee.getNameEmployee());
                     mEmployeeAdapter.notifyDataSetChanged();
                 } else {

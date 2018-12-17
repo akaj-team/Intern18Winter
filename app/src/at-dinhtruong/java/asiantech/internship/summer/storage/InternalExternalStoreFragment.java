@@ -9,6 +9,7 @@ import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,14 +25,16 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.nio.charset.Charset;
 
 import asiantech.internship.summer.R;
 
 public class InternalExternalStoreFragment extends Fragment implements View.OnClickListener {
-    private EditText mEdtInternal;
-    private EditText mEdtExternal;
     private static final int REQUEST_ID_READ_PERMISSION = 100;
     private static final int REQUEST_ID_WRITE_PERMISSION = 200;
+    private static final String INPUT_OUTPUT_EXCEPTION = "Exception";
+    private EditText mEdtInternal;
+    private EditText mEdtExternal;
     private final String FILE_NAME = "note.txt";
     private File mMyInternalFile;
 
@@ -40,9 +43,9 @@ public class InternalExternalStoreFragment extends Fragment implements View.OnCl
         super.onCreate(savedInstanceState);
         ContextWrapper contextWrapper = new ContextWrapper(
                 getContext());
-        String filePath = "ThuMucCuaToi";
+        String filePath = getString(R.string.filePath);
         File directory = contextWrapper.getDir(filePath, Context.MODE_PRIVATE);
-        String fileNameInternal = "internalStorage.txt";
+        String fileNameInternal = getString(R.string.fileNameInternal);
         mMyInternalFile = new File(directory, fileNameInternal);
     }
 
@@ -151,13 +154,13 @@ public class InternalExternalStoreFragment extends Fragment implements View.OnCl
         try {
             File myFile = new File(path);
             FileOutputStream fOut = new FileOutputStream(myFile);
-            OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut);
+            OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut, getString(R.string.charSet));
             myOutWriter.append(data);
             myOutWriter.close();
             fOut.close();
             Toast.makeText(getContext(), FILE_NAME + getString(R.string.saved), Toast.LENGTH_LONG).show();
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e(INPUT_OUTPUT_EXCEPTION, getString(R.string.inputOutputException), e);
         }
     }
 
@@ -169,13 +172,14 @@ public class InternalExternalStoreFragment extends Fragment implements View.OnCl
         try {
             File myFile = new File(path);
             FileInputStream fileInputStream = new FileInputStream(myFile);
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
+            InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream, getString(R.string.charSet));
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
             while ((s = bufferedReader.readLine()) != null) {
                 fileContent.append(s);
             }
             bufferedReader.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e(INPUT_OUTPUT_EXCEPTION, getString(R.string.inputOutputException), e);
         }
         return fileContent.toString();
     }
@@ -185,14 +189,15 @@ public class InternalExternalStoreFragment extends Fragment implements View.OnCl
         try {
             FileInputStream fileInputStream = new FileInputStream(mMyInternalFile);
             DataInputStream dataInputStream = new DataInputStream(fileInputStream);
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(dataInputStream));
+            InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream, getString(R.string.charSet));
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
             String strLine;
             while (null != (strLine = bufferedReader.readLine())) {
                 myData.append(strLine);
             }
             dataInputStream.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e(INPUT_OUTPUT_EXCEPTION, getString(R.string.inputOutputException), e);
         }
         return myData.toString();
     }
@@ -200,11 +205,11 @@ public class InternalExternalStoreFragment extends Fragment implements View.OnCl
     private void writeInternalFile() {
         try {
             FileOutputStream fos = new FileOutputStream(mMyInternalFile);
-            fos.write(mEdtInternal.getText().toString().getBytes());
+            fos.write(mEdtInternal.getText().toString().getBytes(Charset.forName(getString(R.string.charSet))));
             fos.close();
             Toast.makeText(getContext(), R.string.saveFileSuccessfully, Toast.LENGTH_LONG).show();
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e(INPUT_OUTPUT_EXCEPTION, getString(R.string.inputOutputException), e);
         }
     }
 

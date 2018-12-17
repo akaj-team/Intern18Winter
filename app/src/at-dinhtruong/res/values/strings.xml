@@ -71,4 +71,7 @@
     <string name="fileStorage">File Storage</string>
     <string name="saved">saved</string>
     <string name="saveFileSuccessfully">Save file successfully!</string>
+    <string name="inputOutputException">Input Output Exception!</string>
+    <string name="charSet">UTF-8</string>
+    <string name="filePath">ThuMucCuaToi</string>
 </resources>
