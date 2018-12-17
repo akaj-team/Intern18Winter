@@ -21,6 +21,8 @@ public class DBManager extends SQLiteOpenHelper {
     private static final String ID_EMPLOYEE = "id_employee";
     private static final String NAME_EMPLOYEE = "name_employee";
     private static final String COMPANY_ID = "company_id";
+    private static final String CHECK_DATA = " = ? ";
+    private static final String AND_DATA = " AND ";
 
     DBManager(Context context) {
         super(context, DATABASE_NAME, null, 1);
@@ -59,7 +61,7 @@ public class DBManager extends SQLiteOpenHelper {
     Employee getEmployeeById(int idEmployee, int companyID) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(TABLE_EMPLOYEE, new String[]{ID_EMPLOYEE,
-                        COMPANY_ID, NAME_EMPLOYEE}, ID_EMPLOYEE + " = ?" + " AND " + COMPANY_ID + " = ?",
+                        COMPANY_ID, NAME_EMPLOYEE}, ID_EMPLOYEE + CHECK_DATA + AND_DATA + COMPANY_ID + CHECK_DATA,
                 new String[]{String.valueOf(idEmployee), String.valueOf(companyID)}, null, null, null, null);
         cursor.moveToFirst();
         Employee employee = new Employee(cursor.getInt(0), cursor.getInt(1), cursor.getString(2));
@@ -72,7 +74,7 @@ public class DBManager extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(NAME_EMPLOYEE, employee.getNameEmployee());
-        return db.update(TABLE_EMPLOYEE, values, ID_EMPLOYEE + " = ?" + " AND " + COMPANY_ID + " = ?",
+        return db.update(TABLE_EMPLOYEE, values, ID_EMPLOYEE + CHECK_DATA + AND_DATA + COMPANY_ID + CHECK_DATA,
                 new String[]{String.valueOf(employee.getIdEmployee()), String.valueOf(employee.getCompanyId())});
     }
 
@@ -98,7 +100,7 @@ public class DBManager extends SQLiteOpenHelper {
 
     void deleteEmployee(Employee employee) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_EMPLOYEE, ID_EMPLOYEE + " = ?" + " AND " + COMPANY_ID + " = ?",
+        db.delete(TABLE_EMPLOYEE, ID_EMPLOYEE + CHECK_DATA + AND_DATA + COMPANY_ID + CHECK_DATA,
                 new String[]{String.valueOf(employee.getIdEmployee()),
                         String.valueOf(employee.getCompanyId())});
         db.close();
