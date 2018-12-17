@@ -16,6 +16,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
     private List<User> mListUsers;
     private Context mContext;
 
+
     public FavoriteAdapter(List<User> mUsers, Context applicationContext) {
         this.mListUsers = mUsers;
         this.mContext = applicationContext;
@@ -35,7 +36,6 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
         holder.mImgAvatar.setImageResource(user.getAvatar());
         holder.mTvUserComment.setText(user.getUsername());
         holder.mImageCook.setImageResource(user.getImage());
-        holder.mImgLike.setSelected(user.isLike());
         holder.mTvUsername.setText(user.getUsername());
         holder.mTvComment.setText(user.getComment());
     }
@@ -46,7 +46,6 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        private ImageView mImgLike;
         private ImageView mImgAvatar;
         private TextView mTvUsername;
         private TextView mTvUserComment;
@@ -54,7 +53,6 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
         private ImageView mImageCook;
         ViewHolder(View itemView) {
             super(itemView);
-            mImgLike = itemView.findViewById(R.id.imgLike);
             mImgAvatar = itemView.findViewById(R.id.circleImageViewAvatar);
             mTvUsername = itemView.findViewById(R.id.tvUser);
             mImageCook = itemView.findViewById(R.id.imgCook);

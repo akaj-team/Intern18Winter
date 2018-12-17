@@ -32,7 +32,7 @@ public class TimelineFragment extends Fragment implements RecyclerViewAdapter.On
     private int mTotalItem;
     private int mScrollOutItem;
     private List<User> mUsers;
-    public static List<User> sListFavourite = new ArrayList<>();
+    public static List<User> sListFavourite;
     private RecyclerViewAdapter mRecyclerViewAdapter;
     @Nullable
     @Override
@@ -40,6 +40,7 @@ public class TimelineFragment extends Fragment implements RecyclerViewAdapter.On
         setHasOptionsMenu(true);
         View view = inflater.inflate(R.layout.fragment_time_line, container, false);
         mLoading = view.findViewById(R.id.progressBar);
+        sListFavourite = new ArrayList<>();
         initView(view);
         return view;
     }
@@ -137,13 +138,14 @@ public class TimelineFragment extends Fragment implements RecyclerViewAdapter.On
     @Override
     public void eventLike(int position) {
         User user = mUsers.get(position);
-        if(user.isLike()){
-            user.setLike(false);
+        if(user.isFavourite()){
+            user.setFavourite(false);
             sListFavourite.remove(user);
             FavouriteFragment.sFavoriteAdapter.notifyDataSetChanged();
         }else{
-            user.setLike(true);
+            user.setFavourite(true);
             sListFavourite.add(0 ,user);
+
             FavouriteFragment.sFavoriteAdapter.notifyDataSetChanged();
         }
         mRecyclerViewAdapter.notifyDataSetChanged();

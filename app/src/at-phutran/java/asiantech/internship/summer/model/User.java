@@ -6,7 +6,8 @@ public class User {
     private int mImage;
     private int mCountLike;
     private String mComment;
-    private boolean isLike;
+    private boolean isFavourite;
+    private boolean isTimeline;
 
     public User(String username, int avatar, int image, int countLike, String comment) {
         this.mUsername = username;
@@ -56,11 +57,19 @@ public class User {
         this.mComment = comment;
     }
 
-    public boolean isLike() {
-        return isLike;
+    public boolean isFavourite() {
+        return isFavourite;
     }
 
-    public void setLike(boolean like) {
-        isLike = like;
+    public void setFavourite(boolean favourite) {
+        isFavourite = favourite;
     }
+
+    /*public boolean isTimeline() {
+        return isTimeline;
+    }
+
+    public void setTimeline(boolean timeline) {
+        isTimeline = timeline;
+    }*/
 }

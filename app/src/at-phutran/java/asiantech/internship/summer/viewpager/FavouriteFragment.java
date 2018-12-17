@@ -19,6 +19,7 @@ import asiantech.internship.summer.R;
 public class FavouriteFragment extends Fragment{
     @SuppressLint("StaticFieldLeak")
     public static FavoriteAdapter sFavoriteAdapter;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -39,8 +40,7 @@ public class FavouriteFragment extends Fragment{
         assert drawable != null;
         dividerItemDecoration.setDrawable(drawable);
         mRecyclerView.addItemDecoration(dividerItemDecoration);
-        //listUser
-        sFavoriteAdapter = new FavoriteAdapter(TimelineFragment.sListFavourite, getActivity().getApplicationContext());
+        sFavoriteAdapter = new FavoriteAdapter(TimelineFragment.sListFavourite , getActivity().getApplicationContext());
         mRecyclerView.setAdapter(sFavoriteAdapter);
     }
 }

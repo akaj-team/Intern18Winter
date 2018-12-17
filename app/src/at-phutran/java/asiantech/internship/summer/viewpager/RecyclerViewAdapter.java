@@ -37,10 +37,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.mImgAvatar.setImageResource(user.getAvatar());
         holder.mTvUserComment.setText(user.getUsername());
         holder.mImageCook.setImageResource(user.getImage());
-        holder.mImgLike.setSelected(user.isLike());
+        holder.mImgLike.setSelected(user.isFavourite());
         holder.mTvUsername.setText(user.getUsername());
         holder.mTvComment.setText(user.getComment());
-        if(user.isLike()){
+        if(user.isFavourite()){
             holder.mImgLike.setImageResource(R.drawable.ic_favorite_red_500_24dp);
         }
     }
@@ -81,5 +81,4 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public interface OnclickLike {
         void eventLike(int position);
     }
-
 }
