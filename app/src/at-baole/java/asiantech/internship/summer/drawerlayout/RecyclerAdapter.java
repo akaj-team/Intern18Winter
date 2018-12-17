@@ -1,30 +1,31 @@
 package asiantech.internship.summer.drawerlayout;
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import asiantech.internship.summer.drawerlayout.model.Item;
-
 import java.util.List;
 
 import asiantech.internship.summer.R;
+import asiantech.internship.summer.drawerlayout.model.Item;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private static final String TAG = RecyclerAdapter.class.getSimpleName();
+    //private static final String TAG = RecyclerAdapter.class.getSimpleName();
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_ITEM = 1;
     private List<Item> itemObjects;
     private OnItemListener mListener;
 
-    public RecyclerAdapter(List<Item> itemObjects, OnItemListener listener) {
+    RecyclerAdapter(List<Item> itemObjects, OnItemListener listener) {
         this.itemObjects = itemObjects;
         this.mListener = listener;
     }
 
+    @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if (viewType == TYPE_HEADER) {
             View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.header_layout, parent, false);
             return new HeaderViewHolder(layoutView);
@@ -36,7 +37,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         Item mObject = itemObjects.get(position);
         if (holder instanceof HeaderViewHolder) {
             ((HeaderViewHolder) holder).mAvatar.setImageResource(mObject.getItemImage());
@@ -48,10 +49,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
     }
 
-    private Item getItem(int position) {
-        return itemObjects.get(position);
-    }
-
     @Override
     public int getItemCount() {
         return itemObjects.size();
@@ -59,8 +56,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public int getItemViewType(int position) {
-        if (isPositionHeader(position))
+        if (isPositionHeader(position)) {
             return TYPE_HEADER;
+        }
         return TYPE_ITEM;
     }
 

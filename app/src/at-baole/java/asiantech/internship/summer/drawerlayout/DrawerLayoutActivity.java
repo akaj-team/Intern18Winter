@@ -12,7 +12,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -37,8 +36,8 @@ import asiantech.internship.summer.drawerlayout.model.Item;
 
 public class DrawerLayoutActivity extends AppCompatActivity implements RecyclerAdapter.OnItemListener {
     //private static final String TAG = DrawerLayoutActivity.class.getSimpleName();
-    private int GALLERY = 1;
-    private int CAMERA = 2;
+    private static int GALLERY = 1;
+    private static int CAMERA = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

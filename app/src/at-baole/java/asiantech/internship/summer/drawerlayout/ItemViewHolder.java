@@ -7,11 +7,11 @@ import android.widget.TextView;
 
 import asiantech.internship.summer.R;
 
-public class ItemViewHolder extends RecyclerView.ViewHolder {
-    public ImageView mItemImage;
-    public TextView mItemContent;
+class ItemViewHolder extends RecyclerView.ViewHolder {
+    ImageView mItemImage;
+    TextView mItemContent;
 
-    public ItemViewHolder(View itemView) {
+    ItemViewHolder(View itemView) {
         super(itemView);
         mItemImage = itemView.findViewById(R.id.imgItem);
         mItemContent = itemView.findViewById(R.id.tvItem);
