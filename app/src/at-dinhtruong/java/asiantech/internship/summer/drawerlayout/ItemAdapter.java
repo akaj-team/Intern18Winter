@@ -45,10 +45,10 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(viewGroup.getContext());
         if (viewType == VIEW_TYPE_HEADER) {
-            View itView = layoutInflater.inflate(R.layout.header_layout, viewGroup, false);
+            View itView = layoutInflater.inflate(R.layout.header_layout_drawer, viewGroup, false);
             return new HeaderViewHolder(itView);
         }
-        View itView = layoutInflater.inflate(R.layout.item_icon, viewGroup, false);
+        View itView = layoutInflater.inflate(R.layout.item_icon_drawer, viewGroup, false);
         return new ItemViewHoder(itView);
     }
 
@@ -71,7 +71,6 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             } else {
                 headerViewHolder.mImgAvatar.setImageResource(items.get(position).getIcon());
             }
-
         }
     }
 
@@ -111,7 +110,6 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         notifyDataSetChanged();
                     }
             );
-
         }
     }
 }

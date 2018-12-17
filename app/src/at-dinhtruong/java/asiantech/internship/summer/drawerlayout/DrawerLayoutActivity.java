@@ -25,7 +25,6 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import java.util.List;
-import java.util.Objects;
 
 import asiantech.internship.summer.models.Item;
 import asiantech.internship.summer.R;
@@ -38,41 +37,50 @@ public class DrawerLayoutActivity extends AppCompatActivity implements ItemAdapt
     public static final String TAKE_PHOTO = "Take Photo";
     public static final String CHOOSE_FROM_LIBRARY = "Choose from Library";
     public static final String CANCEL = "Cancel";
+    private int positionSelected = -1;
     private List<Item> items;
     private ItemAdapter mItemAdapter;
+    private RecyclerView mRecycleViewItem;
+    private DrawerLayout mDrawerLayout;
+    private LinearLayout mLinearLayoutContent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawer_layout);
         initViewItem();
+        slideDrawer();
     }
 
     private void initViewItem() {
-        DrawerLayout drawerLayout = findViewById(R.id.drawerlayout);
-        LinearLayout llContent = findViewById(R.id.llContent);
-        RecyclerView recyclerViewItem = findViewById(R.id.recycleViewItem);
+        mDrawerLayout = findViewById(R.id.drawerLayout);
+        mLinearLayoutContent = findViewById(R.id.llContent);
+        mRecycleViewItem = findViewById(R.id.recycleViewItem);
         items = Item.createItem();
+        mRecycleViewItem.setLayoutManager(new LinearLayoutManager(this));
+        mItemAdapter = new ItemAdapter(items, DrawerLayoutActivity.this, this);
+        mRecycleViewItem.setAdapter(mItemAdapter);
+    }
+
+    private void slideDrawer() {
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
         int width = size.x;
-        ViewGroup.LayoutParams params = recyclerViewItem.getLayoutParams();
+        ViewGroup.LayoutParams params = mRecycleViewItem.getLayoutParams();
         params.width = width * 5 / 6;
-        recyclerViewItem.setLayoutParams(params);
-        recyclerViewItem.setHasFixedSize(true);
-        recyclerViewItem.setLayoutManager(new LinearLayoutManager(this));
-        mItemAdapter = new ItemAdapter(items, DrawerLayoutActivity.this, this);
-        recyclerViewItem.setAdapter(mItemAdapter);
-        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.app_name, R.string.app_name) {
-            @Override
-            public void onDrawerSlide(View drawerView, float slideOffset) {
-                super.onDrawerSlide(drawerView, slideOffset);
-                float slideX = drawerView.getWidth() * slideOffset;
-                llContent.setTranslationX(slideX);
-            }
-        };
-        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        mRecycleViewItem.setLayoutParams(params);
+        mRecycleViewItem.setHasFixedSize(true);
+        ActionBarDrawerToggle actionBarDrawerToggle =
+                new ActionBarDrawerToggle(this, mDrawerLayout, R.string.app_name, R.string.app_name) {
+                    @Override
+                    public void onDrawerSlide(View drawerView, float slideOffset) {
+                        super.onDrawerSlide(drawerView, slideOffset);
+                        float slideX = drawerView.getWidth() * slideOffset;
+                        mLinearLayoutContent.setTranslationX(slideX);
+                    }
+                };
+        mDrawerLayout.addDrawerListener(actionBarDrawerToggle);
     }
 
     @Override
@@ -83,8 +91,7 @@ public class DrawerLayoutActivity extends AppCompatActivity implements ItemAdapt
         builder.setItems(itemsDialog, (dialog, item) -> {
             if (itemsDialog[item].equals(TAKE_PHOTO)) {
                 if (!requestPermission()) {
-                    Toast.makeText(DrawerLayoutActivity.this, getString(R.string.permissionAccepted), Toast.LENGTH_SHORT)
-                            .show();
+                    Toast.makeText(DrawerLayoutActivity.this, getString(R.string.permissionAccepted), Toast.LENGTH_SHORT).show();
                 } else {
                     cameraIntent();
                 }
@@ -99,10 +106,13 @@ public class DrawerLayoutActivity extends AppCompatActivity implements ItemAdapt
 
     @Override
     public void selectItemMethod(int position) {
-        for (Item item : items) {
-            item.setCheckSelected(false);
+        if (positionSelected != -1) {
+            items.get(positionSelected).setCheckSelected(false);
+            mItemAdapter.notifyItemChanged(positionSelected);
         }
+        positionSelected = position;
         items.get(position).setCheckSelected(true);
+        mItemAdapter.notifyItemChanged(positionSelected);
     }
 
     private void cameraIntent() {
@@ -135,8 +145,7 @@ public class DrawerLayoutActivity extends AppCompatActivity implements ItemAdapt
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     cameraIntent();
                 } else {
-                    Toast.makeText(DrawerLayoutActivity.this, getString(R.string.permissionDenied), Toast.LENGTH_SHORT)
-                            .show();
+                    Toast.makeText(DrawerLayoutActivity.this, getString(R.string.permissionDenied), Toast.LENGTH_SHORT).show();
                 }
                 break;
             default:
@@ -165,8 +174,11 @@ public class DrawerLayoutActivity extends AppCompatActivity implements ItemAdapt
     }
 
     private void onCaptureImageResult(Intent data) {
-        Bundle extras = data.getExtras();
-        Bitmap imageBitmap = (Bitmap) Objects.requireNonNull(extras).get(getString(R.string.data));
+        Bundle getExtrasImage = data.getExtras();
+        Bitmap imageBitmap = null;
+        if (getExtrasImage != null) {
+            imageBitmap = (Bitmap) (getExtrasImage).get(getString(R.string.data));
+        }
         Item item = items.get(0);
         item.setAvatarBitmap(imageBitmap);
         item.setAvatar(null);
