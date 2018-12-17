@@ -9,7 +9,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".DrawerLayoutActivity">
+        <activity android:name=".drawerlayout.DrawerLayoutActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
