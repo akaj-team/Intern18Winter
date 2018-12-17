@@ -40,7 +40,7 @@ public class DrawerLayoutActivity extends AppCompatActivity {
 
     public void setData(){
         mItem = new ArrayList<>();
-        mItem.add(new Item(R.drawable.img_avatar_1, getString(R.string.Email), R.drawable.ic_arrow_drop_down_black_18dp));
+        mItem.add(new Item(R.drawable.img_avatar_default, getString(R.string.Email), R.drawable.ic_arrow_drop_down_black_18dp));
         mItem.add(new Item(R.drawable.ic_move_to_inbox_black_18dp, getString(R.string.Inbox)));
         mItem.add(new Item(R.drawable.ic_send_black_18dp, getString(R.string.Outbox)));
         mItem.add(new Item(R.drawable.ic_delete_black_18dp, getString(R.string.Trash)));
