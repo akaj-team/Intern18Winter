@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -163,7 +162,7 @@ public class TimelineFragment extends Fragment implements TimelineAdapter.onClic
         } else {
             timelineItem.setIsChecked(true);
             timelineItem.setLike(timelineItem.getLike() + 1);
-            PagerActivity.itemList.add(timelineItem);
+            PagerActivity.itemList.add(0, timelineItem);
         }
         mTimelineAdapter.notifyDataSetChanged();
         FavouriteFragment.mFavouriteAdapter.notifyDataSetChanged();
