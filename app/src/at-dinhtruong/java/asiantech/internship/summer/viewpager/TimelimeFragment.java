@@ -8,11 +8,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -23,11 +25,12 @@ import asiantech.internship.summer.models.TimelinePagerItem;
 public class TimelimeFragment extends Fragment implements TimelinePagerAdapter.onClickItem {
     private static final int NUM_OF_ITEM_ON_PAGE = 10;
     private boolean mIsLoadmore = true;
-    private List<TimelinePagerItem> mTimelineItems;
     private int mTotalItemCount;
     private int mChildCount;
     private int mFirstVisible;
     private TimelinePagerAdapter mTimelineAdapter;
+    private List<TimelinePagerItem> mTimelineItems;
+    private List<TimelinePagerItem> favouritePagerItems = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -103,7 +106,6 @@ public class TimelimeFragment extends Fragment implements TimelinePagerAdapter.o
                     timelineAdapter.notifyDataSetChanged();
                 });
             } catch (InterruptedException ignored) {
-
             }
         }) {
         }.start();
@@ -115,18 +117,23 @@ public class TimelimeFragment extends Fragment implements TimelinePagerAdapter.o
         boolean check = timelineItem.isCheckSelected();
         if (check) {
             timelineItem.setCheckSelected(false);
-            ViewPagerActivity.favouritePagerItems.remove(timelineItem);
+            favouritePagerItems.remove(timelineItem);
+            Log.d("xxxxxxx", "onSelectItem: "+favouritePagerItems.size());
             timelineItem.setNumOfLike(0);
             if (getActivity() instanceof ViewPagerActivity) {
                 ((ViewPagerActivity) getActivity()).getFavoriteAdapter().notifyDataSetChanged();
             }
         } else {
-            ViewPagerActivity.favouritePagerItems.add(0, timelineItem);
+            favouritePagerItems.add(0, timelineItem);
             timelineItem.setCheckSelected(true);
             timelineItem.setNumOfLike(1);
             if (getActivity() instanceof ViewPagerActivity) {
                 ((ViewPagerActivity) getActivity()).getFavoriteAdapter().notifyDataSetChanged();
             }
         }
+       /* Fragment fragment = new Fragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("listFavourite", (Serializable) favouritePagerItems);
+        fragment.setArguments(bundle);*/
     }
 }

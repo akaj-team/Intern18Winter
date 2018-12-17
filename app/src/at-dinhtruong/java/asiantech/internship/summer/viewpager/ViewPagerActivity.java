@@ -5,22 +5,21 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
+import java.util.List;
+
 import asiantech.internship.summer.R;
 import asiantech.internship.summer.models.TimelinePagerItem;
 
-import java.util.List;
-
 public class ViewPagerActivity extends AppCompatActivity {
+    //public static List<TimelinePagerItem> favouritePagerItems;
 
-    public static List<TimelinePagerItem> favouritePagerItems;
+    private TimelinePagerAdapter mFavouritePagerAdapter;
 
-    private FavouritePagerAdapter mFavouritePagerAdapter;
-
-    public FavouritePagerAdapter getFavoriteAdapter() {
+    public TimelinePagerAdapter getFavoriteAdapter() {
         return mFavouritePagerAdapter;
     }
 
-    public void setFavouriteAdapter(FavouritePagerAdapter favouritePagerAdapter) {
+    public void setFavouriteAdapter(TimelinePagerAdapter favouritePagerAdapter) {
         this.mFavouritePagerAdapter = favouritePagerAdapter;
     }
 

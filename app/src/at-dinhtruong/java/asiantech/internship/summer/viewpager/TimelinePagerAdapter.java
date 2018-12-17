@@ -31,6 +31,11 @@ public class TimelinePagerAdapter extends RecyclerView.Adapter<RecyclerView.View
         this.mOnClickItem = onClickItem;
     }
 
+    TimelinePagerAdapter(Context context, List<TimelinePagerItem> timelinePagerItems) {
+        this.mTimelines = timelinePagerItems;
+        this.mContext = context;
+    }
+
     private class ViewHolderLoading extends RecyclerView.ViewHolder {
         private ProgressBar mProgressBar;
 
@@ -77,7 +82,6 @@ public class TimelinePagerAdapter extends RecyclerView.Adapter<RecyclerView.View
     public int getItemViewType(int position) {
         return position == mTimelines.size() ? VIEW_TYPE_LOADING : VIEW_TYPE_ITEM;
     }
-
 
 
     @NonNull

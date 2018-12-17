@@ -10,13 +10,22 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import asiantech.internship.summer.R;
+import asiantech.internship.summer.models.TimelinePagerItem;
 
 public class FavouriteFragment extends Fragment {
+    //private List<TimelinePagerItem> mTimelinePagers;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        /*Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            mTimelinePagers = new ArrayList<>();
+            mTimelinePagers = (List<TimelinePagerItem>) bundle.getSerializable("listFavourite");
+        }*/
     }
 
     @Override
@@ -28,16 +37,15 @@ public class FavouriteFragment extends Fragment {
     }
 
     private void initTimeline(View view) {
-        ViewPagerActivity.favouritePagerItems = new ArrayList<>();
+
         RecyclerView recyclerView = view.findViewById(R.id.recyclerViewFavourite);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
-        if (getActivity() instanceof ViewPagerActivity) {
+        /*if (getActivity() instanceof ViewPagerActivity) {
             ((ViewPagerActivity) getActivity()).setFavouriteAdapter(
-                    new FavouritePagerAdapter(getContext(), ViewPagerActivity.favouritePagerItems));
+                    new TimelinePagerAdapter(getContext(), mTimelinePagers));
             recyclerView.setAdapter(((ViewPagerActivity) getActivity()).getFavoriteAdapter());
-        }
-
+        }*/
     }
 }
