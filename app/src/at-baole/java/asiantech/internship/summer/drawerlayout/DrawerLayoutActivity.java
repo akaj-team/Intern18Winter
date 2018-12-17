@@ -36,14 +36,14 @@ import asiantech.internship.summer.drawerlayout.model.Item;
 
 public class DrawerLayoutActivity extends AppCompatActivity implements RecyclerAdapter.OnItemListener {
     //private static final String TAG = DrawerLayoutActivity.class.getSimpleName();
-    private static int GALLERY = 1;
-    private static int CAMERA = 2;
+    private static final int GALLERY = 1;
+    private static final int CAMERA = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawer_layout);
-        requestMultiplePermission();
+        //requestMultiplePermission();
         initView();
     }
 
@@ -148,30 +148,30 @@ public class DrawerLayoutActivity extends AppCompatActivity implements RecyclerA
         }
     }
 
-    private void requestMultiplePermission() {
-        Dexter.withActivity(this)
-                .withPermissions(
-                        Manifest.permission.CAMERA,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        Manifest.permission.READ_EXTERNAL_STORAGE)
-                .withListener(new MultiplePermissionsListener() {
-                    @Override
-                    public void onPermissionsChecked(MultiplePermissionsReport report) {
-                        //Check if all permissions are granted
-//                        if (report.areAllPermissionsGranted()) {
-//                            Toast.makeText(getApplicationContext(), "All permissions are granted by user", Toast.LENGTH_LONG).show();
-//                        }
-//                        //Check for permanent denial of any permission
-//                        if (report.isAnyPermissionPermanentlyDenied()) {
-//                            // show alert dialog navigating to Settings
-//                            //openSettingsDialog();
-//                        }
-                    }
-
-                    @Override
-                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
-                        token.continuePermissionRequest();
-                    }
-                }).withErrorListener(error -> Toast.makeText(getApplicationContext(), getString(R.string.notifyError), Toast.LENGTH_LONG).show()).onSameThread().check();
-    }
+//    private void requestMultiplePermission() {
+//        Dexter.withActivity(this)
+//                .withPermissions(
+//                        Manifest.permission.CAMERA,
+//                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+//                        Manifest.permission.READ_EXTERNAL_STORAGE)
+//                .withListener(new MultiplePermissionsListener() {
+//                    @Override
+//                    public void onPermissionsChecked(MultiplePermissionsReport report) {
+//                        //Check if all permissions are granted
+////                        if (report.areAllPermissionsGranted()) {
+////                            Toast.makeText(getApplicationContext(), "All permissions are granted by user", Toast.LENGTH_LONG).show();
+////                        }
+////                        //Check for permanent denial of any permission
+////                        if (report.isAnyPermissionPermanentlyDenied()) {
+////                            // show alert dialog navigating to Settings
+////                            //openSettingsDialog();
+////                        }
+//                    }
+//
+//                    @Override
+//                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
+//                        token.continuePermissionRequest();
+//                    }
+//                }).withErrorListener(error -> Toast.makeText(getApplicationContext(), getString(R.string.notifyError), Toast.LENGTH_LONG).show()).onSameThread().check();
+//    }
 }
