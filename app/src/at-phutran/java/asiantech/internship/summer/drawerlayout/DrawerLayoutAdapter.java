@@ -16,11 +16,11 @@ import asiantech.internship.summer.model.Data;
 public class DrawerLayoutAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_ITEM = 1;
-    private Onclick mOnclick;
+    private OnItemClickListener mOnItemClickListener;
     private List<Data> mItems;
 
-    DrawerLayoutAdapter(List<Data> itemObjects, Onclick onclick) {
-        this.mOnclick = onclick;
+    DrawerLayoutAdapter(List<Data> itemObjects, OnItemClickListener onItemClickListener) {
+        this.mOnItemClickListener = onItemClickListener;
         this.mItems = itemObjects;
     }
 
@@ -46,18 +46,17 @@ public class DrawerLayoutAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             } else {
                 ((HeaderViewHolder) holder).imgAvatar.setImageResource((mData.getIcon()));
             }
-            ((HeaderViewHolder) holder).tvTitle.setText(mData.getContent());
-            ((HeaderViewHolder) holder).imgAvatar.setOnClickListener(view -> mOnclick.onclickAvatar());
+            ((HeaderViewHolder) holder).tvTitle.setText(mData.getTitle());
+            ((HeaderViewHolder) holder).imgAvatar.setOnClickListener(view -> mOnItemClickListener.onclickAvatar());
         } else if (holder instanceof ItemViewHolder) {
-            ((ItemViewHolder) holder).imgIcon.setImageResource(mData.getIcon());
-            ((ItemViewHolder) holder).tvContent.setText(mData.getContent());
-//            ((ItemViewHolder) holder).linearLayout.setSelected(mData.isChecked());
+            ((ItemViewHolder) holder).mImgIcon.setImageResource(mData.getIcon());
+            ((ItemViewHolder) holder).mTvContent.setText(mData.getTitle());
             if (mData.isChecked()) {
-                ((ItemViewHolder) holder).tvContent.setTextColor(Color.BLUE);
-                ((ItemViewHolder) holder).imgIcon.setColorFilter(Color.BLUE);
+                ((ItemViewHolder) holder).mTvContent.setTextColor(Color.BLUE);
+                ((ItemViewHolder) holder).mImgIcon.setColorFilter(Color.BLUE);
             } else {
-                ((ItemViewHolder) holder).tvContent.setTextColor(Color.BLACK);
-                ((ItemViewHolder) holder).imgIcon.setColorFilter(Color.BLACK);
+                ((ItemViewHolder) holder).mTvContent.setTextColor(Color.BLACK);
+                ((ItemViewHolder) holder).mImgIcon.setColorFilter(Color.BLACK);
             }
         }
     }
@@ -78,12 +77,6 @@ public class DrawerLayoutAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         return position == 0;
     }
 
-    public interface Onclick {
-        void onclickAvatar();
-
-        void changeSelect(int i);
-    }
-
     class HeaderViewHolder extends RecyclerView.ViewHolder {
         ImageView imgAvatar;
         TextView tvTitle;
@@ -96,26 +89,28 @@ public class DrawerLayoutAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder {
-        ImageView imgIcon;
-        TextView tvContent;
-        LinearLayout llItem;
+        private ImageView mImgIcon;
+        private TextView mTvContent;
 
         ItemViewHolder(View itemView) {
             super(itemView);
-            imgIcon = itemView.findViewById(R.id.imgIcon);
-            tvContent = itemView.findViewById(R.id.tvContent);
-            llItem = itemView.findViewById(R.id.llItem);
-            handleEvent();
+            mImgIcon = itemView.findViewById(R.id.imgIcon);
+            mTvContent = itemView.findViewById(R.id.tvContent);
+            handleEventSelected();
         }
 
-        private void handleEvent() {
-            llItem.setOnClickListener(view -> {
-                if (mOnclick == null) {
+        private void handleEventSelected() {
+            itemView.setOnClickListener(view -> {
+                if (mOnItemClickListener == null) {
                     return;
                 }
                 int position = getLayoutPosition();
-                mOnclick.changeSelect(position);
+                mOnItemClickListener.changeSelect(position);
             });
         }
+    }
+    public interface OnItemClickListener {
+        void onclickAvatar();
+        void changeSelect(int i);
     }
 }

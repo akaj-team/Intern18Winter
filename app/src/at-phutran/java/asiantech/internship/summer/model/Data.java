@@ -3,38 +3,46 @@ package asiantech.internship.summer.model;
 import android.graphics.Bitmap;
 
 public class Data {
-    private int mIcon;
-    private String mContent;
-    private boolean mIsChecked;
-    private Bitmap mAvatarBitmap;
+    private int icon;
+    private String title;
+    private boolean isChecked;
+    private Bitmap avatarBitmap;
 
-    public Data(int mIcon, String mContent, boolean mIsChecked, Bitmap mAvatarBitmap) {
-        this.mIcon = mIcon;
-        this.mContent = mContent;
-        this.mIsChecked = mIsChecked;
-        this.mAvatarBitmap = mAvatarBitmap;
-    }
-
-    public Bitmap getAvatarBitmap() {
-        return mAvatarBitmap;
-    }
-
-    public void setAvatarBitmap(Bitmap avatarBitmap) {
-        this.mAvatarBitmap = avatarBitmap;
-    }
-    public boolean isChecked() {
-        return mIsChecked;
-    }
-
-    public void setChecked(Boolean isChecked) {
-        this.mIsChecked = isChecked;
+    public Data(int icon, String title, boolean isChecked) {
+        this.icon = icon;
+        this.title = title;
+        this.isChecked = isChecked;
     }
 
     public int getIcon() {
-        return mIcon;
+        return icon;
     }
 
-    public String getContent() {
-        return mContent;
+    public void setIcon(int icon) {
+        this.icon = icon;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
+    }
+
+    public Bitmap getAvatarBitmap() {
+        return avatarBitmap;
+    }
+
+    public void setAvatarBitmap(Bitmap avatarBitmap) {
+        this.avatarBitmap = avatarBitmap;
     }
 }
