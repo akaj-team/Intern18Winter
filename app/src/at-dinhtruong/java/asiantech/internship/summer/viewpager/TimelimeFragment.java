@@ -21,10 +21,10 @@ import asiantech.internship.summer.models.TimelinePagerItem;
 
 public class TimelimeFragment extends Fragment implements TimelinePagerAdapter.onClickItem {
     private static final int NUM_OF_ITEM_ON_PAGE = 10;
-    private boolean mIsLoadmore = true;
     private int mTotalItemCount;
     private int mChildCount;
     private int mFirstVisible;
+    private boolean mIsLoadmore = true;
     private TimelinePagerAdapter mTimelineAdapter;
     private List<TimelinePagerItem> mTimelineItems;
 
