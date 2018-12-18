@@ -5,13 +5,13 @@ import android.graphics.Bitmap;
 public class Data {
     private int icon;
     private String title;
-    private boolean isChecked;
+    private boolean hasChecked;
     private Bitmap avatarBitmap;
 
     public Data(int icon, String title, boolean isChecked) {
         this.icon = icon;
         this.title = title;
-        this.isChecked = isChecked;
+        this.hasChecked = isChecked;
     }
 
     public int getIcon() {
@@ -31,11 +31,11 @@ public class Data {
     }
 
     public boolean isChecked() {
-        return isChecked;
+        return hasChecked;
     }
 
     public void setChecked(boolean checked) {
-        isChecked = checked;
+        hasChecked = checked;
     }
 
     public Bitmap getAvatarBitmap() {
