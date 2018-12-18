@@ -1,5 +1,6 @@
 package asiantech.internship.summer.asynctaskthreadhandler;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,6 +12,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import java.io.InputStream;
+import java.net.URL;
 
 import asiantech.internship.summer.R;
 
@@ -33,7 +35,7 @@ public class AsyncTaskThreadHandlerActivity extends AppCompatActivity implements
         new DownloadImageTask(mImgImageDownload).execute(URL_IMAGE);
     }
 
-    public DownloadTask(Context context) {
+    /*public DownloadTask(Context context) {
         this.context = context;
         mProgressDialog = new ProgressDialog(context);
 
@@ -43,11 +45,11 @@ public class AsyncTaskThreadHandlerActivity extends AppCompatActivity implements
         mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         mProgressDialog.setCanceledOnTouchOutside(false);
     }
-
+*/
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         ImageView bmImage;
 
-        public DownloadImageTask(ImageView bmImage) {
+        DownloadImageTask(ImageView bmImage) {
             this.bmImage = bmImage;
         }
 
