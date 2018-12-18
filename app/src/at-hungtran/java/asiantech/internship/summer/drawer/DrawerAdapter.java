@@ -13,19 +13,21 @@ import android.widget.TextView;
 import java.util.List;
 
 import asiantech.internship.summer.R;
-import asiantech.internship.summer.model.DataDrawer;
+import asiantech.internship.summer.model.DrawerItem;
 
 public class DrawerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_ITEM = 1;
     private static final int REQUEST_CAMERA = 1;
     private static final int SELECT_FILE = 2;
-    private onClick mOnclick;
-    private List<DataDrawer> mDataDrawer;
+    private OnItemClickListener mOnclickItem;
+    private List<DrawerItem> mDrawerItem;
+    private Context mContext;
 
-    DrawerAdapter(List<DataDrawer> dataDrawers, Context context, onClick onClick) {
-        this.mDataDrawer = dataDrawers;
-        this.mOnclick = onClick;
+    DrawerAdapter(List<DrawerItem> drawerItems, Context context, DrawerLayoutActivity onClickItem) {
+        this.mDrawerItem = drawerItems;
+        this.mOnclickItem = onClickItem;
+        this.mContext = context;
     }
 
     @NonNull
@@ -46,23 +48,23 @@ public class DrawerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof ItemViewHolder) {
-            ((ItemViewHolder) holder).mIconImage.setImageResource(mDataDrawer.get(position).getIconImage());
-            ((ItemViewHolder) holder).mCat.setText(mDataDrawer.get(position).getCat());
-            ((ItemViewHolder) holder).mLinearLayout.setSelected(mDataDrawer.get(position).isChecked());
+            ((ItemViewHolder) holder).mIconImage.setImageResource(mDrawerItem.get(position).getIconImage());
+            ((ItemViewHolder) holder).mTitle.setText(mDrawerItem.get(position).getCat());
 
-            ((ItemViewHolder) holder).mLinearLayout.setOnClickListener(view -> mOnclick.selectItem(position));
-
+            ((ItemViewHolder) holder).mLlItem.setSelected(mDrawerItem.get(position).isChecked());
+            ((ItemViewHolder) holder).mTitle.setTextColor(mContext.getResources().getColorStateList(R.color.color_content));
+            ((ItemViewHolder) holder).mLlItem.setOnClickListener(view -> mOnclickItem.onItemClicked(position));
         } else if (holder instanceof HeaderViewHolder) {
-            DataDrawer object = mDataDrawer.get(0);
+            DrawerItem object = mDrawerItem.get(0);
 
-            if (mDataDrawer.get(position).getAvatarUri() != null) {
+            if (mDrawerItem.get(position).getAvatarUri() != null) {
                 ((HeaderViewHolder) holder).mImgAvt.setImageURI(object.getAvatarUri());
-            } else if (mDataDrawer.get(position).getAvtBitmap() != null) {
+            } else if (mDrawerItem.get(position).getAvtBitmap() != null) {
                 ((HeaderViewHolder) holder).mImgAvt.setImageBitmap(object.getAvtBitmap());
             } else {
                 ((HeaderViewHolder) holder).mImgAvt.setImageResource(object.getImgAvt());
             }
-            ((HeaderViewHolder) holder).mImgAvt.setOnClickListener(v -> mOnclick.avatarClick());
+            ((HeaderViewHolder) holder).mImgAvt.setOnClickListener(v -> mOnclickItem.onAvatarClicked());
             ((HeaderViewHolder) holder).mGmail.setText(object.getGmail());
             ((HeaderViewHolder) holder).mImgCheck.setImageResource(object.getImgCheck());
         }
@@ -70,7 +72,7 @@ public class DrawerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     @Override
     public int getItemCount() {
-        return mDataDrawer.size();
+        return mDrawerItem.size();
     }
 
     @Override
@@ -81,10 +83,10 @@ public class DrawerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         return TYPE_ITEM;
     }
 
-    public interface onClick {
-        void avatarClick();
+    public interface OnItemClickListener {
+        void onAvatarClicked();
 
-        void selectItem(int position);
+        void onItemClicked(int position);
     }
 
     public class HeaderViewHolder extends RecyclerView.ViewHolder {
@@ -103,14 +105,14 @@ public class DrawerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     public class ItemViewHolder extends RecyclerView.ViewHolder {
         private ImageView mIconImage;
-        private TextView mCat;
-        private LinearLayout mLinearLayout;
+        private TextView mTitle;
+        private LinearLayout mLlItem;
 
         ItemViewHolder(View itemView) {
             super(itemView);
             mIconImage = itemView.findViewById(R.id.icImg);
-            mCat = itemView.findViewById(R.id.tvCat);
-            mLinearLayout = itemView.findViewById(R.id.linearlayout);
+            mTitle = itemView.findViewById(R.id.tvTitle);
+            mLlItem = itemView.findViewById(R.id.llItem);
             this.setIsRecyclable(false);
         }
     }

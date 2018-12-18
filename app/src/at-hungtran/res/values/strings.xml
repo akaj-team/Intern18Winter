@@ -35,4 +35,10 @@
     <string name="navigationDrawerClose">Drawer Closed</string>
     <string name="gallery">Gallery</string>
     <string name="camera">Camera</string>
+    <string name="gmail">abudory96@gmail.com</string>
+    <string name="inbox">Inbox</string>
+    <string name="outbox">Outbox</string>
+    <string name="trash">Trash</string>
+    <string name="spam">Spam</string>
+    <string name="dialog">Dialog</string>
 </resources>

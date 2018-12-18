@@ -25,31 +25,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 import asiantech.internship.summer.R;
-import asiantech.internship.summer.model.DataDrawer;
+import asiantech.internship.summer.model.DrawerItem;
 
 import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
-public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAdapter.onClick, ChoosePhotoDialogFragment.onItemClick {
+public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAdapter.OnItemClickListener, ChoosePhotoDialogFragment.onItemClick {
     private static final int CAMERA_REQUEST = 0;
     private static final int GALLERY_REQUEST = 1;
     private static final int READ_PERMISSION_REQUEST_CAMERA = 1111;
     private static final int WRITE_PERMISSION_REQUEST_CAMERA = 1112;
     private static final int READ_PERMISSION_REQUEST_GALLERY = 1113;
     private static final int WRITE_PERMISSION_REQUEST_CALLERY = 11114;
-    List<DataDrawer> mDataDrawer = new ArrayList<>();
+    List<DrawerItem> mDrawerItem = new ArrayList<>();
     private ChoosePhotoDialogFragment mDialogFragment;
-    private DrawerAdapter mDrawerAdapter;
+    private DrawerAdapter mAdapter;
     private ActionBarDrawerToggle mDrawerToggle;
-    private float lastTranslate = 0.0f;
+    private int positionSelected = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawer_layout);
         initView();
-        drawerToggle();
+        initDrawer();
         displayWidth();
     }
 
@@ -68,23 +68,23 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAda
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        mDataDrawer.add(new DataDrawer(R.drawable.img_avt, "abudory96@gmail.com", R.drawable.ic_arrow_drop_down_black_24dp));
+        mDrawerItem.add(new DrawerItem(R.drawable.img_avt, getString(R.string.gmail), R.drawable.ic_arrow_drop_down_black_24dp));
 
-        mDataDrawer.add(new DataDrawer(R.drawable.ic_move_to_inbox_grey_24dp, "Inbox"));
-        mDataDrawer.add(new DataDrawer(R.drawable.ic_send_grey_24dp, "Outbox"));
-        mDataDrawer.add(new DataDrawer(R.drawable.ic_delete_grey_24dp, "Trash"));
-        mDataDrawer.add(new DataDrawer(R.drawable.ic_error_grey_24dp, "Spam"));
-        mDrawerAdapter = new DrawerAdapter(mDataDrawer, this, this);
-        recyclerView.setAdapter(mDrawerAdapter);
+        mDrawerItem.add(new DrawerItem(R.drawable.bg_inbox, getString(R.string.inbox)));
+        mDrawerItem.add(new DrawerItem(R.drawable.bg_outbox, getString(R.string.outbox)));
+        mDrawerItem.add(new DrawerItem(R.drawable.bg_delete, getString(R.string.trash)));
+        mDrawerItem.add(new DrawerItem(R.drawable.bg_spam, getString(R.string.spam)));
+        mAdapter = new DrawerAdapter(mDrawerItem, this, this);
+        recyclerView.setAdapter(mAdapter);
     }
 
 
     @Override
-    public void avatarClick() {
+    public void onAvatarClicked() {
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         mDialogFragment = ChoosePhotoDialogFragment.newInstance();
         mDialogFragment.setOnHeadlineSelectedListener(this);
-        mDialogFragment.show(ft, "dialog");
+        mDialogFragment.show(ft, getString(R.string.dialog));
     }
 
 
@@ -161,24 +161,24 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAda
             case 0:
                 if (resultCode == RESULT_OK) {
                     Bitmap image = (Bitmap) imageReturnedIntent.getExtras().get("data");
-                    DataDrawer dataDrawer = mDataDrawer.get(0);
-                    dataDrawer.setAvtBitmap(image);
-                    dataDrawer.setAvatarUri(null);
-                    mDrawerAdapter.notifyDataSetChanged();
+                    DrawerItem drawerItem = mDrawerItem.get(0);
+                    drawerItem.setAvtBitmap(image);
+                    drawerItem.setAvatarUri(null);
+                    mAdapter.notifyDataSetChanged();
                 }
 
                 break;
             case 1:
                 if (resultCode == RESULT_OK) {
                     Uri selectedImage = imageReturnedIntent.getData();
-                    mDataDrawer.get(0).setAvatarUri(selectedImage);
-                    mDrawerAdapter.notifyDataSetChanged();
+                    mDrawerItem.get(0).setAvatarUri(selectedImage);
+                    mAdapter.notifyDataSetChanged();
                 }
                 break;
         }
     }
 
-    public void drawerToggle() {
+    public void initDrawer() {
         DrawerLayout mDrawerLayout = findViewById(R.id.drawer_layout);
         TextView mTvName = findViewById(R.id.tvName);
 
@@ -197,11 +197,13 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAda
     }
 
     @Override
-    public void selectItem(int position) {
-        for (DataDrawer item : mDataDrawer) {
-            item.setChecked(false);
+    public void onItemClicked(int position) {
+        if (positionSelected != -1) {
+            mDrawerItem.get(positionSelected).setChecked(false);
+            mAdapter.notifyItemChanged(positionSelected);
         }
-        mDataDrawer.get(position).setChecked(true);
-        mDrawerAdapter.notifyDataSetChanged();
+        positionSelected = position;
+        mDrawerItem.get(position).setChecked(true);
+        mAdapter.notifyItemChanged(positionSelected);
     }
 }

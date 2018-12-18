@@ -1,23 +1,22 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/linearlayout"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/llItem"
     android:layout_width="130dp"
     android:layout_height="40dp"
     android:layout_marginLeft="10dp"
     android:layout_marginTop="25dp"
-    android:background="@drawable/common_item_layout"
     android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:paddingLeft="10dp">
+    android:paddingLeft="10dp"
+    tools:ignore="UseCompoundDrawables">
 
     <ImageView
         android:id="@+id/icImg"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_send_black_24dp" />
+        android:layout_height="wrap_content"/>
 
     <TextView
-        android:id="@+id/tvCat"
+        android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"

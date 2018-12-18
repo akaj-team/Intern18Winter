@@ -39,23 +39,17 @@ public class ChoosePhotoDialogFragment extends DialogFragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.choose_photo_dialog_fragment_layout, container, false);
         Button btnGallery = view.findViewById(R.id.btnGallery);
-        btnGallery.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mChooseOne.itemClick(1);
-            }
-        });
+        btnGallery.setOnClickListener(v -> mChooseOne.itemClick(1));
         Button btnCamera = view.findViewById(R.id.btnCamera);
-        btnCamera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mChooseOne.itemClick(2);
-            }
-        });
+        btnCamera.setOnClickListener(v -> mChooseOne.itemClick(2));
         return view;
     }
 
     public interface onItemClick {
+        void onAvatarClicked();
+
         void itemClick(int type);
+
+        void onItemClicked(int position);
     }
 }
