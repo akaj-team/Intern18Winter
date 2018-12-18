@@ -12,14 +12,15 @@ import android.widget.ProgressBar;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import asiantech.internship.summer.R;
 import asiantech.internship.summer.model.TimelineItem;
 
-public class FavouriteFragment extends Fragment {
-    public static FavouriteAdapter mFavouriteAdapter;
+public class FavouriteFragment extends Fragment implements OnChangingFavoritesListener{
+    private FavouriteAdapter mFavouriteAdapter;
     List<TimelineItem> mTimelineItems = new ArrayList<>();
-    RecyclerView recyclerView;
+    private RecyclerView mRecyclerView;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -32,18 +33,27 @@ public class FavouriteFragment extends Fragment {
     }
 
     public void initView(View view) {
-        recyclerView = view.findViewById(R.id.recycler_view);
-        recyclerView.setHasFixedSize(true);
+        mRecyclerView = view.findViewById(R.id.recycler_view);
+        mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(layoutManager);
-        mTimelineItems = createTimelineItem();
+        mRecyclerView.setLayoutManager(layoutManager);
         mFavouriteAdapter = new FavouriteAdapter(mTimelineItems, getActivity());
-        recyclerView.setAdapter(mFavouriteAdapter);
+        mRecyclerView.setAdapter(mFavouriteAdapter);
+
+        if(getActivity() instanceof  PagerActivity) {
+            ((PagerActivity) getActivity()).setOnChangingFavoritesListener(this);
+        }
     }
 
-    public List<TimelineItem> createTimelineItem() {
-            mTimelineItems = PagerActivity.itemList;
-        return mTimelineItems;
+    @Override
+    public void onAddFavourite(List<TimelineItem> listFavourite) {
+        mFavouriteAdapter = new FavouriteAdapter(listFavourite , Objects.requireNonNull(getActivity()).getApplicationContext());
+        mRecyclerView.setAdapter(mFavouriteAdapter);
     }
 
+    @Override
+    public void onRemoveFavourite(List<TimelineItem> listFavourite) {
+        mFavouriteAdapter = new FavouriteAdapter(listFavourite , Objects.requireNonNull(getActivity()).getApplicationContext());
+        mRecyclerView.setAdapter(mFavouriteAdapter);
+    }
 }

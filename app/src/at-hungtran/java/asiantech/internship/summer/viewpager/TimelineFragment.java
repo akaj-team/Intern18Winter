@@ -22,9 +22,10 @@ import asiantech.internship.summer.model.TimelineItem;
 public class TimelineFragment extends Fragment implements TimelineAdapter.onClick {
     private static final String COMMENT = "チャン ヴァン フン ";
     private static final String NAME_OF_PEOPLE = "Le Thi Quynh Chau ";
-    public TimelineAdapter mTimelineAdapter;
+    private TimelineAdapter mTimelineAdapter;
     List<TimelineItem> mTimelineItems = new ArrayList<>();
-    RecyclerView recyclerView;
+    List<TimelineItem> mFavourite = new ArrayList<>();
+    private RecyclerView mRecyclerView;
     private Boolean mIsScroll = true;
     private ProgressBar mProgressBarLoading;
     private int mCurrentItem;
@@ -43,14 +44,14 @@ public class TimelineFragment extends Fragment implements TimelineAdapter.onClic
     }
 
     public void initView(View view) {
-        recyclerView = view.findViewById(R.id.recycler_view);
-        recyclerView.setHasFixedSize(true);
+        mRecyclerView = view.findViewById(R.id.recycler_view);
+        mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(layoutManager);
+        mRecyclerView.setLayoutManager(layoutManager);
         mTimelineItems = createTimelineItem();
         mTimelineAdapter = new TimelineAdapter(mTimelineItems, getActivity(), this);
-        recyclerView.setAdapter(mTimelineAdapter);
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        mRecyclerView.setAdapter(mTimelineAdapter);
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
@@ -135,7 +136,7 @@ public class TimelineFragment extends Fragment implements TimelineAdapter.onClic
                     public void run() {
                         mIsScroll = true;
                         mProgressBarLoading.setVisibility(View.GONE);
-                        recyclerView.getAdapter().notifyDataSetChanged();
+                        mRecyclerView.getAdapter().notifyDataSetChanged();
                     }
                 });
             } catch (InterruptedException ignored) {
@@ -157,14 +158,19 @@ public class TimelineFragment extends Fragment implements TimelineAdapter.onClic
         TimelineItem timelineItem = mTimelineItems.get(position);
         if (timelineItem.isIsChecked()) {
             timelineItem.setLike(timelineItem.getLike() - 1);
-            PagerActivity.itemList.remove(timelineItem);
+            mFavourite.remove(timelineItem);
+            if (getActivity() instanceof PagerActivity) {
+                ((PagerActivity) getActivity()).getOnChangingFavoritesListener().onRemoveFavourite(mFavourite);
+            }
             timelineItem.setIsChecked(false);
         } else {
             timelineItem.setIsChecked(true);
             timelineItem.setLike(timelineItem.getLike() + 1);
-            PagerActivity.itemList.add(0, timelineItem);
+            mFavourite.add(0, timelineItem);
+            if (getActivity() instanceof PagerActivity) {
+                ((PagerActivity) getActivity()).getOnChangingFavoritesListener().onAddFavourite(mFavourite);
+            }
         }
         mTimelineAdapter.notifyDataSetChanged();
-        FavouriteFragment.mFavouriteAdapter.notifyDataSetChanged();
     }
 }
