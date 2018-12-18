@@ -12,26 +12,26 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import asiantech.internship.summer.models.Item;
 import asiantech.internship.summer.R;
+import asiantech.internship.summer.models.DrawerItem;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private List<Item> items;
+public class DrawerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private List<DrawerItem> items;
     private Context mContext;
     private final int VIEW_TYPE_HEADER = 0;
-    private IMethodCaller iMethodCaller;
+    private OnItemClickListener mOnItemClickListener;
 
-    public interface IMethodCaller {
-        void changeAvatarMethod();
+    public interface OnItemClickListener {
+        void onAvatarClicked();
 
-        void selectItemMethod(int position);
+        void onItemClicked(int position);
     }
 
-    ItemAdapter(List<Item> items, Context context, IMethodCaller iMethodCaller) {
+    DrawerAdapter(List<DrawerItem> items, Context context, OnItemClickListener onItemClickListener) {
         this.items = items;
         this.mContext = context;
-        this.iMethodCaller = iMethodCaller;
+        this.mOnItemClickListener = onItemClickListener;
     }
 
     @Override
@@ -55,12 +55,12 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
         if (viewHolder instanceof ItemViewHoder) {
-            Item item = items.get(position);
+            DrawerItem item = items.get(position);
             ItemViewHoder itemViewHoder = (ItemViewHoder) viewHolder;
             itemViewHoder.mImgIcon.setImageResource(item.getIcon());
             itemViewHoder.mTvContent.setText(item.getContent());
             itemViewHoder.mTvContent.setTextColor(mContext.getResources().getColorStateList(R.color.color_content));
-            itemViewHoder.mLlItem.setSelected(item.getCheckSelected());
+            itemViewHoder.mLlItem.setSelected(item.getIsChecked());
         } else if (viewHolder instanceof HeaderViewHolder) {
             HeaderViewHolder headerViewHolder = (HeaderViewHolder) viewHolder;
             headerViewHolder.mTvEmail.setText(items.get(position).getContent());
@@ -83,16 +83,12 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         private ImageView mImgIcon;
         private TextView mTvContent;
         private LinearLayout mLlItem;
-
         ItemViewHoder(@NonNull View itemView) {
             super(itemView);
             mImgIcon = itemView.findViewById(R.id.imgIcon);
             mTvContent = itemView.findViewById(R.id.tvContent);
             mLlItem = itemView.findViewById(R.id.llItem);
-            mLlItem.setOnClickListener(v -> {
-                        iMethodCaller.selectItemMethod(getLayoutPosition());
-                        notifyDataSetChanged();
-                    }
+            itemView.setOnClickListener(v -> mOnItemClickListener.onItemClicked(getLayoutPosition())
             );
         }
     }
@@ -105,10 +101,7 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             super(view);
             mImgAvatar = view.findViewById(R.id.imgAvatar);
             mTvEmail = view.findViewById(R.id.tvEmail);
-            mImgAvatar.setOnClickListener(v -> {
-                        iMethodCaller.changeAvatarMethod();
-                        notifyDataSetChanged();
-                    }
+            mImgAvatar.setOnClickListener(v -> mOnItemClickListener.onAvatarClicked()
             );
         }
     }
