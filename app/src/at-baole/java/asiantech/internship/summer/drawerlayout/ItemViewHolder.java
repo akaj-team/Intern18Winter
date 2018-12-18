@@ -9,14 +9,14 @@ import android.widget.TextView;
 import asiantech.internship.summer.R;
 
 class ItemViewHolder extends RecyclerView.ViewHolder {
-    ImageView mImgItemImage;
-    TextView mTvItemContent;
-    LinearLayout mItemLinearLayout;
+    ImageView mImgItem;
+    TextView mTvItem;
+    LinearLayout mllItem;
 
     ItemViewHolder(View itemView) {
         super(itemView);
-        mImgItemImage = itemView.findViewById(R.id.imgItem);
-        mTvItemContent = itemView.findViewById(R.id.tvItem);
-        mItemLinearLayout = itemView.findViewById(R.id.llItem);
+        mImgItem = itemView.findViewById(R.id.imgItem);
+        mTvItem = itemView.findViewById(R.id.tvItem);
+        mllItem = itemView.findViewById(R.id.llItem);
     }
 }

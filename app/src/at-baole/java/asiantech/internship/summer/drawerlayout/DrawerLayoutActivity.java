@@ -2,17 +2,20 @@ package asiantech.internship.summer.drawerlayout;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.widget.ImageView;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
@@ -25,16 +28,17 @@ import java.util.List;
 import java.util.Objects;
 
 import asiantech.internship.summer.R;
-import asiantech.internship.summer.drawerlayout.model.Item;
+import asiantech.internship.summer.drawerlayout.model.DrawerItem;
 
 
-public class DrawerLayoutActivity extends AppCompatActivity implements RecyclerAdapter.OnItemListener {
+public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAdapter.OnItemClickListener {
     //private static final String TAG = DrawerLayoutActivity.class.getSimpleName();
     private static final int GALLERY = 1;
     private static final int CAMERA = 2;
-    private List<Item> mItems;
-    private RecyclerAdapter mRecyclerAdapter;
-    private int positionSelected = -1;
+    private List<DrawerItem> mItems;
+    private DrawerAdapter mAdapter;
+    private int mPositionSelected = -1;
+    private ActionBarDrawerToggle mDrawerToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +46,7 @@ public class DrawerLayoutActivity extends AppCompatActivity implements RecyclerA
         setContentView(R.layout.activity_drawer_layout);
         //requestMultiplePermission();
         initView();
+        initDrawer();
     }
 
     private void initView() {
@@ -51,34 +56,51 @@ public class DrawerLayoutActivity extends AppCompatActivity implements RecyclerA
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(DrawerLayoutActivity.this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
-        mRecyclerAdapter = new RecyclerAdapter(mItems, this);
-        recyclerView.setAdapter(mRecyclerAdapter);
+        mAdapter = new DrawerAdapter(mItems, this, getApplicationContext());
+        recyclerView.setAdapter(mAdapter);
     }
+
+    public void initDrawer() {
+        DrawerLayout mDrawerLayout = findViewById(R.id.drawerLayout);
+        TextView mTvName = findViewById(R.id.tvName);
+
+        mDrawerLayout.setScrimColor(Color.TRANSPARENT);
+
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.navigationDrawerOpen, R.string.navigationDrawerClose) {
+
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+                super.onDrawerSlide(drawerView, slideOffset);
+                float slideX = drawerView.getWidth() * slideOffset;
+                mTvName.setTranslationX(slideX);
+            }
+        };
+        mDrawerLayout.addDrawerListener(actionBarDrawerToggle);
+    }
+
 
     private void mockData() {
         mItems = new ArrayList<>();
-        mItems.add(new Item(R.drawable.img_avatar_default, getString(R.string.drawerLayoutEmail), false));
-        mItems.add(new Item(R.drawable.bg_inbox, getString(R.string.inbox), false));
-        mItems.add(new Item(R.drawable.bg_outbox, getString(R.string.outbox), false));
-        mItems.add(new Item(R.drawable.bg_trash, getString(R.string.trash), false));
-        mItems.add(new Item(R.drawable.bg_warning, getString(R.string.spam), false));
+        mItems.add(new DrawerItem(R.drawable.img_avatar_default, getString(R.string.drawerLayoutEmail), false));
+        mItems.add(new DrawerItem(R.drawable.bg_ic_inbox, getString(R.string.inbox), false));
+        mItems.add(new DrawerItem(R.drawable.bg_ic_outbox, getString(R.string.outbox), false));
+        mItems.add(new DrawerItem(R.drawable.bg_ic_trash, getString(R.string.trash), false));
+        mItems.add(new DrawerItem(R.drawable.bg_ic_warning, getString(R.string.spam), false));
     }
 
     @Override
-    public void onClickAvatar() {
+    public void onAvatarClicked() {
         showPictureDialog();
     }
 
     @Override
-    public void onClickItem(int position) {
-        if (positionSelected != -1) {
-            mItems.get(position).setIsSelected(false);
-            mRecyclerAdapter.notifyDataSetChanged();
+    public void onItemClicked(int position) {
+        if (mPositionSelected != -1) {
+            mItems.get(mPositionSelected).setIsSelected(false);
         }
-        Log.d("xxx", "onClickItem: "+position);
-        positionSelected = position;
+        mPositionSelected = position;
         mItems.get(position).setIsSelected(true);
-        mRecyclerAdapter.notifyDataSetChanged();
+        mAdapter.notifyDataSetChanged();
     }
 
     private void showPictureDialog() {
@@ -88,8 +110,8 @@ public class DrawerLayoutActivity extends AppCompatActivity implements RecyclerA
                 getString(R.string.selectGallery),
                 getString(R.string.captureCamera)
         };
-        pictureDialog.setItems(pictureDIalogItems, (dialogInterface, i) -> {
-            switch (i) {
+        pictureDialog.setItems(pictureDIalogItems, (dialogInterface, selectAction) -> {
+            switch (selectAction) {
                 case 0:
                     choosePhotosFromGallery();
                     break;
@@ -113,8 +135,7 @@ public class DrawerLayoutActivity extends AppCompatActivity implements RecyclerA
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        ImageView mImgAvatar;
-        mImgAvatar = findViewById(R.id.imgAvatar);
+        DrawerItem item = mItems.get(0);
         if (resultCode == RESULT_CANCELED) {
             return;
         }
@@ -122,18 +143,19 @@ public class DrawerLayoutActivity extends AppCompatActivity implements RecyclerA
             if (data != null) {
                 Uri contentURI = data.getData();
                 try {
-                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), contentURI);
-                    //String path = saveImage(bitmap);
+                    Bitmap galleryBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), contentURI);
+                    item.setAvatarBitmap(galleryBitmap);
+                    mAdapter.notifyItemChanged(0);
                     Toast.makeText(DrawerLayoutActivity.this, getString(R.string.imageSaved), Toast.LENGTH_LONG).show();
-                    mImgAvatar.setImageBitmap(bitmap);
                 } catch (IOException e) {
                     Toast.makeText(DrawerLayoutActivity.this, getString(R.string.saveImageFailed), Toast.LENGTH_LONG).show();
                 }
             }
         } else if (requestCode == CAMERA) {
-            Bitmap thumbnail = (Bitmap) Objects.requireNonNull(data.getExtras()).get(getString(R.string.data));
-            mImgAvatar.setImageBitmap(thumbnail);
-            saveImage(thumbnail);
+            Bitmap cameraBitmap = (Bitmap) Objects.requireNonNull(data.getExtras()).get(getString(R.string.data));
+            item.setAvatarBitmap(cameraBitmap);
+            saveImage(cameraBitmap);
+            mAdapter.notifyItemChanged(0);
             Toast.makeText(DrawerLayoutActivity.this, R.string.imageSaved, Toast.LENGTH_LONG).show();
         }
     }
@@ -167,14 +189,14 @@ public class DrawerLayoutActivity extends AppCompatActivity implements RecyclerA
 //                    @Override
 //                    public void onPermissionsChecked(MultiplePermissionsReport report) {
 //                        //Check if all permissions are granted
-////                        if (report.areAllPermissionsGranted()) {
-////                            Toast.makeText(getApplicationContext(), "All permissions are granted by user", Toast.LENGTH_LONG).show();
-////                        }
-////                        //Check for permanent denial of any permission
-////                        if (report.isAnyPermissionPermanentlyDenied()) {
-////                            // show alert dialog navigating to Settings
-////                            //openSettingsDialog();
-////                        }
+//                        if (report.areAllPermissionsGranted()) {
+//                            Toast.makeText(getApplicationContext(), "All permissions are granted by user", Toast.LENGTH_LONG).show();
+//                        }
+//                        //Check for permanent denial of any permission
+//                        if (report.isAnyPermissionPermanentlyDenied()) {
+//                            // show alert dialog navigating to Settings
+//                            //openSettingsDialog();
+//                        }
 //                    }
 //
 //                    @Override

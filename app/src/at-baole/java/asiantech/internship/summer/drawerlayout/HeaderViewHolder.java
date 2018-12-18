@@ -8,12 +8,12 @@ import android.widget.TextView;
 import asiantech.internship.summer.R;
 
 class HeaderViewHolder extends RecyclerView.ViewHolder {
-    ImageView mAvatar;
-    TextView mEmail;
+    ImageView mImgAvatar;
+    TextView mTvEmail;
 
     HeaderViewHolder(View itemView) {
         super(itemView);
-        mAvatar = itemView.findViewById(R.id.imgAvatar);
-        mEmail = itemView.findViewById(R.id.tvEmail);
+        mImgAvatar = itemView.findViewById(R.id.imgAvatar);
+        mTvEmail = itemView.findViewById(R.id.tvEmail);
     }
 }

@@ -51,5 +51,8 @@
     <string name="imageExtension">png</string>
     <string name="imagePathPNG">image/png</string>
     <string name="notifyError">There is some error</string>
+    <string name="demoDrawerSlide">Demo Drawer Slide</string>
+    <string name="navigationDrawerOpen">Drawer Open</string>
+    <string name="navigationDrawerClose">Drawer Closed</string>
 
 </resources>
