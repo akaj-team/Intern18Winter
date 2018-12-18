@@ -17,9 +17,10 @@ import asiantech.internship.summer.models.DrawerItem;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class DrawerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private List<DrawerItem> items;
+    private static final int VIEW_TYPE_HEADER = 0;
+    private static final int VIEW_TYPE_ITEM = 1;
+    private List<DrawerItem> drawerItems;
     private Context mContext;
-    private final int VIEW_TYPE_HEADER = 0;
     private OnItemClickListener mOnItemClickListener;
 
     public interface OnItemClickListener {
@@ -28,16 +29,16 @@ public class DrawerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         void onItemClicked(int position);
     }
 
-    DrawerAdapter(List<DrawerItem> items, Context context, OnItemClickListener onItemClickListener) {
-        this.items = items;
+    DrawerAdapter(List<DrawerItem> drawerItems, Context context, OnItemClickListener onItemClickListener) {
+        this.drawerItems = drawerItems;
         this.mContext = context;
         this.mOnItemClickListener = onItemClickListener;
     }
 
+
     @Override
     public int getItemViewType(int position) {
-        int viewTypeItem = 1;
-        return position == 0 ? VIEW_TYPE_HEADER : viewTypeItem;
+        return position == 0 ? VIEW_TYPE_HEADER : VIEW_TYPE_ITEM;
     }
 
     @NonNull
@@ -55,7 +56,7 @@ public class DrawerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
         if (viewHolder instanceof ItemViewHoder) {
-            DrawerItem item = items.get(position);
+            DrawerItem item = drawerItems.get(position);
             ItemViewHoder itemViewHoder = (ItemViewHoder) viewHolder;
             itemViewHoder.mImgIcon.setImageResource(item.getIcon());
             itemViewHoder.mTvContent.setText(item.getContent());
@@ -63,26 +64,27 @@ public class DrawerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             itemViewHoder.mLlItem.setSelected(item.getIsChecked());
         } else if (viewHolder instanceof HeaderViewHolder) {
             HeaderViewHolder headerViewHolder = (HeaderViewHolder) viewHolder;
-            headerViewHolder.mTvEmail.setText(items.get(position).getContent());
-            if (items.get(position).getAvatar() != null) {
-                headerViewHolder.mImgAvatar.setImageURI(items.get(position).getAvatar());
-            } else if (items.get(position).getAvatarBitmap() != null) {
-                headerViewHolder.mImgAvatar.setImageBitmap(items.get(position).getAvatarBitmap());
+            headerViewHolder.mTvEmail.setText(drawerItems.get(position).getContent());
+            if (drawerItems.get(position).getAvatar() != null) {
+                headerViewHolder.mImgAvatar.setImageURI(drawerItems.get(position).getAvatar());
+            } else if (drawerItems.get(position).getAvatarBitmap() != null) {
+                headerViewHolder.mImgAvatar.setImageBitmap(drawerItems.get(position).getAvatarBitmap());
             } else {
-                headerViewHolder.mImgAvatar.setImageResource(items.get(position).getIcon());
+                headerViewHolder.mImgAvatar.setImageResource(drawerItems.get(position).getIcon());
             }
         }
     }
 
     @Override
     public int getItemCount() {
-        return items.size();
+        return drawerItems.size();
     }
 
     class ItemViewHoder extends RecyclerView.ViewHolder {
         private ImageView mImgIcon;
         private TextView mTvContent;
         private LinearLayout mLlItem;
+
         ItemViewHoder(@NonNull View itemView) {
             super(itemView);
             mImgIcon = itemView.findViewById(R.id.imgIcon);
