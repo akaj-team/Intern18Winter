@@ -19,4 +19,12 @@
     <string name="username">Username</string>
     <string name="apply">Apply</string>
     <string name="signupActivity">SignUpActivity</string>
+    <string name="view">View and View Group</string>
+    <string name="eventListener">Event and Listener</string>
+    <string name="recyclerView">Android RecyclerView</string>
+    <string name="activityFragment">Activity Fragment</string>
+    <string name="viewPager">Android ViewPager</string>
+    <string name="drawerLayout">Android DrawerLayout</string>
+    <string name="fileStorage">Android DrawerLayout</string>
+    <string name="asyncTask">AsyncTask Thread Handler</string>
 </resources>

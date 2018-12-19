@@ -12,14 +12,15 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
 
-        <activity android:name=".eventlistener.LoginActivity">
+        <activity android:name=".view.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.HomeActivity" />
+        <activity android:name=".view.ViewActivity" />
+        <activity android:name=".eventlistener.LoginActivity" />
     </application>
 
 </manifest>
