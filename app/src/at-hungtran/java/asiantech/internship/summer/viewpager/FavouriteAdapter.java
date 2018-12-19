@@ -18,7 +18,7 @@ import asiantech.internship.summer.model.TimelineItem;
 public class FavouriteAdapter extends RecyclerView.Adapter<FavouriteAdapter.FavouriteViewHolder> {
     private List<TimelineItem> mTimelineItems;
 
-    FavouriteAdapter(List<TimelineItem> timelineItems, Context context) {
+    FavouriteAdapter(List<TimelineItem> timelineItems) {
         this.mTimelineItems = timelineItems;
     }
 

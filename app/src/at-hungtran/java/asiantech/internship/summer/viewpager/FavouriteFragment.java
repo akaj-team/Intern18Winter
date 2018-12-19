@@ -12,7 +12,6 @@ import android.widget.ProgressBar;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import asiantech.internship.summer.R;
 import asiantech.internship.summer.model.TimelineItem;
@@ -37,7 +36,7 @@ public class FavouriteFragment extends Fragment implements OnChangingFavoritesLi
         mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(layoutManager);
-        mFavouriteAdapter = new FavouriteAdapter(mTimelineItems, getActivity());
+        mFavouriteAdapter = new FavouriteAdapter(mTimelineItems);
         mRecyclerView.setAdapter(mFavouriteAdapter);
 
         if(getActivity() instanceof  PagerActivity) {
@@ -47,13 +46,13 @@ public class FavouriteFragment extends Fragment implements OnChangingFavoritesLi
 
     @Override
     public void onAddFavourite(List<TimelineItem> listFavourite) {
-        mFavouriteAdapter = new FavouriteAdapter(listFavourite , Objects.requireNonNull(getActivity()).getApplicationContext());
+        mFavouriteAdapter = new FavouriteAdapter(listFavourite);
         mRecyclerView.setAdapter(mFavouriteAdapter);
     }
 
     @Override
     public void onRemoveFavourite(List<TimelineItem> listFavourite) {
-        mFavouriteAdapter = new FavouriteAdapter(listFavourite , Objects.requireNonNull(getActivity()).getApplicationContext());
+        mFavouriteAdapter = new FavouriteAdapter(listFavourite);
         mRecyclerView.setAdapter(mFavouriteAdapter);
     }
 }
