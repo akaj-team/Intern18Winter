@@ -1,5 +1,17 @@
 <resources>
     <string name="app_name">Intern18Summer</string>
+    <string name="todo">TODO</string>
+    <string name="list">ListBaiTap</string>
+    <string name="exercise1">W1-D3-View and Group View</string>
+    <string name="beat">Beatrice Maxwell</string>
+    <string name="profile">Profile</string>
+    <string name="bookmarks">Bookmarks</string>
+    <string name="post">Posts</string>
+    <string name="news">News</string>
+    <string name="slovakia">Slovakia</string>
+    <string name="content">content</string>
+    <string name="loading">loading</string>
+    <string name="exercise2">Event - Listener</string>
     <string name="inputUser">Username</string>
     <string name="inputPassword">Password</string>
     <string name="inputEmail">Email</string>
@@ -14,4 +26,21 @@
     <string name="errorInputEmail">Lỗi cú pháp email</string>
     <string name="errorInput">Vui lòng nhập ít nhất 6 kí tự</string>
     <string name="errorInputPassword">Vui lòng nhập kí tự và số</string>
+    <string name="inputPass">Password</string>
+    <string name="confirmPass">Confirm Password</string>
+    <string name="sign_up">Signup?</string>
+    <string name="titleInput">Please input email and password:</string>
+    <string name="titleResult">Your email and password:</string>
+    <string name="login">LOGIN</string>
+    <string name="signUp">SIGN UP</string>
+    <string name="checkInput">Please check your email and password</string>
+    <string name="checkInputSignUp">Please check again</string>
+    <string name="exercise3">Fragment</string>
+    <string name="success">success !</string>
+    <string name="username">Trần Thị Thanh</string>
+    <string name="comment">Xinh quá đi</string>
+    <string name="like">like</string>
+    <string name="likes">likes</string>
+    <string name="abc">abc</string>
+    <string name="exercise4">RecyclerView</string>
 </resources>

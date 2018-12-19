@@ -21,4 +21,46 @@
         android:layout_margin="10dp"
         android:text="@string/eventListener" />
 
+    <Button
+        android:id="@+id/btnActivityFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="@string/activityFragment" />
+
+    <Button
+        android:id="@+id/btnRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="@string/recyclerView" />
+
+    <Button
+        android:id="@+id/btnViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="@string/viewPager" />
+
+    <Button
+        android:id="@+id/btnDrawerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="@string/drawerLayout" />
+
+    <Button
+        android:id="@+id/btnFileStorage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="@string/fileStorage" />
+
+    <Button
+        android:id="@+id/btnAsynTask"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="@string/asyncTask" />
+
 </LinearLayout>

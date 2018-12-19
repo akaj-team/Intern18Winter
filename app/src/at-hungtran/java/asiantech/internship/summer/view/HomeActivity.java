@@ -8,6 +8,7 @@ import android.widget.Button;
 
 import asiantech.internship.summer.R;
 import asiantech.internship.summer.eventlistener.LoginActivity;
+import asiantech.internship.summer.recyclerview.TimelineActivity;
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -21,8 +22,12 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private void initView() {
         Button btnViewGroup = findViewById(R.id.btnViewGroup);
         Button btnEventAndListener = findViewById(R.id.btnEventAndListener);
+        Button btnActivityFragment = findViewById(R.id.btnActivityFragment);
+        Button btnRecyclerView = findViewById(R.id.btnRecyclerView);
         btnViewGroup.setOnClickListener(this);
         btnEventAndListener.setOnClickListener(this);
+        btnActivityFragment.setOnClickListener(this);
+        btnRecyclerView.setOnClickListener(this);
     }
 
     @Override
@@ -35,6 +40,16 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             }
             case R.id.btnEventAndListener: {
                 Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
+                startActivity(intent);
+                break;
+            }
+            case R.id.btnActivityFragment: {
+                Intent intent = new Intent(HomeActivity.this, asiantech.internship.summer.activityfragment.LoginActivity.class);
+                startActivity(intent);
+                break;
+            }
+            case R.id.btnRecyclerView: {
+                Intent intent = new Intent(HomeActivity.this, TimelineActivity.class);
                 startActivity(intent);
                 break;
             }

@@ -21,6 +21,8 @@
         </activity>
         <activity android:name=".view.ViewActivity" />
         <activity android:name=".eventlistener.LoginActivity" />
+        <activity android:name=".recyclerview.TimelineActivity" />
+        <activity android:name=".activityfragment.LoginActivity"/>
     </application>
 
 </manifest>
