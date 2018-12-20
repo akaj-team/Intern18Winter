@@ -53,4 +53,11 @@
     <string name="likes">likes</string>
     <string name="recyclerView">RecyclerView</string>
     <string name="asynctaskThreadHandler">AsyncTask - Thread - Handler</string>
+    <string name="download">Download</string>
+    <string name="asyncTask">Async Task</string>
+    <string name="handler">Handler</string>
+    <string name="thread">Thread</string>
+    <string name="inputOoutputException">InputOutputException</string>
+    <string name="getBitmapFromURL">getBitmapFromURL:</string>
+    <string name="downloadingFile">Downloading file...</string>
 </resources>
