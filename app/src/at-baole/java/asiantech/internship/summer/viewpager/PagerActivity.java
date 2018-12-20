@@ -27,11 +27,11 @@ public class PagerActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
     }
 
-    public OnChangeFavoritesListener getOnChangingFavoritesListener() {
+    public OnChangeFavoritesListener getOnChangeFavoritesListener() {
         return mOnChangeFavouritesListener;
     }
 
-    public void setOnChangingFavoritesListener(OnChangeFavoritesListener onChangingFavoritesListener) {
+    public void setOnChangeFavoritesListener(OnChangeFavoritesListener onChangingFavoritesListener) {
         this.mOnChangeFavouritesListener = onChangingFavoritesListener;
     }
 }

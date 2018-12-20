@@ -85,14 +85,14 @@ public class TimelineFragment extends Fragment implements TimelineAdapter.OnItem
             Toast.makeText(getContext(), R.string.addFavourite, Toast.LENGTH_LONG).show();
             mFavourite.add(0, timelineItem);
             if (getActivity() instanceof PagerActivity) {
-                ((PagerActivity) getActivity()).getOnChangingFavoritesListener().onAddFavourite(mFavourite);
+                ((PagerActivity) getActivity()).getOnChangeFavoritesListener().addFavourite(mFavourite);
             }
         } else {
             timelineItem.setIsChecked(false);
             Toast.makeText(getContext(), R.string.removeFavourite, Toast.LENGTH_LONG).show();
             mFavourite.remove(timelineItem);
             if (getActivity() instanceof PagerActivity) {
-                ((PagerActivity) getActivity()).getOnChangingFavoritesListener().onRemoveFavourite(mFavourite);
+                ((PagerActivity) getActivity()).getOnChangeFavoritesListener().removeFavourite(mFavourite);
             }
         }
         mAdapter.notifyDataSetChanged();

@@ -37,18 +37,18 @@ public class FavouriteFragment extends Fragment implements OnChangeFavoritesList
         FavouriteAdapter mAdapter = new FavouriteAdapter(mTimelineItems, getContext());
         mRecyclerView.setAdapter(mAdapter);
         if (getActivity() instanceof PagerActivity) {
-            ((PagerActivity) getActivity()).setOnChangingFavoritesListener(this);
+            ((PagerActivity) getActivity()).setOnChangeFavoritesListener(this);
         }
     }
 
     @Override
-    public void onAddFavourite(List<TimelineItem> listFavourite) {
+    public void addFavourite(List<TimelineItem> listFavourite) {
         mFavouriteAdapter = new FavouriteAdapter(listFavourite, getContext());
         mRecyclerView.setAdapter(mFavouriteAdapter);
     }
 
     @Override
-    public void onRemoveFavourite(List<TimelineItem> listFavourite) {
+    public void removeFavourite(List<TimelineItem> listFavourite) {
         mFavouriteAdapter = new FavouriteAdapter(listFavourite, getContext());
         mRecyclerView.setAdapter(mFavouriteAdapter);
     }

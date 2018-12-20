@@ -5,7 +5,7 @@ import java.util.List;
 import asiantech.internship.summer.recyclerview.model.TimelineItem;
 
 public interface OnChangeFavoritesListener {
-    void onAddFavourite(List<TimelineItem> listFavourite);
+    void addFavourite(List<TimelineItem> listFavourite);
 
-    void onRemoveFavourite(List<TimelineItem> listFavourite);
+    void removeFavourite(List<TimelineItem> listFavourite);
 }
