@@ -39,10 +39,13 @@
     <string name="sharePreferences">share preferences</string>
     <string name="internalAndExternal">internal or External</string>
     <string name="saveDatabase">save database</string>
+    <string name="inputNull">Input null, nothing to save</string>
     <string name="informationSaved">Your information has been saved</string>
     <string name="internalInput">Input data for internal storage</string>
     <string name="externalInput">Input data for external storage</string>
     <string name="internalSave">Internal Save</string>
     <string name="externalSave">External Save</string>
     <string name="load">load</string>
+    <string name="saveToDir">Saved data to</string>
+    <string name="loadFromDir">Loaded data from</string>
 </resources>

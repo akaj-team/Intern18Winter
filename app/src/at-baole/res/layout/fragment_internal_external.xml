@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center_vertical"
+    android:background="@color/colorGreen"
     android:orientation="vertical">
 
     <EditText
@@ -10,52 +10,71 @@
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/shape"
         android:hint="@string/internalInput"
         android:inputType="text"
         tools:ignore="Autofill" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal">
 
         <Button
             android:id="@+id/btnSaveInternal"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="match_parent"
-            android:text="@string/internalSave" />
+            android:layout_weight="1"
+            android:textSize="18sp"
+            android:text="@string/internalSave"
+            tools:ignore="ButtonStyle" />
 
         <Button
             android:id="@+id/btnLoadInternal"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="match_parent"
-            android:text="@string/load" />
+            android:layout_weight="1"
+            android:text="@string/load"
+            android:textSize="18sp"
+            tools:ignore="ButtonStyle" />
 
     </LinearLayout>
 
+    <EditText
+        android:id="@+id/edtExtStorage"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/shape"
+        android:hint="@string/externalInput"
+        android:inputType="text"
+        tools:ignore="Autofill" />
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_marginTop="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal">
-
-        <EditText
-            android:id="@+id/edtExtStorage"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="7"
-            android:hint="@string/externalInput"
-            android:inputType="text"
-            tools:ignore="Autofill" />
 
         <Button
             android:id="@+id/btnSaveExternal"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="3"
-            android:text="@string/externalSave" />
+            android:layout_weight="1"
+            android:textSize="18sp"
+            android:text="@string/externalSave"
+            tools:ignore="ButtonStyle" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/load"
+            android:textSize="18sp"
+            tools:ignore="ButtonStyle" />
 
     </LinearLayout>
 
