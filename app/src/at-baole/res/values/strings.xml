@@ -34,6 +34,15 @@
     <string name="like">like</string>
     <string name="likes">likes</string>
     <string name="zerolike">%s like</string>
-    <string name="username">Le Quoc Bao</string>
+    <string name="username">Username</string>
     <string name="comment">It is very delicious</string>
+    <string name="sharePreferences">share preferences</string>
+    <string name="internalAndExternal">internal or External</string>
+    <string name="saveDatabase">save database</string>
+    <string name="informationSaved">Your information has been saved</string>
+    <string name="internalInput">Input data for internal storage</string>
+    <string name="externalInput">Input data for external storage</string>
+    <string name="internalSave">Internal Save</string>
+    <string name="externalSave">External Save</string>
+    <string name="load">load</string>
 </resources>
