@@ -16,7 +16,7 @@
         android:src="@drawable/ic_error_black_36dp" />
 
     <TextView
-        android:id="@+id/tvContent"
+        android:id="@+id/tvTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"

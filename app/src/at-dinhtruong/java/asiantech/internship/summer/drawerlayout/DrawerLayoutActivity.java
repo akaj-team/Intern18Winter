@@ -1,6 +1,7 @@
 package asiantech.internship.summer.drawerlayout;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -29,6 +30,7 @@ import java.util.List;
 import asiantech.internship.summer.R;
 import asiantech.internship.summer.models.DrawerItem;
 
+@SuppressLint("Registered")
 public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAdapter.OnItemClickListener {
     private static final int REQUEST_IMAGE_CAPTURE = 200;
     private static final int REQUEST_SELECT_PICTURE = 201;
@@ -63,7 +65,7 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAda
         recycleViewItem.setHasFixedSize(true);
         items = DrawerItem.createItem();
         recycleViewItem.setLayoutManager(new LinearLayoutManager(this));
-        mAdapterItem = new DrawerAdapter(items, DrawerLayoutActivity.this, this);
+        mAdapterItem = new DrawerAdapter(items, this);
         recycleViewItem.setAdapter(mAdapterItem);
     }
 
