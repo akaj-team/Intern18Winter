@@ -40,7 +40,7 @@ public class InternalExternalFragment extends Fragment {
         String text = mEdtInputInternal.getText().toString();
         if (mEdtInputInternal.getText().length() != 0) {
             try (FileOutputStream fos = Objects.requireNonNull(getActivity()).openFileOutput(FILE_NAME, Context.MODE_PRIVATE)) {
-                fos.write(text.getBytes());
+                fos.write(text.getBytes("utf-8"));
                 mEdtInputInternal.getText().clear();
                 Toast.makeText(getActivity(), getString(R.string.saveToDir) + " " + getActivity().getFilesDir() + "/" + FILE_NAME, Toast.LENGTH_LONG).show();
             } catch (IOException ignored) {
@@ -52,7 +52,7 @@ public class InternalExternalFragment extends Fragment {
 
     public void loadDataInternal() {
         try (FileInputStream fis = Objects.requireNonNull(getActivity()).openFileInput(FILE_NAME)) {
-            InputStreamReader isr = new InputStreamReader(fis);
+            InputStreamReader isr = new InputStreamReader(fis,"utf-8");
             BufferedReader br = new BufferedReader(isr);
             StringBuilder sb;
             sb = new StringBuilder();
