@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".filestorage.FileStorageActivity">
+
+        <activity android:name=".mainactivity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,6 +22,8 @@
         <activity android:name=".activity_fragment.InformationActivity" />
         <activity android:name=".activity_fragment.LoginActivity" />
         <activity android:name=".recyclerview.RecyclerViewActivity" />
+        <activity android:name=".filestorage.FileStorageActivity" />
+
     </application>
 
 </manifest>

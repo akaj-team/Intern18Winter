@@ -48,4 +48,10 @@
     <string name="load">load</string>
     <string name="saveToDir">Saved data to</string>
     <string name="loadFromDir">Loaded data from</string>
+    <string name="listIssues">List Issues</string>
+    <string name="toViewAndGroupView">view and group view</string>
+    <string name="toEventListener">event and listener</string>
+    <string name="toActivityFragment">activity and fragment</string>
+    <string name="toRecyclerView">recycler view</string>
+    <string name="toFileStorage">file storage</string>
 </resources>
