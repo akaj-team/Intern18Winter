@@ -13,22 +13,17 @@ import asiantech.internship.summer.recyclerview.RecyclerViewActivity;
 import asiantech.internship.summer.view_and_groupview.ViewActivity;
 
 public class MainActivity extends AppCompatActivity {
-    private Button mBtnToGroupView;
-    private Button mBtnToEventListener;
-    private Button mBtnToActivityFragment;
-    private Button mBtnToRecyclerView;
-    private Button mBtnToFileStorage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mBtnToGroupView = findViewById(R.id.btnToGroupView);
-        mBtnToEventListener = findViewById(R.id.btnToEventListener);
-        mBtnToActivityFragment = findViewById(R.id.btnToActivityFragment);
-        mBtnToRecyclerView = findViewById(R.id.btnToRecyclerView);
-        mBtnToFileStorage = findViewById(R.id.btnToFileStorage);
+        Button mBtnToGroupView = findViewById(R.id.btnToGroupView);
+        Button mBtnToEventListener = findViewById(R.id.btnToEventListener);
+        Button mBtnToActivityFragment = findViewById(R.id.btnToActivityFragment);
+        Button mBtnToRecyclerView = findViewById(R.id.btnToRecyclerView);
+        Button mBtnToFileStorage = findViewById(R.id.btnToFileStorage);
 
         mBtnToGroupView.setOnClickListener(toGroupView -> {
             Intent intentGroupView = new Intent(getApplication(), ViewActivity.class);
