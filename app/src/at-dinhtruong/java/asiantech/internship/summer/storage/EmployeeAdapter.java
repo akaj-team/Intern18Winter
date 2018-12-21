@@ -14,13 +14,13 @@ import asiantech.internship.summer.models.Employee;
 
 public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.EmployeeViewHolder> {
     private List<Employee> mEmployees;
-    private onClickEmployee mOnClickEmployee;
+    private OnEmployeeClickListener mOnClickEmployee;
 
     @NonNull
     @Override
     public EmployeeAdapter.EmployeeViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(viewGroup.getContext());
-        View itView = layoutInflater.inflate(R.layout.item_company_employee, viewGroup, false);
+        View itView = layoutInflater.inflate(R.layout.filestorage_item, viewGroup, false);
         return new EmployeeViewHolder(itView);
     }
 
@@ -35,9 +35,9 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.Employ
 
         EmployeeViewHolder(View itemView) {
             super(itemView);
-            mTvEmployee = itemView.findViewById(R.id.custom_view_item);
+            mTvEmployee = itemView.findViewById(R.id.tvItem);
             mTvEmployee.setOnClickListener(view ->
-                    mOnClickEmployee.onSelectEmployee(getAdapterPosition()));
+                    mOnClickEmployee.onEmployeeClicked(getAdapterPosition()));
         }
     }
 
@@ -46,14 +46,14 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.Employ
         return mEmployees.size();
     }
 
-    EmployeeAdapter(List<Employee> employees, onClickEmployee onClickEmployee) {
+    EmployeeAdapter(List<Employee> employees, OnEmployeeClickListener onClickEmployee) {
         this.mEmployees = employees;
         this.mOnClickEmployee = onClickEmployee;
 
     }
 
-    public interface onClickEmployee {
-        void onSelectEmployee(int position);
+    public interface OnEmployeeClickListener {
+        void onEmployeeClicked(int position);
     }
 
 }

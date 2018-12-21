@@ -74,8 +74,10 @@ public class DBManager extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(NAME_EMPLOYEE, employee.getNameEmployee());
-        return db.update(TABLE_EMPLOYEE, values, ID_EMPLOYEE + CHECK_DATA + AND_DATA + COMPANY_ID + CHECK_DATA,
+        int updated = db.update(TABLE_EMPLOYEE, values, ID_EMPLOYEE + CHECK_DATA + AND_DATA + COMPANY_ID + CHECK_DATA,
                 new String[]{String.valueOf(employee.getIdEmployee()), String.valueOf(employee.getCompanyId())});
+        db.close();
+        return updated;
     }
 
     List<Employee> getAllEmployeeById(int idCompany) {
@@ -97,12 +99,25 @@ public class DBManager extends SQLiteOpenHelper {
         return employees;
     }
 
-    void deleteEmployee(Employee employee) {
+    Company getCompanyById(int idCompany) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_COMPANY, new String[]{ID_COMPANY,
+                        NAME_COMPANY}, ID_COMPANY + CHECK_DATA,
+                new String[]{String.valueOf(idCompany)}, null, null, null, null);
+        cursor.moveToFirst();
+        Company company = new Company(cursor.getInt(0), cursor.getString(1));
+        cursor.close();
+        db.close();
+        return company;
+    }
+
+    int deleteEmployee(Employee employee) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_EMPLOYEE, ID_EMPLOYEE + CHECK_DATA + AND_DATA + COMPANY_ID + CHECK_DATA,
+        int deleted = db.delete(TABLE_EMPLOYEE, ID_EMPLOYEE + CHECK_DATA + AND_DATA + COMPANY_ID + CHECK_DATA,
                 new String[]{String.valueOf(employee.getIdEmployee()),
                         String.valueOf(employee.getCompanyId())});
         db.close();
+        return deleted;
     }
 
     List<Company> getAllCompany() {

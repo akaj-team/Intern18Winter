@@ -8,14 +8,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
 
 import asiantech.internship.summer.R;
+import asiantech.internship.summer.models.Company;
 import asiantech.internship.summer.models.Employee;
 
-public class EmployeeActivity extends AppCompatActivity implements EmployeeAdapter.onClickEmployee, View.OnClickListener {
+public class EmployeeActivity extends AppCompatActivity implements EmployeeAdapter.OnEmployeeClickListener, View.OnClickListener {
     private int mIdCompany;
     private int mPositionItem;
     private List<Employee> mEmployeesById;
@@ -24,21 +26,23 @@ public class EmployeeActivity extends AppCompatActivity implements EmployeeAdapt
     private EmployeeAdapter mEmployeeAdapter;
     private Button mBtnUpdate;
     private Button mBtnDelete;
-    private DBManager mDbManager;
+    private DBManager mDBManager;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mDbManager = new DBManager(getApplicationContext());
-        setContentView(R.layout.activity_employee);
+        mDBManager = new DBManager(getApplicationContext());
+        setContentView(R.layout.activity_filestorage_employee);
         Intent intent = getIntent();
         mIdCompany = intent.getIntExtra(SqliteFragment.ID_COMPANY, 0);
         initEmployee();
     }
 
     private void initEmployee() {
+        Company company = mDBManager.getCompanyById(mIdCompany);
         RecyclerView recyclerView = findViewById(R.id.recyclerViewEmployee);
+        TextView tvNameCompany = findViewById(R.id.tvNameCompany);
         mEdtIdEmployee = findViewById(R.id.edtIdEmployee);
         mEdtNameEmployee = findViewById(R.id.edtNameEmployee);
         mBtnUpdate = findViewById(R.id.btnUpdate);
@@ -50,15 +54,16 @@ public class EmployeeActivity extends AppCompatActivity implements EmployeeAdapt
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
-        mEmployeesById = mDbManager.getAllEmployeeById(mIdCompany);
+        mEmployeesById = mDBManager.getAllEmployeeById(mIdCompany);
         mEdtIdEmployee.setText(String.valueOf(mEmployeesById.size() + 1));
+        tvNameCompany.setText(company.getNameCompany());
         mEmployeeAdapter = new EmployeeAdapter(mEmployeesById, this);
         recyclerView.setAdapter(mEmployeeAdapter);
     }
 
     @Override
-    public void onSelectEmployee(int position) {
-        Employee employee = mDbManager.getEmployeeById(mEmployeesById.get(position).getIdEmployee(), mEmployeesById.get(position).getCompanyId());
+    public void onEmployeeClicked(int position) {
+        Employee employee = mDBManager.getEmployeeById(mEmployeesById.get(position).getIdEmployee(), mEmployeesById.get(position).getCompanyId());
         mEdtIdEmployee.setText(String.valueOf(employee.getIdEmployee()));
         mEdtNameEmployee.setText(employee.getNameEmployee());
         mBtnUpdate.setEnabled(true);
@@ -73,14 +78,14 @@ public class EmployeeActivity extends AppCompatActivity implements EmployeeAdapt
             case R.id.btnUpdate: {
                 if (employee.getNameEmployee().equals("")) {
                     Toast.makeText(getApplicationContext(), R.string.pleaseFillTheEmployeeName, Toast.LENGTH_LONG).show();
-                } else if (!employee.getNameEmployee().equals("") && mDbManager.updateEmployee(employee) > 0) {
+                } else if (!employee.getNameEmployee().equals("") && mDBManager.updateEmployee(employee) > 0) {
                     mEmployeesById.get(mPositionItem).setNameEmployee(employee.getNameEmployee());
                     mEmployeeAdapter.notifyDataSetChanged();
+                    mEdtIdEmployee.setText(String.valueOf(mEmployeesById.get(mEmployeesById.size() - 1).getIdEmployee() + 1));
+                    mEdtNameEmployee.setText("");
                 } else {
                     Toast.makeText(getApplicationContext(), R.string.updateError, Toast.LENGTH_LONG).show();
                 }
-                mEdtIdEmployee.setText(String.valueOf(mEmployeesById.get(mEmployeesById.size() - 1).getIdEmployee() + 1));
-                mEdtNameEmployee.setText("");
                 break;
             }
             case R.id.btnInsert: {
@@ -95,7 +100,7 @@ public class EmployeeActivity extends AppCompatActivity implements EmployeeAdapt
                 if (nameEmployee.equals("")) {
                     Toast.makeText(getApplicationContext(), R.string.pleaseFillTheEmployeeName, Toast.LENGTH_LONG).show();
                 } else {
-                    mDbManager.addEmployee(employee);
+                    mDBManager.addEmployee(employee);
                     mEmployeesById.add(employee);
                     mEmployeeAdapter.notifyDataSetChanged();
                     mEdtIdEmployee.setText(String.valueOf(mEmployeesById.get(mEmployeesById.size() - 1).getIdEmployee() + 1));
@@ -104,17 +109,20 @@ public class EmployeeActivity extends AppCompatActivity implements EmployeeAdapt
                 break;
             }
             case R.id.btnDelete: {
-                mDbManager.deleteEmployee(employee);
-                mEmployeesById.remove(mPositionItem);
-                mEmployeeAdapter.notifyDataSetChanged();
-                int idEmployee;
-                if (mEmployeesById.size() == 0) {
-                    idEmployee = 1;
+                if (mDBManager.deleteEmployee(employee) > 0) {
+                    mEmployeesById.remove(mPositionItem);
+                    mEmployeeAdapter.notifyDataSetChanged();
+                    int idEmployee;
+                    if (mEmployeesById.size() == 0) {
+                        idEmployee = 1;
+                    } else {
+                        idEmployee = mEmployeesById.get(mEmployeesById.size() - 1).getIdEmployee() + 1;
+                    }
+                    mEdtIdEmployee.setText(String.valueOf(idEmployee));
+                    mEdtNameEmployee.setText("");
                 } else {
-                    idEmployee = mEmployeesById.get(mEmployeesById.size() - 1).getIdEmployee() + 1;
+                    Toast.makeText(getApplicationContext(), R.string.deleteError, Toast.LENGTH_LONG).show();
                 }
-                mEdtIdEmployee.setText(String.valueOf(idEmployee));
-                mEdtNameEmployee.setText("");
                 break;
             }
         }

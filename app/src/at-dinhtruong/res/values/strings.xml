@@ -74,4 +74,6 @@
     <string name="inputOutputException">Input Output Exception!</string>
     <string name="charSet">UTF-8</string>
     <string name="filePath">ThuMucCuaToi</string>
+    <string name="deleteError">Delete error</string>
+    <string name="danhSachCongTy">Danh Sach Cong ty</string>
 </resources>

@@ -18,6 +18,7 @@ import asiantech.internship.summer.models.Company;
 public class SqliteFragment extends Fragment implements CompanyAdapter.OnItemClickListener {
     private DBManager mDBManager;
     public static final String ID_COMPANY = "idCompany";
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +40,7 @@ public class SqliteFragment extends Fragment implements CompanyAdapter.OnItemCli
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mDBManager.createDefaultCompany();
         List<Company> companies = mDBManager.getAllCompany();
-        CompanyAdapter companyAdapter = new CompanyAdapter(companies,this);
+        CompanyAdapter companyAdapter = new CompanyAdapter(companies, this);
         mRecyclerView.setAdapter(companyAdapter);
     }
 

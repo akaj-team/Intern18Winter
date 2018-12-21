@@ -4,6 +4,11 @@ public class Company {
     private int mIdCompany;
     private String mNameCompany;
 
+    public Company(int mIdCompany, String mNameCompany) {
+        this.mIdCompany = mIdCompany;
+        this.mNameCompany = mNameCompany;
+    }
+
     public Company(String mNameCompany) {
         this.mNameCompany = mNameCompany;
     }

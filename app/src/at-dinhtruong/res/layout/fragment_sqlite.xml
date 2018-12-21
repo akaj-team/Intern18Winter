@@ -3,6 +3,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/danhSachCongTy"
+        android:textAlignment="center"
+        android:textSize="30sp" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerViewCompany"
         android:layout_width="match_parent"

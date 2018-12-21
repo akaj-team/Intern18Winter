@@ -25,7 +25,7 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.CompanyV
     @Override
     public CompanyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(viewGroup.getContext());
-        View itView = layoutInflater.inflate(R.layout.item_company_employee, viewGroup, false);
+        View itView = layoutInflater.inflate(R.layout.filestorage_item, viewGroup, false);
         return new CompanyViewHolder(itView);
     }
 
@@ -44,7 +44,7 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.CompanyV
 
         CompanyViewHolder(View v) {
             super(v);
-            mTvNameCompany = v.findViewById(R.id.custom_view_item);
+            mTvNameCompany = v.findViewById(R.id.tvItem);
             mTvNameCompany.setOnClickListener(view ->
                     mOnItemClickListener.onItemClicked(mCompanies.get(getAdapterPosition()).getIdCompany()));
         }

@@ -6,6 +6,15 @@
     android:orientation="vertical"
     tools:context=".storage.EmployeeActivity">
 
+    <TextView
+        android:id="@+id/tvNameCompany"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/danhSachCongTy"
+        android:textAlignment="center"
+        android:textSize="25sp" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
