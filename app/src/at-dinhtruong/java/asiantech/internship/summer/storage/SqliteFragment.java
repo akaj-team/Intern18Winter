@@ -17,7 +17,6 @@ import asiantech.internship.summer.models.Company;
 
 public class SqliteFragment extends Fragment implements CompanyAdapter.OnItemClickListener {
     private DBManager mDBManager;
-    public static final String ID_COMPANY = "idCompany";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,7 +47,7 @@ public class SqliteFragment extends Fragment implements CompanyAdapter.OnItemCli
     @Override
     public void onItemClicked(int idCompany) {
         Intent intent = new Intent(getActivity(), EmployeeActivity.class);
-        intent.putExtra(ID_COMPANY, idCompany);
+        intent.putExtra(getString(R.string.idCompany), idCompany);
         startActivity(intent);
     }
 }

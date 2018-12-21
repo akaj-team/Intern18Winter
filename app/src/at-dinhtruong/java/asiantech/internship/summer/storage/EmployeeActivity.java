@@ -35,7 +35,7 @@ public class EmployeeActivity extends AppCompatActivity implements EmployeeAdapt
         mDBManager = new DBManager(getApplicationContext());
         setContentView(R.layout.activity_filestorage_employee);
         Intent intent = getIntent();
-        mIdCompany = intent.getIntExtra(SqliteFragment.ID_COMPANY, 0);
+        mIdCompany = intent.getIntExtra(getString(R.string.idCompany), 0);
         initEmployee();
     }
 

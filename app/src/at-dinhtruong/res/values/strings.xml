@@ -76,4 +76,5 @@
     <string name="filePath">ThuMucCuaToi</string>
     <string name="deleteError">Delete error</string>
     <string name="danhSachCongTy">Danh Sach Cong ty</string>
+    <string name="idCompany">idCompany</string>
 </resources>
