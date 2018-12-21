@@ -21,13 +21,7 @@ import asiantech.internship.summer.R;
 
 public class ThreadFragment extends Fragment implements View.OnClickListener {
 
-    private ImageView mImgImageDownload;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
+    private ImageView mImgDownload;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -39,7 +33,7 @@ public class ThreadFragment extends Fragment implements View.OnClickListener {
 
     private void initView(View view) {
         Button btnDownload = view.findViewById(R.id.btnDownLoadAsync);
-        mImgImageDownload = view.findViewById(R.id.imgImageDownload);
+        mImgDownload = view.findViewById(R.id.imgDownload);
         btnDownload.setOnClickListener(this);
     }
 
@@ -47,7 +41,7 @@ public class ThreadFragment extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         new Thread(() -> {
             final Bitmap b = getBitmapFromURL(AsyncTaskFragment.URL_IMAGE);
-            mImgImageDownload.post(() -> mImgImageDownload.setImageBitmap(b));
+            mImgDownload.post(() -> mImgDownload.setImageBitmap(b));
         }).start();
     }
 

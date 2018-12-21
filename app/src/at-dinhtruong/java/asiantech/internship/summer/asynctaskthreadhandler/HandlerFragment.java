@@ -16,14 +16,8 @@ import android.widget.ImageView;
 import asiantech.internship.summer.R;
 
 public class HandlerFragment extends Fragment implements View.OnClickListener {
-    private ImageView mImgImageDownload;
+    private ImageView mImgDownload;
     private Bitmap mBitmap;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -35,7 +29,7 @@ public class HandlerFragment extends Fragment implements View.OnClickListener {
 
     private void initView(View view) {
         Button btnDownload = view.findViewById(R.id.btnDownLoadAsync);
-        mImgImageDownload = view.findViewById(R.id.imgImageDownload);
+        mImgDownload = view.findViewById(R.id.imgDownload);
         btnDownload.setOnClickListener(this);
     }
 
@@ -54,7 +48,7 @@ public class HandlerFragment extends Fragment implements View.OnClickListener {
     private Handler messageHandler = new Handler() {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            mImgImageDownload.setImageBitmap(mBitmap);
+            mImgDownload.setImageBitmap(mBitmap);
         }
     };
 }

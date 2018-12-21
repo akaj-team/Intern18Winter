@@ -25,13 +25,8 @@ import asiantech.internship.summer.R;
 
 public class AsyncTaskFragment extends Fragment implements View.OnClickListener {
     public static final String URL_IMAGE = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Pizigani_1367_Chart_10MB.jpg/1280px-Pizigani_1367_Chart_10MB.jpg";
-    private ImageView mImgImageDownload;
+    private ImageView mImgDownload;
     private ProgressDialog mProgressDialog;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -43,7 +38,7 @@ public class AsyncTaskFragment extends Fragment implements View.OnClickListener 
     }
 
     private void initView(View view) {
-        mImgImageDownload = view.findViewById(R.id.imgImageDownload);
+        mImgDownload = view.findViewById(R.id.imgDownload);
         Button btnDownloadAsync = view.findViewById(R.id.btnDownLoadAsync);
         btnDownloadAsync.setOnClickListener(this);
     }
@@ -107,7 +102,7 @@ public class AsyncTaskFragment extends Fragment implements View.OnClickListener 
 
         protected void onPostExecute(Bitmap result) {
             mProgressDialog.dismiss();
-            mImgImageDownload.setImageBitmap(result);
+            mImgDownload.setImageBitmap(result);
         }
 
         @Override
