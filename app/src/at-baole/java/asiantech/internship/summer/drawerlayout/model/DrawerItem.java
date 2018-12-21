@@ -5,13 +5,13 @@ import android.graphics.Bitmap;
 public class DrawerItem {
     private int icon;
     private String title;
-    private boolean checkSelected;
+    private boolean isSelected;
     private Bitmap avatarBitmap;
 
     public DrawerItem(int icon, String title, boolean isSelected) {
         this.icon = icon;
         this.title = title;
-        this.checkSelected = isSelected;
+        this.isSelected = isSelected;
     }
 
     public int getItemImage() {
@@ -23,11 +23,11 @@ public class DrawerItem {
     }
 
     public boolean isSelected() {
-        return checkSelected;
+        return isSelected;
     }
 
     public void setIsSelected(boolean isSelected) {
-        this.checkSelected = isSelected;
+        this.isSelected = isSelected;
     }
 
     public Bitmap getAvatarBitmap() {

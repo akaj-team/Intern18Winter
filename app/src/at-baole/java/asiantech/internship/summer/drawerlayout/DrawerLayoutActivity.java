@@ -32,42 +32,39 @@ import asiantech.internship.summer.drawerlayout.model.DrawerItem;
 
 
 public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAdapter.OnItemClickListener {
-    //private static final String TAG = DrawerLayoutActivity.class.getSimpleName();
-    private static final int GALLERY = 1;
-    private static final int CAMERA = 2;
+    private static final int GALLERY = 101;
+    private static final int CAMERA = 102;
+    private static final int CHOOSE_GALLERY = 0;
+    private static final int CAPTURE_CAMERA = 1;
+    private int mPositionSelected = -1;
     private List<DrawerItem> mItems;
     private DrawerAdapter mAdapter;
-    private int mPositionSelected = -1;
-    private ActionBarDrawerToggle mDrawerToggle;
+    private DrawerLayout mDrawerLayout;
+    private TextView mTvName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawer_layout);
-        //requestMultiplePermission();
         initView();
         initDrawer();
     }
 
     private void initView() {
+        mDrawerLayout = findViewById(R.id.drawerLayout);
+        mTvName = findViewById(R.id.tvName);
         mockData();
-        RecyclerView recyclerView;
-        recyclerView = findViewById(R.id.recyclerViewHeader);
+        RecyclerView recyclerView = findViewById(R.id.recyclerViewHeader);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(DrawerLayoutActivity.this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
-        mAdapter = new DrawerAdapter(mItems, this, getApplicationContext());
+        mAdapter = new DrawerAdapter(mItems, this);
         recyclerView.setAdapter(mAdapter);
     }
 
     public void initDrawer() {
-        DrawerLayout mDrawerLayout = findViewById(R.id.drawerLayout);
-        TextView mTvName = findViewById(R.id.tvName);
-
         mDrawerLayout.setScrimColor(Color.TRANSPARENT);
-
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.navigationDrawerOpen, R.string.navigationDrawerClose) {
-
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {
                 super.onDrawerSlide(drawerView, slideOffset);
@@ -97,25 +94,26 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAda
     public void onItemClicked(int position) {
         if (mPositionSelected != -1) {
             mItems.get(mPositionSelected).setIsSelected(false);
+            mAdapter.notifyItemChanged(mPositionSelected);
         }
         mPositionSelected = position;
         mItems.get(position).setIsSelected(true);
-        mAdapter.notifyDataSetChanged();
+        mAdapter.notifyItemChanged(position);
     }
 
     private void showPictureDialog() {
         AlertDialog.Builder pictureDialog = new AlertDialog.Builder(this);
         pictureDialog.setTitle(R.string.selectAction);
-        String pictureDIalogItems[] = {
+        String pictureDialogItems[] = {
                 getString(R.string.selectGallery),
                 getString(R.string.captureCamera)
         };
-        pictureDialog.setItems(pictureDIalogItems, (dialogInterface, selectAction) -> {
-            switch (selectAction) {
-                case 0:
+        pictureDialog.setItems(pictureDialogItems, (dialogInterface, position) -> {
+            switch (position) {
+                case CHOOSE_GALLERY:
                     choosePhotosFromGallery();
                     break;
-                case 1:
+                case CAPTURE_CAMERA:
                     capturePhotosFromCamera();
                     break;
             }
@@ -178,31 +176,4 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAda
         } catch (IOException ignored) {
         }
     }
-
-//    private void requestMultiplePermission() {
-//        Dexter.withActivity(this)
-//                .withPermissions(
-//                        Manifest.permission.CAMERA,
-//                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
-//                        Manifest.permission.READ_EXTERNAL_STORAGE)
-//                .withListener(new MultiplePermissionsListener() {
-//                    @Override
-//                    public void onPermissionsChecked(MultiplePermissionsReport report) {
-//                        //Check if all permissions are granted
-//                        if (report.areAllPermissionsGranted()) {
-//                            Toast.makeText(getApplicationContext(), "All permissions are granted by user", Toast.LENGTH_LONG).show();
-//                        }
-//                        //Check for permanent denial of any permission
-//                        if (report.isAnyPermissionPermanentlyDenied()) {
-//                            // show alert dialog navigating to Settings
-//                            //openSettingsDialog();
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
-//                        token.continuePermissionRequest();
-//                    }
-//                }).withErrorListener(error -> Toast.makeText(getApplicationContext(), getString(R.string.notifyError), Toast.LENGTH_LONG).show()).onSameThread().check();
-//    }
 }
