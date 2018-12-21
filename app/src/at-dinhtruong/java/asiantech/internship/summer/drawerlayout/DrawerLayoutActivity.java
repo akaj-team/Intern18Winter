@@ -36,9 +36,9 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAda
     private static final int REQUEST_SELECT_PICTURE = 201;
     private static final int REQUEST_CODE_ASK_PERMISSIONS_CAMERA = 123;
     private static final int REQUEST_CODE_ASK_PERMISSIONS_GALLERY = 124;
-    private int positionSelected = -1;
+    private int mPositionSelected = -1;
     private int mActionChangeAvatar = 0;
-    private List<DrawerItem> items;
+    private List<DrawerItem> mDrawerItems;
     private DrawerAdapter mAdapterItem;
     private DrawerLayout mDrawerLayout;
     private FrameLayout mFrameLayoutDrawer;
@@ -63,9 +63,9 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAda
         params.width = width * 5 / 6;
         recycleViewItem.setLayoutParams(params);
         recycleViewItem.setHasFixedSize(true);
-        items = DrawerItem.createItem();
+        mDrawerItems = DrawerItem.createItem();
         recycleViewItem.setLayoutManager(new LinearLayoutManager(this));
-        mAdapterItem = new DrawerAdapter(items, this);
+        mAdapterItem = new DrawerAdapter(mDrawerItems, this);
         recycleViewItem.setAdapter(mAdapterItem);
     }
 
@@ -111,13 +111,13 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAda
 
     @Override
     public void onItemClicked(int position) {
-        if (positionSelected != -1) {
-            items.get(positionSelected).setIsChecked(false);
-            mAdapterItem.notifyItemChanged(positionSelected);
+        if (mPositionSelected != -1) {
+            mDrawerItems.get(mPositionSelected).setIsChecked(false);
+            mAdapterItem.notifyItemChanged(mPositionSelected);
         }
-        positionSelected = position;
-        items.get(position).setIsChecked(true);
-        mAdapterItem.notifyItemChanged(positionSelected);
+        mPositionSelected = position;
+        mDrawerItems.get(position).setIsChecked(true);
+        mAdapterItem.notifyItemChanged(mPositionSelected);
     }
 
     private void openCamera() {
@@ -188,7 +188,7 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAda
 
     private void onSelectFromGalleryResult(Intent data) {
         Uri selectedImageURI = data.getData();
-        DrawerItem item = items.get(0);
+        DrawerItem item = mDrawerItems.get(0);
         item.setAvatar(selectedImageURI);
         item.setAvatarBitmap(null);
         mAdapterItem.notifyItemChanged(0);
@@ -200,7 +200,7 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAda
         if (getExtrasImage != null) {
             imageBitmap = (Bitmap) (getExtrasImage).get(getString(R.string.data));
         }
-        DrawerItem item = items.get(0);
+        DrawerItem item = mDrawerItems.get(0);
         item.setAvatarBitmap(imageBitmap);
         item.setAvatar(null);
         mAdapterItem.notifyItemChanged(0);

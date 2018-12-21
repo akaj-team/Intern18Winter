@@ -52,9 +52,9 @@ public class DrawerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
         if (viewHolder instanceof ItemViewHoder) {
-            ((ItemViewHoder) viewHolder).onBindItem(position);
+            ((ItemViewHoder) viewHolder).onBind(position);
         } else if (viewHolder instanceof HeaderViewHolder) {
-            ((HeaderViewHolder) viewHolder).onBindHeader(position);
+            ((HeaderViewHolder) viewHolder).onBind(position);
         }
     }
 
@@ -75,7 +75,7 @@ public class DrawerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             );
         }
 
-        void onBindItem(int position) {
+        private void onBind(int position) {
             DrawerItem item = mDrawerItems.get(position);
             mImgIcon.setImageResource(item.getIcon());
             mTvTitle.setText(item.getContent());
@@ -96,7 +96,7 @@ public class DrawerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             );
         }
 
-        void onBindHeader(int position) {
+        private void onBind(int position) {
             DrawerItem item = mDrawerItems.get(position);
             mTvEmail.setText(item.getContent());
             if (item.getAvatar() != null) {
