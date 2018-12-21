@@ -56,4 +56,12 @@
     <string name="pass_key">password</string>
     <string name="space" />
     <string name="exercise5">storage</string>
+    <string name="listCompany">Danh sách công ty</string>
+    <string name="inputIdEmployee">Input ID</string>
+    <string name="inputNameEmployee">Input Name</string>
+    <string name="inputEmployee">Please input employee of </string>
+    <string name="insert">insert</string>
+    <string name="update">update</string>
+    <string name="delete">delete</string>
+    <string name="listEmployee">List name employee of</string>
 </resources>

@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="asiantech.internship.summer">
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -17,14 +19,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".viewandviewgroup.ViewActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
-        <activity android:name=".eventlistener.SignUpActivity"
+        <activity
+            android:name=".viewandviewgroup.ViewActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".eventlistener.SignUpActivity"
             android:label="@string/title" />
-        <activity android:name=".fragment.LoginActivity"/>
-        <activity android:name=".fragment.WelcomeActivity"/>
-        <activity android:name=".recyclerview.RecyclerViewActivity"/>
+        <activity android:name=".fragment.LoginActivity" />
+        <activity android:name=".fragment.WelcomeActivity" />
+        <activity android:name=".recyclerview.RecyclerViewActivity" />
         <activity android:name=".file_storage.FileStorageActivity" />
+        <activity android:name=".file_storage.EmployeeActivity"></activity>
     </application>
 
 </manifest>
