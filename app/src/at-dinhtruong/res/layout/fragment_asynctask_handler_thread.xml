@@ -17,5 +17,5 @@
         android:layout_height="300dp"
         android:layout_gravity="center"
         android:layout_margin="20dp"
-        android:src="@drawable/img_avatar"/>
+        android:scaleType="fitXY" />
 </LinearLayout>

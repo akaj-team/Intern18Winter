@@ -66,8 +66,8 @@ public class AsyncTaskFragment extends Fragment implements View.OnClickListener 
 
     @SuppressLint("StaticFieldLeak")
     private class DownloadImageTask extends AsyncTask<String, Integer, Bitmap> {
-        long total = 0;
-        int fileLength = 0;
+        long mTotal = 0;
+        int mFileLength = 0;
 
         protected Bitmap doInBackground(String... urls) {
             Bitmap bitmapImage = null;
@@ -79,7 +79,7 @@ public class AsyncTaskFragment extends Fragment implements View.OnClickListener 
                 bitmapImage = BitmapFactory.decodeStream(inputStream);
                 connection = (HttpURLConnection) url.openConnection();
                 connection.connect();
-                fileLength = connection.getContentLength();
+                mFileLength = connection.getContentLength();
                 inputStream = connection.getInputStream();
                 byte data[] = new byte[1024];
                 int count;
@@ -88,9 +88,9 @@ public class AsyncTaskFragment extends Fragment implements View.OnClickListener 
                         inputStream.close();
                         return null;
                     }
-                    total += count;
-                    if (fileLength > 0) {
-                        publishProgress((int) (total * 100 / fileLength));
+                    mTotal += count;
+                    if (mFileLength > 0) {
+                        publishProgress((int) (mTotal * 100 / mFileLength));
                     }
                 }
             } catch (IOException e) {
