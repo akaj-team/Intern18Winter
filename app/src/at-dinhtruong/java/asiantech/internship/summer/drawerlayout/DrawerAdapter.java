@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -67,13 +66,11 @@ public class DrawerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     class ItemViewHoder extends RecyclerView.ViewHolder {
         private ImageView mImgIcon;
         private TextView mTvTitle;
-        private LinearLayout mLlItem;
 
         ItemViewHoder(@NonNull View itemView) {
             super(itemView);
             mImgIcon = itemView.findViewById(R.id.imgIcon);
             mTvTitle = itemView.findViewById(R.id.tvTitle);
-            mLlItem = itemView.findViewById(R.id.llItem);
             itemView.setOnClickListener(v -> mOnItemClickListener.onItemClicked(getLayoutPosition())
             );
         }
@@ -83,7 +80,7 @@ public class DrawerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             mImgIcon.setImageResource(item.getIcon());
             mTvTitle.setText(item.getContent());
             mTvTitle.setTextColor(itemView.getContext().getResources().getColorStateList(R.color.color_content));
-            mLlItem.setSelected(item.getIsChecked());
+            itemView.setSelected(item.getIsChecked());
         }
     }
 
