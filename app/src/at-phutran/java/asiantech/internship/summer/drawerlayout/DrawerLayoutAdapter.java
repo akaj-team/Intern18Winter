@@ -10,27 +10,27 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import java.util.List;
 import asiantech.internship.summer.R;
-import asiantech.internship.summer.model.Data;
+import asiantech.internship.summer.model.DrawerItem;
 
 public class DrawerLayoutAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_ITEM = 1;
     private OnItemClickListener mOnItemClickListener;
-    private List<Data> mItems;
+    private List<DrawerItem> mItems;
 
-    DrawerLayoutAdapter(List<Data> itemObjects, OnItemClickListener onItemClickListener) {
-        this.mOnItemClickListener = onItemClickListener;
-        this.mItems = itemObjects;
+    DrawerLayoutAdapter(List<DrawerItem> items, OnItemClickListener onItemClickListener) {
+        mOnItemClickListener = onItemClickListener;
+        mItems = items;
     }
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if (viewType == TYPE_HEADER) {
-            View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.header_layout, parent, false);
+            View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.drawer_item_header, parent, false);
             return new HeaderViewHolder(layoutView);
         } else if (viewType == TYPE_ITEM) {
-            View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_row_drawer, parent, false);
+            View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.drawer_item, parent, false);
             return new ItemViewHolder(layoutView);
         }
         throw new RuntimeException();
@@ -38,7 +38,7 @@ public class DrawerLayoutAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        Data mData = mItems.get(position);
+        DrawerItem mData = mItems.get(position);
         if (holder instanceof HeaderViewHolder) {
             if (mData.getAvatarBitmap() != null) {
                 ((HeaderViewHolder) holder).imgAvatar.setImageBitmap((mData.getAvatarBitmap()));
@@ -46,7 +46,7 @@ public class DrawerLayoutAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 ((HeaderViewHolder) holder).imgAvatar.setImageResource((mData.getIcon()));
             }
             ((HeaderViewHolder) holder).tvTitle.setText(mData.getTitle());
-            ((HeaderViewHolder) holder).imgAvatar.setOnClickListener(view -> mOnItemClickListener.onclickAvatar());
+            ((HeaderViewHolder) holder).imgAvatar.setOnClickListener(view -> mOnItemClickListener.onAvatarClicked());
         } else if (holder instanceof ItemViewHolder) {
             ((ItemViewHolder) holder).mImgIcon.setImageResource(mData.getIcon());
             ((ItemViewHolder) holder).mTvContent.setText(mData.getTitle());
@@ -104,12 +104,12 @@ public class DrawerLayoutAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     return;
                 }
                 int position = getLayoutPosition();
-                mOnItemClickListener.changeSelect(position);
+                mOnItemClickListener.onItemChecked(position);
             });
         }
     }
     public interface OnItemClickListener {
-        void onclickAvatar();
-        void changeSelect(int i);
+        void onAvatarClicked();
+        void onItemChecked(int position);
     }
 }

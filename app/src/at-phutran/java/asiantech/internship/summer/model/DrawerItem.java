@@ -2,13 +2,13 @@ package asiantech.internship.summer.model;
 
 import android.graphics.Bitmap;
 
-public class Data {
+public class DrawerItem {
     private int icon;
     private String title;
     private boolean hasChecked;
     private Bitmap avatarBitmap;
 
-    public Data(int icon, String title, boolean isChecked) {
+    public DrawerItem(int icon, String title, boolean isChecked) {
         this.icon = icon;
         this.title = title;
         this.hasChecked = isChecked;
