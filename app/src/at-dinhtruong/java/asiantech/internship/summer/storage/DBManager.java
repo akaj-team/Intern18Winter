@@ -97,7 +97,6 @@ public class DBManager extends SQLiteOpenHelper {
         return employees;
     }
 
-
     void deleteEmployee(Employee employee) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_EMPLOYEE, ID_EMPLOYEE + CHECK_DATA + AND_DATA + COMPANY_ID + CHECK_DATA,

@@ -15,13 +15,13 @@ import java.util.List;
 import asiantech.internship.summer.R;
 import asiantech.internship.summer.models.Company;
 
-public class SqliteFragment extends Fragment implements CompanyAdapter.onClickItem {
-    private DBManager mDbManager;
+public class SqliteFragment extends Fragment implements CompanyAdapter.OnItemClickListener {
+    private DBManager mDBManager;
     public static final String ID_COMPANY = "idCompany";
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mDbManager = new DBManager(getContext());
+        mDBManager = new DBManager(getContext());
     }
 
     @Override
@@ -37,15 +37,15 @@ public class SqliteFragment extends Fragment implements CompanyAdapter.onClickIt
         mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(linearLayoutManager);
-        mDbManager.createDefaultCompany();
-        List<Company> companies = mDbManager.getAllCompany();
+        mDBManager.createDefaultCompany();
+        List<Company> companies = mDBManager.getAllCompany();
         CompanyAdapter companyAdapter = new CompanyAdapter(companies,this);
         mRecyclerView.setAdapter(companyAdapter);
     }
 
 
     @Override
-    public void onSelectItem(int idCompany) {
+    public void onItemClicked(int idCompany) {
         Intent intent = new Intent(getActivity(), EmployeeActivity.class);
         intent.putExtra(ID_COMPANY, idCompany);
         startActivity(intent);

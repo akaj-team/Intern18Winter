@@ -14,11 +14,11 @@ import asiantech.internship.summer.models.Company;
 
 public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.CompanyViewHolder> {
     private List<Company> mCompanies;
-    private onClickItem mOnClickItem;
+    private OnItemClickListener mOnItemClickListener;
 
-    CompanyAdapter(List<Company> companies, onClickItem onClickItem) {
-        this.mCompanies = companies;
-        this.mOnClickItem = onClickItem;
+    CompanyAdapter(List<Company> companies, OnItemClickListener onClickItem) {
+        mCompanies = companies;
+        mOnItemClickListener = onClickItem;
     }
 
     @NonNull
@@ -31,7 +31,7 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.CompanyV
 
     @Override
     public void onBindViewHolder(@NonNull CompanyViewHolder holder, int position) {
-        holder.initDataCompany(mCompanies.get(position));
+        holder.bind(mCompanies.get(position));
     }
 
     @Override
@@ -46,16 +46,16 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.CompanyV
             super(v);
             mTvNameCompany = v.findViewById(R.id.custom_view_item);
             mTvNameCompany.setOnClickListener(view ->
-                    mOnClickItem.onSelectItem(mCompanies.get(getAdapterPosition()).getIdCompany()));
+                    mOnItemClickListener.onItemClicked(mCompanies.get(getAdapterPosition()).getIdCompany()));
         }
 
-        private void initDataCompany(Company company) {
+        private void bind(Company company) {
             mTvNameCompany.setText(company.getNameCompany());
         }
     }
 
-    public interface onClickItem {
-        void onSelectItem(int position);
+    public interface OnItemClickListener {
+        void onItemClicked(int position);
     }
 
 }
