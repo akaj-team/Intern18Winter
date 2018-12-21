@@ -38,7 +38,7 @@ public class AsyncTaskFragment extends Fragment implements View.OnClickListener 
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_asynctask_handler_thread, container, false);
         initView(view);
-        DownloadTask();
+        downloadTask();
         return view;
     }
 
@@ -54,7 +54,7 @@ public class AsyncTaskFragment extends Fragment implements View.OnClickListener 
         new DownloadImageTask().execute(URL_IMAGE);
     }
 
-    public void DownloadTask() {
+    public void downloadTask() {
         mProgressDialog = new ProgressDialog(getContext());
         mProgressDialog.setTitle(getString(R.string.asyncTask));
         mProgressDialog.setMessage(getString(R.string.downloadingFile));
