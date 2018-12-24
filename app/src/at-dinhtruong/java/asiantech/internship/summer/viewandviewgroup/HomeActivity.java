@@ -10,6 +10,7 @@ import asiantech.internship.summer.R;
 import asiantech.internship.summer.activityandfragment.LoginActivity;
 import asiantech.internship.summer.eventandlistener.EventAndListenerActivity;
 import asiantech.internship.summer.recyclerview.RecyclerViewActivity;
+import asiantech.internship.summer.servicesbroadcast.ServicesBroadcastActivity;
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -25,10 +26,12 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         Button btnEventAndListener = findViewById(R.id.btnEventAndListener);
         Button btnActivityAndFragment = findViewById(R.id.btnActivityAndFragment);
         Button btnRecyclerView = findViewById(R.id.btnRecyclerView);
+        Button btnServicesBroadcast = findViewById(R.id.btnServicesBroadcast);
         btnViewGroup.setOnClickListener(this);
         btnEventAndListener.setOnClickListener(this);
         btnActivityAndFragment.setOnClickListener(this);
         btnRecyclerView.setOnClickListener(this);
+        btnServicesBroadcast.setOnClickListener(this);
     }
 
     @Override
@@ -51,6 +54,11 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             }
             case R.id.btnRecyclerView: {
                 Intent intent = new Intent(HomeActivity.this, RecyclerViewActivity.class);
+                startActivity(intent);
+                break;
+            }
+            case R.id.btnServicesBroadcast: {
+                Intent intent = new Intent(HomeActivity.this, ServicesBroadcastActivity.class);
                 startActivity(intent);
                 break;
             }

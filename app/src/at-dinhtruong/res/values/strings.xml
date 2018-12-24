@@ -52,4 +52,8 @@
     <string name="like">like</string>
     <string name="likes">likes</string>
     <string name="recyclerView">RecyclerView</string>
+    <string name="servicesBroadcast">Services Broadcast</string>
+    <string name="pause">Pause</string>
+    <string name="play">Play</string>
+    <string name="timeMusicPlayer">--:--</string>
 </resources>
