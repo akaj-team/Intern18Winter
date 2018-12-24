@@ -42,7 +42,7 @@ public class StorageFragment extends Fragment implements View.OnClickListener {
         mEdtExternalStorage = view.findViewById(R.id.edtInputExternal);
         Button mButtonInternalStorage = view.findViewById(R.id.btnInternalStorage);
         Button mButtonExternalStorage = view.findViewById(R.id.btnExternalStorage);
-        loadInternalStorage();
+        readInternalStorage();
         readFileExternalStorage();
         mButtonInternalStorage.setOnClickListener(this);
         mButtonExternalStorage.setOnClickListener(this);
@@ -60,7 +60,7 @@ public class StorageFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    public void loadInternalStorage() {
+    public void readInternalStorage() {
         try {
             mFileInputStream = Objects.requireNonNull(getActivity()).openFileInput(FILENAME_INTERNAL);
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(mFileInputStream));
@@ -76,7 +76,7 @@ public class StorageFragment extends Fragment implements View.OnClickListener {
             if (mFileInputStream != null) {
                 try {
                     mFileInputStream.close();
-                } catch (IOException e) {
+                } catch (IOException ignored) {
                 }
             }
         }
@@ -136,7 +136,7 @@ public class StorageFragment extends Fragment implements View.OnClickListener {
             }
             myReader.close();
             this.mEdtExternalStorage.setText(fileContent.toString());
-        } catch (IOException e) {
+        } catch (IOException ignored) {
         }
     }
 
@@ -146,7 +146,8 @@ public class StorageFragment extends Fragment implements View.OnClickListener {
             case R.id.btnInternalStorage:
             {
                 saveInternalStorage();
-                loadInternalStorage();
+                readInternalStorage();
+                break;
             }
             case R.id.btnExternalStorage:
             {

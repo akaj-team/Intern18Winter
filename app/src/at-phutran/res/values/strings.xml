@@ -64,4 +64,19 @@
     <string name="update">update</string>
     <string name="delete">delete</string>
     <string name="listEmployee">List name employee of</string>
+    <string name="updateEmployee">Update employee</string>
+    <string name="cancel">cancel</string>
+    <string name="position">position</string>
+    <string name="nameCompany">name_company</string>
+    <string name="successful">successful</string>
+    <string name="error">error</string>
+    <string name="noteInputEmployee">please input name of Employee</string>
+    <string name="empty">Employee is empty!</string>
+    <string name="asiantech">Asiantech</string>
+    <string name="logigear">Logigear</string>
+    <string name="fpt">Fpt</string>
+    <string name="mgm">MGM</string>
+    <string name="zenken">Zenken</string>
+    <string name="enclave">Enclave</string>
+    <string name="employeeExist">employee is existing</string>
 </resources>

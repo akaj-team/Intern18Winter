@@ -1,27 +1,22 @@
 package asiantech.internship.summer.file_storage;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import java.util.List;
-
 import asiantech.internship.summer.R;
 import asiantech.internship.summer.model.Company;
 
 public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.ViewHolder> {
     private List<Company> mListCompany;
     private OnclickNameCompany mOnclickNameCompany;
-    private Context mContext;
 
-    public CompanyAdapter(List<Company> listCompany, Context context, OnclickNameCompany onclickNameCompany) {
-        this.mListCompany = listCompany;
-        this.mContext = context;
-        this.mOnclickNameCompany = onclickNameCompany;
+    CompanyAdapter(List<Company> listCompany, OnclickNameCompany onclickNameCompany) {
+        mListCompany = listCompany;
+        mOnclickNameCompany = onclickNameCompany;
     }
 
     @NonNull
@@ -42,14 +37,16 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.ViewHold
         return mListCompany.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
         private TextView mTvNameCompany;
-        public ViewHolder(View itemView) {
+
+        ViewHolder(View itemView) {
             super(itemView);
             mTvNameCompany = itemView.findViewById(R.id.tvCompany);
             this.setIsRecyclable(false);
             handleEvent();
         }
+
         private void handleEvent() {
             mTvNameCompany.setOnClickListener(view -> {
                 if (mOnclickNameCompany == null) {

@@ -89,9 +89,9 @@
         android:layout_height="wrap_content"
         android:textSize="20sp"
         android:background="@color/colorYellow"/>
-    <ListView
-        android:id="@+id/lvEmployee"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerViewEmployee"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-    </ListView>
+    </android.support.v7.widget.RecyclerView>
 </LinearLayout>

@@ -1,60 +1,59 @@
 package asiantech.internship.summer.file_storage;
 
-import android.graphics.Color;
-import android.util.Log;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.TextView;
-
 import java.util.List;
-
 import asiantech.internship.summer.R;
 import asiantech.internship.summer.model.Employee;
 
-class EmployeeAdapter extends BaseAdapter {
+class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.ViewHolder> {
     private List<Employee> mListEmployees;
     private OnclickItem mOnclickItem;
 
-    EmployeeAdapter(List<Employee> mListEmployees, OnclickItem onclickItem) {
-        this.mListEmployees = mListEmployees;
-        this.mOnclickItem = onclickItem;
+    EmployeeAdapter(List<Employee> listEmployees, OnclickItem onclickItem) {
+        mListEmployees = listEmployees;
+        mOnclickItem = onclickItem;
+    }
+    @NonNull
+    @Override
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+        View view = layoutInflater.inflate(R.layout.item_row_employee, parent, false);
+        return new EmployeeAdapter.ViewHolder(view);
     }
 
     @Override
-    public int getCount() {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        Employee employee = mListEmployees.get(position);
+        holder.tvContent.setText(employee.getNameEmployee());
+    }
+
+
+    @Override
+    public int getItemCount() {
         return mListEmployees.size();
     }
 
-    @Override
-    public Object getItem(int i) {
-        return null;
-    }
-
-    @Override
-    public long getItemId(int i) {
-        return 0;
-    }
-
-    @Override
-    public View getView(int i, View convertView, ViewGroup viewGroup) {
-        Employee employee = mListEmployees.get(i);
-        View view = convertView;
-        if (convertView == null) {
-            view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_row_employee, viewGroup, false);
-            TextView tvContent = view.findViewById(R.id.tvEmployee);
-            tvContent.setText(employee.getNameEmployee());
-            view.setOnClickListener(view1 -> {
-//                mOnclickItem.selectedItem(i);
-                Log.i("xxx", "getView: " + employee.getIdEmployee());
-                /*mOnclickItem.showSizeItem(employee.getIdEmployee());*/
+    class ViewHolder extends RecyclerView.ViewHolder {
+        TextView tvContent;
+        ViewHolder(View itemView) {
+            super(itemView);
+            tvContent = itemView.findViewById(R.id.tvEmployee);
+            handleEvent();
+        }
+        private void handleEvent() {
+            itemView.setOnClickListener(view -> {
+                int position = getLayoutPosition();
+                mOnclickItem.selectedItem(position);
             });
         }
-        return view;
     }
 
-    public interface OnclickItem{
+    public interface OnclickItem {
         void selectedItem(int position);
     }
 }

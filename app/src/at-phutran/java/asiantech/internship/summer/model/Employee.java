@@ -4,16 +4,14 @@ public class Employee {
     private int idEmployee;
     private String nameEmployee;
     private int id_company;
-    private boolean hasSelected;
 
     public Employee() {
     }
 
-    public Employee(int idEmployee, String nameEmployee, int id_company, boolean hasSelected) {
+    public Employee(int idEmployee, String nameEmployee, int id_company) {
         this.idEmployee = idEmployee;
         this.nameEmployee = nameEmployee;
         this.id_company = id_company;
-        this.hasSelected = hasSelected;
     }
 
     public int getIdEmployee() {
@@ -38,13 +36,5 @@ public class Employee {
 
     public void setId_company(int id_company) {
         this.id_company = id_company;
-    }
-
-    public boolean isSelected() {
-        return hasSelected;
-    }
-
-    public void setSelected(boolean hasSelected) {
-        this.hasSelected = hasSelected;
     }
 }

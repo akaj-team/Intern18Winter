@@ -23,7 +23,6 @@ public class Database extends SQLiteOpenHelper {
 
     Database(Context context) {
         super(context, DATABASE_NAME, null, 1);
-        SQLiteDatabase db = this.getWritableDatabase();
     }
 
     @Override
@@ -85,7 +84,7 @@ public class Database extends SQLiteOpenHelper {
     List<Employee> getAllEmployeeById(int idCompany) {
         List<Employee> listEmployees = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("select * from " + TABLE_EMPLOYEE + " WHERE " + COL_ID_COMPANY + " = " + idCompany, null);
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_EMPLOYEE + " WHERE " + COL_ID_COMPANY + " = ?", new String[]{String.valueOf(idCompany)});
         if(cursor.moveToFirst()){
             do {
                 Employee employee = new Employee();
@@ -99,6 +98,20 @@ public class Database extends SQLiteOpenHelper {
         db.close();
         return listEmployees;
     }
-
-
+    int updateEmployee(Employee employee) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COL_NAME_EMPLOYEE, employee.getNameEmployee());
+        int updated = db.update(TABLE_EMPLOYEE, values, COL_ID_EMPOYEE + " = ? " + "AND " + COL_ID_COMPANY + " = ? ",
+                new String[]{String.valueOf(employee.getIdEmployee()), String.valueOf(employee.getId_company())});
+        db.close();
+        return updated;
+    }
+    int deleteEmployee(Employee employee) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        int deleted = db.delete(TABLE_EMPLOYEE,COL_ID_EMPOYEE + " = ? " + "AND " + COL_ID_COMPANY + " = ? ",
+                new String[]{String.valueOf(employee.getIdEmployee()), String.valueOf(employee.getId_company())});
+        db.close();
+        return deleted;
+    }
 }

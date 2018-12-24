@@ -1,134 +1,169 @@
 package asiantech.internship.summer.file_storage;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import asiantech.internship.summer.R;
 import asiantech.internship.summer.model.Employee;
 
 public class EmployeeActivity extends AppCompatActivity implements View.OnClickListener, EmployeeAdapter.OnclickItem {
+    private TextView mTvListEmployee;
     private Database mDatabase;
     private EditText mEdtIDEmployee;
     private EditText mEdtNameEmployee;
-    private TextView mTvNameCompany;
-    private TextView mTvListEmployee;
-    private Button mBtnAddEmployee;
-    private Button mBtnUpdateEmployee;
-    private Button mBtnDeleteEmployee;
     private Employee mEmployee;
-    private List<Employee> listEmployees;
-    private ListView mListViewEmployee;
+    private List<Employee> mListEmployeeById;
+    private RecyclerView mRecylerViewEmployee;
     private String mNameCompany;
     private EmployeeAdapter mEmployeeAdapter;
     private int mIDCompany;
-    private long mResult;
     private int mDem = 0;
-    private int mPosition = -1;
+    private int mExist = 0;
+    private int mPosition;
 
-    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_employee);
-        listEmployees = new ArrayList<>();
+        mListEmployeeById = new ArrayList<>();
         mDatabase = new Database(getApplicationContext());
         mEmployee = new Employee();
         mEdtIDEmployee = findViewById(R.id.edtIDEmployee);
         mEdtNameEmployee = findViewById(R.id.edtNameEmployee);
-        mTvNameCompany = findViewById(R.id.tvNameEmployee);
         mTvListEmployee = findViewById(R.id.tvListEmployee);
-        mBtnAddEmployee = findViewById(R.id.btnAddEmployee);
-        mBtnUpdateEmployee = findViewById(R.id.btnUpdateEmployee);
-        mBtnDeleteEmployee = findViewById(R.id.btnDeleteEmployee);
-        mListViewEmployee = findViewById(R.id.lvEmployee);
-        Intent intent = getIntent();
-        mIDCompany = intent.getIntExtra("position", 0);
-        listEmployees = mDatabase.getAllEmployeeById(mIDCompany);
-        mNameCompany = intent.getStringExtra("name_company");
-        mTvNameCompany.setText(getString(R.string.inputEmployee) + " " + mNameCompany);
-        if (listEmployees.size() != 0) {
-            listEmployees = mDatabase.getAllEmployeeById(mIDCompany);
-            mDem = listEmployees.get(listEmployees.size() - 1).getIdEmployee() + 1;
-            resetViewInsertEmployee(mDem);
-            mTvListEmployee.setText(getString(R.string.listEmployee) + " " + intent.getStringExtra("name_company"));
-            updateListView(listEmployees);
+        TextView tvNameCompany = findViewById(R.id.tvNameEmployee);
+        Button btnAddEmployee = findViewById(R.id.btnAddEmployee);
+        Button btnUpdateEmployee = findViewById(R.id.btnUpdateEmployee);
+        Button btnDeleteEmployee = findViewById(R.id.btnDeleteEmployee);
+        mRecylerViewEmployee = findViewById(R.id.recyclerViewEmployee);
+        btnAddEmployee.setOnClickListener(this);
+        btnUpdateEmployee.setOnClickListener(this);
+        btnDeleteEmployee.setOnClickListener(this);
+        getDataCompanyClicked();
+        tvNameCompany.setText(String.format("%s %s", getString(R.string.inputEmployee), mNameCompany));
+        mListEmployeeById = mDatabase.getAllEmployeeById(mIDCompany);
+        if (mListEmployeeById.size() != 0) {
+            mTvListEmployee.setText(String.format("%s %s", getString(R.string.listEmployee), mNameCompany));
+            mDem = mListEmployeeById.get(mListEmployeeById.size() - 1).getIdEmployee() + 1;
         } else {
             mDem += 1;
-            resetViewInsertEmployee(mDem);
-            mTvListEmployee.setText("Employee is empty!");
-            updateListView(listEmployees);
+            mTvListEmployee.setText(R.string.empty);
         }
-        mBtnAddEmployee.setOnClickListener(this);
+
+        resetViewInsertEmployee(mDem);
+        initView(mListEmployeeById);
     }
 
-    @SuppressLint("SetTextI18n")
+    private void getDataCompanyClicked() {
+        Intent intent = getIntent();
+        mIDCompany = intent.getIntExtra(getString(R.string.position), 0);
+        mNameCompany = intent.getStringExtra(getString(R.string.nameCompany));
+    }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnAddEmployee: {
-                int id = Integer.parseInt(mEdtIDEmployee.getText().toString());
-                String name = mEdtNameEmployee.getText().toString();
-                mEmployee = new Employee(id, name, mIDCompany, false);
-                if (listEmployees.size() == 0) {
-                    mTvListEmployee.setText(getString(R.string.listEmployee) + " " + mNameCompany);
-                    mResult = mDatabase.insertEmployee(mEmployee);
-                    Log.i("xxx", "onClick: " + mResult);
-                    if (mResult > 0) {
-                        listEmployees.add(mEmployee);
-                        mDem = listEmployees.get(listEmployees.size() - 1).getIdEmployee() + 1;
-                        Toast.makeText(this, "Thêm thành công", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(this, "Thêm thất bại", Toast.LENGTH_SHORT).show();
+                creatEmployee();
+                if (mListEmployeeById.size() > 0) {
+                    for (int i = 0; i < mListEmployeeById.size(); i++) {
+                        if (mEmployee.getIdEmployee() == mListEmployeeById.get(i).getIdEmployee()) {
+                            mExist += 1;
+                        }
                     }
-                    resetViewInsertEmployee(mDem);
-                    updateListView(listEmployees);
+                    if (mExist != 0) {
+                        mExist = 0;
+                        Toast.makeText(this, R.string.employeeExist, Toast.LENGTH_SHORT).show();
+                    } else {
+                        mTvListEmployee.setText(String.format("%s %s", getString(R.string.listEmployee), mNameCompany));
+                        if (mDatabase.insertEmployee(mEmployee) > 0) {
+                            mListEmployeeById.add(mEmployee);
+                            mDem = mListEmployeeById.get(mListEmployeeById.size() - 1).getIdEmployee() + 1;
+                            Toast.makeText(this, R.string.successful, Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(this, R.string.error, Toast.LENGTH_SHORT).show();
+                        }
+                    }
                 } else {
-                    mResult = mDatabase.insertEmployee(mEmployee);
-                    if (mResult > 0) {
-                        listEmployees.add(mEmployee);
-                        mDem = listEmployees.get(listEmployees.size() - 1).getIdEmployee() + 1;
-                        Toast.makeText(this, "Thêm thành công", Toast.LENGTH_SHORT).show();
-                        resetViewInsertEmployee(mDem);
+                    mTvListEmployee.setText(String.format("%s %s", getString(R.string.listEmployee), mNameCompany));
+                    if (mDatabase.insertEmployee(mEmployee) > 0) {
+                        mListEmployeeById.add(mEmployee);
+                        mDem = mListEmployeeById.get(mListEmployeeById.size() - 1).getIdEmployee() + 1;
+                        Toast.makeText(this, R.string.successful, Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(this, "Thêm thất bại", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, R.string.error, Toast.LENGTH_SHORT).show();
                     }
-                    updateListView(listEmployees);
                 }
+                resetViewInsertEmployee(mDem);
+                mEmployeeAdapter.notifyDataSetChanged();
+                break;
+            }
+            case R.id.btnUpdateEmployee: {
+                creatEmployee();
+                if (mEmployee.getNameEmployee().equals("")) {
+                    Toast.makeText(getApplicationContext(), R.string.noteInputEmployee, Toast.LENGTH_LONG).show();
+                } else if (!mEmployee.getNameEmployee().equals("") && mDatabase.updateEmployee(mEmployee) > 0) {
+                    mListEmployeeById.get(mPosition).setNameEmployee(mEmployee.getNameEmployee());
+                    Toast.makeText(getApplicationContext(), R.string.successful, Toast.LENGTH_SHORT).show();
+                    resetViewInsertEmployee(mDem);
+                    mEmployeeAdapter.notifyDataSetChanged();
+                } else {
+                    Toast.makeText(getApplicationContext(), R.string.error, Toast.LENGTH_LONG).show();
+                }
+                break;
+            }
+            case R.id.btnDeleteEmployee: {
+                creatEmployee();
+                if (mListEmployeeById.size() == 0) {
+                    Toast.makeText(getApplicationContext(), R.string.empty, Toast.LENGTH_LONG).show();
+                } else {
+                    if (mDatabase.deleteEmployee(mEmployee) > 0) {
+                        mListEmployeeById.remove(mPosition);
+                        Toast.makeText(getApplicationContext(), R.string.successful, Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(this, R.string.error, Toast.LENGTH_SHORT).show();
+                    }
+                }
+                mEmployeeAdapter.notifyDataSetChanged();
+                resetViewInsertEmployee(mDem);
                 break;
             }
         }
     }
 
-    private void updateListView(List<Employee> list) {
-        mEmployeeAdapter = new EmployeeAdapter(list, this);
-        mListViewEmployee.setAdapter(mEmployeeAdapter);
+    private void creatEmployee() {
+        int id = Integer.parseInt(mEdtIDEmployee.getText().toString());
+        String name = mEdtNameEmployee.getText().toString();
+        mEmployee = new Employee(id, name, mIDCompany);
     }
 
-    private void resetViewInsertEmployee(int i) {
-        mEdtIDEmployee.setText(String.valueOf(i));
+    private void initView(List<Employee> list) {
+        mRecylerViewEmployee.setHasFixedSize(true);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        mRecylerViewEmployee.setLayoutManager(linearLayoutManager);
+        mEmployeeAdapter = new EmployeeAdapter(list, this);
+        mRecylerViewEmployee.setAdapter(mEmployeeAdapter);
+    }
+
+    private void resetViewInsertEmployee(int position) {
+        mEdtIDEmployee.setText(String.valueOf(position));
         mEdtNameEmployee.setText("");
     }
 
     @Override
     public void selectedItem(int position) {
-        if (mPosition >= 0) {
-            listEmployees.get(mPosition).setSelected(false);
-        }
-        listEmployees.get(position).setSelected(true);
+        mEmployee = mListEmployeeById.get(position);
+        mEdtIDEmployee.setText(String.valueOf(mEmployee.getIdEmployee()));
+        mEdtNameEmployee.setText(mEmployee.getNameEmployee());
         mPosition = position;
-        mEmployeeAdapter.notifyDataSetChanged();
     }
-
 }
