@@ -46,5 +46,4 @@ public class FileStorageActivity extends AppCompatActivity {
         });
         mViewPagerContent.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayoutHeader));
     }
-
 }

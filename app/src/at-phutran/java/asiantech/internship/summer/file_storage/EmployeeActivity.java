@@ -16,6 +16,7 @@ import asiantech.internship.summer.R;
 import asiantech.internship.summer.model.Employee;
 
 public class EmployeeActivity extends AppCompatActivity implements View.OnClickListener, EmployeeAdapter.OnclickItem {
+    private static final String FORMAT = "%s %s";
     private TextView mTvListEmployee;
     private Database mDatabase;
     private EditText mEdtIDEmployee;
@@ -49,10 +50,10 @@ public class EmployeeActivity extends AppCompatActivity implements View.OnClickL
         btnUpdateEmployee.setOnClickListener(this);
         btnDeleteEmployee.setOnClickListener(this);
         getDataCompanyClicked();
-        tvNameCompany.setText(String.format("%s %s", getString(R.string.inputEmployee), mNameCompany));
+        tvNameCompany.setText(String.format(FORMAT, getString(R.string.inputEmployee), mNameCompany));
         mListEmployeeById = mDatabase.getAllEmployeeById(mIDCompany);
         if (mListEmployeeById.size() != 0) {
-            mTvListEmployee.setText(String.format("%s %s", getString(R.string.listEmployee), mNameCompany));
+            mTvListEmployee.setText(String.format(FORMAT, getString(R.string.listEmployee), mNameCompany));
             mDem = mListEmployeeById.get(mListEmployeeById.size() - 1).getIdEmployee() + 1;
         } else {
             mDem += 1;
@@ -84,7 +85,7 @@ public class EmployeeActivity extends AppCompatActivity implements View.OnClickL
                         mExist = 0;
                         Toast.makeText(this, R.string.employeeExist, Toast.LENGTH_SHORT).show();
                     } else {
-                        mTvListEmployee.setText(String.format("%s %s", getString(R.string.listEmployee), mNameCompany));
+                        mTvListEmployee.setText(String.format(FORMAT, getString(R.string.listEmployee), mNameCompany));
                         if (mDatabase.insertEmployee(mEmployee) > 0) {
                             mListEmployeeById.add(mEmployee);
                             mDem = mListEmployeeById.get(mListEmployeeById.size() - 1).getIdEmployee() + 1;
@@ -94,7 +95,7 @@ public class EmployeeActivity extends AppCompatActivity implements View.OnClickL
                         }
                     }
                 } else {
-                    mTvListEmployee.setText(String.format("%s %s", getString(R.string.listEmployee), mNameCompany));
+                    mTvListEmployee.setText(String.format(FORMAT, getString(R.string.listEmployee), mNameCompany));
                     if (mDatabase.insertEmployee(mEmployee) > 0) {
                         mListEmployeeById.add(mEmployee);
                         mDem = mListEmployeeById.get(mListEmployeeById.size() - 1).getIdEmployee() + 1;

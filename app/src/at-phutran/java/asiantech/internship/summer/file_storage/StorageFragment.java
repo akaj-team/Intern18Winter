@@ -63,7 +63,7 @@ public class StorageFragment extends Fragment implements View.OnClickListener {
     public void readInternalStorage() {
         try {
             mFileInputStream = Objects.requireNonNull(getActivity()).openFileInput(FILENAME_INTERNAL);
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(mFileInputStream));
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(mFileInputStream,"UTF-8"));
             StringBuilder stringBuilder = new StringBuilder();
             String text;
             while ((text = bufferedReader.readLine()) != null) {
