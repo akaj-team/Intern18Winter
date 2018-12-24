@@ -4,7 +4,6 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
@@ -43,6 +42,8 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAda
     private DrawerAdapter mAdapter;
     private ActionBarDrawerToggle mDrawerToggle;
     private int positionSelected = -1;
+    private DrawerLayout mDrawerLayout;
+    private TextView mTvName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,20 +51,21 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAda
         setContentView(R.layout.activity_drawer_layout);
         initView();
         initDrawer();
-        displayWidth();
     }
 
-    public int displayWidth() {
+    private int displayWidth() {
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
         return size.x;
     }
 
-    public void initView() {
-        RecyclerView recyclerView = findViewById(R.id.recycler_view);
+    private void initView() {
+        RecyclerView recyclerView = findViewById(R.id.rvDrawer);
         ViewGroup.LayoutParams params = recyclerView.getLayoutParams();
-        params.width = 4 * displayWidth() / 5;
+        mDrawerLayout = findViewById(R.id.drawer_layout);
+        mTvName = findViewById(R.id.tvName);
+        params.width = 5 * displayWidth() / 6;
         recyclerView.setLayoutParams(params);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -74,7 +76,7 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAda
         mDrawerItem.add(new DrawerItem(R.drawable.bg_outbox, getString(R.string.outbox)));
         mDrawerItem.add(new DrawerItem(R.drawable.bg_delete, getString(R.string.trash)));
         mDrawerItem.add(new DrawerItem(R.drawable.bg_spam, getString(R.string.spam)));
-        mAdapter = new DrawerAdapter(mDrawerItem, this, this);
+        mAdapter = new DrawerAdapter(mDrawerItem,  this);
         recyclerView.setAdapter(mAdapter);
     }
 
@@ -104,7 +106,7 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAda
 
     @Override
     public void itemClick(int type) {
-        if (type == 1) {
+        if (type == ChoosePhotoDialogFragment.CHOOSE_GALLERY) {
             int permissionCheck = ContextCompat.checkSelfPermission(this,
                     READ_EXTERNAL_STORAGE);
             if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
@@ -128,7 +130,7 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAda
             }
             openGallery();
         }
-        if (type == 2) {
+        if (type == ChoosePhotoDialogFragment.CHOOSE_CAMERA) {
             int permissionCheck = ContextCompat.checkSelfPermission(this,
                     CAMERA);
             if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
@@ -158,7 +160,7 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAda
     protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
         super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
         switch (requestCode) {
-            case 0:
+            case CAMERA_REQUEST:
                 if (resultCode == RESULT_OK) {
                     Bitmap image = (Bitmap) imageReturnedIntent.getExtras().get("data");
                     DrawerItem drawerItem = mDrawerItem.get(0);
@@ -168,7 +170,7 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAda
                 }
 
                 break;
-            case 1:
+            case GALLERY_REQUEST:
                 if (resultCode == RESULT_OK) {
                     Uri selectedImage = imageReturnedIntent.getData();
                     mDrawerItem.get(0).setAvatarUri(selectedImage);
@@ -179,11 +181,6 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAda
     }
 
     public void initDrawer() {
-        DrawerLayout mDrawerLayout = findViewById(R.id.drawer_layout);
-        TextView mTvName = findViewById(R.id.tvName);
-
-        mDrawerLayout.setScrimColor(Color.TRANSPARENT);
-
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.navigationDrawerOpen, R.string.navigationDrawerClose) {
 
             @Override

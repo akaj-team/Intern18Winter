@@ -4,7 +4,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 
 public class DrawerItem {
-    private int iconImage;
+    private int iconResource;
     private String title;
     private int imgAvt;
     private String gmail;
@@ -14,7 +14,7 @@ public class DrawerItem {
     private Bitmap avtBitmap;
 
     public DrawerItem(int iconImage, String title) {
-        this.iconImage = iconImage;
+        this.iconResource = iconImage;
         this.title = title;
     }
 
@@ -41,11 +41,11 @@ public class DrawerItem {
     }
 
     public int getIconImage() {
-        return iconImage;
+        return iconResource;
     }
 
     public void setIconImage(int iconImage) {
-        this.iconImage = iconImage;
+        this.iconResource = iconImage;
     }
 
     public String getCat() {

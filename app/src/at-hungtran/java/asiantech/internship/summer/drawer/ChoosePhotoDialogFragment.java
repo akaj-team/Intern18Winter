@@ -13,6 +13,8 @@ import asiantech.internship.summer.R;
 
 public class ChoosePhotoDialogFragment extends DialogFragment {
 
+    public static final int CHOOSE_CAMERA = 2;
+    public static final int CHOOSE_GALLERY = 1;
     private onItemClick mChooseOne;
 
     public static ChoosePhotoDialogFragment newInstance() {
@@ -39,17 +41,13 @@ public class ChoosePhotoDialogFragment extends DialogFragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.choose_photo_dialog_fragment_layout, container, false);
         Button btnGallery = view.findViewById(R.id.btnGallery);
-        btnGallery.setOnClickListener(v -> mChooseOne.itemClick(1));
+        btnGallery.setOnClickListener(v -> mChooseOne.itemClick(CHOOSE_GALLERY));
         Button btnCamera = view.findViewById(R.id.btnCamera);
-        btnCamera.setOnClickListener(v -> mChooseOne.itemClick(2));
+        btnCamera.setOnClickListener(v -> mChooseOne.itemClick(CHOOSE_CAMERA));
         return view;
     }
 
     public interface onItemClick {
-        void onAvatarClicked();
-
         void itemClick(int type);
-
-        void onItemClicked(int position);
     }
 }
