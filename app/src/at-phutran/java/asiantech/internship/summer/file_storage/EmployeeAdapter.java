@@ -32,7 +32,6 @@ class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.ViewHolder> {
         holder.tvContent.setText(employee.getNameEmployee());
     }
 
-
     @Override
     public int getItemCount() {
         return mListEmployees.size();
