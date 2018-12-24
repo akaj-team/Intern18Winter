@@ -55,7 +55,13 @@ public class EmployeeActivity extends AppCompatActivity implements EmployeeAdapt
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
         mEmployeesById = mDBManager.getAllEmployeeById(mIdCompany);
-        mEdtIdEmployee.setText(String.valueOf(mEmployeesById.size() + 1));
+        int idEmployee;
+        if (mEmployeesById.size() == 0) {
+            idEmployee = 1;
+        } else {
+            idEmployee = mEmployeesById.get(mEmployeesById.size() - 1).getIdEmployee() + 1;
+        }
+        mEdtIdEmployee.setText(String.valueOf(idEmployee));
         tvNameCompany.setText(company.getNameCompany());
         mEmployeeAdapter = new EmployeeAdapter(mEmployeesById, this);
         recyclerView.setAdapter(mEmployeeAdapter);
