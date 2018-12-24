@@ -40,12 +40,12 @@ public class DatabaseFragment extends Fragment implements CompanyAdapter.OnClick
         mRecyclerView.setAdapter(new CompanyAdapter(companies, this));
     }
     private void addListCompany(){
-        databaseHelper.addCompany(new Company("Company 1"));
-        databaseHelper.addCompany(new Company("Company 2"));
-        databaseHelper.addCompany(new Company("Company 3"));
-        databaseHelper.addCompany(new Company("Company 4"));
-        databaseHelper.addCompany(new Company("Company 4"));
-        databaseHelper.addCompany(new Company("Company 5"));
+        databaseHelper.addCompany(new Company("Asian Tech Company"));
+        databaseHelper.addCompany(new Company("FPT Company"));
+        databaseHelper.addCompany(new Company("Framgia Company"));
+        databaseHelper.addCompany(new Company("Enclave Company"));
+        databaseHelper.addCompany(new Company("Axon Active Company"));
+        databaseHelper.addCompany(new Company("Gameloft Company"));
     }
 
     @Override

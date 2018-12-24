@@ -8,11 +8,11 @@ import android.support.v7.widget.Toolbar;
 
 import asiantech.internship.summer.R;
 
-public class TabLayoutActivity extends AppCompatActivity {
+public class FileStorageActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tab_layout);
+        setContentView(R.layout.activity_filestorage);
         Toolbar toolbar = findViewById(R.id.toolbar);
         TabLayout tabLayout = findViewById(R.id.tab_layout);
         ViewPager viewPager = findViewById(R.id.pager);
@@ -21,7 +21,7 @@ public class TabLayoutActivity extends AppCompatActivity {
             setSupportActionBar(toolbar);
         }
 
-        viewPager.setAdapter(new TabLayoutAdapter(getSupportFragmentManager()));
+        viewPager.setAdapter(new FileStorageAdapter(getSupportFragmentManager()));
         tabLayout.setupWithViewPager(viewPager);
     }
 

@@ -5,13 +5,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-public class TabLayoutAdapter extends FragmentPagerAdapter {
+public class FileStorageAdapter extends FragmentPagerAdapter {
     private String listTab[] = {"Share Preference", "Store", "Database"};
     private SharePreferenceFragment mSharePreferenceFragment;
     private StoreFragment mStoreFragment;
     private DatabaseFragment mDatabaseFragment;
 
-    TabLayoutAdapter(FragmentManager fm) {
+    FileStorageAdapter(FragmentManager fm) {
         super(fm);
         mSharePreferenceFragment = new SharePreferenceFragment();
         mStoreFragment = new StoreFragment();
