@@ -19,4 +19,10 @@
     <string name="username">Username</string>
     <string name="apply">Apply</string>
     <string name="signupActivity">SignUpActivity</string>
+    <string name="thisFieldIsNotEmpty">This field is not empty</string>
+    <string name="error">Error</string>
+    <string name="listCompany">List Company</string>
+    <string name="delete">Delete</string>
+    <string name="insert">Insert</string>
+    <string name="update">Update</string>
 </resources>

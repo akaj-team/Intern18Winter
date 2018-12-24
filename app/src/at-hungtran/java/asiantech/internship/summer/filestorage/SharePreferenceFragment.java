@@ -18,7 +18,7 @@ import asiantech.internship.summer.R;
 public class SharePreferenceFragment extends Fragment {
     private EditText mUsername;
     private EditText mPassword;
-    private SharedPreferences.Editor editor;
+    private SharedPreferences.Editor mEditor;
 
     @Nullable
     @Override
@@ -33,7 +33,7 @@ public class SharePreferenceFragment extends Fragment {
         mPassword = view.findViewById(R.id.edtPassword);
         Button mLogin = view.findViewById(R.id.btnLoginShare);
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("loginref", Context.MODE_PRIVATE);
-        editor = sharedPreferences.edit();
+        mEditor = sharedPreferences.edit();
         mLogin.setOnClickListener(v -> login());
         Boolean saveLogin = sharedPreferences.getBoolean("savelogin", true);
         if (saveLogin) {
@@ -46,12 +46,11 @@ public class SharePreferenceFragment extends Fragment {
         String username = mUsername.getText().toString();
         String password = mPassword.getText().toString();
         if (!username.equals("") && !password.equals("")) {
-            editor.putBoolean("savelogin", true);
-            editor.putString("username", username);
-            editor.putString("password", password);
-            editor.commit();
-            Toast.makeText(getActivity(), "Login successfully",
-                    Toast.LENGTH_LONG).show();
+            mEditor.putBoolean("savelogin", true);
+            mEditor.putString("username", username);
+            mEditor.putString("password", password);
+            mEditor.commit();
+            Toast.makeText(getActivity(), "Login successfully", Toast.LENGTH_LONG).show();
         }
     }
 }

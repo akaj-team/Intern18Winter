@@ -30,10 +30,10 @@ import asiantech.internship.summer.R;
 public class StoreFragment extends Fragment {
     private static final int REQUEST_ID_READ_PERMISSION = 100;
     private static final int REQUEST_ID_WRITE_PERMISSION = 200;
-    private final String fileNameExternal = "externalStorage.txt";
-    private final String filenameInternal = "internalStorage.txt";
-    private File myFile;
-    private String filepath = "MyDir";
+    private final String mFileNameExternal = "externalStorage.txt";
+    private final String mFilenameInternal = "internalStorage.txt";
+    private File mMyFile;
+    private String mFilepath = "MyDir";
     private EditText mEdtInternal;
     private EditText mEdtExternal;
 
@@ -103,20 +103,20 @@ public class StoreFragment extends Fragment {
 
     private void writeFileExternal() {
         ContextWrapper contextWrapper = new ContextWrapper(getActivity().getApplicationContext());
-        File extStore = contextWrapper.getDir(filepath, Context.MODE_PRIVATE);
-        String path = extStore.getAbsolutePath() + "/" + fileNameExternal;
+        File extStore = contextWrapper.getDir(mFilepath, Context.MODE_PRIVATE);
+        String path = extStore.getAbsolutePath() + "/" + mFileNameExternal;
         String external = mEdtExternal.getText().toString();
 
         try {
-            myFile = new File(path);
-            myFile.createNewFile();
-            FileOutputStream fOut = new FileOutputStream(myFile);
+            mMyFile = new File(path);
+            mMyFile.createNewFile();
+            FileOutputStream fOut = new FileOutputStream(mMyFile);
             OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut);
             myOutWriter.append(external);
             myOutWriter.close();
             fOut.close();
 
-            Toast.makeText(getActivity().getApplicationContext(), fileNameExternal + " saved", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity().getApplicationContext(), mFileNameExternal + " saved", Toast.LENGTH_LONG).show();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -124,11 +124,11 @@ public class StoreFragment extends Fragment {
 
     private void onClickInternal() {
         ContextWrapper contextWrapper = new ContextWrapper(getActivity().getApplicationContext());
-        File directory = contextWrapper.getDir(filepath, Context.MODE_PRIVATE);
-        myFile = new File(directory, filenameInternal);
+        File directory = contextWrapper.getDir(mFilepath, Context.MODE_PRIVATE);
+        mMyFile = new File(directory, mFilenameInternal);
         String internal = mEdtInternal.getText().toString();
         try {
-            FileOutputStream fos = new FileOutputStream(myFile);
+            FileOutputStream fos = new FileOutputStream(mMyFile);
             fos.write(internal.getBytes());
             fos.close();
         } catch (IOException e) {
@@ -140,11 +140,11 @@ public class StoreFragment extends Fragment {
 
     private void readFileInternal() {
         ContextWrapper contextWrapper = new ContextWrapper(getActivity().getApplicationContext());
-        File directory = contextWrapper.getDir(filepath, Context.MODE_PRIVATE);
-        myFile = new File(directory, filenameInternal);
+        File directory = contextWrapper.getDir(mFilepath, Context.MODE_PRIVATE);
+        mMyFile = new File(directory, mFilenameInternal);
         StringBuilder myData = new StringBuilder();
         try {
-            FileInputStream fis = new FileInputStream(myFile);
+            FileInputStream fis = new FileInputStream(mMyFile);
             DataInputStream in = new DataInputStream(fis);
             BufferedReader br = new BufferedReader(
                     new InputStreamReader(in));
@@ -161,8 +161,8 @@ public class StoreFragment extends Fragment {
 
     private void readFileExternal() {
         ContextWrapper contextWrapper = new ContextWrapper(getActivity().getApplicationContext());
-        File extStore = contextWrapper.getDir(filepath, Context.MODE_PRIVATE);
-        String path = extStore.getAbsolutePath() + "/" + fileNameExternal;
+        File extStore = contextWrapper.getDir(mFilepath, Context.MODE_PRIVATE);
+        String path = extStore.getAbsolutePath() + "/" + mFileNameExternal;
         String s;
         StringBuilder fileContent = new StringBuilder();
         try {

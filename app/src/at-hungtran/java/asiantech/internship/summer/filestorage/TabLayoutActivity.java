@@ -9,7 +9,6 @@ import android.support.v7.widget.Toolbar;
 import asiantech.internship.summer.R;
 
 public class TabLayoutActivity extends AppCompatActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
