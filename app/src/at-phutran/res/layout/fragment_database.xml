@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
     <TextView
-        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/listCompany"
         android:background="@color/colorYellow"
+        android:gravity="center"
+        android:text="@string/listCompany"
         android:textSize="30sp"
-        android:textStyle="bold|italic"/>
+        android:textStyle="bold|italic" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerViewCompany"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </android.support.v7.widget.RecyclerView>
+        android:layout_height="match_parent" />
 </LinearLayout>

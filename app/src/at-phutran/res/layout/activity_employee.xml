@@ -1,97 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/llListEmployees"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="asiantech.internship.summer.file_storage.EmployeeActivity">
+
     <TextView
         android:id="@+id/tvNameEmployee"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/inputEmployee"
-        android:gravity="center"
-        android:textSize="20sp"
         android:background="@color/colorSkyBlue"
-        android:textStyle="bold|italic"/>
+        android:gravity="center"
+        android:text="@string/inputEmployee"
+        android:textSize="20sp"
+        android:textStyle="bold|italic" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/inputIdEmployee"
-            android:layout_weight="2"/>
+            android:layout_weight="2"
+            android:text="@string/inputIdEmployee" />
+
         <EditText
             android:id="@+id/edtIDEmployee"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="@string/inputIdEmployee"
             android:layout_weight="3"
             android:enabled="false"
+            android:hint="@string/inputIdEmployee"
             android:inputType="text"
             tools:ignore="Autofill" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/inputNameEmployee"
-            android:layout_weight="2"/>
+            android:layout_weight="2"
+            android:text="@string/inputNameEmployee" />
+
         <EditText
             android:id="@+id/edtNameEmployee"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="@string/inputNameEmployee"
             android:layout_weight="3"
+            android:hint="@string/inputNameEmployee"
             android:inputType="text"
             tools:ignore="Autofill" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:gravity="center">
+
         <Button
             android:id="@+id/btnUpdateEmployee"
-            android:layout_gravity="center"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/update"
+            android:layout_gravity="center"
             android:layout_weight="1"
+            android:text="@string/update"
             tools:ignore="ButtonStyle" />
+
         <Button
             android:id="@+id/btnAddEmployee"
-            android:layout_gravity="center"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/insert"
+            android:layout_gravity="center"
             android:layout_weight="1"
+            android:text="@string/insert"
             tools:ignore="ButtonStyle" />
+
         <Button
             android:id="@+id/btnDeleteEmployee"
-            android:layout_gravity="center"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/delete"
+            android:layout_gravity="center"
             android:layout_weight="1"
+            android:text="@string/delete"
             tools:ignore="ButtonStyle" />
     </LinearLayout>
+
     <TextView
         android:id="@+id/tvListEmployee"
-        android:padding="10dp"
-        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:background="@color/colorYellow"/>
+        android:background="@color/colorYellow"
+        android:gravity="center"
+        android:padding="10dp"
+        android:textSize="20sp" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerViewEmployee"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </android.support.v7.widget.RecyclerView>
+        android:layout_height="wrap_content" />
 </LinearLayout>
