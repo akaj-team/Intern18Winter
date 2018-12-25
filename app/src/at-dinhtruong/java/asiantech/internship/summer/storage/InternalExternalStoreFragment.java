@@ -153,11 +153,11 @@ public class InternalExternalStoreFragment extends Fragment implements View.OnCl
         String data = mEdtExternal.getText().toString();
         try {
             File myFile = new File(path);
-            FileOutputStream fOut = new FileOutputStream(myFile);
-            OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut, getString(R.string.charSet));
+            FileOutputStream fileOutputStream = new FileOutputStream(myFile);
+            OutputStreamWriter myOutWriter = new OutputStreamWriter(fileOutputStream, getString(R.string.charSet));
             myOutWriter.append(data);
             myOutWriter.close();
-            fOut.close();
+            fileOutputStream.close();
             Toast.makeText(getContext(), FILE_NAME + getString(R.string.saved), Toast.LENGTH_LONG).show();
         } catch (IOException e) {
             Log.e(INPUT_OUTPUT_EXCEPTION, getString(R.string.inputOutputException), e);
@@ -172,8 +172,7 @@ public class InternalExternalStoreFragment extends Fragment implements View.OnCl
         try {
             File myFile = new File(path);
             FileInputStream fileInputStream = new FileInputStream(myFile);
-            InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream, getString(R.string.charSet));
-            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream, getString(R.string.charSet)));
             while ((s = bufferedReader.readLine()) != null) {
                 fileContent.append(s);
             }
@@ -189,8 +188,7 @@ public class InternalExternalStoreFragment extends Fragment implements View.OnCl
         try {
             FileInputStream fileInputStream = new FileInputStream(mMyInternalFile);
             DataInputStream dataInputStream = new DataInputStream(fileInputStream);
-            InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream, getString(R.string.charSet));
-            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream, getString(R.string.charSet)));
             String strLine;
             while (null != (strLine = bufferedReader.readLine())) {
                 myData.append(strLine);
