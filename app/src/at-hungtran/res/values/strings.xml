@@ -42,4 +42,13 @@
     <string name="eventListener">Event and Listener</string>
     <string name="recyclerView">Android RecyclerView</string>
     <string name="fileStorage">File Storage</string>
+    <string name="external">EXTERNAL</string>
+    <string name="internal">INTERNAL</string>
+    <string name="utf8">UTF-8</string>
+    <string name="saveSuccessfully">Save successfully!!</string>
+    <string name="permissionCancel">Permission Cancel!!</string>
+    <string name="saved">saved</string>
+    <string name="sharePreference">Share Preference</string>
+    <string name="internalExternnal">Internal External</string>
+    <string name="database">Database</string>
 </resources>

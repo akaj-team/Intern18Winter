@@ -5,8 +5,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import asiantech.internship.summer.R;
+
 public class FileStorageAdapter extends FragmentPagerAdapter {
-    private String listTab[] = {"Share Preference", "Store", "Database"};
+    private String listTab[] = {String.valueOf(R.string.sharePreference), String.valueOf(R.string.internalExternnal), String.valueOf(R.string.database)};
     private SharePreferenceFragment mSharePreferenceFragment;
     private StoreFragment mStoreFragment;
     private DatabaseFragment mDatabaseFragment;
@@ -28,7 +30,7 @@ public class FileStorageAdapter extends FragmentPagerAdapter {
             return mDatabaseFragment;
         }
         return null;
-     }
+    }
 
     @Override
     public int getCount() {

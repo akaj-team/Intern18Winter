@@ -10,8 +10,9 @@
         android:layout_width="300dp"
         android:layout_height="40dp"
         android:background="@drawable/border"
+        android:importantForAutofill="no"
         android:inputType="text"
-        tools:ignore="Autofill,LabelFor" />
+        tools:ignore="LabelFor" />
 
     <EditText
         android:id="@+id/edtPassword"
@@ -19,8 +20,9 @@
         android:layout_height="40dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/border"
+        android:importantForAutofill="no"
         android:inputType="textPassword"
-        tools:ignore="Autofill,LabelFor,UnusedAttribute" />
+        tools:ignore="LabelFor" />
 
     <Button
         android:id="@+id/btnLoginShare"

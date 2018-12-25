@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,12 +25,15 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.nio.charset.Charset;
 
 import asiantech.internship.summer.R;
 
 public class StoreFragment extends Fragment {
     private static final int REQUEST_ID_READ_PERMISSION = 100;
     private static final int REQUEST_ID_WRITE_PERMISSION = 200;
+    private static final int VERSION_SDK = 23;
+    private static final String TAG = "StoreFragment";
     private final String mFileNameExternal = "externalStorage.txt";
     private final String mFilenameInternal = "internalStorage.txt";
     private File mMyFile;
@@ -66,7 +70,7 @@ public class StoreFragment extends Fragment {
     }
 
     private boolean askPermission() {
-        if (android.os.Build.VERSION.SDK_INT >= 23) {
+        if (android.os.Build.VERSION.SDK_INT >= VERSION_SDK) {
             int permission = ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
             if (permission != PackageManager.PERMISSION_GRANTED) {
                 this.requestPermissions(
@@ -97,7 +101,7 @@ public class StoreFragment extends Fragment {
                 }
             }
         } else {
-            Toast.makeText(getActivity().getApplicationContext(), "Permission Cancelled!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity().getApplicationContext(), R.string.permissionCancel, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -111,14 +115,14 @@ public class StoreFragment extends Fragment {
             mMyFile = new File(path);
             mMyFile.createNewFile();
             FileOutputStream fOut = new FileOutputStream(mMyFile);
-            OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut);
+            OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut,String.valueOf(R.string.utf8));
             myOutWriter.append(external);
             myOutWriter.close();
             fOut.close();
 
-            Toast.makeText(getActivity().getApplicationContext(), mFileNameExternal + " saved", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity().getApplicationContext(), mFileNameExternal + R.string.saved, Toast.LENGTH_LONG).show();
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e(TAG, e.getMessage(), e);
         }
     }
 
@@ -129,12 +133,12 @@ public class StoreFragment extends Fragment {
         String internal = mEdtInternal.getText().toString();
         try {
             FileOutputStream fos = new FileOutputStream(mMyFile);
-            fos.write(internal.getBytes());
+            fos.write(internal.getBytes(Charset.forName(String.valueOf(R.string.utf8))));
             fos.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e(TAG, e.getMessage(), e);
         }
-        Toast.makeText(getActivity(), "Save successfully",
+        Toast.makeText(getActivity(), R.string.saveSuccessfully,
                 Toast.LENGTH_LONG).show();
     }
 
@@ -147,14 +151,14 @@ public class StoreFragment extends Fragment {
             FileInputStream fis = new FileInputStream(mMyFile);
             DataInputStream in = new DataInputStream(fis);
             BufferedReader br = new BufferedReader(
-                    new InputStreamReader(in));
+                    new InputStreamReader(in,String.valueOf(R.string.utf8)));
             String strLine;
             while ((strLine = br.readLine()) != null) {
                 myData.append(strLine);
             }
             in.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e(TAG, e.getMessage(), e);
         }
         mEdtInternal.setText(myData.toString());
     }
@@ -169,7 +173,7 @@ public class StoreFragment extends Fragment {
             File myFile = new File(path);
             FileInputStream fIn = new FileInputStream(myFile);
             BufferedReader myReader = new BufferedReader(
-                    new InputStreamReader(fIn));
+                    new InputStreamReader(fIn,String.valueOf(R.string.utf8)));
 
             while ((s = myReader.readLine()) != null) {
                 fileContent.append(s).append("\n");
@@ -177,7 +181,7 @@ public class StoreFragment extends Fragment {
             myReader.close();
             mEdtExternal.setText(fileContent.toString());
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e(TAG, e.getMessage(), e);
         }
     }
 }

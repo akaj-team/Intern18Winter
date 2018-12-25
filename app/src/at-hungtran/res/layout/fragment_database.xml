@@ -8,14 +8,15 @@
         android:id="@+id/tvCompany"
         android:layout_width="300dp"
         android:layout_height="40dp"
-        android:text="@string/listCompany"
-        android:textSize="25sp"
+        android:background="@drawable/border"
         android:gravity="center"
-        android:background="@drawable/border" />
+        android:text="@string/listCompany"
+        android:textSize="25sp" />
+
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvCompany"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/rvCompany">
+        android:layout_height="wrap_content">
 
     </android.support.v7.widget.RecyclerView>
 
