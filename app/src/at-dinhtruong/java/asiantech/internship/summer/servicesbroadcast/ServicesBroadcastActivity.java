@@ -7,6 +7,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
@@ -79,24 +80,23 @@ public class ServicesBroadcastActivity extends AppCompatActivity implements View
             mMediaPlayer.pause();
             mBtnPlay.setText(R.string.play);
         }
-        //nitification
-        NotificationCompat.Builder mBuilder =
-                new NotificationCompat.Builder(getApplicationContext(), "notify_001");
-        Intent ii = new Intent(getApplicationContext(), ServicesBroadcastActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, ii, 0);
 
-        NotificationCompat.BigTextStyle bigText = new NotificationCompat.BigTextStyle();
-        bigText.bigText("ahihi");
-        bigText.setBigContentTitle("Play music");
-        bigText.setSummaryText("Da da di da");
+        showNotification();
+        onUpdateSeekBarProgress();
+    }
 
+    public void showNotification() {
+        Intent intent = new Intent(getApplicationContext(), ServicesBroadcastActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, 0);
+
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getApplicationContext(), "notify_001");
         mBuilder.setContentIntent(pendingIntent);
         mBuilder.setSmallIcon(R.drawable.ic_play_arrow_black_36dp);
-        mBuilder.setContentTitle("Your Title");
-        mBuilder.setContentText("Your text");
+        mBuilder.setLargeIcon(BitmapFactory.decodeResource(getApplicationContext().getResources(),
+                R.drawable.ic_play_arrow_black_36dp));
+        mBuilder.setContentTitle("Play Music");
+        mBuilder.setContentText("Da da di da");
         mBuilder.setPriority(Notification.PRIORITY_MAX);
-        mBuilder.setStyle(bigText);
-        mBuilder.addAction(R.drawable.ic_play_arrow_black_36dp, "play music", pendingIntent);
         NotificationManager mNotificationManager = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -112,8 +112,6 @@ public class ServicesBroadcastActivity extends AppCompatActivity implements View
         if (mNotificationManager != null) {
             mNotificationManager.notify(0, mBuilder.build());
         }
-        //nitification
-        onUpdateSeekBarProgress();
     }
 
     @SuppressLint("ClickableViewAccessibility")
