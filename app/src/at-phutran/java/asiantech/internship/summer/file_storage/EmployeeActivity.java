@@ -27,7 +27,7 @@ public class EmployeeActivity extends AppCompatActivity implements View.OnClickL
     private String mNameCompany;
     private EmployeeAdapter mEmployeeAdapter;
     private int mIDCompany;
-    private int mDem = 0;
+    private int mCount = 0;
     private int mExist = 0;
     private int mPosition;
 
@@ -54,13 +54,13 @@ public class EmployeeActivity extends AppCompatActivity implements View.OnClickL
         mListEmployeeById = mDatabase.getAllEmployeeById(mIDCompany);
         if (mListEmployeeById.size() != 0) {
             mTvListEmployee.setText(String.format(FORMAT, getString(R.string.listEmployee), mNameCompany));
-            mDem = mListEmployeeById.get(mListEmployeeById.size() - 1).getIdEmployee() + 1;
+            mCount = mListEmployeeById.get(mListEmployeeById.size() - 1).getIdEmployee() + 1;
         } else {
-            mDem += 1;
+            mCount += 1;
             mTvListEmployee.setText(R.string.empty);
         }
 
-        resetViewInsertEmployee(mDem);
+        resetViewInsertEmployee(mCount);
         initView(mListEmployeeById);
     }
 
@@ -72,9 +72,9 @@ public class EmployeeActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onClick(View view) {
+        createEmployee();
         switch (view.getId()) {
             case R.id.btnAddEmployee: {
-                creatEmployee();
                 if (mListEmployeeById.size() > 0) {
                     for (int i = 0; i < mListEmployeeById.size(); i++) {
                         if (mEmployee.getIdEmployee() == mListEmployeeById.get(i).getIdEmployee()) {
@@ -88,7 +88,7 @@ public class EmployeeActivity extends AppCompatActivity implements View.OnClickL
                         mTvListEmployee.setText(String.format(FORMAT, getString(R.string.listEmployee), mNameCompany));
                         if (mDatabase.insertEmployee(mEmployee) > 0) {
                             mListEmployeeById.add(mEmployee);
-                            mDem = mListEmployeeById.get(mListEmployeeById.size() - 1).getIdEmployee() + 1;
+                            mCount = mListEmployeeById.get(mListEmployeeById.size() - 1).getIdEmployee() + 1;
                             Toast.makeText(this, R.string.successful, Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(this, R.string.error, Toast.LENGTH_SHORT).show();
@@ -98,24 +98,23 @@ public class EmployeeActivity extends AppCompatActivity implements View.OnClickL
                     mTvListEmployee.setText(String.format(FORMAT, getString(R.string.listEmployee), mNameCompany));
                     if (mDatabase.insertEmployee(mEmployee) > 0) {
                         mListEmployeeById.add(mEmployee);
-                        mDem = mListEmployeeById.get(mListEmployeeById.size() - 1).getIdEmployee() + 1;
+                        mCount = mListEmployeeById.get(mListEmployeeById.size() - 1).getIdEmployee() + 1;
                         Toast.makeText(this, R.string.successful, Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(this, R.string.error, Toast.LENGTH_SHORT).show();
                     }
                 }
-                resetViewInsertEmployee(mDem);
+                resetViewInsertEmployee(mCount);
                 mEmployeeAdapter.notifyDataSetChanged();
                 break;
             }
             case R.id.btnUpdateEmployee: {
-                creatEmployee();
-                if (mEmployee.getNameEmployee().equals("")) {
+                if (mEmployee.getNameEmployee().isEmpty()) {
                     Toast.makeText(getApplicationContext(), R.string.noteInputEmployee, Toast.LENGTH_LONG).show();
-                } else if (!mEmployee.getNameEmployee().equals("") && mDatabase.updateEmployee(mEmployee) > 0) {
+                } else if (!mEmployee.getNameEmployee().isEmpty() && mDatabase.updateEmployee(mEmployee) > 0) {
                     mListEmployeeById.get(mPosition).setNameEmployee(mEmployee.getNameEmployee());
                     Toast.makeText(getApplicationContext(), R.string.successful, Toast.LENGTH_SHORT).show();
-                    resetViewInsertEmployee(mDem);
+                    resetViewInsertEmployee(mCount);
                     mEmployeeAdapter.notifyDataSetChanged();
                 } else {
                     Toast.makeText(getApplicationContext(), R.string.error, Toast.LENGTH_LONG).show();
@@ -123,7 +122,6 @@ public class EmployeeActivity extends AppCompatActivity implements View.OnClickL
                 break;
             }
             case R.id.btnDeleteEmployee: {
-                creatEmployee();
                 if (mListEmployeeById.size() == 0) {
                     Toast.makeText(getApplicationContext(), R.string.empty, Toast.LENGTH_LONG).show();
                 } else {
@@ -135,13 +133,13 @@ public class EmployeeActivity extends AppCompatActivity implements View.OnClickL
                     }
                 }
                 mEmployeeAdapter.notifyDataSetChanged();
-                resetViewInsertEmployee(mDem);
+                resetViewInsertEmployee(mCount);
                 break;
             }
         }
     }
 
-    private void creatEmployee() {
+    private void createEmployee() {
         int id = Integer.parseInt(mEdtIDEmployee.getText().toString());
         String name = mEdtNameEmployee.getText().toString();
         mEmployee = new Employee(id, name, mIDCompany);
