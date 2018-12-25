@@ -54,5 +54,9 @@
     <string name="demoDrawerSlide">Demo Drawer Slide</string>
     <string name="navigationDrawerOpen">Drawer Open</string>
     <string name="navigationDrawerClose">Drawer Closed</string>
+    <string name="galleryPermissionAccepted">Gallery Permission Accepted</string>
+    <string name="galleryPermissionDenied">Gallery Permisison Denied</string>
+    <string name="cameraPermissionAccepted">Camera Permission Accepted</string>
+    <string name="cameraPermissionDenied">Camera Permission Denied</string>
 
 </resources>

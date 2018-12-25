@@ -30,10 +30,10 @@ public class DrawerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if (viewType == TYPE_HEADER) {
             View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.drawer_item_header, parent, false);
-            return new HeaderViewHolder(layoutView, mListener);
+            return new HeaderViewHolder(layoutView);
         } else if (viewType == TYPE_ITEM) {
             View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.drawer_item, parent, false);
-            return new ItemViewHolder(layoutView, mListener);
+            return new ItemViewHolder(layoutView);
         }
         throw new RuntimeException();
     }
@@ -74,11 +74,11 @@ public class DrawerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         private ImageView mImgAvatar;
         private TextView mTvEmail;
 
-        HeaderViewHolder(View itemView, OnItemClickListener headerListener) {
+        HeaderViewHolder(View itemView) {
             super(itemView);
             mImgAvatar = itemView.findViewById(R.id.imgAvatar);
             mTvEmail = itemView.findViewById(R.id.tvEmail);
-            mImgAvatar.setOnClickListener(view -> headerListener.onAvatarClicked());
+            mImgAvatar.setOnClickListener(view -> mListener.onAvatarClicked());
         }
 
         void onBindHeaderView(DrawerItem header) {
@@ -96,12 +96,12 @@ public class DrawerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         private LinearLayout mllItem;
         private ImageView mImgItem;
 
-        ItemViewHolder(View itemView, OnItemClickListener itemListener) {
+        ItemViewHolder(View itemView) {
             super(itemView);
             mImgItem = itemView.findViewById(R.id.imgItem);
             mTvItem = itemView.findViewById(R.id.tvItem);
             mllItem = itemView.findViewById(R.id.llItem);
-            itemView.setOnClickListener(view -> itemListener.onItemClicked(getLayoutPosition()));
+            itemView.setOnClickListener(view -> mListener.onItemClicked(getLayoutPosition()));
         }
 
         void onBindItemView(DrawerItem item) {

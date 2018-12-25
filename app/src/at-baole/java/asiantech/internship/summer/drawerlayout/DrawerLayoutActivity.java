@@ -1,6 +1,8 @@
 package asiantech.internship.summer.drawerlayout;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.media.MediaScannerConnection;
@@ -8,6 +10,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
@@ -36,8 +41,11 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAda
     private static final int CAMERA = 102;
     private static final int CHOOSE_GALLERY = 0;
     private static final int CAPTURE_CAMERA = 1;
+    private static final int GALLERY_PERMISSION_REQUEST_CODE = 201;
+    private static final int CAMERA_PERMISSION_REQUEST_CODE = 202;
+    private int mActionChangeAvatar = 79;
     private int mPositionSelected = -1;
-    private List<DrawerItem> mItems;
+    private List<DrawerItem> mDrawerItems;
     private DrawerAdapter mAdapter;
     private DrawerLayout mDrawerLayout;
     private TextView mTvName;
@@ -58,7 +66,7 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAda
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(DrawerLayoutActivity.this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
-        mAdapter = new DrawerAdapter(mItems, this);
+        mAdapter = new DrawerAdapter(mDrawerItems, this);
         recyclerView.setAdapter(mAdapter);
     }
 
@@ -77,12 +85,12 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAda
 
 
     private void mockData() {
-        mItems = new ArrayList<>();
-        mItems.add(new DrawerItem(R.drawable.img_avatar_default, getString(R.string.drawerLayoutEmail), false));
-        mItems.add(new DrawerItem(R.drawable.bg_ic_inbox, getString(R.string.inbox), false));
-        mItems.add(new DrawerItem(R.drawable.bg_ic_outbox, getString(R.string.outbox), false));
-        mItems.add(new DrawerItem(R.drawable.bg_ic_trash, getString(R.string.trash), false));
-        mItems.add(new DrawerItem(R.drawable.bg_ic_warning, getString(R.string.spam), false));
+        mDrawerItems = new ArrayList<>();
+        mDrawerItems.add(new DrawerItem(R.drawable.img_avatar_default, getString(R.string.drawerLayoutEmail), false));
+        mDrawerItems.add(new DrawerItem(R.drawable.bg_ic_inbox, getString(R.string.inbox), false));
+        mDrawerItems.add(new DrawerItem(R.drawable.bg_ic_outbox, getString(R.string.outbox), false));
+        mDrawerItems.add(new DrawerItem(R.drawable.bg_ic_trash, getString(R.string.trash), false));
+        mDrawerItems.add(new DrawerItem(R.drawable.bg_ic_warning, getString(R.string.spam), false));
     }
 
     @Override
@@ -93,11 +101,11 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAda
     @Override
     public void onItemClicked(int position) {
         if (mPositionSelected != -1) {
-            mItems.get(mPositionSelected).setIsSelected(false);
+            mDrawerItems.get(mPositionSelected).setIsSelected(false);
             mAdapter.notifyItemChanged(mPositionSelected);
         }
         mPositionSelected = position;
-        mItems.get(position).setIsSelected(true);
+        mDrawerItems.get(position).setIsSelected(true);
         mAdapter.notifyItemChanged(position);
     }
 
@@ -110,30 +118,38 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAda
         };
         pictureDialog.setItems(pictureDialogItems, (dialogInterface, position) -> {
             switch (position) {
-                case CHOOSE_GALLERY:
-                    choosePhotosFromGallery();
+                case CHOOSE_GALLERY: {
+                    mActionChangeAvatar = 80;
+                    if (requestPermission()) {
+                        choosePhotosFromGallery();
+                    }
                     break;
-                case CAPTURE_CAMERA:
-                    capturePhotosFromCamera();
+                }
+                case CAPTURE_CAMERA: {
+                    mActionChangeAvatar = 81;
+                    if (requestPermission()) {
+                        capturePhotosFromCamera();
+                    }
                     break;
+                }
             }
         });
         pictureDialog.show();
     }
 
-    public void choosePhotosFromGallery() {
+    private void choosePhotosFromGallery() {
         Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(galleryIntent, GALLERY);
     }
 
-    public void capturePhotosFromCamera() {
+    private void capturePhotosFromCamera() {
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(cameraIntent, CAMERA);
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        DrawerItem item = mItems.get(0);
+        DrawerItem item = mDrawerItems.get(0);
         if (resultCode == RESULT_CANCELED) {
             return;
         }
@@ -152,13 +168,13 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAda
         } else if (requestCode == CAMERA) {
             Bitmap cameraBitmap = (Bitmap) Objects.requireNonNull(data.getExtras()).get(getString(R.string.data));
             item.setAvatarBitmap(cameraBitmap);
-            saveImage(cameraBitmap);
+            saveImage(Objects.requireNonNull(cameraBitmap));
             mAdapter.notifyItemChanged(0);
             Toast.makeText(DrawerLayoutActivity.this, R.string.imageSaved, Toast.LENGTH_LONG).show();
         }
     }
 
-    public void saveImage(Bitmap myBitmap) {
+    private void saveImage(Bitmap myBitmap) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         myBitmap.compress(Bitmap.CompressFormat.PNG, 90, bytes);
         File wallpaperDirectory = new File(Environment.getExternalStorageDirectory() + getString(R.string.imageDirectory));
@@ -174,6 +190,44 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAda
             fo.close();
             f.getAbsolutePath();
         } catch (IOException ignored) {
+        }
+    }
+
+    private boolean requestPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED && mActionChangeAvatar == 80) {
+            ActivityCompat.requestPermissions(DrawerLayoutActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, GALLERY_PERMISSION_REQUEST_CODE);
+            return false;
+        }
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED && mActionChangeAvatar == 81) {
+            ActivityCompat.requestPermissions(DrawerLayoutActivity.this, new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION_REQUEST_CODE);
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case GALLERY_PERMISSION_REQUEST_CODE: {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    choosePhotosFromGallery();
+                    Toast.makeText(DrawerLayoutActivity.this, R.string.galleryPermissionAccepted, Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(DrawerLayoutActivity.this, R.string.galleryPermissionDenied, Toast.LENGTH_LONG).show();
+                }
+                break;
+            }
+            case CAMERA_PERMISSION_REQUEST_CODE: {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    capturePhotosFromCamera();
+                    Toast.makeText(DrawerLayoutActivity.this, R.string.cameraPermissionAccepted, Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(DrawerLayoutActivity.this, R.string.cameraPermissionDenied, Toast.LENGTH_LONG).show();
+                }
+                break;
+            }
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
 }
