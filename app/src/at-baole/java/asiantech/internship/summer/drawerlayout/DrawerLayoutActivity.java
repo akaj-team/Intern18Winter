@@ -35,12 +35,12 @@ import java.util.Objects;
 import asiantech.internship.summer.R;
 import asiantech.internship.summer.drawerlayout.model.DrawerItem;
 
-
 public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAdapter.OnItemClickListener {
     private static final int GALLERY = 101;
     private static final int CAMERA = 102;
     private static final int CHOOSE_GALLERY = 0;
     private static final int CAPTURE_CAMERA = 1;
+    private static final int CANCEL_ACTION = 99;
     private static final int GALLERY_PERMISSION_REQUEST_CODE = 201;
     private static final int CAMERA_PERMISSION_REQUEST_CODE = 202;
     private int mActionChangeAvatar = 79;
@@ -83,7 +83,6 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAda
         mDrawerLayout.addDrawerListener(actionBarDrawerToggle);
     }
 
-
     private void mockData() {
         mDrawerItems = new ArrayList<>();
         mDrawerItems.add(new DrawerItem(R.drawable.img_avatar_default, getString(R.string.drawerLayoutEmail), false));
@@ -113,8 +112,9 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAda
         AlertDialog.Builder pictureDialog = new AlertDialog.Builder(this);
         pictureDialog.setTitle(R.string.selectAction);
         String pictureDialogItems[] = {
-                getString(R.string.selectGallery),
-                getString(R.string.captureCamera)
+                getString(R.string.chooseGallery),
+                getString(R.string.captureCamera),
+                getString(R.string.cancelAction)
         };
         pictureDialog.setItems(pictureDialogItems, (dialogInterface, position) -> {
             switch (position) {
@@ -132,6 +132,8 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAda
                     }
                     break;
                 }
+                case CANCEL_ACTION:
+                    dialogInterface.dismiss();
             }
         });
         pictureDialog.show();

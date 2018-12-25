@@ -43,8 +43,9 @@
     <string name="spam">Spam</string>
     <string name="imageDirectory">Image Directory</string>
     <string name="selectAction">Select Action</string>
-    <string name="selectGallery">Select a photo from gallery</string>
+    <string name="chooseGallery">Choose a photo from gallery</string>
     <string name="captureCamera">Capture a photo from camera</string>
+    <string name="cancelAction">Cancel</string>
     <string name="imageSaved">Image Saved</string>
     <string name="saveImageFailed">Failed to save images</string>
     <string name="data">data</string>
