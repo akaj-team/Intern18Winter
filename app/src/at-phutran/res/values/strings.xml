@@ -43,4 +43,9 @@
     <string name="likes">likes</string>
     <string name="abc">abc</string>
     <string name="exercise4">RecyclerView</string>
+    <string name="asyncTask">AsyncTask</string>
+    <string name="thread">Thread</string>
+    <string name="handler">Handler</string>
+    <string name="exercise5">AsyncTask</string>
+    <string name="download_image">Download image</string>
 </resources>

@@ -6,29 +6,27 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import asiantech.internship.summer.R;
+import asiantech.internship.summer.asynctask.AsyncTaskThreadHandlerActivity;
 import asiantech.internship.summer.eventlistener.SignUpActivity;
 import asiantech.internship.summer.fragment.LoginActivity;
 import asiantech.internship.summer.recyclerview.RecyclerViewActivity;
 
 public class ListActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private Button mBtnView;
-    private Button mBtnListener;
-    private Button mBtnRecyclerView;
-    private Button mBtnFragment;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
-        mBtnView = findViewById(R.id.btnExercise1);
-        mBtnListener = findViewById(R.id.btnExercise2);
-        mBtnFragment = findViewById(R.id.btnExercise3);
-        mBtnRecyclerView = findViewById(R.id.btnExercise4);
-        mBtnView.setOnClickListener(this);
-        mBtnListener.setOnClickListener(this);
-        mBtnFragment.setOnClickListener(this);
-        mBtnRecyclerView.setOnClickListener(this);
+        Button btnView = findViewById(R.id.btnExercise1);
+        Button btnListener = findViewById(R.id.btnExercise2);
+        Button btnFragment = findViewById(R.id.btnExercise3);
+        Button btnRecyclerView = findViewById(R.id.btnExercise4);
+        Button btnAsyncTask = findViewById(R.id.btnExercise5);
+        btnView.setOnClickListener(this);
+        btnListener.setOnClickListener(this);
+        btnFragment.setOnClickListener(this);
+        btnRecyclerView.setOnClickListener(this);
+        btnAsyncTask.setOnClickListener(this);
     }
 
     @Override
@@ -51,6 +49,11 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
             }
             case R.id.btnExercise4: {
                 Intent intent = new Intent(ListActivity.this, RecyclerViewActivity.class);
+                startActivity(intent);
+                break;
+            }
+            case R.id.btnExercise5: {
+                Intent intent = new Intent(ListActivity.this, AsyncTaskThreadHandlerActivity.class);
                 startActivity(intent);
                 break;
             }
