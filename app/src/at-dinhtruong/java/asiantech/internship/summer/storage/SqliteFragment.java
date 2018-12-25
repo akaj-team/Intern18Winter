@@ -25,24 +25,22 @@ public class SqliteFragment extends Fragment implements CompanyAdapter.OnItemCli
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_sqlite, container, false);
-        initCompany(view);
+        initViews(view);
         return view;
     }
 
-    private void initCompany(View view) {
-        RecyclerView mRecyclerView = view.findViewById(R.id.recyclerViewCompany);
-        mRecyclerView.setHasFixedSize(true);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
-        mRecyclerView.setLayoutManager(linearLayoutManager);
+    private void initViews(View view) {
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerViewCompany);
+        recyclerView.setHasFixedSize(true);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(linearLayoutManager);
         mDBManager.createDefaultCompany();
         List<Company> companies = mDBManager.getAllCompany();
         CompanyAdapter companyAdapter = new CompanyAdapter(companies, this);
-        mRecyclerView.setAdapter(companyAdapter);
+        recyclerView.setAdapter(companyAdapter);
     }
-
 
     @Override
     public void onItemClicked(int idCompany) {

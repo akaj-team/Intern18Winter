@@ -15,10 +15,13 @@
 
         <EditText
             android:id="@+id/edtInternal"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/internal"
-            android:inputType="text"
+            android:inputType="textMultiLine"
+            android:lines="8"
+            android:maxLines="10"
+            android:textColor="@color/colorBlack"
             android:textStyle="bold"
             tools:ignore="Autofill" />
 
@@ -38,10 +41,13 @@
 
         <EditText
             android:id="@+id/edtExternal"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/external"
-            android:inputType="text"
+            android:inputType="textMultiLine"
+            android:lines="8"
+            android:maxLines="10"
+            android:textColor="@color/colorBlack"
             android:textStyle="bold"
             tools:ignore="Autofill" />
 

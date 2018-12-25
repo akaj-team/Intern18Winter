@@ -55,7 +55,7 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.CompanyV
     }
 
     public interface OnItemClickListener {
-        void onItemClicked(int position);
+        void onItemClicked(int id);
     }
 
 }

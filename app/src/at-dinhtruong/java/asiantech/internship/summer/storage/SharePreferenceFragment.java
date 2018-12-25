@@ -17,15 +17,15 @@ import java.util.Objects;
 import asiantech.internship.summer.R;
 
 public class SharePreferenceFragment extends Fragment implements View.OnClickListener {
+    private static final String USER_NAME = "userName";
+    private static final String PASS_WORD = "passWord";
+    private static final String DATA_USER = "dataUser";
     private EditText mEdtUserName;
     private EditText mEdtPassWord;
     private String mUserName;
     private String mPassWord;
     private String mUserNameShare;
     private String mPassWordShare;
-    private final String USER_NAME = "userName";
-    private final String PASS_WORD = "passWord";
-    private final String DATA_USER = "dataUser";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -36,16 +36,16 @@ public class SharePreferenceFragment extends Fragment implements View.OnClickLis
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_share_preference, container, false);
-        initViewLogin(view);
+        initViews(view);
         return view;
     }
 
-    private void initViewLogin(View view) {
+    private void initViews(View view) {
         mEdtUserName = view.findViewById(R.id.edtUserName);
         mEdtPassWord = view.findViewById(R.id.edtPassWord);
         Button btnLogin = view.findViewById(R.id.btnLogin);
         readData();
-        if (!mUserNameShare.equals("") && !mPassWordShare.equals("")) {
+        if (!mUserNameShare.isEmpty() && !mPassWordShare.isEmpty()) {
             mEdtUserName.setText(mUserNameShare);
             mEdtPassWord.setText(mPassWordShare);
         }

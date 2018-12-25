@@ -23,6 +23,10 @@ public class DBManager extends SQLiteOpenHelper {
     private static final String COMPANY_ID = "company_id";
     private static final String CHECK_DATA = " = ? ";
     private static final String AND_DATA = " AND ";
+    private static final String SQL_QUERY_COMPANY = "CREATE TABLE " + TABLE_COMPANY + " (" +
+            ID_COMPANY + " integer primary key AUTOINCREMENT, " + NAME_COMPANY + " TEXT)";
+    private static final String SQL_QUERY_EMPLOYEE = "CREATE TABLE " + TABLE_EMPLOYEE + " (" +
+            ID_EMPLOYEE + " integer, " + COMPANY_ID + " integer, " + NAME_EMPLOYEE + " TEXT)";
 
     DBManager(Context context) {
         super(context, DATABASE_NAME, null, 1);
@@ -30,14 +34,8 @@ public class DBManager extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        String sqlQueryCompany = "CREATE TABLE " + TABLE_COMPANY + " (" +
-                ID_COMPANY + " integer primary key AUTOINCREMENT, " +
-                NAME_COMPANY + " TEXT)";
-        sqLiteDatabase.execSQL(sqlQueryCompany);
-        String sqlQueryEmployee = "CREATE TABLE " + TABLE_EMPLOYEE + " (" +
-                ID_EMPLOYEE + " integer, " + COMPANY_ID + " integer, " +
-                NAME_EMPLOYEE + " TEXT)";
-        sqLiteDatabase.execSQL(sqlQueryEmployee);
+        sqLiteDatabase.execSQL(SQL_QUERY_COMPANY);
+        sqLiteDatabase.execSQL(SQL_QUERY_EMPLOYEE);
     }
 
     @Override
@@ -49,7 +47,7 @@ public class DBManager extends SQLiteOpenHelper {
     }
 
     void addEmployee(Employee employee) {
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(ID_EMPLOYEE, employee.getIdEmployee());
         values.put(COMPANY_ID, employee.getCompanyId());
@@ -59,7 +57,7 @@ public class DBManager extends SQLiteOpenHelper {
     }
 
     Employee getEmployeeById(int idEmployee, int companyID) {
-        SQLiteDatabase db = this.getReadableDatabase();
+        SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.query(TABLE_EMPLOYEE, new String[]{ID_EMPLOYEE,
                         COMPANY_ID, NAME_EMPLOYEE}, ID_EMPLOYEE + CHECK_DATA + AND_DATA + COMPANY_ID + CHECK_DATA,
                 new String[]{String.valueOf(idEmployee), String.valueOf(companyID)}, null, null, null, null);
@@ -71,7 +69,7 @@ public class DBManager extends SQLiteOpenHelper {
     }
 
     int updateEmployee(Employee employee) {
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(NAME_EMPLOYEE, employee.getNameEmployee());
         int updated = db.update(TABLE_EMPLOYEE, values, ID_EMPLOYEE + CHECK_DATA + AND_DATA + COMPANY_ID + CHECK_DATA,
@@ -83,7 +81,7 @@ public class DBManager extends SQLiteOpenHelper {
     List<Employee> getAllEmployeeById(int idCompany) {
         List<Employee> employees = new ArrayList<>();
         String selectQuery = "SELECT  * FROM " + TABLE_EMPLOYEE + " WHERE COMPANY_ID = " + idCompany;
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()) {
             do {
@@ -100,7 +98,7 @@ public class DBManager extends SQLiteOpenHelper {
     }
 
     Company getCompanyById(int idCompany) {
-        SQLiteDatabase db = this.getReadableDatabase();
+        SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.query(TABLE_COMPANY, new String[]{ID_COMPANY,
                         NAME_COMPANY}, ID_COMPANY + CHECK_DATA,
                 new String[]{String.valueOf(idCompany)}, null, null, null, null);
@@ -112,7 +110,7 @@ public class DBManager extends SQLiteOpenHelper {
     }
 
     int deleteEmployee(Employee employee) {
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = getWritableDatabase();
         int deleted = db.delete(TABLE_EMPLOYEE, ID_EMPLOYEE + CHECK_DATA + AND_DATA + COMPANY_ID + CHECK_DATA,
                 new String[]{String.valueOf(employee.getIdEmployee()),
                         String.valueOf(employee.getCompanyId())});
@@ -123,7 +121,7 @@ public class DBManager extends SQLiteOpenHelper {
     List<Company> getAllCompany() {
         List<Company> companies = new ArrayList<>();
         String selectQuery = "SELECT  * FROM " + TABLE_COMPANY;
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()) {
             do {
@@ -140,15 +138,15 @@ public class DBManager extends SQLiteOpenHelper {
 
     private int getCompaniesCount() {
         String countQuery = "SELECT * FROM " + TABLE_COMPANY;
-        SQLiteDatabase db = this.getReadableDatabase();
+        SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
-        int countCompaniew = cursor.getCount();
+        int count = cursor.getCount();
         cursor.close();
-        return countCompaniew;
+        return count;
     }
 
     private void addCompany(Company company) {
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(NAME_COMPANY, company.getNameCompany());
         db.insert(TABLE_COMPANY, null, values);
@@ -156,13 +154,13 @@ public class DBManager extends SQLiteOpenHelper {
     }
 
     void createDefaultCompany() {
-        int count = this.getCompaniesCount();
+        int count = getCompaniesCount();
         if (count == 0) {
-            this.addCompany(new Company("Công ty 1"));
-            this.addCompany(new Company("Công ty 2"));
-            this.addCompany(new Company("Công ty 3"));
-            this.addCompany(new Company("Công ty 4"));
-            this.addCompany(new Company("Công ty 5"));
+            addCompany(new Company("Công ty 1"));
+            addCompany(new Company("Công ty 2"));
+            addCompany(new Company("Công ty 3"));
+            addCompany(new Company("Công ty 4"));
+            addCompany(new Company("Công ty 5"));
         }
     }
 }

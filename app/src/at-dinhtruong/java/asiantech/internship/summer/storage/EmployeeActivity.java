@@ -1,6 +1,5 @@
 package asiantech.internship.summer.storage;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -34,12 +33,11 @@ public class EmployeeActivity extends AppCompatActivity implements EmployeeAdapt
         super.onCreate(savedInstanceState);
         mDBManager = new DBManager(getApplicationContext());
         setContentView(R.layout.activity_filestorage_employee);
-        Intent intent = getIntent();
-        mIdCompany = intent.getIntExtra(getString(R.string.idCompany), 0);
-        initEmployee();
+        mIdCompany = getIntent().getIntExtra(getString(R.string.idCompany), 0);
+        initViews();
     }
 
-    private void initEmployee() {
+    private void initViews() {
         Company company = mDBManager.getCompanyById(mIdCompany);
         RecyclerView recyclerView = findViewById(R.id.recyclerViewEmployee);
         TextView tvNameCompany = findViewById(R.id.tvNameCompany);
@@ -69,7 +67,7 @@ public class EmployeeActivity extends AppCompatActivity implements EmployeeAdapt
 
     @Override
     public void onEmployeeClicked(int position) {
-        Employee employee = mDBManager.getEmployeeById(mEmployeesById.get(position).getIdEmployee(), mEmployeesById.get(position).getCompanyId());
+        Employee employee = mEmployeesById.get(position);
         mEdtIdEmployee.setText(String.valueOf(employee.getIdEmployee()));
         mEdtNameEmployee.setText(employee.getNameEmployee());
         mBtnUpdate.setEnabled(true);
@@ -82,35 +80,25 @@ public class EmployeeActivity extends AppCompatActivity implements EmployeeAdapt
         Employee employee = getDataForUpdate();
         switch (view.getId()) {
             case R.id.btnUpdate: {
-                if (employee.getNameEmployee().equals("")) {
+                if (employee.getNameEmployee().isEmpty()) {
                     Toast.makeText(getApplicationContext(), R.string.pleaseFillTheEmployeeName, Toast.LENGTH_LONG).show();
-                } else if (!employee.getNameEmployee().equals("") && mDBManager.updateEmployee(employee) > 0) {
-                    mEmployeesById.get(mPositionItem).setNameEmployee(employee.getNameEmployee());
-                    mEmployeeAdapter.notifyDataSetChanged();
-                    mEdtIdEmployee.setText(String.valueOf(mEmployeesById.get(mEmployeesById.size() - 1).getIdEmployee() + 1));
-                    mEdtNameEmployee.setText("");
                 } else {
-                    Toast.makeText(getApplicationContext(), R.string.updateError, Toast.LENGTH_LONG).show();
+                    if (mDBManager.updateEmployee(employee) > 0) {
+                        mEmployeesById.get(mPositionItem).setNameEmployee(employee.getNameEmployee());
+                        mEmployeeAdapter.notifyDataSetChanged();
+                    } else {
+                        Toast.makeText(getApplicationContext(), R.string.updateError, Toast.LENGTH_LONG).show();
+                    }
                 }
                 break;
             }
             case R.id.btnInsert: {
-                int idEmployee;
-                if (mEmployeesById.size() == 0) {
-                    idEmployee = 1;
-                } else {
-                    idEmployee = mEmployeesById.get(mEmployeesById.size() - 1).getIdEmployee() + 1;
-                }
-                String nameEmployee = mEdtNameEmployee.getText().toString();
-                employee = new Employee(idEmployee, mIdCompany, nameEmployee);
-                if (nameEmployee.equals("")) {
+                if (employee.getNameEmployee().isEmpty()) {
                     Toast.makeText(getApplicationContext(), R.string.pleaseFillTheEmployeeName, Toast.LENGTH_LONG).show();
                 } else {
                     mDBManager.addEmployee(employee);
                     mEmployeesById.add(employee);
                     mEmployeeAdapter.notifyDataSetChanged();
-                    mEdtIdEmployee.setText(String.valueOf(mEmployeesById.get(mEmployeesById.size() - 1).getIdEmployee() + 1));
-                    mEdtNameEmployee.setText("");
                 }
                 break;
             }
@@ -118,20 +106,20 @@ public class EmployeeActivity extends AppCompatActivity implements EmployeeAdapt
                 if (mDBManager.deleteEmployee(employee) > 0) {
                     mEmployeesById.remove(mPositionItem);
                     mEmployeeAdapter.notifyDataSetChanged();
-                    int idEmployee;
-                    if (mEmployeesById.size() == 0) {
-                        idEmployee = 1;
-                    } else {
-                        idEmployee = mEmployeesById.get(mEmployeesById.size() - 1).getIdEmployee() + 1;
-                    }
-                    mEdtIdEmployee.setText(String.valueOf(idEmployee));
-                    mEdtNameEmployee.setText("");
                 } else {
                     Toast.makeText(getApplicationContext(), R.string.deleteError, Toast.LENGTH_LONG).show();
                 }
                 break;
             }
         }
+        int idEmployee;
+        if (mEmployeesById.size() == 0) {
+            idEmployee = 1;
+        } else {
+            idEmployee = mEmployeesById.get(mEmployeesById.size() - 1).getIdEmployee() + 1;
+        }
+        mEdtIdEmployee.setText(String.valueOf(idEmployee));
+        mEdtNameEmployee.setText("");
     }
 
     private Employee getDataForUpdate() {

@@ -16,6 +16,11 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.Employ
     private List<Employee> mEmployees;
     private OnEmployeeClickListener mOnClickEmployee;
 
+    EmployeeAdapter(List<Employee> employees, OnEmployeeClickListener onClickEmployee) {
+        this.mEmployees = employees;
+        this.mOnClickEmployee = onClickEmployee;
+    }
+
     @NonNull
     @Override
     public EmployeeAdapter.EmployeeViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
@@ -30,6 +35,11 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.Employ
         holder.mTvEmployee.setText(employee.getNameEmployee());
     }
 
+    @Override
+    public int getItemCount() {
+        return mEmployees.size();
+    }
+
     class EmployeeViewHolder extends RecyclerView.ViewHolder {
         private TextView mTvEmployee;
 
@@ -39,17 +49,6 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.Employ
             mTvEmployee.setOnClickListener(view ->
                     mOnClickEmployee.onEmployeeClicked(getAdapterPosition()));
         }
-    }
-
-    @Override
-    public int getItemCount() {
-        return mEmployees.size();
-    }
-
-    EmployeeAdapter(List<Employee> employees, OnEmployeeClickListener onClickEmployee) {
-        this.mEmployees = employees;
-        this.mOnClickEmployee = onClickEmployee;
-
     }
 
     public interface OnEmployeeClickListener {
