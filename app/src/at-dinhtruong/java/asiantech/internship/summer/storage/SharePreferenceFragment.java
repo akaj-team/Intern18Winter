@@ -33,8 +33,7 @@ public class SharePreferenceFragment extends Fragment implements View.OnClickLis
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_share_preference, container, false);
         initViews(view);
         return view;
@@ -53,8 +52,7 @@ public class SharePreferenceFragment extends Fragment implements View.OnClickLis
     }
 
     private void saveData() {
-        SharedPreferences preferences = Objects.requireNonNull(this.getActivity())
-                .getSharedPreferences(DATA_USER, Context.MODE_PRIVATE);
+        SharedPreferences preferences = Objects.requireNonNull(this.getActivity()).getSharedPreferences(DATA_USER, Context.MODE_PRIVATE);
         SharedPreferences.Editor edit = preferences.edit();
         edit.putString(USER_NAME, mUserName);
         edit.putString(PASS_WORD, mPassWord);
