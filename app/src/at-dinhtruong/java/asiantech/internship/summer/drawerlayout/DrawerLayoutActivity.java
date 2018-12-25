@@ -25,6 +25,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import asiantech.internship.summer.R;
@@ -63,7 +64,7 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAda
         params.width = width * 5 / 6;
         recycleViewItem.setLayoutParams(params);
         recycleViewItem.setHasFixedSize(true);
-        mDrawerItems = DrawerItem.createItem();
+        mDrawerItems = createItem();
         recycleViewItem.setLayoutManager(new LinearLayoutManager(this));
         mAdapterItem = new DrawerAdapter(mDrawerItems, this);
         recycleViewItem.setAdapter(mAdapterItem);
@@ -89,14 +90,14 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAda
         builder.setTitle(R.string.addPhoto);
         builder.setItems(itemsDialog, (dialog, item) -> {
             if (itemsDialog[item].equals(getString(R.string.takePhoto))) {
-                mActionChangeAvatar = 15;
+                mActionChangeAvatar = REQUEST_IMAGE_CAPTURE;
                 if (!requestPermission()) {
                     Toast.makeText(DrawerLayoutActivity.this, getString(R.string.permissionAccepted), Toast.LENGTH_SHORT).show();
                 } else {
                     openCamera();
                 }
             } else if (itemsDialog[item].equals(getString(R.string.chooseFromLibrary))) {
-                mActionChangeAvatar = 20;
+                mActionChangeAvatar = REQUEST_SELECT_PICTURE;
                 if (!requestPermission()) {
                     Toast.makeText(DrawerLayoutActivity.this, getString(R.string.permissionAccepted), Toast.LENGTH_SHORT).show();
                 } else {
@@ -137,12 +138,12 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAda
     }
 
     private boolean requestPermission() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED && mActionChangeAvatar == 15) {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED && mActionChangeAvatar == REQUEST_IMAGE_CAPTURE) {
             ActivityCompat
                     .requestPermissions(DrawerLayoutActivity.this, new String[]{Manifest.permission.CAMERA}, REQUEST_CODE_ASK_PERMISSIONS_CAMERA);
             return false;
         }
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED && mActionChangeAvatar == 20) {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED && mActionChangeAvatar == REQUEST_SELECT_PICTURE) {
             ActivityCompat
                     .requestPermissions(DrawerLayoutActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_ASK_PERMISSIONS_GALLERY);
             return false;
@@ -204,5 +205,14 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAda
         item.setAvatarBitmap(imageBitmap);
         item.setAvatar(null);
         mAdapterItem.notifyItemChanged(0);
+    }
+    private List<DrawerItem> createItem() {
+        List<DrawerItem> items = new ArrayList<>();
+        items.add(new DrawerItem(R.drawable.img_avatar_drawer_layout, getString(R.string.dinhTruongAsiantechVn), null, null));
+        items.add(new DrawerItem(R.drawable.bg_inbox, getString(R.string.inbox), false));
+        items.add(new DrawerItem(R.drawable.bg_outbox, getString(R.string.outbox), false));
+        items.add(new DrawerItem(R.drawable.bg_trash, getString(R.string.trash), false));
+        items.add(new DrawerItem(R.drawable.bg_spam, getString(R.string.spam), false));
+        return items;
     }
 }
