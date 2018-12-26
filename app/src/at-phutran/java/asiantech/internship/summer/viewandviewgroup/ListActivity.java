@@ -10,6 +10,7 @@ import asiantech.internship.summer.drawerlayout.DrawerLayoutActivity;
 import asiantech.internship.summer.eventlistener.SignUpActivity;
 import asiantech.internship.summer.fragment.LoginActivity;
 import asiantech.internship.summer.recyclerview.RecyclerViewActivity;
+import asiantech.internship.summer.viewpager.ViewPagerActivity;
 
 public class ListActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -17,6 +18,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
     private Button mBtnListener;
     private Button mBtnRecyclerView;
     private Button mBtnFragment;
+    private Button mBtnViewPager;
     private Button mBtnDrawerLayout;
 
     @Override
@@ -27,11 +29,13 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         mBtnListener = findViewById(R.id.btnExercise2);
         mBtnFragment = findViewById(R.id.btnExercise3);
         mBtnRecyclerView = findViewById(R.id.btnExercise4);
-        mBtnDrawerLayout = findViewById(R.id.btnExercise5);
+        mBtnViewPager = findViewById(R.id.btnExercise5);
+        mBtnDrawerLayout = findViewById(R.id.btnExercise7);
         mBtnView.setOnClickListener(this);
         mBtnListener.setOnClickListener(this);
         mBtnFragment.setOnClickListener(this);
         mBtnRecyclerView.setOnClickListener(this);
+        mBtnViewPager.setOnClickListener(this);
         mBtnDrawerLayout.setOnClickListener(this);
     }
 
@@ -59,6 +63,11 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             }
             case R.id.btnExercise5: {
+                Intent intent = new Intent(ListActivity.this, ViewPagerActivity.class);
+                startActivity(intent);
+                break;
+            }
+            case R.id.btnExercise7: {
                 Intent intent = new Intent(ListActivity.this, DrawerLayoutActivity.class);
                 startActivity(intent);
                 break;

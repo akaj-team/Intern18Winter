@@ -10,6 +10,7 @@ import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -20,11 +21,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.karumi.dexter.Dexter;
-import com.karumi.dexter.MultiplePermissionsReport;
-import com.karumi.dexter.PermissionToken;
-import com.karumi.dexter.listener.PermissionRequest;
-import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,10 +30,12 @@ import asiantech.internship.summer.model.DrawerItem;
 
 public class DrawerLayoutActivity extends AppCompatActivity implements DrawerLayoutAdapter.OnItemClickListener {
 
-    private static final int GALLERY = 111;
     private static final int CHOOSE_GALLERY = 0;
-    private static final int CAMERA = 222;
     private static final int CHOOSE_CAMERA = 1;
+    private static final int GALLERY = 111;
+    private static final int CAMERA = 222;
+    private static final int REQUEST_CODE_ASK_PERMISSIONS_CAMERA = 333;
+    private static final int REQUEST_CODE_ASK_PERMISSIONS_GALLERY = 444;
     protected RecyclerView mRecyclerViewDrawer;
     private TextView mTvContent;
     private List<DrawerItem> mData;
@@ -70,6 +68,7 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerLay
         mData.add(new DrawerItem(R.drawable.ic_delete_black_24dp, getString(R.string.trash), false));
         mData.add(new DrawerItem(R.drawable.ic_error_black_24dp, getString(R.string.spam), false));
     }
+
     private void initView() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(DrawerLayoutActivity.this);
         mRecyclerViewDrawer.setLayoutManager(linearLayoutManager);
@@ -77,7 +76,8 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerLay
         mDrawerLayoutAdapter = new DrawerLayoutAdapter(mData, this);
         mRecyclerViewDrawer.setAdapter(mDrawerLayoutAdapter);
     }
-    private void slide(){
+
+    private void slide() {
         DrawerLayout mDrawerLayout = findViewById(R.id.drawerLayout);
         mTvContent = findViewById(R.id.tvContent);
         mDrawerLayout.setScrimColor(Color.TRANSPARENT);
@@ -108,14 +108,12 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerLay
         requestMultiplePermissions();
         AlertDialog.Builder pictureDialog = new AlertDialog.Builder(this);
         pictureDialog.setTitle(R.string.action);
-        String[] pictureDialogItems = {
-                getString(R.string.gallery),
-                getString(R.string.camera)};
+        String[] pictureDialogItems = {getString(R.string.gallery), getString(R.string.camera)};
         pictureDialog.setItems(pictureDialogItems,
                 (dialog, which) -> {
                     switch (which) {
                         case CHOOSE_GALLERY:
-                            choosePhotoFromGallary();
+                            choosePhotoFromGallery();
                             break;
                         case CHOOSE_CAMERA:
                             takePhotoFromCamera();
@@ -125,9 +123,8 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerLay
         pictureDialog.show();
     }
 
-    public void choosePhotoFromGallary() {
-        Intent galleryIntent = new Intent(Intent.ACTION_PICK,
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+    public void choosePhotoFromGallery() {
+        Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(galleryIntent, GALLERY);
     }
 
@@ -156,7 +153,6 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerLay
         } catch (IOException e) {
             Toast.makeText(this, R.string.error, Toast.LENGTH_SHORT).show();
         }
-
     }
 
     private void openCamera(Intent data) {
@@ -169,28 +165,8 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerLay
     }
 
     private void requestMultiplePermissions() {
-        Dexter.withActivity(this)
-                .withPermissions(
-                        Manifest.permission.CAMERA,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        Manifest.permission.READ_EXTERNAL_STORAGE)
-                .withListener(new MultiplePermissionsListener() {
-                    @Override
-                    public void onPermissionsChecked(MultiplePermissionsReport report) {
-                        // check if all permissions are granted
-                        if (report.areAllPermissionsGranted()) {
-                            Toast.makeText(getApplicationContext(), R.string.permission, Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
-                    @Override
-                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
-                        token.continuePermissionRequest();
-                    }
-                }).
-                withErrorListener(error -> Toast.makeText(getApplicationContext(), R.string.error, Toast.LENGTH_SHORT).show())
-                .onSameThread()
-                .check();
+        ActivityCompat.requestPermissions(DrawerLayoutActivity.this, new String[]{Manifest.permission.CAMERA}, REQUEST_CODE_ASK_PERMISSIONS_CAMERA);
+        ActivityCompat.requestPermissions(DrawerLayoutActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_ASK_PERMISSIONS_GALLERY);
     }
 
     @Override

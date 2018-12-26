@@ -12,7 +12,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
 
-        <activity android:name=".recyclerview.TimelineActivity">
+        <activity android:name=".viewpager.PagerActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -76,6 +76,12 @@ public class DrawerLayoutAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         return position == 0;
     }
 
+    public interface OnItemClickListener {
+        void onAvatarClicked();
+
+        void onItemChecked(int position);
+    }
+
     class HeaderViewHolder extends RecyclerView.ViewHolder {
         ImageView imgAvatar;
         TextView tvTitle;
@@ -107,9 +113,5 @@ public class DrawerLayoutAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 mOnItemClickListener.onItemChecked(position);
             });
         }
-    }
-    public interface OnItemClickListener {
-        void onAvatarClicked();
-        void onItemChecked(int position);
     }
 }
