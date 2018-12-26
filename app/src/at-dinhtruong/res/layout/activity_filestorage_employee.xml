@@ -13,6 +13,7 @@
         android:layout_marginTop="10dp"
         android:text="@string/danhSachCongTy"
         android:textAlignment="center"
+        android:textColor="@color/colorBlack"
         android:textSize="25sp" />
 
     <LinearLayout
@@ -32,6 +33,7 @@
             android:hint="@string/maNhanVien"
             android:inputType="text"
             android:padding="5dp"
+            android:textColor="@color/colorBlack"
             tools:ignore="Autofill" />
 
         <EditText
@@ -41,6 +43,7 @@
             android:layout_weight="1"
             android:hint="@string/tenNhanVien"
             android:inputType="text"
+            android:textColor="@color/colorBlack"
             tools:ignore="Autofill" />
 
     </LinearLayout>

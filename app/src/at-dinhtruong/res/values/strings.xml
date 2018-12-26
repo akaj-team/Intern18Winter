@@ -72,13 +72,13 @@
     <string name="updateError">Update Error!</string>
     <string name="permissionCancelled">Permission Cancelled!</string>
     <string name="fileStorage">File Storage</string>
-    <string name="saved"> saved</string>
+    <string name="saved">saved</string>
     <string name="saveFileSuccessfully">Save file successfully!</string>
     <string name="inputOutputException">Input Output Exception!</string>
     <string name="charSet">UTF-8</string>
     <string name="filePath">ThuMucCuaToi</string>
     <string name="deleteError">Delete error</string>
-    <string name="danhSachCongTy">Danh Sach Cong ty</string>
+    <string name="danhSachCongTy">Danh Sách Công Ty</string>
     <string name="idCompany">idCompany</string>
     <string name="fileNameInternal">internalStorage.txt</string>
 </resources>

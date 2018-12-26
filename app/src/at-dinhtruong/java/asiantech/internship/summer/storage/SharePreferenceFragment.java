@@ -60,10 +60,12 @@ public class SharePreferenceFragment extends Fragment implements View.OnClickLis
     }
 
     private void readData() {
-        SharedPreferences preferences = Objects.requireNonNull(this.getActivity())
-                .getSharedPreferences(DATA_USER, Context.MODE_PRIVATE);
-        mUserNameShare = preferences.getString(USER_NAME, "");
-        mPassWordShare = preferences.getString(PASS_WORD, "");
+        if (getActivity() instanceof FileStoreActivity) {
+            SharedPreferences preferences = (getActivity()).getSharedPreferences(DATA_USER, Context.MODE_PRIVATE);
+            mUserNameShare = preferences.getString(USER_NAME, "");
+            mPassWordShare = preferences.getString(PASS_WORD, "");
+        }
+
     }
 
     @Override

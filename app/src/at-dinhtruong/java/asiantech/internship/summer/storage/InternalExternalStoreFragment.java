@@ -93,33 +93,27 @@ public class InternalExternalStoreFragment extends Fragment implements View.OnCl
     }
 
     private void askPermissionAndWriteFile() {
-        boolean canWrite = askPermission(REQUEST_ID_WRITE_PERMISSION,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        boolean canWrite = askPermission(REQUEST_ID_WRITE_PERMISSION);
         if (canWrite) {
             writeExternalFile();
         }
     }
 
     private void askPermissionAndReadFile() {
-        boolean canRead = askPermission(REQUEST_ID_READ_PERMISSION,
-                Manifest.permission.READ_EXTERNAL_STORAGE);
+        boolean canRead = askPermission(REQUEST_ID_READ_PERMISSION);
         if (canRead) {
             readExternalFile();
         }
     }
 
-    private boolean askPermission(int requestId, String permissionName) {
+    private boolean askPermission(int requestId) {
         if (getContext() == null) {
             return false;
         }
-
         if (android.os.Build.VERSION.SDK_INT >= 23) {
-            int permission = ActivityCompat.checkSelfPermission(getContext(), permissionName);
+            int permission = ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
             if (permission != PackageManager.PERMISSION_GRANTED) {
-                requestPermissions(
-                        new String[]{permissionName},
-                        requestId
-                );
+                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, requestId);
                 return false;
             }
         }
@@ -151,16 +145,18 @@ public class InternalExternalStoreFragment extends Fragment implements View.OnCl
         File extStore = Environment.getExternalStorageDirectory();
         String path = extStore.getAbsolutePath() + "/" + FILE_NAME;
         String data = mEdtExternal.getText().toString();
-        try {
-            File myFile = new File(path);
-            FileOutputStream fileOutputStream = new FileOutputStream(myFile);
-            OutputStreamWriter myOutWriter = new OutputStreamWriter(fileOutputStream, StandardCharsets.UTF_8);
-            myOutWriter.append(data);
-            myOutWriter.close();
-            fileOutputStream.close();
-            Toast.makeText(getContext(), FILE_NAME + getString(R.string.saved), Toast.LENGTH_LONG).show();
-        } catch (IOException e) {
-            Log.e(TAG, e.getMessage());
+        if (!data.isEmpty()) {
+            try {
+                File myFile = new File(path);
+                FileOutputStream fileOutputStream = new FileOutputStream(myFile);
+                OutputStreamWriter myOutWriter = new OutputStreamWriter(fileOutputStream, StandardCharsets.UTF_8);
+                myOutWriter.append(data);
+                myOutWriter.close();
+                fileOutputStream.close();
+                Toast.makeText(getContext(), FILE_NAME + getString(R.string.saved), Toast.LENGTH_LONG).show();
+            } catch (IOException e) {
+                Log.e(TAG, e.getMessage());
+            }
         }
     }
 
