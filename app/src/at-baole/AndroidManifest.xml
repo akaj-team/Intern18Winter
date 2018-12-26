@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".viewpager.PagerActivity">
+        <activity android:name=".asynctaskthreadhandler.AsyncTaskThreadHandlerActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -18,10 +18,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".event_listener.SignUpActivity" />
-        <activity android:name=".view_and_groupview.ViewActivity"/>
-        <activity android:name=".activity_fragment.InformationActivity"/>
-        <activity android:name=".activity_fragment.LoginActivity"/>
-        <activity android:name=".recyclerview.RecyclerViewActivity"/>
-        <activity android:name=".viewpager.TimelineActivity"/>
+        <activity android:name=".view_and_groupview.ViewActivity" />
+        <activity android:name=".activity_fragment.InformationActivity" />
+        <activity android:name=".activity_fragment.LoginActivity" />
+        <activity android:name=".recyclerview.RecyclerViewActivity" />
+        <activity android:name=".viewpager.TimelineActivity" />
+        <activity android:name=".viewpager.PagerActivity" />
     </application>
+
 </manifest>
