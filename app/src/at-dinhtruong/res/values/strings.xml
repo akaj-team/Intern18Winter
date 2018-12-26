@@ -52,4 +52,5 @@
     <string name="like">like</string>
     <string name="likes">likes</string>
     <string name="recyclerView">RecyclerView</string>
+    <string name="restApi">REST API</string>
 </resources>
