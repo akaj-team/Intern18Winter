@@ -1,5 +1,6 @@
 package asiantech.internship.summer.restapi;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
 import asiantech.internship.summer.R;
@@ -15,9 +18,11 @@ import asiantech.internship.summer.models.Image;
 
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHolder> {
     private List<Image> mImages;
+    private Context mContext;
 
-    ImageAdapter(List<Image> images) {
+    ImageAdapter(List<Image> images, Context context) {
         mImages = images;
+        mContext = context;
     }
 
     @NonNull
@@ -38,6 +43,11 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
         return mImages.size();
     }
 
+    public void updateAnswers(List<Image> images) {
+        mImages = images;
+        notifyDataSetChanged();
+    }
+
     class ImageViewHolder extends RecyclerView.ViewHolder {
         private ImageView mImgItem;
         private TextView mTvItem;
@@ -49,8 +59,10 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
         }
 
         private void initData(Image image) {
-            //mImgItem.setImageResource(image.getUrl());
-            mTvItem.setText(image.getUrl());
+            if (!image.getImageId().isEmpty()) {
+                mTvItem.setText(image.getImageId());
+                Glide.with(mContext).load(image.getUrl()).into(mImgItem);
+            }
         }
     }
 }

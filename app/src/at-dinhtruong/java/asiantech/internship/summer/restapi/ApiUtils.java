@@ -1,10 +1,10 @@
 package asiantech.internship.summer.restapi;
 
-public class ApiUtils {
+class ApiUtils {
 
-    public static final String BASE_URL = "https://api.gyazo.com/api/";
+    private static final String BASE_URL = "https://api.gyazo.com/api/";
 
-    public static SOService getSOService() {
+    static SOService getSOService() {
         return RetrofitClient.getClient(BASE_URL).create(SOService.class);
     }
 }

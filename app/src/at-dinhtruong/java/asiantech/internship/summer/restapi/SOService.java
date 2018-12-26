@@ -9,8 +9,8 @@ import retrofit2.http.Query;
 
 public interface SOService {
 
-    @GET("/images")
-    Call<Image> getAnswers(@Query("access_token") String accessToken, @Query("page") int page, @Query("per_page") int perPage);
+    @GET("images")
+    Call<List<Image>> getAnswers(@Query("access_token") String accessToken, @Query("page") int page, @Query("per_page") int perPage);
 //
 //    @GET("/answers?order=desc&sort=activity&site=stackoverflow")
 //    Call<List<SOAnswersResponse>> getAnswers(@Query("tagged") String tags);

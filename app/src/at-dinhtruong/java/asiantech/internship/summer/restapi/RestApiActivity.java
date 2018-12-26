@@ -1,7 +1,9 @@
 package asiantech.internship.summer.restapi;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -17,7 +19,6 @@ import retrofit2.Response;
 
 public class RestApiActivity extends AppCompatActivity {
     private ImageAdapter mImageAdapter;
-    private List<Image> mImages;
     private SOService mService;
 
     @Override
@@ -29,26 +30,31 @@ public class RestApiActivity extends AppCompatActivity {
 
     private void initViews() {
         mService = ApiUtils.getSOService();
-        mImages = new ArrayList<>();
+        List<Image> images = new ArrayList<>();
         RecyclerView recyclerView = findViewById(R.id.recyclerViewItem);
         recyclerView.setHasFixedSize(true);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(gridLayoutManager);
-        mImageAdapter = new ImageAdapter(mImages);
+        Log.d("xxxxx", "initViews: " + images.size());
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL));
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        mImageAdapter = new ImageAdapter(images, getApplicationContext());
         recyclerView.setAdapter(mImageAdapter);
         loadAnswers();
     }
 
     private void loadAnswers() {
-        mService.getAnswers("6f5a48ac0e8aca77e0e8ef42e88962852b6ffaba01c16c5ba37ea13760c0317e",1,20).enqueue(new Callback<Image>() {
+        mService.getAnswers("6f5a48ac0e8aca77e0e8ef42e88962852b6ffaba01c16c5ba37ea13760c0317e", 1, 20).enqueue(new Callback<List<Image>>() {
             @Override
-            public void onResponse(Call<Image> call, Response<Image> response) {
-                Log.d("xxxxxx", "onResponse: "+response.body().getCreatedAt());
+            public void onResponse(@NonNull Call<List<Image>> call, @NonNull Response<List<Image>> response) {
+                if (response.body() != null) {
+                    mImageAdapter.updateAnswers(response.body());
+                }
             }
 
             @Override
-            public void onFailure(Call<Image> call, Throwable t) {
-
+            public void onFailure(@NonNull Call<List<Image>> call, @NonNull Throwable t) {
+                Log.d("xxxxxx", "Throwable: " + t.getMessage());
             }
         });
     }
