@@ -16,8 +16,8 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
     private List<User> mListUser;
     private Context mContext;
 
-    FavoriteAdapter(List<User> mUsers, Context context) {
-        mListUser = mUsers;
+    FavoriteAdapter(List<User> users, Context context) {
+        mListUser = users;
         mContext = context;
     }
 
