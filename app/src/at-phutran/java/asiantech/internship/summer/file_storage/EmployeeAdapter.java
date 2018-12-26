@@ -18,6 +18,7 @@ class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.ViewHolder> {
         mListEmployees = listEmployees;
         mOnclickItem = onclickItem;
     }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -37,22 +38,24 @@ class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.ViewHolder> {
         return mListEmployees.size();
     }
 
+    public interface OnclickItem {
+        void selectedItem(int position);
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvContent;
+
         ViewHolder(View itemView) {
             super(itemView);
             tvContent = itemView.findViewById(R.id.tvEmployee);
             handleEvent();
         }
+
         private void handleEvent() {
             itemView.setOnClickListener(view -> {
                 int position = getLayoutPosition();
                 mOnclickItem.selectedItem(position);
             });
         }
-    }
-
-    public interface OnclickItem {
-        void selectedItem(int position);
     }
 }

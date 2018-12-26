@@ -10,6 +10,7 @@ public class PageAdapter extends FragmentPagerAdapter {
     private static final String sharePreference = "Share Preference";
     private static final String storage = "Storage";
     private static final String database = "Database";
+
     PageAdapter(FragmentManager fm) {
         super(fm);
     }
@@ -31,7 +32,7 @@ public class PageAdapter extends FragmentPagerAdapter {
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
-        switch (position){
+        switch (position) {
             case 0:
                 return sharePreference;
             case 1:

@@ -37,6 +37,10 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.ViewHold
         return mListCompany.size();
     }
 
+    public interface OnclickNameCompany {
+        void viewEmployee(int position);
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder {
         private TextView mTvNameCompany;
 
@@ -55,8 +59,5 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.ViewHold
                 mOnclickNameCompany.viewEmployee(position);
             });
         }
-    }
-    public interface OnclickNameCompany {
-        void viewEmployee(int position);
     }
 }

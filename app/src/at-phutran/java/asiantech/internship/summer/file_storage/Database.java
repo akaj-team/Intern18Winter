@@ -5,10 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import asiantech.internship.summer.model.Company;
 import asiantech.internship.summer.model.Employee;
 
@@ -54,7 +52,7 @@ public class Database extends SQLiteOpenHelper {
         long result = -1;
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        if(!employee.getNameEmployee().isEmpty()){
+        if (!employee.getNameEmployee().isEmpty()) {
             contentValues.put(COL_ID_EMPOYEE, employee.getIdEmployee());
             contentValues.put(COL_NAME_EMPLOYEE, employee.getNameEmployee());
             contentValues.put(COL_ID_COMPANY, employee.getIdCompany());
@@ -86,19 +84,20 @@ public class Database extends SQLiteOpenHelper {
         List<Employee> listEmployees = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_EMPLOYEE + " WHERE " + COL_ID_COMPANY + CHECK, new String[]{String.valueOf(idCompany)});
-        if(cursor.moveToFirst()){
+        if (cursor.moveToFirst()) {
             do {
                 Employee employee = new Employee();
                 employee.setIdEmployee(cursor.getInt(0));
                 employee.setNameEmployee(cursor.getString(1));
                 employee.setIdCompany(cursor.getInt(2));
                 listEmployees.add(employee);
-            }while(cursor.moveToNext());
+            } while (cursor.moveToNext());
         }
         cursor.close();
         db.close();
         return listEmployees;
     }
+
     int updateEmployee(Employee employee) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -108,9 +107,10 @@ public class Database extends SQLiteOpenHelper {
         db.close();
         return updated;
     }
+
     int deleteEmployee(Employee employee) {
         SQLiteDatabase db = this.getWritableDatabase();
-        int deleted = db.delete(TABLE_EMPLOYEE,COL_ID_EMPOYEE + CHECK + "AND " + COL_ID_COMPANY + CHECK,
+        int deleted = db.delete(TABLE_EMPLOYEE, COL_ID_EMPOYEE + CHECK + "AND " + COL_ID_COMPANY + CHECK,
                 new String[]{String.valueOf(employee.getIdEmployee()), String.valueOf(employee.getIdCompany())});
         db.close();
         return deleted;

@@ -44,8 +44,6 @@ public class DatabaseFragment extends Fragment implements CompanyAdapter.Onclick
         mListCompany = mDatabase.getAllCompany();
         RecyclerView recyclerViewCompany = view.findViewById(R.id.recyclerViewCompany);
         recyclerViewCompany.setHasFixedSize(true);
-        /*LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
-        recyclerViewCompany.setLayoutManager(linearLayoutManager);*/
         recyclerViewCompany.setLayoutManager(new LinearLayoutManager(getActivity()));
         CompanyAdapter companyAdapter = new CompanyAdapter(mListCompany, this);
         recyclerViewCompany.setAdapter(companyAdapter);
