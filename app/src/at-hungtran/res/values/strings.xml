@@ -48,7 +48,5 @@
     <string name="saveSuccessfully">Save successfully!!</string>
     <string name="permissionCancel">Permission Cancel!!</string>
     <string name="saved">saved</string>
-    <string name="sharePreference">Share Preference</string>
-    <string name="internalExternnal">Internal External</string>
-    <string name="database">Database</string>
+    <string name="listEmployee">List Employee </string>
 </resources>

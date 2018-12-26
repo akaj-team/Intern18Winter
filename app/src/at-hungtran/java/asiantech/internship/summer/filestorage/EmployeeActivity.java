@@ -1,5 +1,6 @@
 package asiantech.internship.summer.filestorage;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -39,10 +40,12 @@ public class EmployeeActivity extends AppCompatActivity implements View.OnClickL
         initEmployee();
     }
 
+    @SuppressLint("SetTextI18n")
     private void initEmployee() {
         Company mCompany = mDatabaseHelper.getCompanyById(mIdCompany);
         RecyclerView mRvEmployee = findViewById(R.id.rvEmployee);
         TextView mTvNameCompany = findViewById(R.id.tvNameCompany);
+        TextView mTvListNameEmployee = findViewById(R.id.tvListNameEmployee);
         Button mBtnInsert = findViewById(R.id.btnInsert);
         mBtnDelete = findViewById(R.id.btnDelete);
         mBtnUpdate = findViewById(R.id.btnUpdate);
@@ -60,6 +63,7 @@ public class EmployeeActivity extends AppCompatActivity implements View.OnClickL
         mEmployeesById = mDatabaseHelper.getAllEmployeeById(mIdCompany);
         mEdtIdEmployee.setText(String.valueOf(mEmployeesById.size() + 1));
         mTvNameCompany.setText(mCompany.getName());
+        mTvListNameEmployee.setText(getString(R.string.listEmployee) + " " + mCompany.getName());
         mEdtIdEmployee.setEnabled(false);
         mBtnUpdate.setEnabled(false);
         mBtnDelete.setEnabled(false);

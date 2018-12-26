@@ -5,10 +5,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import asiantech.internship.summer.R;
-
 public class FileStorageAdapter extends FragmentPagerAdapter {
-    private String listTab[] = {String.valueOf(R.string.sharePreference), String.valueOf(R.string.internalExternnal), String.valueOf(R.string.database)};
+    private String listTab[] = {"Share Preference", "Internal External Store", "Database"};
     private SharePreferenceFragment mSharePreferenceFragment;
     private StoreFragment mStoreFragment;
     private DatabaseFragment mDatabaseFragment;
