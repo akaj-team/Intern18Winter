@@ -13,12 +13,12 @@ import asiantech.internship.summer.R;
 import asiantech.internship.summer.model.User;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
-    private List<User> mListUsers;
+    private List<User> mListUser;
     private Context mContext;
     private OnclickLike mOnclickLike;
 
     RecyclerViewAdapter(List<User> listUsers, Context context, OnclickLike onclickLike) {
-        this.mListUsers = listUsers;
+        this.mListUser = listUsers;
         this.mContext = context;
         this.mOnclickLike = onclickLike;
     }
@@ -33,7 +33,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        User user = mListUsers.get(position);
+        User user = mListUser.get(position);
         holder.imgAvatar.setImageResource(user.getAvatar());
         holder.tvUserComment.setText(user.getUsername());
         holder.imgCook.setImageResource(user.getImage());
@@ -49,7 +49,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public int getItemCount() {
-        return mListUsers.size();
+        return mListUser.size();
     }
 
     public interface OnclickLike {
