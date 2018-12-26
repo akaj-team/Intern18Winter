@@ -27,6 +27,7 @@
         <activity android:name=".filestorage.EmployeeActivity" />
         <activity android:name=".activityfragment.LoginActivity" />
         <activity android:name=".recyclerview.TimelineActivity" />
+        <activity android:name=".viewpager.PagerActivity" />
     </application>
 
 </manifest>
