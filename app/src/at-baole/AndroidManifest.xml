@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="asiantech.internship.summer">
 
@@ -24,5 +25,7 @@
         <activity android:name=".activity_fragment.InformationActivity"/>
         <activity android:name=".activity_fragment.LoginActivity"/>
         <activity android:name=".recyclerview.RecyclerViewActivity"/>
+        <activity android:name=".viewpager.TimelineActivity"/>
+        <activity android:name=".viewpager.PagerActivity"/>
     </application>
 </manifest>

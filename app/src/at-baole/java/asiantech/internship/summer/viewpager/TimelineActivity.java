@@ -1,13 +1,12 @@
-package asiantech.internship.summer.recyclerview;
+package asiantech.internship.summer.viewpager;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
 import asiantech.internship.summer.R;
-import asiantech.internship.summer.viewpager.TimelineFragment;
 
-public class RecyclerViewActivity extends AppCompatActivity {
+public class TimelineActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
