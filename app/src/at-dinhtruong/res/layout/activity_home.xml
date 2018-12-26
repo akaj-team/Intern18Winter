@@ -21,6 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:text="@string/eventAndListener" />
+
     <Button
         android:id="@+id/btnActivityAndFragment"
         android:layout_width="match_parent"
@@ -40,5 +41,12 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:text="@string/drawerLayout" />
+
+    <Button
+        android:id="@+id/btnViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="@string/viewPager" />
 
 </LinearLayout>

@@ -28,6 +28,7 @@
         <activity android:name=".activityandfragment.LoginActivity" />
         <activity android:name=".activityandfragment.InformationActivity" />
         <activity android:name=".recyclerview.RecyclerViewActivity" />
+        <activity android:name=".viewpager.ViewPagerActivity" />
         <activity android:name=".drawerlayout.DrawerLayoutActivity" />
     </application>
 
