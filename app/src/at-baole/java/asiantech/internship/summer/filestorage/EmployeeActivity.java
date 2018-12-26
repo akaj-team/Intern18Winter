@@ -3,6 +3,7 @@ package asiantech.internship.summer.filestorage;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,15 +21,16 @@ import asiantech.internship.summer.filestorage.model.Employee;
 
 public class EmployeeActivity extends AppCompatActivity implements View.OnClickListener, EmployeeAdapter.onClickEmployee {
     private DatabaseHelper mDatabaseHelper;
-    private List<Employee> mEmployeesById;
-    private EditText mEdtIdEmployee;
-    private EditText mEdtNameEmployee;
-    private Button mBtnInsert;
+    private List<Employee> mEmployees;
+    private EditText mEdtEmployeeId;
+    private EditText mEdtEmployeeName;
     private Button mBtnUpdate;
     private Button mBtnDelete;
     private EmployeeAdapter mEmployeeAdapter;
-    private int mIdCompany;
-    private int mPositionItem;
+    private int mCompanyId;
+    private int mItemPosition;
+    private Employee mEmployee;
+    private int mEmployeeId;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,19 +38,19 @@ public class EmployeeActivity extends AppCompatActivity implements View.OnClickL
         mDatabaseHelper = new DatabaseHelper(getApplicationContext());
         setContentView(R.layout.activity_employee);
         Intent intent = getIntent();
-        mIdCompany = intent.getIntExtra(SaveDatabaseFragment.ID_COMPANY, 0);
-        initEmployee();
+        mCompanyId = intent.getIntExtra(SaveDatabaseFragment.ID_COMPANY, 0);
+        initEmployeeView();
     }
 
-    private void initEmployee() {
-        Company mCompany = mDatabaseHelper.getCompanyById(mIdCompany);
+    private void initEmployeeView() {
+        Company mCompany = mDatabaseHelper.getCompanyById(mCompanyId);
         RecyclerView mRvEmployee = findViewById(R.id.rvEmployee);
         TextView mTvNameCompany = findViewById(R.id.tvCompany);
-        mBtnInsert = findViewById(R.id.btnInsert);
+        Button mBtnInsert = findViewById(R.id.btnInsert);
         mBtnDelete = findViewById(R.id.btnDelete);
         mBtnUpdate = findViewById(R.id.btnUpdate);
-        mEdtIdEmployee = findViewById(R.id.edtIdEmployee);
-        mEdtNameEmployee = findViewById(R.id.edtEmployeeName);
+        mEdtEmployeeId = findViewById(R.id.edtIdEmployee);
+        mEdtEmployeeName = findViewById(R.id.edtEmployeeName);
 
         mBtnInsert.setOnClickListener(this);
         mBtnDelete.setOnClickListener(this);
@@ -58,85 +60,120 @@ public class EmployeeActivity extends AppCompatActivity implements View.OnClickL
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRvEmployee.setLayoutManager(linearLayoutManager);
 
-        mEmployeesById = mDatabaseHelper.getAllEmployeeById(mIdCompany);
-        mEdtIdEmployee.setText(String.valueOf(mEmployeesById.size() + 1));
+        mEmployees = mDatabaseHelper.getAllEmployeeById(mCompanyId);
+        mEdtEmployeeId.setText(String.valueOf(mEmployees.size() + 1));
         mTvNameCompany.setText(mCompany.getCompanyName());
-        mEdtIdEmployee.setEnabled(false);
+        mEdtEmployeeId.setEnabled(false);
         mBtnUpdate.setEnabled(false);
         mBtnDelete.setEnabled(false);
-        mEmployeeAdapter = new EmployeeAdapter(mEmployeesById, this);
+        mEmployeeAdapter = new EmployeeAdapter(mEmployees, this, getApplicationContext());
         mRvEmployee.setAdapter(mEmployeeAdapter);
     }
 
     @Override
     public void onSelectEmployee(int position) {
-        Employee employee = mDatabaseHelper.getEmployeeById(mEmployeesById.get(position).getEmployeeId(), mEmployeesById.get(position).getCompanyId());
-        mEdtIdEmployee.setText(String.valueOf(employee.getEmployeeId()));
-        mEdtNameEmployee.setText(employee.getEmployeeName());
+        Employee employee = mDatabaseHelper.getEmployeeById(mEmployees.get(position).getEmployeeId(), mEmployees.get(position).getCompanyId());
+        mEdtEmployeeId.setText(String.valueOf(employee.getEmployeeId()));
+        mEdtEmployeeName.setText(employee.getEmployeeName());
         mBtnUpdate.setEnabled(true);
         mBtnDelete.setEnabled(true);
-        mPositionItem = position;
+        mItemPosition = position;
     }
 
     @Override
     public void onClick(View v) {
-        Employee employee;
         switch (v.getId()) {
             case R.id.btnInsert: {
-                int idEmployee;
-                if (mEmployeesById.size() == 0) {
-                    idEmployee = 1;
+                int employeeId;
+                if (mEmployees.size() == 0) {
+                    employeeId = 1;
                 } else {
-                    idEmployee = mEmployeesById.get(mEmployeesById.size() - 1).getEmployeeId() + 1;
+                    employeeId = mEmployees.get(mEmployees.size() - 1).getEmployeeId() + 1;
                 }
-                String nameEmployee = mEdtNameEmployee.getText().toString();
-                employee = new Employee(idEmployee, mIdCompany, nameEmployee);
+                String nameEmployee = mEdtEmployeeName.getText().toString();
+                mEmployee = new Employee(employeeId, mCompanyId, nameEmployee);
                 if (nameEmployee.equals("")) {
-                    Toast.makeText(getApplicationContext(), "This field is not empty", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), R.string.fieldNotNull, Toast.LENGTH_LONG).show();
                 } else {
-                    mDatabaseHelper.addEmployee(employee);
-                    mEmployeesById.add(employee);
-                    mEmployeeAdapter.notifyDataSetChanged();
-                    mEdtIdEmployee.setText(String.valueOf(mEmployeesById.get(mEmployeesById.size() - 1).getEmployeeId() + 1));
-                    mEdtNameEmployee.setText("");
+                    confirmInsertDialog();
                 }
                 break;
             }
             case R.id.btnUpdate: {
-                int idEmployee = Integer.parseInt(mEdtIdEmployee.getText().toString());
-                String nameEmployee = mEdtNameEmployee.getText().toString();
-                employee = new Employee(idEmployee, mIdCompany, nameEmployee);
-                if (employee.getEmployeeName().equals("")) {
-                    Toast.makeText(getApplicationContext(), "This field is not empty", Toast.LENGTH_LONG).show();
-                } else if (!employee.getEmployeeName().equals("") && mDatabaseHelper.updateEmployee(employee) > 0) {
-                    mEmployeesById.get(mPositionItem).setEmployeeName(employee.getEmployeeName());
-                    mEmployeeAdapter.notifyDataSetChanged();
-                    mEdtIdEmployee.setText(String.valueOf(mEmployeesById.get(mEmployeesById.size() - 1).getEmployeeId() + 1));
-                    mEdtNameEmployee.setText("");
+                int idEmployee = Integer.parseInt(mEdtEmployeeId.getText().toString());
+                String nameEmployee = mEdtEmployeeName.getText().toString();
+                mEmployee = new Employee(idEmployee, mCompanyId, nameEmployee);
+                if (mEmployee.getEmployeeName().equals("")) {
+                    Toast.makeText(getApplicationContext(), R.string.fieldNotNull, Toast.LENGTH_LONG).show();
+                } else if (!mEmployee.getEmployeeName().equals("") && mDatabaseHelper.updateEmployee(mEmployee) > 0) {
+                    confirmUpdateDialog();
                 } else {
-                    Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), R.string.errorOccured, Toast.LENGTH_LONG).show();
                 }
                 break;
             }
             case R.id.btnDelete: {
-                int idEmployee = Integer.parseInt(mEdtIdEmployee.getText().toString());
-                String nameEmployee = mEdtNameEmployee.getText().toString();
-                employee = new Employee(idEmployee, mIdCompany, nameEmployee);
-                if (mDatabaseHelper.deleteEmployee(employee) > 0) {
-                    mEmployeesById.remove(mPositionItem);
-                    mEmployeeAdapter.notifyDataSetChanged();
-                    if (mEmployeesById.size() == 0) {
-                        idEmployee = 1;
-                    } else {
-                        idEmployee = mEmployeesById.get(mEmployeesById.size() - 1).getEmployeeId() + 1;
-                    }
-                    mEdtIdEmployee.setText(String.valueOf(idEmployee));
-                    mEdtNameEmployee.setText("");
+                mEmployeeId = Integer.parseInt(mEdtEmployeeId.getText().toString());
+                String nameEmployee = mEdtEmployeeName.getText().toString();
+                mEmployee = new Employee(mEmployeeId, mCompanyId, nameEmployee);
+                if (mDatabaseHelper.deleteEmployee(mEmployee) > 0) {
+                    confirmDeleteDialog();
                 } else {
-                    Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), R.string.errorOccured, Toast.LENGTH_LONG).show();
                 }
                 break;
             }
         }
+    }
+
+    private void confirmInsertDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.confirmInsert);
+        builder.setPositiveButton(R.string.yes, (dialogInterface, yes) -> {
+            mDatabaseHelper.addEmployee(mEmployee);
+            mEmployees.add(mEmployee);
+            mEmployeeAdapter.notifyDataSetChanged();
+            mEdtEmployeeId.setText(String.valueOf(mEmployees.get(mEmployees.size() - 1).getEmployeeId() + 1));
+            mEdtEmployeeName.setText("");
+            Toast.makeText(this, R.string.insertSuccessfully, Toast.LENGTH_LONG).show();
+        });
+        builder.setNegativeButton(R.string.no, (dialogInterface, no) -> dialogInterface.dismiss());
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    private void confirmUpdateDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.confirmUpdate);
+        builder.setPositiveButton(R.string.yes, (dialogInterface, yes) -> {
+            mEmployees.get(mItemPosition).setEmployeeName(mEmployee.getEmployeeName());
+            mEmployeeAdapter.notifyDataSetChanged();
+            mEdtEmployeeId.setText(String.valueOf(mEmployees.get(mEmployees.size() - 1).getEmployeeId() + 1));
+            mEdtEmployeeName.setText("");
+            Toast.makeText(this, R.string.updateSuccessfully, Toast.LENGTH_LONG).show();
+        });
+        builder.setNegativeButton(R.string.no, (dialogInterface, no) -> dialogInterface.dismiss());
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    private void confirmDeleteDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.confirmDelete);
+        builder.setPositiveButton(R.string.yes, (dialogInterface, yes) -> {
+            mEmployees.remove(mItemPosition);
+            mEmployeeAdapter.notifyDataSetChanged();
+            if (mEmployees.size() == 0) {
+                mEmployeeId = 1;
+            } else {
+                mEmployeeId = mEmployees.get(mEmployees.size() - 1).getEmployeeId() + 1;
+            }
+            mEdtEmployeeId.setText(String.valueOf(mEmployeeId));
+            mEdtEmployeeName.setText("");
+            Toast.makeText(this, R.string.deleteSuccessfully, Toast.LENGTH_LONG).show();
+        });
+        builder.setNegativeButton(R.string.no, (dialogInterface, no) -> dialogInterface.dismiss());
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 }

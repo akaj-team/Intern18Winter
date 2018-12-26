@@ -3,13 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorLightGrey"
     android:orientation="vertical">
 
     <TextView
-        android:background="@drawable/border"
         android:id="@+id/tvCompany"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:background="@drawable/border"
         android:text="@string/companyName"
         android:textAlignment="center"
         android:textColor="@color/colorRed"
@@ -23,21 +24,32 @@
 
         <EditText
             android:id="@+id/edtIdEmployee"
-            android:layout_width="match_parent"
+            android:layout_width="300dp"
             android:layout_height="50dp"
-            android:inputType="text" />
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/shape_white"
+            android:inputType="text"
+            android:padding="10dp"
+            android:textColor="@color/colorBlack" />
 
         <EditText
             android:id="@+id/edtEmployeeName"
-            android:layout_width="match_parent"
+            android:layout_width="300dp"
             android:layout_height="50dp"
-            android:inputType="text" />
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/shape_white"
+            android:hint="@string/hintEmployeeName"
+            android:inputType="text"
+            android:padding="10dp" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal"
         tools:ignore="ButtonStyle">
 
@@ -65,13 +77,13 @@
     </LinearLayout>
 
     <TextView
-        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:gravity="center"
-        android:textColor="@color/colorRed"
+        android:layout_marginTop="20dp"
         android:background="@drawable/border"
-        android:text="LIST EMPLOYEE"
+        android:gravity="center"
+        android:text="@string/listEmployees"
+        android:textColor="@color/colorRed"
         android:textSize="20sp" />
 
     <LinearLayout
@@ -84,7 +96,8 @@
             android:layout_weight="3"
             android:background="@drawable/border"
             android:gravity="center"
-            android:text="Emp. ID"
+            android:text="@string/employeeID"
+            android:textColor="@color/colorBlack"
             android:textSize="20sp" />
 
         <TextView
@@ -93,7 +106,8 @@
             android:layout_weight="7"
             android:background="@drawable/border"
             android:gravity="center"
-            android:text="Employee Name"
+            android:text="@string/employeeName"
+            android:textColor="@color/colorBlack"
             android:textSize="20sp" />
 
     </LinearLayout>

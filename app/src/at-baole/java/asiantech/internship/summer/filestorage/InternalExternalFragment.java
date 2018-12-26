@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +25,9 @@ import java.util.Objects;
 import asiantech.internship.summer.R;
 
 public class InternalExternalFragment extends Fragment {
-    private static final String FILE_NAME = "example.txt";
+    private static final String INTERNAL_FILE_NAME = "internalExample.txt";
+    private static final String EXTERNAL_FILE_NAME = "externalExample.txt";
+    private static final String EXTERNAL_DIRECTORY_NAME = "MyAppFile";
     private static final int REQUEST_ID_WRITE_PERMISSION = 200;
     private static final int SDK_VERSION_CHECK = 23;
     private EditText mEdtInputInternal;
@@ -36,12 +37,14 @@ public class InternalExternalFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_internal_external, container, false);
+
         mEdtInputInternal = view.findViewById(R.id.edtIntStorage);
         mEdtInputExternal = view.findViewById(R.id.edtExtStorage);
         Button mBtnSaveInternal = view.findViewById(R.id.btnSaveInternal);
         Button mBtnLoadInternal = view.findViewById(R.id.btnLoadInternal);
         Button mBtnSaveExternal = view.findViewById(R.id.btnSaveExternal);
         Button mBtnLoadExternal = view.findViewById(R.id.btnLoadExternal);
+
         mBtnSaveInternal.setOnClickListener(saveInternalView -> saveDataInternal());
         mBtnLoadInternal.setOnClickListener(loadInternalView -> loadDataInternal());
         mBtnSaveExternal.setOnClickListener(saveExternalView -> {
@@ -55,10 +58,10 @@ public class InternalExternalFragment extends Fragment {
     public void saveDataInternal() {
         String text = mEdtInputInternal.getText().toString();
         if (mEdtInputInternal.getText().length() != 0) {
-            try (FileOutputStream fos = Objects.requireNonNull(getActivity()).openFileOutput(FILE_NAME, Context.MODE_PRIVATE)) {
-                fos.write(text.getBytes("utf-8"));
+            try (FileOutputStream fos = Objects.requireNonNull(getActivity()).openFileOutput(INTERNAL_FILE_NAME, Context.MODE_PRIVATE)) {
+                fos.write(text.getBytes(getString(R.string.encoding)));
                 mEdtInputInternal.getText().clear();
-                Toast.makeText(getActivity(), getString(R.string.saveToDir) + " " + getActivity().getFilesDir() + "/" + FILE_NAME, Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), getString(R.string.saveToDir) + " " + getActivity().getFilesDir() + "/" + INTERNAL_FILE_NAME, Toast.LENGTH_LONG).show();
             } catch (IOException ignored) {
             }
         } else {
@@ -67,8 +70,8 @@ public class InternalExternalFragment extends Fragment {
     }
 
     public void loadDataInternal() {
-        try (FileInputStream fis = Objects.requireNonNull(getActivity()).openFileInput(FILE_NAME)) {
-            InputStreamReader isr = new InputStreamReader(fis, "utf-8");
+        try (FileInputStream fis = Objects.requireNonNull(getActivity()).openFileInput(INTERNAL_FILE_NAME)) {
+            InputStreamReader isr = new InputStreamReader(fis, getString(R.string.encoding));
             BufferedReader br = new BufferedReader(isr);
             StringBuilder sb;
             sb = new StringBuilder();
@@ -76,7 +79,7 @@ public class InternalExternalFragment extends Fragment {
             while ((text = br.readLine()) != null) {
                 sb.append(text).append("\n");
                 mEdtInputInternal.setText(text);
-                Toast.makeText(getActivity(), getString(R.string.loadFromDir) + " " + getActivity().getFilesDir() + "/" + FILE_NAME, Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), getString(R.string.loadFromDir) + " " + getActivity().getFilesDir() + "/" + INTERNAL_FILE_NAME, Toast.LENGTH_LONG).show();
             }
         } catch (IOException ignored) {
         }
@@ -87,38 +90,37 @@ public class InternalExternalFragment extends Fragment {
         state = Environment.getExternalStorageState();
         if (Environment.MEDIA_MOUNTED.equals(state)) {
             File Root = Environment.getExternalStorageDirectory();
-            File Dir = new File(Root.getAbsolutePath() + "/MyAppFile");
+            File Dir = new File(Root.getAbsolutePath() + "/" + EXTERNAL_DIRECTORY_NAME);
             if (!Dir.exists()) {
                 Dir.mkdir();
             }
-            File file = new File(Dir, "MyMessage.txt");
+            File file = new File(Dir, EXTERNAL_FILE_NAME);
             String Message = mEdtInputExternal.getText().toString();
             try {
                 FileOutputStream fos = new FileOutputStream(file);
-                fos.write(Message.getBytes());
+                fos.write(Message.getBytes(getString(R.string.encoding)));
                 fos.close();
                 mEdtInputExternal.setText("");
-                Log.d("xxx", "saveDataExternal: " +Dir);
-                Toast.makeText(getActivity(), "Message Saved", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), R.string.inputSaved, Toast.LENGTH_LONG).show();
             } catch (IOException ignored) {
             }
         } else {
-            Toast.makeText(getActivity(), "SD card Not Found", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), R.string.sdCardNotFound, Toast.LENGTH_LONG).show();
         }
     }
 
     private void loadDataExternal() {
         File Root = Environment.getExternalStorageDirectory();
-        File Dir = new File(Root.getAbsolutePath() + "/MyAppFile");
-        File file = new File(Dir, "MyMessage.txt");
-        String Message;
+        File Dir = new File(Root.getAbsolutePath() + "/" + EXTERNAL_DIRECTORY_NAME);
+        File file = new File(Dir, EXTERNAL_FILE_NAME);
+        String input;
         try {
             FileInputStream fis = new FileInputStream(file);
             InputStreamReader isr = new InputStreamReader(fis);
             BufferedReader br = new BufferedReader(isr);
             StringBuilder sb = new StringBuilder();
-            while ((Message = br.readLine()) != null) {
-                sb.append(Message).append("\n");
+            while ((input = br.readLine()) != null) {
+                sb.append(input).append("\n");
             }
             mEdtInputExternal.setText(sb.toString());
         } catch (IOException ignored) {
@@ -135,10 +137,8 @@ public class InternalExternalFragment extends Fragment {
 
     private boolean askPermission() {
         if (android.os.Build.VERSION.SDK_INT >= SDK_VERSION_CHECK) {
-            // Check if we have permission
             int permission = Objects.requireNonNull(getActivity()).checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
             if (permission != PackageManager.PERMISSION_GRANTED) {
-                // If don't have permission so prompt the user.
                 this.requestPermissions(
                         new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                         InternalExternalFragment.REQUEST_ID_WRITE_PERMISSION);

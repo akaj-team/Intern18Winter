@@ -25,7 +25,7 @@ public class SharedPreferencesFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View spView = inflater.inflate(R.layout.fragment_share_preferences, container, false);
+        View spView = inflater.inflate(R.layout.fragment_shared_preferences, container, false);
         mEdtUsername = spView.findViewById(R.id.edtUsername);
         mEdtPassword = spView.findViewById(R.id.edtPassword);
         mBtnLogin = spView.findViewById(R.id.btnLogin);

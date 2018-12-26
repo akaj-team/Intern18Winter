@@ -12,46 +12,49 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.List;
+import java.util.Objects;
 
 import asiantech.internship.summer.R;
 import asiantech.internship.summer.filestorage.model.Company;
 
-public class SaveDatabaseFragment extends Fragment implements CompanyAdapter.OnClickCompany{
-    DatabaseHelper databaseHelper;
-    List<Company> mCompanies;
-    public static final String ID_COMPANY = "idCompany";
+public class SaveDatabaseFragment extends Fragment implements CompanyAdapter.OnClickCompany {
+    public static final String ID_COMPANY = "CompanyId";
+    DatabaseHelper mDatabaseHelper;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_save_database, container, false);
-        databaseHelper = new DatabaseHelper(getActivity().getApplicationContext());
-        if(databaseHelper.getCompaniesCount() == 0){
+        mDatabaseHelper = new DatabaseHelper(Objects.requireNonNull(getActivity()).getApplicationContext());
+        if (mDatabaseHelper.getCompaniesCount() == 0) {
             addListCompany();
         }
         initCompany(view);
         return view;
     }
+
     private void initCompany(View view) {
         RecyclerView mRecyclerView = view.findViewById(R.id.recyclerViewCompany);
         mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(linearLayoutManager);
-        List<Company> companies = databaseHelper.getAllCompany();
-        mRecyclerView.setAdapter(new CompanyAdapter(companies, this));
+        List<Company> companies = mDatabaseHelper.getAllCompany();
+        mRecyclerView.setAdapter(new CompanyAdapter(companies, this, getContext()));
     }
-    private void addListCompany(){
-        databaseHelper.addCompany(new Company("Asian Tech Company"));
-        databaseHelper.addCompany(new Company("FPT Company"));
-        databaseHelper.addCompany(new Company("Framgia Company"));
-        databaseHelper.addCompany(new Company("Enclave Company"));
-        databaseHelper.addCompany(new Company("Axon Active Company"));
-        databaseHelper.addCompany(new Company("Gameloft Company"));
+
+    private void addListCompany() {
+        mDatabaseHelper.addCompany(new Company(getString(R.string.companyAsianTech)));
+        mDatabaseHelper.addCompany(new Company(getString(R.string.companySharkChau)));
+        mDatabaseHelper.addCompany(new Company(getString(R.string.companyBaoLe)));
+        mDatabaseHelper.addCompany(new Company(getString(R.string.companyTruongDinh)));
+        mDatabaseHelper.addCompany(new Company(getString(R.string.companyTranPhu)));
+        mDatabaseHelper.addCompany(new Company(getString(R.string.companyTranHung)));
     }
 
     @Override
-    public void onSelectItem(int idCompany) {
+    public void onSelectCompany(int companyId) {
         Intent intent = new Intent(getActivity(), EmployeeActivity.class);
-        intent.putExtra(ID_COMPANY, idCompany);
+        intent.putExtra(ID_COMPANY, companyId);
         startActivity(intent);
     }
 }

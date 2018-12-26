@@ -1,11 +1,13 @@
 package asiantech.internship.summer.filestorage;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -13,13 +15,16 @@ import asiantech.internship.summer.R;
 import asiantech.internship.summer.filestorage.model.Company;
 
 public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.CompanyViewHolder> {
-    private List<Company> mItemCompany;
-    private OnClickCompany mOnClickCompany;
+    private List<Company> mCompanies;
+    private OnClickCompany mOnClickCompanyListener;
+    private Context mContext;
 
-    CompanyAdapter(List<Company> companies, OnClickCompany onClickCompany){
-        this.mItemCompany = companies;
-        this.mOnClickCompany = onClickCompany;
+    CompanyAdapter(List<Company> companies, OnClickCompany onClickCompany, Context context) {
+        this.mCompanies = companies;
+        this.mOnClickCompanyListener = onClickCompany;
+        this.mContext = context;
     }
+
     @NonNull
     @Override
     public CompanyAdapter.CompanyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -30,12 +35,16 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.CompanyV
 
     @Override
     public void onBindViewHolder(@NonNull CompanyAdapter.CompanyViewHolder holder, int position) {
-        holder.mTvNameCompany.setText(mItemCompany.get(position).getCompanyName());
+        holder.mTvNameCompany.setText(mCompanies.get(position).getCompanyName());
     }
 
     @Override
     public int getItemCount() {
-        return mItemCompany.size();
+        return mCompanies.size();
+    }
+
+    public interface OnClickCompany {
+        void onSelectCompany(int position);
     }
 
     class CompanyViewHolder extends RecyclerView.ViewHolder {
@@ -44,10 +53,11 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.CompanyV
         CompanyViewHolder(View itemView) {
             super(itemView);
             mTvNameCompany = itemView.findViewById(R.id.tvItemCompany);
-            mTvNameCompany.setOnClickListener(v -> mOnClickCompany.onSelectItem(mItemCompany.get(getAdapterPosition()).getCompanyId()));
+            mTvNameCompany.setOnClickListener(v -> {
+                mOnClickCompanyListener.onSelectCompany(mCompanies.get(getAdapterPosition()).getCompanyId());
+                Toast.makeText(mContext, mContext.getString(R.string.textSelected) + " "
+                        + mCompanies.get(getAdapterPosition()).getCompanyName(), Toast.LENGTH_LONG).show();
+            });
         }
-    }
-    public interface OnClickCompany {
-        void onSelectItem(int position);
     }
 }

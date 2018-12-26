@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:orientation="horizontal"
-    android:layout_height="40dp">
+    android:layout_height="40dp"
+    android:orientation="horizontal">
 
     <TextView
         android:id="@+id/tvItemEmployeeId"
         android:layout_width="0dp"
+        android:layout_height="match_parent"
         android:layout_weight="3"
+        android:background="@drawable/border"
         android:gravity="center"
-        android:background="@drawable/border"
-        android:textSize="20sp"
         android:textColor="@color/colorBlue"
-        android:layout_height="match_parent" />
+        android:textSize="20sp" />
+
     <TextView
-        android:background="@drawable/border"
         android:id="@+id/tvItemEmployee"
         android:layout_width="0dp"
-        android:layout_weight="7"
         android:layout_height="match_parent"
+        android:layout_weight="7"
+        android:background="@drawable/border"
         android:gravity="center"
-        android:textSize="20sp"
-        android:textColor="@color/colorBlue" />
-
+        android:textColor="@color/colorBlue"
+        android:textSize="20sp" />
 
 
 </LinearLayout>
