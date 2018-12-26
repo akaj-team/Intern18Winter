@@ -19,14 +19,14 @@ import asiantech.internship.summer.filestorage.model.Company;
 
 public class SaveDatabaseFragment extends Fragment implements CompanyAdapter.OnClickCompany {
     public static final String ID_COMPANY = "CompanyId";
-    DatabaseHelper mDatabaseHelper;
+    DataAccess mDataAccess;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_save_database, container, false);
-        mDatabaseHelper = new DatabaseHelper(Objects.requireNonNull(getActivity()).getApplicationContext());
-        if (mDatabaseHelper.getCompaniesCount() == 0) {
+        mDataAccess = new DataAccess(Objects.requireNonNull(getActivity()).getApplicationContext());
+        if (mDataAccess.getCompaniesCount() == 0) {
             addListCompany();
         }
         initCompany(view);
@@ -38,17 +38,17 @@ public class SaveDatabaseFragment extends Fragment implements CompanyAdapter.OnC
         mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(linearLayoutManager);
-        List<Company> companies = mDatabaseHelper.getAllCompany();
+        List<Company> companies = mDataAccess.getAllCompany();
         mRecyclerView.setAdapter(new CompanyAdapter(companies, this, getContext()));
     }
 
     private void addListCompany() {
-        mDatabaseHelper.addCompany(new Company(getString(R.string.companyAsianTech)));
-        mDatabaseHelper.addCompany(new Company(getString(R.string.companySharkChau)));
-        mDatabaseHelper.addCompany(new Company(getString(R.string.companyBaoLe)));
-        mDatabaseHelper.addCompany(new Company(getString(R.string.companyTruongDinh)));
-        mDatabaseHelper.addCompany(new Company(getString(R.string.companyTranPhu)));
-        mDatabaseHelper.addCompany(new Company(getString(R.string.companyTranHung)));
+        mDataAccess.addCompany(new Company(getString(R.string.companyAsianTech)));
+        mDataAccess.addCompany(new Company(getString(R.string.companySharkChau)));
+        mDataAccess.addCompany(new Company(getString(R.string.companyBaoLe)));
+        mDataAccess.addCompany(new Company(getString(R.string.companyTruongDinh)));
+        mDataAccess.addCompany(new Company(getString(R.string.companyTranPhu)));
+        mDataAccess.addCompany(new Company(getString(R.string.companyTranHung)));
     }
 
     @Override

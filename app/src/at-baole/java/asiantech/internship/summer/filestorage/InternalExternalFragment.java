@@ -116,7 +116,7 @@ public class InternalExternalFragment extends Fragment {
         String input;
         try {
             FileInputStream fis = new FileInputStream(file);
-            InputStreamReader isr = new InputStreamReader(fis);
+            InputStreamReader isr = new InputStreamReader(fis, getString(R.string.encoding));
             BufferedReader br = new BufferedReader(isr);
             StringBuilder sb = new StringBuilder();
             while ((input = br.readLine()) != null) {

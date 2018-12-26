@@ -12,7 +12,7 @@ import java.util.List;
 import asiantech.internship.summer.filestorage.model.Company;
 import asiantech.internship.summer.filestorage.model.Employee;
 
-public class DatabaseHelper extends SQLiteOpenHelper {
+public class DataAccess extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "company.sqlite";
 
     private static final String TABLE_COMPANY = "company";
@@ -39,9 +39,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     ")";
     private static final int DATA_VERSION = 1;
 
-    DatabaseHelper(Context context) {
+    DataAccess(Context context) {
         super(context, DATABASE_NAME, null, DATA_VERSION);
-        //SQLiteDatabase db = this.getWritableDatabase();
     }
 
     @Override

@@ -1,50 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:gravity="center"
         android:text="@string/listIssues"
-        android:textSize="30sp"
-        android:textColor="@color/colorRed"/>
+        android:textColor="@color/colorRed"
+        android:textSize="30sp" />
 
     <Button
         android:id="@+id/btnToGroupView"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="10dp"
-        android:text="@string/toViewAndGroupView"/>
+        android:text="@string/toViewAndGroupView"
+        tools:ignore="InconsistentLayout" />
 
     <Button
         android:id="@+id/btnToEventListener"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="10dp"
-        android:text="@string/toEventListener"/>
+        android:text="@string/toEventListener"
+        tools:ignore="InconsistentLayout"/>
 
     <Button
         android:id="@+id/btnToActivityFragment"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="10dp"
-        android:text="@string/toActivityFragment"/>
+        android:text="@string/toActivityFragment"
+        tools:ignore="InconsistentLayout"/>
 
     <Button
         android:id="@+id/btnToRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="10dp"
-        android:text="@string/toRecyclerView"/>
+        android:text="@string/toRecyclerView"
+        tools:ignore="InconsistentLayout"/>
 
     <Button
         android:id="@+id/btnToFileStorage"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="10dp"
-        android:text="@string/toFileStorage"/>
+        android:text="@string/toFileStorage"
+        tools:ignore="InconsistentLayout"/>
 
 </LinearLayout>

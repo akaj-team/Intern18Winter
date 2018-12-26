@@ -20,7 +20,7 @@ import asiantech.internship.summer.filestorage.model.Company;
 import asiantech.internship.summer.filestorage.model.Employee;
 
 public class EmployeeActivity extends AppCompatActivity implements View.OnClickListener, EmployeeAdapter.onClickEmployee {
-    private DatabaseHelper mDatabaseHelper;
+    private DataAccess mDataAccess;
     private List<Employee> mEmployees;
     private EditText mEdtEmployeeId;
     private EditText mEdtEmployeeName;
@@ -35,7 +35,7 @@ public class EmployeeActivity extends AppCompatActivity implements View.OnClickL
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mDatabaseHelper = new DatabaseHelper(getApplicationContext());
+        mDataAccess = new DataAccess(getApplicationContext());
         setContentView(R.layout.activity_employee);
         Intent intent = getIntent();
         mCompanyId = intent.getIntExtra(SaveDatabaseFragment.ID_COMPANY, 0);
@@ -43,7 +43,7 @@ public class EmployeeActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void initEmployeeView() {
-        Company mCompany = mDatabaseHelper.getCompanyById(mCompanyId);
+        Company mCompany = mDataAccess.getCompanyById(mCompanyId);
         RecyclerView mRvEmployee = findViewById(R.id.rvEmployee);
         TextView mTvNameCompany = findViewById(R.id.tvCompany);
         Button mBtnInsert = findViewById(R.id.btnInsert);
@@ -60,7 +60,7 @@ public class EmployeeActivity extends AppCompatActivity implements View.OnClickL
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRvEmployee.setLayoutManager(linearLayoutManager);
 
-        mEmployees = mDatabaseHelper.getAllEmployeeById(mCompanyId);
+        mEmployees = mDataAccess.getAllEmployeeById(mCompanyId);
         mEdtEmployeeId.setText(String.valueOf(mEmployees.size() + 1));
         mTvNameCompany.setText(mCompany.getCompanyName());
         mEdtEmployeeId.setEnabled(false);
@@ -72,7 +72,7 @@ public class EmployeeActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onSelectEmployee(int position) {
-        Employee employee = mDatabaseHelper.getEmployeeById(mEmployees.get(position).getEmployeeId(), mEmployees.get(position).getCompanyId());
+        Employee employee = mDataAccess.getEmployeeById(mEmployees.get(position).getEmployeeId(), mEmployees.get(position).getCompanyId());
         mEdtEmployeeId.setText(String.valueOf(employee.getEmployeeId()));
         mEdtEmployeeName.setText(employee.getEmployeeName());
         mBtnUpdate.setEnabled(true);
@@ -105,7 +105,7 @@ public class EmployeeActivity extends AppCompatActivity implements View.OnClickL
                 mEmployee = new Employee(idEmployee, mCompanyId, nameEmployee);
                 if (mEmployee.getEmployeeName().equals("")) {
                     Toast.makeText(getApplicationContext(), R.string.fieldNotNull, Toast.LENGTH_LONG).show();
-                } else if (!mEmployee.getEmployeeName().equals("") && mDatabaseHelper.updateEmployee(mEmployee) > 0) {
+                } else if (!mEmployee.getEmployeeName().equals("") && mDataAccess.updateEmployee(mEmployee) > 0) {
                     confirmUpdateDialog();
                 } else {
                     Toast.makeText(getApplicationContext(), R.string.errorOccured, Toast.LENGTH_LONG).show();
@@ -116,7 +116,7 @@ public class EmployeeActivity extends AppCompatActivity implements View.OnClickL
                 mEmployeeId = Integer.parseInt(mEdtEmployeeId.getText().toString());
                 String nameEmployee = mEdtEmployeeName.getText().toString();
                 mEmployee = new Employee(mEmployeeId, mCompanyId, nameEmployee);
-                if (mDatabaseHelper.deleteEmployee(mEmployee) > 0) {
+                if (mDataAccess.deleteEmployee(mEmployee) > 0) {
                     confirmDeleteDialog();
                 } else {
                     Toast.makeText(getApplicationContext(), R.string.errorOccured, Toast.LENGTH_LONG).show();
@@ -130,7 +130,7 @@ public class EmployeeActivity extends AppCompatActivity implements View.OnClickL
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(R.string.confirmInsert);
         builder.setPositiveButton(R.string.yes, (dialogInterface, yes) -> {
-            mDatabaseHelper.addEmployee(mEmployee);
+            mDataAccess.addEmployee(mEmployee);
             mEmployees.add(mEmployee);
             mEmployeeAdapter.notifyDataSetChanged();
             mEdtEmployeeId.setText(String.valueOf(mEmployees.get(mEmployees.size() - 1).getEmployeeId() + 1));
