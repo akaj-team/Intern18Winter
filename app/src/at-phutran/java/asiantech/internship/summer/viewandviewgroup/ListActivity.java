@@ -10,6 +10,7 @@ import asiantech.internship.summer.eventlistener.SignUpActivity;
 import asiantech.internship.summer.file_storage.FileStorageActivity;
 import asiantech.internship.summer.fragment.LoginActivity;
 import asiantech.internship.summer.recyclerview.RecyclerViewActivity;
+import asiantech.internship.summer.viewpager.ViewPagerActivity;
 
 public class ListActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -18,6 +19,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
     private Button mBtnRecyclerView;
     private Button mBtnFragment;
     private Button mBtnStorage;
+    private Button mBtnViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,12 +29,14 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         mBtnListener = findViewById(R.id.btnExercise2);
         mBtnFragment = findViewById(R.id.btnExercise3);
         mBtnRecyclerView = findViewById(R.id.btnExercise4);
-        mBtnStorage = findViewById(R.id.btnExercise5);
+        mBtnViewPager = findViewById(R.id.btnExercise5);
+        mBtnStorage = findViewById(R.id.btnExercise6);
         mBtnView.setOnClickListener(this);
         mBtnListener.setOnClickListener(this);
         mBtnFragment.setOnClickListener(this);
         mBtnRecyclerView.setOnClickListener(this);
         mBtnStorage.setOnClickListener(this);
+        mBtnViewPager.setOnClickListener(this);
     }
 
     @Override
@@ -59,6 +63,11 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             }
             case R.id.btnExercise5: {
+                Intent intent = new Intent(ListActivity.this, ViewPagerActivity.class);
+                startActivity(intent);
+                break;
+            }
+            case R.id.btnExercise6: {
                 Intent intent = new Intent(ListActivity.this, FileStorageActivity.class);
                 startActivity(intent);
                 break;
