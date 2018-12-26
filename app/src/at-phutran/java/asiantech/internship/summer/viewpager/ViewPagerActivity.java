@@ -1,10 +1,10 @@
 package asiantech.internship.summer.viewpager;
 
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import asiantech.internship.summer.R;
 
 public class ViewPagerActivity extends AppCompatActivity {
@@ -27,8 +27,7 @@ public class ViewPagerActivity extends AppCompatActivity {
                 mViewPagerContent.setCurrentItem(tab.getPosition());
                 if (tab.getPosition() == 0) {
                     fragmentTransaction.replace(R.id.viewPagerContent, new TimelineFragment());
-                }
-                else {
+                } else {
                     FavouriteFragment favouriteFragment = new FavouriteFragment();
                     fragmentTransaction.replace(R.id.viewPagerContent, favouriteFragment);
                 }
@@ -47,11 +46,11 @@ public class ViewPagerActivity extends AppCompatActivity {
         mViewPagerContent.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayoutHeader));
     }
 
-    public void setOnChangingFavoritesListener(OnChangingFavoritesListener onChangingFavoritesListener) {
-        this.mOnChangingFavoritesListener = onChangingFavoritesListener;
-    }
-
     public OnChangingFavoritesListener getOnChangingFavoritesListener() {
         return mOnChangingFavoritesListener;
+    }
+
+    public void setOnChangingFavoritesListener(OnChangingFavoritesListener onChangingFavoritesListener) {
+        this.mOnChangingFavoritesListener = onChangingFavoritesListener;
     }
 }

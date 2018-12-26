@@ -13,13 +13,12 @@ import asiantech.internship.summer.R;
 import asiantech.internship.summer.model.User;
 
 public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHolder>{
-    private List<User> mListUsers;
+    private List<User> mListUser;
     private Context mContext;
 
-
-    FavoriteAdapter(List<User> mUsers, Context applicationContext) {
-        this.mListUsers = mUsers;
-        this.mContext = applicationContext;
+    FavoriteAdapter(List<User> mUsers, Context context) {
+        mListUser = mUsers;
+        mContext = context;
     }
 
     @NonNull
@@ -32,32 +31,32 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        User user = mListUsers.get(position);
-        holder.mImgAvatar.setImageResource(user.getAvatar());
-        holder.mTvUserComment.setText(user.getUsername());
-        holder.mImageCook.setImageResource(user.getImage());
-        holder.mTvUsername.setText(user.getUsername());
-        holder.mTvComment.setText(user.getComment());
+        User user = mListUser.get(position);
+        holder.imgAvatar.setImageResource(user.getAvatar());
+        holder.tvUserComment.setText(user.getUsername());
+        holder.imgCook.setImageResource(user.getImage());
+        holder.tvUsername.setText(user.getUsername());
+        holder.tvComment.setText(user.getComment());
     }
 
     @Override
     public int getItemCount() {
-        return mListUsers.size();
+        return mListUser.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        private ImageView mImgAvatar;
-        private TextView mTvUsername;
-        private TextView mTvUserComment;
-        private TextView mTvComment;
-        private ImageView mImageCook;
+        ImageView imgAvatar;
+        TextView tvUsername;
+        TextView tvUserComment;
+        TextView tvComment;
+        ImageView imgCook;
         ViewHolder(View itemView) {
             super(itemView);
-            mImgAvatar = itemView.findViewById(R.id.circleImageViewAvatar);
-            mTvUsername = itemView.findViewById(R.id.tvUser);
-            mImageCook = itemView.findViewById(R.id.imgCook);
-            mTvUserComment = itemView.findViewById(R.id.tvUserComment);
-            mTvComment = itemView.findViewById(R.id.tvComment);
+            imgAvatar = itemView.findViewById(R.id.circleImageViewAvatar);
+            tvUsername = itemView.findViewById(R.id.tvUser);
+            imgCook = itemView.findViewById(R.id.imgCook);
+            tvUserComment = itemView.findViewById(R.id.tvUserComment);
+            tvComment = itemView.findViewById(R.id.tvComment);
             this.setIsRecyclable(false);
         }
     }

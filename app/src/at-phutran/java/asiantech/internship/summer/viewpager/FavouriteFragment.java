@@ -48,14 +48,14 @@ public class FavouriteFragment extends Fragment implements OnChangingFavoritesLi
     }
 
     @Override
-    public void onAdding(List<User> list) {
-        mFavoriteAdapter = new FavoriteAdapter(list , Objects.requireNonNull(getActivity()).getApplicationContext());
+    public void onAdding(List<User> users) {
+        mFavoriteAdapter = new FavoriteAdapter(users , getActivity());
         mRecyclerView.setAdapter(mFavoriteAdapter);
     }
 
     @Override
-    public void onRemoving(List<User> list) {
-        mFavoriteAdapter = new FavoriteAdapter(list , Objects.requireNonNull(getActivity()).getApplicationContext());
+    public void onRemoving(List<User> users) {
+        mFavoriteAdapter = new FavoriteAdapter(users , getActivity());
         mRecyclerView.setAdapter(mFavoriteAdapter);
     }
 }
