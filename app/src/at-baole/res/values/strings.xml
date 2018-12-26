@@ -30,12 +30,16 @@
     <string name="signUpSuccessully">Sign Up Successfully</string>
     <string name="confirmPasswordError">Confirm Password not match</string>
     <string name="backToScreen">Click the button to return to the main screen of your phone</string>
-    <string name="liked">Liked</string>
+    <string name="liked">liked</string>
     <string name="like">like</string>
     <string name="likes">likes</string>
     <string name="zerolike">%s like</string>
     <string name="username">Username</string>
     <string name="comment">It is very delicious</string>
+    <string name="timeline">Timeline</string>
+    <string name="favourite">Favourite</string>
+    <string name="addFavourite">Added to your Favourite</string>
+    <string name="removeFavourite">Remove from your Favourite</string>
     <string name="sharePreferences">share preferences</string>
     <string name="internalAndExternal">internal or External</string>
     <string name="saveDatabase">save database</string>
