@@ -13,21 +13,33 @@ import asiantech.internship.summer.recyclerview.RecyclerViewActivity;
 import asiantech.internship.summer.view_and_groupview.ViewActivity;
 import asiantech.internship.summer.viewpager.PagerActivity;
 
-public class MainActivity extends AppCompatActivity {
+public class ListIssuesActivity extends AppCompatActivity {
     private Button mBtnToGroupView;
+    private Button mBtnToEventListener;
+    private Button mBtnToActivityFragment;
+    private Button mBtnToRecyclerView;
+    private Button mBtnToViewPager;
+    private Button mBtnToFileStorage;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_check);
+        setContentView(R.layout.activity_list_issues);
+        mappingButton();
+        onClick();
+    }
 
+    private void mappingButton() {
         mBtnToGroupView = findViewById(R.id.btnToGroupView);
-        Button mBtnToEventListener = findViewById(R.id.btnToEventListener);
-        Button mBtnToActivityFragment = findViewById(R.id.btnToActivityFragment);
-        Button mBtnToRecyclerView = findViewById(R.id.btnToRecyclerView);
-        Button mBtnToViewPager = findViewById(R.id.btnToViewPager);
-        Button mBtnToFileStorage = findViewById(R.id.btnToFileStorage);
+        mBtnToEventListener = findViewById(R.id.btnToEventListener);
+        mBtnToActivityFragment = findViewById(R.id.btnToActivityFragment);
+        mBtnToRecyclerView = findViewById(R.id.btnToRecyclerView);
+        mBtnToViewPager = findViewById(R.id.btnToViewPager);
+        mBtnToFileStorage = findViewById(R.id.btnToFileStorage);
+    }
 
+    private void onClick() {
         mBtnToGroupView.setOnClickListener(toGroupView -> {
             Intent intentGroupView = new Intent(getApplication(), ViewActivity.class);
             startActivity(intentGroupView);

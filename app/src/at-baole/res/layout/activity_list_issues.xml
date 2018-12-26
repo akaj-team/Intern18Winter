@@ -14,32 +14,44 @@
 
     <Button
         android:id="@+id/btnToGroupView"
-        style="@style/Button"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
         android:text="@string/toViewAndGroupView" />
 
     <Button
         android:id="@+id/btnToEventListener"
-        style="@style/Button"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
         android:text="@string/toEventListener" />
 
     <Button
         android:id="@+id/btnToActivityFragment"
-        style="@style/Button"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
         android:text="@string/toActivityFragment" />
 
     <Button
         android:id="@+id/btnToRecyclerView"
-        style="@style/Button"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
         android:text="@string/toRecyclerView" />
 
     <Button
         android:id="@+id/btnToViewPager"
-        style="@style/Button"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
         android:text="@string/toViewPager" />
 
     <Button
         android:id="@+id/btnToFileStorage"
-        style="@style/Button"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
         android:text="@string/toFileStorage" />
 
 </LinearLayout>
