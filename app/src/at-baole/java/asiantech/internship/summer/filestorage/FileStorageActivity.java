@@ -30,7 +30,7 @@ public class FileStorageActivity extends AppCompatActivity {
             public void onTabSelected(TabLayout.Tab tab) {
                 mViewPager.setCurrentItem(tab.getPosition());
                 if (tab.getPosition() == 0) {
-                    fragmentTransaction.replace(R.id.viewPager, new SharePreferencesFragment());
+                    fragmentTransaction.replace(R.id.viewPager, new SharedPreferencesFragment());
                 }
                 if (tab.getPosition() == 1) {
                     fragmentTransaction.replace(R.id.viewPager, new InternalExternalFragment());

@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import asiantech.internship.summer.R;
 
-public class SharePreferencesFragment extends Fragment {
+public class SharedPreferencesFragment extends Fragment {
 
     private EditText mEdtUsername;
     private EditText mEdtPassword;

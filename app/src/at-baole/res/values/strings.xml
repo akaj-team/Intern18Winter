@@ -54,4 +54,10 @@
     <string name="toActivityFragment">activity and fragment</string>
     <string name="toRecyclerView">recycler view</string>
     <string name="toFileStorage">file storage</string>
+    <string name="listCompanies">LIST COMPANIES</string>
+    <string name="listEmployees">LIST EMPLOYEES</string>
+    <string name="companyName">COMPANY NAME</string>
+    <string name="insert">INSERT</string>
+    <string name="update">UPDATE</string>
+    <string name="delete">DELETE</string>
 </resources>

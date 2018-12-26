@@ -17,7 +17,7 @@ public class PagerAdapter extends FragmentPagerAdapter {
         switch (position) {
             case 0:
             default:
-                return new SharePreferencesFragment();
+                return new SharedPreferencesFragment();
             case 1:
                 return new InternalExternalFragment();
             case 2:
