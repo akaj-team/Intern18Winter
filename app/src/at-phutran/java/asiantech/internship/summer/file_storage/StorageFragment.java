@@ -125,9 +125,7 @@ public class StorageFragment extends Fragment implements View.OnClickListener {
         StringBuilder fileContent = new StringBuilder();
         try {
             FileInputStream inputStream = new FileInputStream(new File(filePath));
-            BufferedReader myReader = new BufferedReader(
-                    new InputStreamReader(inputStream, StandardCharsets.UTF_8));
-
+            BufferedReader myReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
             while ((text = myReader.readLine()) != null) {
                 fileContent.append(text).append("\n");
             }
