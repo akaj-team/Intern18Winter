@@ -12,7 +12,7 @@ public interface SOService {
 
     @GET("/images")
     Call<List<Image>> getAnswers(@Query("tagged") String tags);
-
+//
 //    @GET("/answers?order=desc&sort=activity&site=stackoverflow")
 //    Call<List<SOAnswersResponse>> getAnswers(@Query("tagged") String tags);
 //
