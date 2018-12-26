@@ -14,13 +14,14 @@ import asiantech.internship.summer.view_and_groupview.ViewActivity;
 import asiantech.internship.summer.viewpager.PagerActivity;
 
 public class MainActivity extends AppCompatActivity {
+    private Button mBtnToGroupView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button mBtnToGroupView = findViewById(R.id.btnToGroupView);
+        mBtnToGroupView = findViewById(R.id.btnToGroupView);
         Button mBtnToEventListener = findViewById(R.id.btnToEventListener);
         Button mBtnToActivityFragment = findViewById(R.id.btnToActivityFragment);
         Button mBtnToRecyclerView = findViewById(R.id.btnToRecyclerView);
