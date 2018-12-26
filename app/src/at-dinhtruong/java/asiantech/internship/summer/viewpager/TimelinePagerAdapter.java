@@ -20,19 +20,19 @@ import asiantech.internship.summer.models.TimelinePagerItem;
 public class TimelinePagerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int VIEW_TYPE_ITEM = 0;
     private static final int VIEW_TYPE_LOADING = 1;
-    private List<TimelinePagerItem> mTimelines;
+    private List<TimelinePagerItem> mTimelinePagerItem;
     private Context mContext;
     private boolean mIsLoading;
     private onClickItem mOnClickItem;
 
     TimelinePagerAdapter(Context context, List<TimelinePagerItem> timeLines, onClickItem onClickItem) {
-        this.mTimelines = timeLines;
+        this.mTimelinePagerItem = timeLines;
         this.mContext = context;
         this.mOnClickItem = onClickItem;
     }
 
     TimelinePagerAdapter(Context context, List<TimelinePagerItem> timelinePagerItems) {
-        this.mTimelines = timelinePagerItems;
+        this.mTimelinePagerItem = timelinePagerItems;
         this.mContext = context;
     }
 
@@ -75,12 +75,12 @@ public class TimelinePagerAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     @Override
     public int getItemCount() {
-        return mIsLoading ? mTimelines.size() + 1 : mTimelines.size();
+        return mIsLoading ? mTimelinePagerItem.size() + 1 : mTimelinePagerItem.size();
     }
 
     @Override
     public int getItemViewType(int position) {
-        return position == mTimelines.size() ? VIEW_TYPE_LOADING : VIEW_TYPE_ITEM;
+        return position == mTimelinePagerItem.size() ? VIEW_TYPE_LOADING : VIEW_TYPE_ITEM;
     }
 
     @NonNull
@@ -98,7 +98,7 @@ public class TimelinePagerAdapter extends RecyclerView.Adapter<RecyclerView.View
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof TimelineViewHolder) {
-            TimelinePagerItem timeLineItem = mTimelines.get(position);
+            TimelinePagerItem timeLineItem = mTimelinePagerItem.get(position);
             TimelineViewHolder timelineViewHolder = (TimelineViewHolder) holder;
             Drawable drawableAvatar = mContext.getResources().getDrawable(mContext.getResources()
                     .getIdentifier(timeLineItem.getAvatar(), "drawable", mContext.getPackageName()));
@@ -107,11 +107,10 @@ public class TimelinePagerAdapter extends RecyclerView.Adapter<RecyclerView.View
             timelineViewHolder.mImgAvatar.setImageDrawable(drawableAvatar);
             timelineViewHolder.mImgImage.setImageDrawable(drawableImage);
             timelineViewHolder.mTvName.setText(timeLineItem.getName());
-            String numOfLike;
             if (timeLineItem.getNumOfLike() == 0) {
                 timelineViewHolder.mTvNumOfLike.setText(String.valueOf(0));
             } else {
-                numOfLike = " " + timeLineItem.getNumOfLike() + " " + mContext.getString(R.string.like);
+                String numOfLike = " " + timeLineItem.getNumOfLike() + " " + mContext.getString(R.string.like);
                 timelineViewHolder.mTvNumOfLike.setText(numOfLike);
             }
             timelineViewHolder.mTvDescription.setText(Html.fromHtml("<b>" + timeLineItem.getName() + "</b>" + "  " + timeLineItem.getDescription()));
@@ -127,17 +126,17 @@ public class TimelinePagerAdapter extends RecyclerView.Adapter<RecyclerView.View
     }
 
     public void add(int position, TimelinePagerItem timelineItem) {
-        mTimelines.add(position, timelineItem);
+        mTimelinePagerItem.add(position, timelineItem);
         notifyItemInserted(position);
     }
 
     void clear() {
-        mTimelines.clear();
+        mTimelinePagerItem.clear();
         notifyDataSetChanged();
     }
 
     void addAll(List<TimelinePagerItem> timelineItems) {
-        mTimelines.addAll(timelineItems);
+        mTimelinePagerItem.addAll(timelineItems);
         notifyDataSetChanged();
     }
 
