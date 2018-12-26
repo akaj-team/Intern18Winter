@@ -10,6 +10,7 @@ import asiantech.internship.summer.R;
 import asiantech.internship.summer.activityandfragment.LoginActivity;
 import asiantech.internship.summer.eventandlistener.EventAndListenerActivity;
 import asiantech.internship.summer.recyclerview.RecyclerViewActivity;
+import asiantech.internship.summer.viewpager.ViewPagerActivity;
 import asiantech.internship.summer.storage.FileStoreActivity;
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
@@ -26,11 +27,13 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         Button btnEventAndListener = findViewById(R.id.btnEventAndListener);
         Button btnActivityAndFragment = findViewById(R.id.btnActivityAndFragment);
         Button btnRecyclerView = findViewById(R.id.btnRecyclerView);
+        Button btnViewPager = findViewById(R.id.btnViewPager);
         Button btnFileStorage = findViewById(R.id.btnFileStorage);
         btnViewGroup.setOnClickListener(this);
         btnEventAndListener.setOnClickListener(this);
         btnActivityAndFragment.setOnClickListener(this);
         btnRecyclerView.setOnClickListener(this);
+        btnViewPager.setOnClickListener(this);
         btnFileStorage.setOnClickListener(this);
     }
 
@@ -54,6 +57,11 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             }
             case R.id.btnRecyclerView: {
                 Intent intent = new Intent(HomeActivity.this, RecyclerViewActivity.class);
+                startActivity(intent);
+                break;
+            }
+            case R.id.btnViewPager: {
+                Intent intent = new Intent(HomeActivity.this, ViewPagerActivity.class);
                 startActivity(intent);
                 break;
             }

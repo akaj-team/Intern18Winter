@@ -7,6 +7,7 @@ public class TimelineItem {
     private String mDescription;
     private int mLike;
     private String mCommenterName;
+    private boolean mIsChecked;
 
     public TimelineItem(int imageAvt, String name, int image, String description, int like, String commenterName) {
         this.mImageAvt = imageAvt;
@@ -15,6 +16,14 @@ public class TimelineItem {
         this.mDescription = description;
         this.mLike = like;
         this.mCommenterName = commenterName;
+    }
+
+    public boolean isIsChecked() {
+        return mIsChecked;
+    }
+
+    public void setIsChecked(boolean isChecked) {
+        this.mIsChecked = isChecked;
     }
 
     public int getImageAvt() {
@@ -57,7 +66,11 @@ public class TimelineItem {
         this.mLike = like;
     }
 
-    public String getCommenterName() { return mCommenterName; }
+    public String getCommenterName() {
+        return mCommenterName;
+    }
 
-    public void setCommenterName(String commenterName) { this.mCommenterName = commenterName; }
+    public void setCommenterName(String commenterName) {
+        this.mCommenterName = commenterName;
+    }
 }

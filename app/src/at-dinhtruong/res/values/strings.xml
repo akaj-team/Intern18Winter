@@ -52,6 +52,9 @@
     <string name="like">like</string>
     <string name="likes">likes</string>
     <string name="recyclerView">RecyclerView</string>
+    <string name="viewPager">View Pager</string>
+    <string name="pager">Pager</string>
+    <string name="favourite">Favourite</string>
     <string name="maNhanVien">Employee ID</string>
     <string name="tenNhanVien">Employee Name</string>
     <string name="update">Update</string>
