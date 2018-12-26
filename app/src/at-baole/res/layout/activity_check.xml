@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:text="@string/listIssues"
+        android:textColor="@color/colorRed"
+        android:textSize="30sp" />
+
+    <Button
+        android:id="@+id/btnToGroupView"
+        style="@style/Button"
+        android:text="@string/toViewAndGroupView" />
+
+    <Button
+        android:id="@+id/btnToEventListener"
+        style="@style/Button"
+        android:text="@string/toEventListener" />
+
+    <Button
+        android:id="@+id/btnToActivityFragment"
+        style="@style/Button"
+        android:text="@string/toActivityFragment" />
+
+    <Button
+        android:id="@+id/btnToRecyclerView"
+        style="@style/Button"
+        android:text="@string/toRecyclerView" />
+
+    <Button
+        android:id="@+id/btnToViewPager"
+        style="@style/Button"
+        android:text="@string/toViewPager" />
+
+    <Button
+        android:id="@+id/btnToFileStorage"
+        style="@style/Button"
+        android:text="@string/toFileStorage" />
+
+</LinearLayout>
