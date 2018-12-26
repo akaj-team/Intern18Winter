@@ -24,7 +24,6 @@ public class FavouriteFragment extends Fragment implements OnChangingFavoritesLi
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_timeline, container, false);
         ProgressBar mProgressBarLoading = view.findViewById(R.id.progress_bar);
         initView(view);
