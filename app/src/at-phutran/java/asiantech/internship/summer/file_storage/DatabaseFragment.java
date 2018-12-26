@@ -22,7 +22,6 @@ public class DatabaseFragment extends Fragment implements CompanyAdapter.Onclick
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        setHasOptionsMenu(true);
         View view = inflater.inflate(R.layout.fragment_database, container, false);
         mDatabase = new Database(Objects.requireNonNull(getActivity()).getApplicationContext());
         if (mDatabase.getAllCompany().size() == 0) {
@@ -45,8 +44,9 @@ public class DatabaseFragment extends Fragment implements CompanyAdapter.Onclick
         mListCompany = mDatabase.getAllCompany();
         RecyclerView recyclerViewCompany = view.findViewById(R.id.recyclerViewCompany);
         recyclerViewCompany.setHasFixedSize(true);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
-        recyclerViewCompany.setLayoutManager(linearLayoutManager);
+        /*LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+        recyclerViewCompany.setLayoutManager(linearLayoutManager);*/
+        recyclerViewCompany.setLayoutManager(new LinearLayoutManager(getActivity()));
         CompanyAdapter companyAdapter = new CompanyAdapter(mListCompany, this);
         recyclerViewCompany.setAdapter(companyAdapter);
     }
@@ -56,8 +56,7 @@ public class DatabaseFragment extends Fragment implements CompanyAdapter.Onclick
         Company company = mListCompany.get(position);
         Intent intent = new Intent(getActivity(), EmployeeActivity.class);
         intent.putExtra(getString(R.string.position), company.getId());
-        String name = company.getName();
-        intent.putExtra(getString(R.string.nameCompany), name);
+        intent.putExtra(getString(R.string.nameCompany), company.getName());
         startActivity(intent);
     }
 }

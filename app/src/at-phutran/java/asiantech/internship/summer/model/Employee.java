@@ -3,15 +3,15 @@ package asiantech.internship.summer.model;
 public class Employee {
     private int idEmployee;
     private String nameEmployee;
-    private int id_company;
+    private int idCompany;
 
     public Employee() {
     }
 
-    public Employee(int idEmployee, String nameEmployee, int id_company) {
+    public Employee(int idEmployee, String nameEmployee, int idCompany) {
         this.idEmployee = idEmployee;
         this.nameEmployee = nameEmployee;
-        this.id_company = id_company;
+        this.idCompany = idCompany;
     }
 
     public int getIdEmployee() {
@@ -30,11 +30,11 @@ public class Employee {
         this.nameEmployee = nameEmployee;
     }
 
-    public int getId_company() {
-        return id_company;
+    public int getIdCompany() {
+        return idCompany;
     }
 
-    public void setId_company(int id_company) {
-        this.id_company = id_company;
+    public void setIdCompany(int idCompany) {
+        this.idCompany = idCompany;
     }
 }

@@ -78,4 +78,6 @@
     <string name="zenken">Zenken</string>
     <string name="enclave">Enclave</string>
     <string name="employeeExist">employee is existing</string>
+    <string name="userInfor">UserInfor</string>
+    <string name="save">saved</string>
 </resources>

@@ -21,7 +21,6 @@ public class SharePreferenceFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        setHasOptionsMenu(true);
         View itemView = inflater.inflate(R.layout.fragment_share_preference, container, false);
         mEdtUsername = itemView.findViewById(R.id.edtInputUser);
         mEdtPassword = itemView.findViewById(R.id.edtInputPassword);
@@ -32,7 +31,7 @@ public class SharePreferenceFragment extends Fragment {
     }
 
     public void handleLogin() {
-        SharedPreferences sharedPreferences = Objects.requireNonNull(getActivity()).getApplicationContext().getSharedPreferences("UserInfor", Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = Objects.requireNonNull(getActivity()).getApplicationContext().getSharedPreferences(getString(R.string.userInfor), Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(getString(R.string.user_key), mEdtUsername.getText().toString());
         editor.putString(getString(R.string.pass_key), mEdtPassword.getText().toString());
@@ -40,7 +39,7 @@ public class SharePreferenceFragment extends Fragment {
     }
 
     public void loginHistory() {
-        SharedPreferences sharedPreferences = Objects.requireNonNull(getActivity()).getApplicationContext().getSharedPreferences("UserInfor", Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = Objects.requireNonNull(getActivity()).getApplicationContext().getSharedPreferences(getString(R.string.userInfor), Context.MODE_PRIVATE);
         if (sharedPreferences.contains(getString(R.string.user_key)) || sharedPreferences.contains(getString(R.string.pass_key))) {
             mEdtUsername.setText(sharedPreferences.getString(getString(R.string.user_key), getString(R.string.space)));
             mEdtPassword.setText(sharedPreferences.getString(getString(R.string.pass_key), getString(R.string.space)));

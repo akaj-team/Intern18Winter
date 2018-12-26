@@ -15,26 +15,7 @@
         app:tabGravity="fill"
         app:tabMode="fixed"
         app:tabSelectedTextColor="@color/colorPrimary"
-        app:tabTextColor="@color/colorWhite">
-
-        <android.support.design.widget.TabItem
-            android:id="@+id/tabSharePreference"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/sharePreference" />
-
-        <android.support.design.widget.TabItem
-            android:id="@+id/tabStorage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/storage" />
-
-        <android.support.design.widget.TabItem
-            android:id="@+id/tabDatabase"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/database" />
-    </android.support.design.widget.TabLayout>
+        app:tabTextColor="@color/colorWhite" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewPagerContent"

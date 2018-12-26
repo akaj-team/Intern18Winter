@@ -43,7 +43,6 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.ViewHold
         ViewHolder(View itemView) {
             super(itemView);
             mTvNameCompany = itemView.findViewById(R.id.tvCompany);
-            this.setIsRecyclable(false);
             handleEvent();
         }
 

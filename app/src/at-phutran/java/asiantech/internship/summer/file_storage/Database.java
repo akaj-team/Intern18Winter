@@ -54,10 +54,10 @@ public class Database extends SQLiteOpenHelper {
         long result = -1;
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        if(!employee.getNameEmployee().equals("")){
+        if(!employee.getNameEmployee().isEmpty()){
             contentValues.put(COL_ID_EMPOYEE, employee.getIdEmployee());
             contentValues.put(COL_NAME_EMPLOYEE, employee.getNameEmployee());
-            contentValues.put(COL_ID_COMPANY, employee.getId_company());
+            contentValues.put(COL_ID_COMPANY, employee.getIdCompany());
             result = db.insert(TABLE_EMPLOYEE, null, contentValues);
         }
         db.close();
@@ -91,7 +91,7 @@ public class Database extends SQLiteOpenHelper {
                 Employee employee = new Employee();
                 employee.setIdEmployee(cursor.getInt(0));
                 employee.setNameEmployee(cursor.getString(1));
-                employee.setId_company(cursor.getInt(2));
+                employee.setIdCompany(cursor.getInt(2));
                 listEmployees.add(employee);
             }while(cursor.moveToNext());
         }
@@ -104,14 +104,14 @@ public class Database extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(COL_NAME_EMPLOYEE, employee.getNameEmployee());
         int updated = db.update(TABLE_EMPLOYEE, values, COL_ID_EMPOYEE + CHECK + "AND " + COL_ID_COMPANY + CHECK,
-                new String[]{String.valueOf(employee.getIdEmployee()), String.valueOf(employee.getId_company())});
+                new String[]{String.valueOf(employee.getIdEmployee()), String.valueOf(employee.getIdCompany())});
         db.close();
         return updated;
     }
     int deleteEmployee(Employee employee) {
         SQLiteDatabase db = this.getWritableDatabase();
         int deleted = db.delete(TABLE_EMPLOYEE,COL_ID_EMPOYEE + CHECK + "AND " + COL_ID_COMPANY + CHECK,
-                new String[]{String.valueOf(employee.getIdEmployee()), String.valueOf(employee.getId_company())});
+                new String[]{String.valueOf(employee.getIdEmployee()), String.valueOf(employee.getIdCompany())});
         db.close();
         return deleted;
     }
