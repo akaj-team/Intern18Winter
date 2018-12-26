@@ -31,4 +31,6 @@
     <string name="helloWorld">hello world :))</string>
     <string name="like">%s like</string>
     <string name="likes">%s likes</string>
+    <string name="downloading">Downloading</string>
+    <string name="download">Download Images AsyncTask</string>
 </resources>
