@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -42,7 +41,6 @@ public class RestApiActivity extends AppCompatActivity implements View.OnClickLi
     private static final int REQUEST_CODE_ASK_PERMISSIONS_CAMERA = 123;
     private static final int REQUEST_CODE_ASK_PERMISSIONS_GALLERY = 124;
     private static final String ACCESS_TOKEN = "6f5a48ac0e8aca77e0e8ef42e88962852b6ffaba01c16c5ba37ea13760c0317e";
-    private static final String TAG = "RestApiActivity";
     private int mActionUpload = 0;
     private ImageAdapter mImageAdapter;
     private SOService mService;
@@ -192,11 +190,11 @@ public class RestApiActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void onCaptureImageResult(Intent data) {
-        Bundle getExtrasImage = data.getExtras();
-        Bitmap imageBitmap = null;
-        if (getExtrasImage != null) {
-            imageBitmap = (Bitmap) (getExtrasImage).get("data");
-        }
+//        Bundle getExtrasImage = data.getExtras();
+//        Bitmap imageBitmap = null;
+//        if (getExtrasImage != null) {
+//            imageBitmap = (Bitmap) (getExtrasImage).get("data");
+//        }
 
     }
 
