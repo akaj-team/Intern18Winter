@@ -39,7 +39,7 @@ public class DrawerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     @Override
     public int getItemCount() {
-        return mDrawerItems.size();
+        return (mDrawerItems.size() + 1);
     }
 
     @Override
@@ -76,12 +76,11 @@ public class DrawerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             super(itemView);
             mImgIcon = itemView.findViewById(R.id.imgIcon);
             mTvTitle = itemView.findViewById(R.id.tvTitle);
-            itemView.setOnClickListener(v -> mOnItemClickListener.onItemClicked(getAdapterPosition())
-            );
+            itemView.setOnClickListener(v -> mOnItemClickListener.onItemClicked((getAdapterPosition()+1)));
         }
 
         private void onBind() {
-            DrawerItem item = mDrawerItems.get(getAdapterPosition());
+            DrawerItem item = mDrawerItems.get(getAdapterPosition() - 1);
             mImgIcon.setImageResource(item.getIcon());
             mTvTitle.setText(item.getTitle());
             mTvTitle.setTextColor(itemView.getContext().getResources().getColorStateList(R.color.color_content));
@@ -101,12 +100,11 @@ public class DrawerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
 
         private void onBind() {
-            DrawerItem item = mDrawerItems.get(getAdapterPosition());
-            mTvEmail.setText(item.getTitle());
+            mTvEmail.setText(R.string.dinhTruongAsiantechVn);
             if (mSelectedImage != null) {
                 mImgAvatar.setImageURI(mSelectedImage);
             } else {
-                mImgAvatar.setImageResource(item.getIcon());
+                mImgAvatar.setImageResource(R.drawable.img_avatar);
             }
         }
     }

@@ -118,9 +118,9 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAda
             mDrawerItems.get(mPositionSelected).setChecked(false);
             mAdapterItem.notifyItemChanged(mPositionSelected);
         }
-        mPositionSelected = position;
-        mDrawerItems.get(position).setChecked(true);
-        mAdapterItem.notifyItemChanged(mPositionSelected);
+        mPositionSelected = position - 2;
+        mDrawerItems.get(position - 2).setChecked(true);
+        mAdapterItem.notifyDataSetChanged();
     }
 
     private void openCamera() {
@@ -210,7 +210,6 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAda
 
     private List<DrawerItem> createItem() {
         List<DrawerItem> items = new ArrayList<>();
-        items.add(new DrawerItem(R.drawable.img_avatar_drawer_layout, getString(R.string.dinhTruongAsiantechVn), false));
         items.add(new DrawerItem(R.drawable.bg_inbox, getString(R.string.inbox), false));
         items.add(new DrawerItem(R.drawable.bg_outbox, getString(R.string.outbox), false));
         items.add(new DrawerItem(R.drawable.bg_trash, getString(R.string.trash), false));
