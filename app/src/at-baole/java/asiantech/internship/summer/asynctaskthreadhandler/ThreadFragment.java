@@ -23,6 +23,7 @@ import asiantech.internship.summer.R;
 public class ThreadFragment extends Fragment {
     private ImageView mImgThread;
     private ProgressDialog mProgressDialog;
+    private Bitmap mBitmap;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -33,22 +34,24 @@ public class ThreadFragment extends Fragment {
     }
 
     private void initView(View threadView) {
-        Button mBtnDownloadThread;
-        mBtnDownloadThread = threadView.findViewById(R.id.btnThread);
+        Button mBtnThread;
+        mBtnThread = threadView.findViewById(R.id.btnThread);
         mImgThread = threadView.findViewById(R.id.imgThread);
-        mBtnDownloadThread.setOnClickListener(onClickView -> onCLickDownload());
+        mBtnThread.setOnClickListener(onClickView -> onCLickDownload());
     }
 
     private void onCLickDownload() {
         initProgressDialog();
+
         new Thread() {
             public void run() {
-                final Bitmap bitmap = getImageBitmap(AsyncTaskFragment.IMAGE_URL);
+
                 try {
                     while (mProgressDialog.getProgress() <= mProgressDialog.getMax()) {
                         mImgThread.post(() -> mProgressDialog.incrementProgressBy(1));
                         if (mProgressDialog.getProgress() == mProgressDialog.getMax()) {
-                            mImgThread.setImageBitmap(bitmap);
+                            mBitmap = getImageBitmap(AsyncTaskFragment.IMAGE_URL);
+                            mImgThread.setImageBitmap(mBitmap);
                             mProgressDialog.dismiss();
                         }
                     }
