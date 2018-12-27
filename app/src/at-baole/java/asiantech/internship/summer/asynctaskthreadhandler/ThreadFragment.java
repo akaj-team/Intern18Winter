@@ -1,5 +1,6 @@
 package asiantech.internship.summer.asynctaskthreadhandler;
 
+import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ import asiantech.internship.summer.R;
 
 public class ThreadFragment extends Fragment {
     private ImageView mImgThread;
+    private ProgressDialog mProgressDialog;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -38,13 +40,23 @@ public class ThreadFragment extends Fragment {
     }
 
     private void onCLickDownload() {
-        new Thread(() -> {
-            final Bitmap bitmap = getImageBitmap(AsyncTaskFragment.IMAGE_URL);
-            mImgThread.post(() -> {
-                mImgThread.setImageBitmap(bitmap);
-                Toast.makeText(getActivity(), R.string.downloadSuccessfully, Toast.LENGTH_LONG).show();
-            });
-        }).start();
+        initProgressDialog();
+        new Thread() {
+            public void run() {
+                final Bitmap bitmap = getImageBitmap(AsyncTaskFragment.IMAGE_URL);
+                try {
+                    while (mProgressDialog.getProgress() <= mProgressDialog.getMax()) {
+                        mImgThread.post(() -> mProgressDialog.incrementProgressBy(1));
+                        if (mProgressDialog.getProgress() == mProgressDialog.getMax()) {
+                            mImgThread.setImageBitmap(bitmap);
+                            mProgressDialog.dismiss();
+                        }
+                    }
+                } catch (Exception ignored) {
+                }
+            }
+        }.start();
+        Toast.makeText(getActivity(), R.string.downloadSuccessfully, Toast.LENGTH_LONG).show();
     }
 
     public Bitmap getImageBitmap(String src) {
@@ -58,5 +70,15 @@ public class ThreadFragment extends Fragment {
         } catch (IOException ignored) {
             return null;
         }
+    }
+
+    private void initProgressDialog() {
+        mProgressDialog = new ProgressDialog(getActivity());
+        mProgressDialog.setTitle(R.string.handler);
+        mProgressDialog.setMessage(getString(R.string.downloading));
+        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        mProgressDialog.setProgress(0);
+        mProgressDialog.setMax(100);
+        mProgressDialog.show();
     }
 }
