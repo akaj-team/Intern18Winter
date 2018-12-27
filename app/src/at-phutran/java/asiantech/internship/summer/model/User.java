@@ -1,57 +1,74 @@
 package asiantech.internship.summer.model;
 
 public class User {
-    private String username;
-    private int avatar;
-    private int image;
-    private int countLike;
-    private String comment;
+    private String mUsername;
+    private int mAvatar;
+    private int mImage;
+    private int mCountLike;
+    private String mComment;
+    private boolean hasLiked;
 
     public User(String username, int avatar, int image, int countLike, String comment) {
-        this.username = username;
-        this.avatar = avatar;
-        this.image = image;
-        this.countLike = countLike;
-        this.comment = comment;
+        this.mUsername = username;
+        this.mAvatar = avatar;
+        this.mImage = image;
+        this.mCountLike = countLike;
+        this.mComment = comment;
     }
 
     public String getUsername() {
-        return username;
+        return mUsername;
     }
 
     public void setUsername(String username) {
-        this.username = username;
+        this.mUsername = username;
     }
 
     public int getAvatar() {
-        return avatar;
+        return mAvatar;
     }
 
     public void setAvatar(int avatar) {
-        this.avatar = avatar;
+        this.mAvatar = avatar;
     }
 
     public int getImage() {
-        return image;
+        return mImage;
     }
 
     public void setImage(int image) {
-        this.image = image;
+        this.mImage = image;
     }
 
     public int getCountLike() {
-        return countLike;
+        return mCountLike;
     }
 
     public void setCountLike(int countLike) {
-        this.countLike = countLike;
+        this.mCountLike = countLike;
     }
 
     public String getComment() {
-        return comment;
+        return mComment;
     }
 
     public void setComment(String comment) {
-        this.comment = comment;
+        this.mComment = comment;
+    }
+
+    /*public boolean isLiked() {
+        return isLiked;
+    }
+
+    public void setLiked(boolean favourite) {
+        isLiked = favourite;
+    }*/
+
+    public boolean isHasLiked() {
+        return hasLiked;
+    }
+
+    public void setHasLiked(boolean hasLiked) {
+        this.hasLiked = hasLiked;
     }
 }
