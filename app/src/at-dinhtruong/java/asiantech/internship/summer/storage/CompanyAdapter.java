@@ -31,7 +31,7 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.CompanyV
 
     @Override
     public void onBindViewHolder(@NonNull CompanyViewHolder holder, int position) {
-        holder.bind(mCompanies.get(position));
+        holder.bind();
     }
 
     @Override
@@ -49,8 +49,8 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.CompanyV
                     mOnItemClickListener.onItemClicked(mCompanies.get(getAdapterPosition()).getIdCompany()));
         }
 
-        private void bind(Company company) {
-            mTvNameCompany.setText(company.getNameCompany());
+        private void bind() {
+            mTvNameCompany.setText(mCompanies.get(getAdapterPosition()).getNameCompany());
         }
     }
 

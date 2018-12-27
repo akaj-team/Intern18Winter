@@ -6,9 +6,9 @@ public class Employee {
     private String mNameEmployee;
 
     public Employee(int idEmployee, int idCompany, String nameEmployee) {
-        this.mIdEmployee = idEmployee;
-        this.mCompanyId = idCompany;
-        this.mNameEmployee = nameEmployee;
+        mIdEmployee = idEmployee;
+        mCompanyId = idCompany;
+        mNameEmployee = nameEmployee;
     }
 
     public Employee() {
@@ -19,7 +19,7 @@ public class Employee {
     }
 
     public void setIdEmployee(int idEmployee) {
-        this.mIdEmployee = idEmployee;
+        mIdEmployee = idEmployee;
     }
 
     public int getCompanyId() {
@@ -27,7 +27,7 @@ public class Employee {
     }
 
     public void setCompanyId(int companyId) {
-        this.mCompanyId = companyId;
+        mCompanyId = companyId;
     }
 
     public String getNameEmployee() {
@@ -35,7 +35,7 @@ public class Employee {
     }
 
     public void setNameEmployee(String nameEmployee) {
-        this.mNameEmployee = nameEmployee;
+        mNameEmployee = nameEmployee;
     }
 
 }
