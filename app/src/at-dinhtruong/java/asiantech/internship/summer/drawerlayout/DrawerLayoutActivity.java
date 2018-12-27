@@ -3,6 +3,7 @@ package asiantech.internship.summer.drawerlayout;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -25,6 +26,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -113,11 +115,11 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAda
     @Override
     public void onItemClicked(int position) {
         if (mPositionSelected != -1) {
-            mDrawerItems.get(mPositionSelected).setIsChecked(false);
+            mDrawerItems.get(mPositionSelected).setChecked(false);
             mAdapterItem.notifyItemChanged(mPositionSelected);
         }
         mPositionSelected = position;
-        mDrawerItems.get(position).setIsChecked(true);
+        mDrawerItems.get(position).setChecked(true);
         mAdapterItem.notifyItemChanged(mPositionSelected);
     }
 
@@ -189,30 +191,37 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAda
 
     private void onSelectFromGalleryResult(Intent data) {
         Uri selectedImageURI = data.getData();
-        DrawerItem item = mDrawerItems.get(0);
-        item.setAvatar(selectedImageURI);
-        item.setAvatarBitmap(null);
+        mAdapterItem.setSetImageUri(selectedImageURI);
         mAdapterItem.notifyItemChanged(0);
     }
 
     private void onCaptureImageResult(Intent data) {
         Bundle getExtrasImage = data.getExtras();
-        Bitmap imageBitmap = null;
         if (getExtrasImage != null) {
-            imageBitmap = (Bitmap) (getExtrasImage).get(getString(R.string.data));
+            Bitmap imageBitmap = (Bitmap) (getExtrasImage).get(getString(R.string.data));
+            Uri uriImage = null;
+            if (imageBitmap != null) {
+                uriImage = getImageUri(getApplicationContext(), imageBitmap);
+            }
+            mAdapterItem.setSetImageUri(uriImage);
+            mAdapterItem.notifyItemChanged(0);
         }
-        DrawerItem item = mDrawerItems.get(0);
-        item.setAvatarBitmap(imageBitmap);
-        item.setAvatar(null);
-        mAdapterItem.notifyItemChanged(0);
     }
+
     private List<DrawerItem> createItem() {
         List<DrawerItem> items = new ArrayList<>();
-        items.add(new DrawerItem(R.drawable.img_avatar_drawer_layout, getString(R.string.dinhTruongAsiantechVn), null, null));
+        items.add(new DrawerItem(R.drawable.img_avatar_drawer_layout, getString(R.string.dinhTruongAsiantechVn), false));
         items.add(new DrawerItem(R.drawable.bg_inbox, getString(R.string.inbox), false));
         items.add(new DrawerItem(R.drawable.bg_outbox, getString(R.string.outbox), false));
         items.add(new DrawerItem(R.drawable.bg_trash, getString(R.string.trash), false));
         items.add(new DrawerItem(R.drawable.bg_spam, getString(R.string.spam), false));
         return items;
+    }
+
+    private Uri getImageUri(Context context, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), inImage, getString(R.string.title), null);
+        return Uri.parse(path);
     }
 }

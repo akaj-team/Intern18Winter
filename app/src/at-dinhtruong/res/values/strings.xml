@@ -69,4 +69,5 @@
     <string name="outbox">Outbox</string>
     <string name="trash">Trash</string>
     <string name="spam">Spam</string>
+    <string name="title">Title</string>
 </resources>
