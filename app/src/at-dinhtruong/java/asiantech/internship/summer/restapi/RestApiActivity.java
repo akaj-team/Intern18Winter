@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,15 +16,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import asiantech.internship.summer.R;
 import asiantech.internship.summer.models.Image;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -34,6 +42,7 @@ public class RestApiActivity extends AppCompatActivity implements View.OnClickLi
     private static final int REQUEST_CODE_ASK_PERMISSIONS_CAMERA = 123;
     private static final int REQUEST_CODE_ASK_PERMISSIONS_GALLERY = 124;
     private static final String ACCESS_TOKEN = "6f5a48ac0e8aca77e0e8ef42e88962852b6ffaba01c16c5ba37ea13760c0317e";
+    private static final String TAG = "RestApiActivity";
     private int mActionUpload = 0;
     private ImageAdapter mImageAdapter;
     private SOService mService;
@@ -179,8 +188,7 @@ public class RestApiActivity extends AppCompatActivity implements View.OnClickLi
 
     private void onSelectFromGalleryResult(Intent data) {
         Uri selectedImageURI = data.getData();
-
-        //imgAvatar.setImageURI(selectedImageURI);
+        uploadImages(selectedImageURI);
     }
 
     private void onCaptureImageResult(Intent data) {
@@ -189,12 +197,64 @@ public class RestApiActivity extends AppCompatActivity implements View.OnClickLi
         if (getExtrasImage != null) {
             imageBitmap = (Bitmap) (getExtrasImage).get("data");
         }
-        //imgAvatar.setImageBitmap(imageBitmap);
-//        DrawerItem item = mDrawerItems.get(0);
-//        item.setAvatarBitmap(imageBitmap);
-//        item.setAvatar(null);
-//        mAdapterItem.notifyItemChanged(0);*/
+
     }
 
+    private void uploadImages(Uri uriFile) {
+        mService = ApiUtils.getSOServiceUpload();
+        File file = new File(Objects.requireNonNull(getRealPathImage(uriFile)));
+        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), getRealPathImage(uriFile));
+        MultipartBody.Part multipartBody = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
+        mService.uploadImage(ACCESS_TOKEN, multipartBody).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                Log.d("xxxx", "success " + response.code());
+                Log.d("xxxx", "success " + response.message());
+            }
 
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.d("xxxx", "message = " + t.getMessage());
+                Log.d("xxxx", "cause = " + t.getCause());
+            }
+        });
+    }
+
+    //    private String getRealPathFromURI(Uri contentURI) {
+//        String result;
+//        Cursor cursor = getContentResolver().query(contentURI, null, null, null, null);
+//        if (cursor == null) {
+//            result = contentURI.getPath();
+//        } else {
+//            cursor.moveToFirst();
+//            int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+//            result = cursor.getString(idx);
+//            Log.d("xxxxxxxxxxxxx", "getRealPathFromURI: "+result);
+//            cursor.close();
+//        }
+//        return result;
+//    }
+    /*public String GetRealPathFromURI(Uri contentUri) {
+        String mediaStoreImagesMediaData = "_data";
+        String[] projection = {mediaStoreImagesMediaData};
+        Cursor cursor = getContentResolver().query(contentUri, projection, null, null, null);
+        int columnIndex = cursor.getColumnIndex(mediaStoreImagesMediaData);
+        cursor.moveToFirst();
+        Log.d("xxxx", "GetRealPathFromURI: "+cursor.getString(columnIndex));
+        return cursor.getString(columnIndex);
+    }*/
+    private String getRealPathImage(Uri imageUri) {
+        String[] projection = {MediaStore.Images.Media.DATA};
+        Cursor cursor = getContentResolver().query(imageUri, projection, null, null, null);
+        if (cursor == null) {
+            return null;
+        }
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        //String path = cursor.getString(column_index);
+        String path = cursor.getString(column_index);
+        cursor.close();
+        Log.d("xxxxxx", "getRealPathImage: "+path);
+        return path;
+    }
 }

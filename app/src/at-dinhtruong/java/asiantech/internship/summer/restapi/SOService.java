@@ -3,22 +3,22 @@ package asiantech.internship.summer.restapi;
 import java.util.List;
 
 import asiantech.internship.summer.models.Image;
+import okhttp3.MultipartBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
+import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Query;
 
 public interface SOService {
 
     @GET("images")
     Call<List<Image>> getImages(@Query("access_token") String accessToken, @Query("page") int page, @Query("per_page") int perPage);
-//
-//    @GET("/answers?order=desc&sort=activity&site=stackoverflow")
-//    Call<List<SOAnswersResponse>> getImages(@Query("tagged") String tags);
-//
-//    @GET("/answers/{id}/{id2}")
-//    Call<List<SOAnswersResponse>> getImages(@Query("tagged") String tags,
-//                                             @Query("order") String order,
-//                                             @Path("id") String id,
-//                                             @Path("id") String id2);
-//    // query không cần truyền "id " trên đường dẫn, chỉ truyền khi dùng Path
+
+    @Multipart
+    @POST("upload")
+    Call<ResponseBody> uploadImage(@Query("access_token") String accessToken, @Part MultipartBody.Part file);
+
 }
