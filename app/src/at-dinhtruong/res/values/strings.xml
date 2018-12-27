@@ -56,4 +56,6 @@
     <string name="pager">Pager</string>
     <string name="favourite">Favourite</string>
     <string name="restApi">REST API</string>
+    <string name="camera">Camera</string>
+    <string name="library">Library</string>
 </resources>

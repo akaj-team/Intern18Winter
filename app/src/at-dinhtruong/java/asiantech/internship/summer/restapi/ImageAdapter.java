@@ -35,17 +35,12 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
 
     @Override
     public void onBindViewHolder(@NonNull ImageViewHolder holder, int position) {
-        holder.initData(mImages.get(position));
+        holder.onBind(mImages.get(position));
     }
 
     @Override
     public int getItemCount() {
         return mImages.size();
-    }
-
-    public void updateAnswers(List<Image> images) {
-        mImages = images;
-        notifyDataSetChanged();
     }
 
     class ImageViewHolder extends RecyclerView.ViewHolder {
@@ -58,7 +53,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
             mTvItem = itView.findViewById(R.id.tvItem);
         }
 
-        private void initData(Image image) {
+        private void onBind(Image image) {
             if (!image.getImageId().isEmpty()) {
                 mTvItem.setText(image.getImageId());
                 Glide.with(mContext).load(image.getUrl()).into(mImgItem);
