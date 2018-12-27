@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="asiantech.internship.summer.viewpager.ViewPagerActivity">
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tabLayoutHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <android.support.design.widget.TabItem
+            android:id="@+id/tabTimeline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/imageLoaded"/>
+        <android.support.design.widget.TabItem
+            android:id="@+id/tabFavourite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/insertImage"/>
+    </android.support.design.widget.TabLayout>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPagerContent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </android.support.v4.view.ViewPager>
+
+</LinearLayout>

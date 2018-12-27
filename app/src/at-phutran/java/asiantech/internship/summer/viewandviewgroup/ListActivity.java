@@ -9,6 +9,7 @@ import asiantech.internship.summer.R;
 import asiantech.internship.summer.eventlistener.SignUpActivity;
 import asiantech.internship.summer.fragment.LoginActivity;
 import asiantech.internship.summer.recyclerview.RecyclerViewActivity;
+import asiantech.internship.summer.retrofit.RetrofitActivity;
 import asiantech.internship.summer.viewpager.ViewPagerActivity;
 
 public class ListActivity extends AppCompatActivity implements View.OnClickListener {
@@ -18,6 +19,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
     private Button mBtnRecyclerView;
     private Button mBtnFragment;
     private Button mBtnViewPager;
+    private Button mBtnRetrofit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,11 +30,13 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         mBtnFragment = findViewById(R.id.btnExercise3);
         mBtnRecyclerView = findViewById(R.id.btnExercise4);
         mBtnViewPager = findViewById(R.id.btnExercise5);
+        mBtnRetrofit = findViewById(R.id.btnExercise8);
         mBtnView.setOnClickListener(this);
         mBtnListener.setOnClickListener(this);
         mBtnFragment.setOnClickListener(this);
         mBtnRecyclerView.setOnClickListener(this);
         mBtnViewPager.setOnClickListener(this);
+        mBtnRetrofit.setOnClickListener(this);
     }
 
     @Override
@@ -60,6 +64,11 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
             }
             case R.id.btnExercise5: {
                 Intent intent = new Intent(ListActivity.this, ViewPagerActivity.class);
+                startActivity(intent);
+                break;
+            }
+            case R.id.btnExercise8: {
+                Intent intent = new Intent(ListActivity.this, RetrofitActivity.class);
                 startActivity(intent);
                 break;
             }
