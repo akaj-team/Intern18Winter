@@ -4,9 +4,9 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 
 public class DrawerItem {
-    private int iconResource;
+    private int iconImage;
     private String title;
-    private int imgAvt;
+    private int iconResource;
     private String gmail;
     private int imgCheck;
     private boolean isChecked;
@@ -14,12 +14,12 @@ public class DrawerItem {
     private Bitmap avtBitmap;
 
     public DrawerItem(int iconImage, String title) {
-        this.iconResource = iconImage;
+        this.iconImage = iconImage;
         this.title = title;
     }
 
-    public DrawerItem(int imgAvt, String gmail, int imgCheck) {
-        this.imgAvt = imgAvt;
+    public DrawerItem(int iconResource, String gmail, int imgCheck) {
+        this.iconResource = iconResource;
         this.gmail = gmail;
         this.imgCheck = imgCheck;
     }
@@ -41,11 +41,11 @@ public class DrawerItem {
     }
 
     public int getIconImage() {
-        return iconResource;
+        return iconImage;
     }
 
     public void setIconImage(int iconImage) {
-        this.iconResource = iconImage;
+        this.iconImage = iconImage;
     }
 
     public String getCat() {
@@ -56,12 +56,12 @@ public class DrawerItem {
         this.title = title;
     }
 
-    public int getImgAvt() {
-        return imgAvt;
+    public int getIconResource() {
+        return iconResource;
     }
 
-    public void setImgAvt(int imgAvt) {
-        this.imgAvt = imgAvt;
+    public void setIconResource(int iconResource) {
+        this.iconResource = iconResource;
     }
 
     public String getGmail() {

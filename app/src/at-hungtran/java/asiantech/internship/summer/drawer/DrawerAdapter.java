@@ -79,7 +79,7 @@ public class DrawerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             super(itemView);
             mImgAvt = itemView.findViewById(R.id.imgAvt);
             mGmail = itemView.findViewById(R.id.tvGmail);
-            mImgCheck = itemView.findViewById(R.id.icCheck);
+            mImgCheck = itemView.findViewById(R.id.imgIconCheck);
             this.setIsRecyclable(false);
         }
         private void onBind(int position){
@@ -90,7 +90,7 @@ public class DrawerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             } else if (mDrawerItem.get(position).getAvtBitmap() != null) {
                 mImgAvt.setImageBitmap(object.getAvtBitmap());
             } else {
-                mImgAvt.setImageResource(object.getImgAvt());
+                mImgAvt.setImageResource(object.getIconResource());
             }
             mImgAvt.setOnClickListener(v -> mOnClickItem.onAvatarClicked());
             mGmail.setText(object.getGmail());
@@ -105,10 +105,9 @@ public class DrawerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         ItemViewHolder(View itemView) {
             super(itemView);
-            mIconImage = itemView.findViewById(R.id.icImg);
+            mIconImage = itemView.findViewById(R.id.imgIcon);
             mTitle = itemView.findViewById(R.id.tvTitle);
             mLlItem = itemView.findViewById(R.id.llItem);
-            this.setIsRecyclable(false);
         }
         private void onBind(int position){
             mIconImage.setImageResource(mDrawerItem.get(position).getIconImage());

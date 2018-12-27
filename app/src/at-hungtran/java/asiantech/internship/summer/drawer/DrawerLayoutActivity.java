@@ -27,10 +27,9 @@ import asiantech.internship.summer.R;
 import asiantech.internship.summer.model.DrawerItem;
 
 import static android.Manifest.permission.CAMERA;
-import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
-public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAdapter.OnItemClickListener, ChoosePhotoDialogFragment.onItemClick {
+public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAdapter.OnItemClickListener, ChoosePhotoDialogFragment.OnItemClickListener {
     private static final int CAMERA_REQUEST = 0;
     private static final int GALLERY_REQUEST = 1;
     private static final int READ_PERMISSION_REQUEST_CAMERA = 1111;
@@ -70,14 +69,18 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAda
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
+        initData();
+        mAdapter = new DrawerAdapter(mDrawerItem, this);
+        recyclerView.setAdapter(mAdapter);
+    }
+
+    private void initData() {
         mDrawerItem.add(new DrawerItem(R.drawable.img_avt, getString(R.string.gmail), R.drawable.ic_arrow_drop_down_black_24dp));
 
         mDrawerItem.add(new DrawerItem(R.drawable.bg_inbox, getString(R.string.inbox)));
         mDrawerItem.add(new DrawerItem(R.drawable.bg_outbox, getString(R.string.outbox)));
         mDrawerItem.add(new DrawerItem(R.drawable.bg_delete, getString(R.string.trash)));
         mDrawerItem.add(new DrawerItem(R.drawable.bg_spam, getString(R.string.spam)));
-        mAdapter = new DrawerAdapter(mDrawerItem,  this);
-        recyclerView.setAdapter(mAdapter);
     }
 
 
@@ -95,7 +98,6 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAda
                 android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(pickIntent, GALLERY_REQUEST);
         mDialogFragment.dismiss();
-
     }
 
     private void takePicture() {
@@ -105,19 +107,8 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAda
     }
 
     @Override
-    public void itemClick(int type) {
+    public void onChooseImage(int type) {
         if (type == ChoosePhotoDialogFragment.CHOOSE_GALLERY) {
-            int permissionCheck = ContextCompat.checkSelfPermission(this,
-                    READ_EXTERNAL_STORAGE);
-            if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(
-                        this,
-                        new String[]{READ_EXTERNAL_STORAGE},
-                        READ_PERMISSION_REQUEST_GALLERY
-                );
-                return;
-            }
-
             int permissionWrite = ContextCompat.checkSelfPermission(this,
                     WRITE_EXTERNAL_STORAGE);
             if (permissionWrite != PackageManager.PERMISSION_GRANTED) {
@@ -166,7 +157,7 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAda
                     DrawerItem drawerItem = mDrawerItem.get(0);
                     drawerItem.setAvtBitmap(image);
                     drawerItem.setAvatarUri(null);
-                    mAdapter.notifyDataSetChanged();
+                    mAdapter.notifyItemChanged(0);
                 }
 
                 break;
@@ -174,7 +165,7 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAda
                 if (resultCode == RESULT_OK) {
                     Uri selectedImage = imageReturnedIntent.getData();
                     mDrawerItem.get(0).setAvatarUri(selectedImage);
-                    mAdapter.notifyDataSetChanged();
+                    mAdapter.notifyItemChanged(0);
                 }
                 break;
         }
