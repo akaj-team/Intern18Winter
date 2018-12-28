@@ -146,7 +146,6 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAda
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        //DrawerItem draweritem = mDrawerItems.get(0);
         if (resultCode == RESULT_CANCELED) {
             return;
         }
