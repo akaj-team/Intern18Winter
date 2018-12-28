@@ -40,25 +40,16 @@ public class DrawerLayoutAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         DrawerItem mData = mItems.get(position);
         if (holder instanceof HeaderViewHolder) {
-            if (mData.getAvatarBitmap() != null) {
-                ((HeaderViewHolder) holder).imgAvatar.setImageBitmap((mData.getAvatarBitmap()));
-            } else {
-                ((HeaderViewHolder) holder).imgAvatar.setImageResource((mData.getIcon()));
-            }
+            ((HeaderViewHolder) holder).onBind();
             ((HeaderViewHolder) holder).tvTitle.setText(mData.getTitle());
             ((HeaderViewHolder) holder).imgAvatar.setOnClickListener(view -> mOnItemClickListener.onAvatarClicked());
         } else if (holder instanceof ItemViewHolder) {
             ((ItemViewHolder) holder).mImgIcon.setImageResource(mData.getIcon());
             ((ItemViewHolder) holder).mTvContent.setText(mData.getTitle());
-            if (mData.isChecked()) {
-                ((ItemViewHolder) holder).mTvContent.setTextColor(Color.BLUE);
-                ((ItemViewHolder) holder).mImgIcon.setColorFilter(Color.BLUE);
-            } else {
-                ((ItemViewHolder) holder).mTvContent.setTextColor(Color.BLACK);
-                ((ItemViewHolder) holder).mImgIcon.setColorFilter(Color.BLACK);
-            }
+            ((ItemViewHolder) holder).onBind();
         }
     }
+
 
     @Override
     public int getItemCount() {
@@ -85,15 +76,27 @@ public class DrawerLayoutAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     class HeaderViewHolder extends RecyclerView.ViewHolder {
         ImageView imgAvatar;
         TextView tvTitle;
+        DrawerItem drawerItem;
 
         HeaderViewHolder(View itemView) {
             super(itemView);
             imgAvatar = itemView.findViewById(R.id.avatarCircleImageView);
             tvTitle = itemView.findViewById(R.id.tvTitle);
         }
+
+        private void onBind() {
+            int position = getLayoutPosition();
+            drawerItem = mItems.get(position);
+            if (drawerItem.getAvatarBitmap() != null) {
+                imgAvatar.setImageBitmap(drawerItem.getAvatarBitmap());
+            } else {
+                imgAvatar.setImageResource(drawerItem.getIcon());
+            }
+        }
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder {
+        int position;
         private ImageView mImgIcon;
         private TextView mTvContent;
 
@@ -109,9 +112,19 @@ public class DrawerLayoutAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 if (mOnItemClickListener == null) {
                     return;
                 }
-                int position = getLayoutPosition();
+                position = getLayoutPosition();
                 mOnItemClickListener.onItemChecked(position);
             });
+        }
+
+        private void onBind() {
+            if (mItems.get(getLayoutPosition()).isChecked()) {
+                mTvContent.setTextColor(Color.BLUE);
+                mImgIcon.setColorFilter(Color.BLUE);
+            } else {
+                mTvContent.setTextColor(Color.BLACK);
+                mImgIcon.setColorFilter(Color.BLACK);
+            }
         }
     }
 }

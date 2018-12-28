@@ -3,7 +3,9 @@ package asiantech.internship.summer.drawerlayout;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Point;
@@ -11,6 +13,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -21,6 +24,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +46,7 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerLay
     private List<DrawerItem> mData;
     private DrawerLayoutAdapter mDrawerLayoutAdapter;
     private int mPosition = -1;
+    private int mActionChangeAvatar;
 
     @SuppressLint("CutPasteId")
     @Override
@@ -105,7 +111,6 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerLay
 
     @Override
     public void onAvatarClicked() {
-        requestMultiplePermissions();
         AlertDialog.Builder pictureDialog = new AlertDialog.Builder(this);
         pictureDialog.setTitle(R.string.action);
         String[] pictureDialogItems = {getString(R.string.gallery), getString(R.string.camera)};
@@ -113,9 +118,11 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerLay
                 (dialog, which) -> {
                     switch (which) {
                         case CHOOSE_GALLERY:
+                            mActionChangeAvatar = GALLERY;
                             choosePhotoFromGallery();
                             break;
                         case CHOOSE_CAMERA:
+                            mActionChangeAvatar = CAMERA;
                             takePhotoFromCamera();
                             break;
                     }
@@ -124,13 +131,17 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerLay
     }
 
     public void choosePhotoFromGallery() {
-        Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(galleryIntent, GALLERY);
+        if(requestPermission()){
+            Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            startActivityForResult(galleryIntent, GALLERY);
+        }
     }
 
     private void takePhotoFromCamera() {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(intent, CAMERA);
+        if(requestPermission()){
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            startActivityForResult(intent, CAMERA);
+        }
     }
 
     @Override
@@ -164,11 +175,23 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerLay
         mDrawerLayoutAdapter.notifyItemChanged(0);
     }
 
-    private void requestMultiplePermissions() {
-        ActivityCompat.requestPermissions(DrawerLayoutActivity.this, new String[]{Manifest.permission.CAMERA}, REQUEST_CODE_ASK_PERMISSIONS_CAMERA);
-        ActivityCompat.requestPermissions(DrawerLayoutActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_ASK_PERMISSIONS_GALLERY);
+    private boolean requestPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED && mActionChangeAvatar == CAMERA) {
+            ActivityCompat.requestPermissions(DrawerLayoutActivity.this, new String[]{Manifest.permission.CAMERA}, REQUEST_CODE_ASK_PERMISSIONS_CAMERA);
+            return false;
+        }
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED && mActionChangeAvatar == GALLERY) {
+            ActivityCompat.requestPermissions(DrawerLayoutActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_ASK_PERMISSIONS_GALLERY);
+            return false;
+        }
+        return true;
     }
-
+    private Uri getImageUri(Context context, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), inImage, getString(R.string.title), null);
+        return Uri.parse(path);
+    }
     @Override
     public void onItemChecked(int i) {
         if (mPosition >= 0) {
