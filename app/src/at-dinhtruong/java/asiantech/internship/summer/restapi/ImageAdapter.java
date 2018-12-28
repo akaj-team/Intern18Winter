@@ -40,7 +40,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
 
     @Override
     public void onBindViewHolder(@NonNull ImageViewHolder holder, int position) {
-        holder.onBind(mImages.get(position));
+        holder.onBind();
     }
 
     @Override
@@ -58,7 +58,8 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
             mTvItem = itView.findViewById(R.id.tvItem);
         }
 
-        private void onBind(Image image) {
+        private void onBind() {
+            Image image = mImages.get(getAdapterPosition());
             if (!image.getImageId().isEmpty()) {
                 mTvItem.setText(image.getImageId());
                 Glide.with(mContext).load(image.getUrl()).into(mImgItem);

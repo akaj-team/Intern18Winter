@@ -16,17 +16,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -36,10 +35,11 @@ import asiantech.internship.summer.utils.RealPathUtil;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RestApiActivity extends AppCompatActivity implements View.OnClickListener {
     private static final int REQUEST_IMAGE_CAPTURE = 200;
@@ -52,8 +52,6 @@ public class RestApiActivity extends AppCompatActivity implements View.OnClickLi
     private int mActionUpload = 0;
     private ImageAdapter mImageAdapter;
     private SOService mService;
-    private List<Image> mImages;
-    private RecyclerView mRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,16 +61,16 @@ public class RestApiActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void initViews() {
-        mService = ApiUtils.getSOService();
-        mImages = new ArrayList<>();
-        mRecyclerView = findViewById(R.id.recyclerViewItem);
-        mRecyclerView.setHasFixedSize(true);
+        setUpApi();
+        List<Image> images = new ArrayList<>();
+        RecyclerView recyclerView = findViewById(R.id.recyclerViewItem);
+        recyclerView.setHasFixedSize(true);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
-        mRecyclerView.setLayoutManager(gridLayoutManager);
-        mImageAdapter = new ImageAdapter(mImages, getApplicationContext());
-        mRecyclerView.setAdapter(mImageAdapter);
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL));
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        recyclerView.setLayoutManager(gridLayoutManager);
+        mImageAdapter = new ImageAdapter(images, getApplicationContext());
+        recyclerView.setAdapter(mImageAdapter);
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL));
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         loadImages();
         Button btnCamera = findViewById(R.id.btnCamera);
         Button btnGallery = findViewById(R.id.btnGallery);
@@ -186,7 +184,7 @@ public class RestApiActivity extends AppCompatActivity implements View.OnClickLi
 
     private void onSelectFromGalleryResult(Intent data) {
         Uri selectedImageURI = data.getData();
-        uploadImages(selectedImageURI);
+        uploadImage(selectedImageURI);
     }
 
     private void onCaptureImageResult(Intent data) {
@@ -195,26 +193,30 @@ public class RestApiActivity extends AppCompatActivity implements View.OnClickLi
         if (getExtrasImage != null) {
             imageBitmap = (Bitmap) (getExtrasImage).get(getString(R.string.data));
         }
-        uploadImages(getImageUri(getApplicationContext(), imageBitmap));
+        if (imageBitmap != null) {
+            uploadImage(getImageUri(getApplicationContext(), imageBitmap));
+        }
     }
 
-    private void uploadImages(Uri uriFile) {
-        mService = ApiUtils.getSOServiceUpload();
-        File file = new File(Objects.requireNonNull(RealPathUtil.getRealPath(getApplicationContext(), uriFile)));
-        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), convertFileToArrayByte(file));
-        Log.d("xxxxx", "uploadImages: " + convertFileToArrayByte(file).length);
-        MultipartBody.Part multipartBody = MultipartBody.Part.createFormData("imagedata", file.getName(), requestFile);
-        mService.uploadImage(ACCESS_TOKEN, multipartBody).enqueue(new Callback<ResponseBody>() {
+    private void uploadImage(Uri imageUri) {
+        File file = new File(Objects.requireNonNull(RealPathUtil.getRealPath(getApplicationContext(), imageUri)));
+        RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+        MultipartBody.Part image = MultipartBody.Part.createFormData("imagedata", file.getName(), requestBody);
+        RequestBody token = RequestBody.create(MediaType.parse("text/plain"), SOService.TOKEN);
+        mService.uploadImage(SOService.UPLOAD_URL, token, image).enqueue(new Callback<Image>() {
             @Override
-            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
-                Log.d("xxxxxxxxx", "onResponse: " + response.code());
-                Log.d("xxxxxxxxx", "onResponse: " + response.message());
+            public void onResponse(Call<Image> call, Response<Image> response) {
+                if (response.isSuccessful()) {
+                    mImageAdapter.notifyItemInserted(0);
+                    Toast.makeText(RestApiActivity.this, "Upload completed!", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
-            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
-                Log.d("xxxxxxxxx", "onResponse: " + t.getMessage());
+            public void onFailure(Call<Image> call, Throwable t) {
+                Toast.makeText(RestApiActivity.this, "Upload failed!", Toast.LENGTH_SHORT).show();
             }
+
         });
     }
 
@@ -224,18 +226,12 @@ public class RestApiActivity extends AppCompatActivity implements View.OnClickLi
         String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), inImage, getString(R.string.title), null);
         return Uri.parse(path);
     }
-
-    private byte[] convertFileToArrayByte(File file) {
-        byte[] bytesArray = new byte[(int) file.length()];
-        FileInputStream fis;
-        try {
-            fis = new FileInputStream(file);
-            fis.read(bytesArray);
-            fis.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Log.d("xxxxxxxxxx", "convertFileToArrayByte: " + Arrays.toString(bytesArray));
-        return bytesArray;
+    private void setUpApi() {
+        Gson gson = new GsonBuilder().setLenient().create();
+        Retrofit getImagesRetrofit = new Retrofit.Builder()
+                .baseUrl(SOService.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+        mService = getImagesRetrofit.create(SOService.class);
     }
 }

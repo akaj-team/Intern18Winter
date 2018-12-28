@@ -23,15 +23,6 @@ public class Image {
     @Expose
     private String createdAt;
 
-    public Image(String imageId, String permalinkUrl, String thumbUrl, String url, String type, String createdAt) {
-        this.imageId = imageId;
-        this.permalinkUrl = permalinkUrl;
-        this.thumbUrl = thumbUrl;
-        this.url = url;
-        this.type = type;
-        this.createdAt = createdAt;
-    }
-
     public String getImageId() {
         return imageId;
     }
