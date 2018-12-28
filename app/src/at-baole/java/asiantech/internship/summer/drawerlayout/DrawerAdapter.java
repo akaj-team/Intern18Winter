@@ -82,8 +82,8 @@ public class DrawerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
 
         void onBindHeaderView(DrawerItem header) {
-            if (header.getAvatarBitmap() != null) {
-                mImgAvatar.setImageBitmap(header.getAvatarBitmap());
+            if (header.getAvatarUri() != null) {
+                mImgAvatar.setImageURI(header.getAvatarUri());
             } else {
                 mImgAvatar.setImageResource(header.getItemImage());
             }

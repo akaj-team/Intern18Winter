@@ -1,14 +1,13 @@
 package asiantech.internship.summer.drawerlayout;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -24,11 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 
@@ -151,48 +146,32 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAda
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        DrawerItem item = mDrawerItems.get(0);
+        DrawerItem draweritem = mDrawerItems.get(0);
         if (resultCode == RESULT_CANCELED) {
             return;
         }
         if (requestCode == GALLERY) {
             if (data != null) {
                 Uri contentURI = data.getData();
-                try {
-                    Bitmap galleryBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), contentURI);
-                    item.setAvatarBitmap(galleryBitmap);
-                    mAdapter.notifyItemChanged(0);
-                    Toast.makeText(DrawerLayoutActivity.this, getString(R.string.imageSaved), Toast.LENGTH_LONG).show();
-                } catch (IOException e) {
-                    Toast.makeText(DrawerLayoutActivity.this, getString(R.string.saveImageFailed), Toast.LENGTH_LONG).show();
-                }
+                draweritem.setAvatarUri(contentURI);
+                mAdapter.notifyItemChanged(0);
+                Toast.makeText(DrawerLayoutActivity.this, getString(R.string.imageSaved), Toast.LENGTH_LONG).show();
             }
         } else if (requestCode == CAMERA) {
-            Bitmap cameraBitmap = (Bitmap) Objects.requireNonNull(data.getExtras()).get(getString(R.string.data));
-            item.setAvatarBitmap(cameraBitmap);
-            saveImage(Objects.requireNonNull(cameraBitmap));
-            mAdapter.notifyItemChanged(0);
-            Toast.makeText(DrawerLayoutActivity.this, R.string.imageSaved, Toast.LENGTH_LONG).show();
+            if (data != null) {
+                Bitmap cameraBitmap = (Bitmap) (Objects.requireNonNull(data.getExtras())).get(getString(R.string.data));
+                draweritem.setAvatarUri(getImageUri(getApplicationContext(), Objects.requireNonNull(cameraBitmap)));
+                mAdapter.notifyItemChanged(0);
+                Toast.makeText(DrawerLayoutActivity.this, R.string.imageSaved, Toast.LENGTH_LONG).show();
+            }
         }
     }
 
-    private void saveImage(Bitmap myBitmap) {
+    private Uri getImageUri(Context context, Bitmap imageBitmap) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        myBitmap.compress(Bitmap.CompressFormat.PNG, 90, bytes);
-        File wallpaperDirectory = new File(Environment.getExternalStorageDirectory() + getString(R.string.imageDirectory));
-        if (!wallpaperDirectory.exists()) {
-            wallpaperDirectory.mkdirs();
-        }
-        try {
-            File f = new File(wallpaperDirectory, Calendar.getInstance().getTimeInMillis() + getString(R.string.imageExtension));
-            f.createNewFile();
-            FileOutputStream fo = new FileOutputStream(f);
-            fo.write(bytes.toByteArray());
-            MediaScannerConnection.scanFile(this, new String[]{f.getPath()}, new String[]{getString(R.string.imagePathPNG)}, null);
-            fo.close();
-            f.getAbsolutePath();
-        } catch (IOException ignored) {
-        }
+        imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), imageBitmap, "", null);
+        return Uri.parse(path);
     }
 
     private boolean requestPermission() {
