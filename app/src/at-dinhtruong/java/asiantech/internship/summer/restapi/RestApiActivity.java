@@ -24,9 +24,9 @@ import android.widget.Toast;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -202,6 +202,7 @@ public class RestApiActivity extends AppCompatActivity implements View.OnClickLi
         mService = ApiUtils.getSOServiceUpload();
         File file = new File(Objects.requireNonNull(RealPathUtil.getRealPath(getApplicationContext(), uriFile)));
         RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), convertFileToArrayByte(file));
+        Log.d("xxxxx", "uploadImages: " + convertFileToArrayByte(file).length);
         MultipartBody.Part multipartBody = MultipartBody.Part.createFormData("imagedata", file.getName(), requestFile);
         mService.uploadImage(ACCESS_TOKEN, multipartBody).enqueue(new Callback<ResponseBody>() {
             @Override
@@ -231,12 +232,10 @@ public class RestApiActivity extends AppCompatActivity implements View.OnClickLi
             fis = new FileInputStream(file);
             fis.read(bytesArray);
             fis.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Log.d("xxxxxx", "convertFileToArrayByte: "+bytesArray.length);
+        Log.d("xxxxxxxxxx", "convertFileToArrayByte: " + Arrays.toString(bytesArray));
         return bytesArray;
     }
 }
