@@ -28,7 +28,7 @@ public class DrawerItem {
         this.title = title;
     }
 
-    public Boolean isChecked() {
+    public Boolean getIsChecked() {
         return isChecked;
     }
 
