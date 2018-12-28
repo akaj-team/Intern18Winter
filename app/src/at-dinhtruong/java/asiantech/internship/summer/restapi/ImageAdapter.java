@@ -25,6 +25,11 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
         mContext = context;
     }
 
+    void updateList(List<Image> images) {
+        mImages = images;
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public ImageViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {

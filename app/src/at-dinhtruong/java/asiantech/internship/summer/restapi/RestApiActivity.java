@@ -2,9 +2,10 @@ package asiantech.internship.summer.restapi;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -20,6 +21,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +29,7 @@ import java.util.Objects;
 
 import asiantech.internship.summer.R;
 import asiantech.internship.summer.models.Image;
+import asiantech.internship.summer.utils.RealPathUtil;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -40,6 +43,8 @@ public class RestApiActivity extends AppCompatActivity implements View.OnClickLi
     private static final int REQUEST_SELECT_PICTURE = 201;
     private static final int REQUEST_CODE_ASK_PERMISSIONS_CAMERA = 123;
     private static final int REQUEST_CODE_ASK_PERMISSIONS_GALLERY = 124;
+    private static final int mPage = 1;
+    private static final int mPerPage = 20;
     private static final String ACCESS_TOKEN = "6f5a48ac0e8aca77e0e8ef42e88962852b6ffaba01c16c5ba37ea13760c0317e";
     private int mActionUpload = 0;
     private ImageAdapter mImageAdapter;
@@ -61,6 +66,8 @@ public class RestApiActivity extends AppCompatActivity implements View.OnClickLi
         mRecyclerView.setHasFixedSize(true);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
         mRecyclerView.setLayoutManager(gridLayoutManager);
+        mImageAdapter = new ImageAdapter(mImages, getApplicationContext());
+        mRecyclerView.setAdapter(mImageAdapter);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         loadImages();
@@ -71,20 +78,10 @@ public class RestApiActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void loadImages() {
-        int page = 1;
-        int perPage = 20;
-        mService.getImages(ACCESS_TOKEN, page, perPage).enqueue(new Callback<List<Image>>() {
+        mService.getImages(ACCESS_TOKEN, mPage, mPerPage).enqueue(new Callback<List<Image>>() {
             @Override
             public void onResponse(@NonNull Call<List<Image>> call, @NonNull Response<List<Image>> response) {
-                if (response.body() != null) {
-                    for (Image objImage : response.body()) {
-                        if (!objImage.getImageId().isEmpty()) {
-                            mImages.add(objImage);
-                        }
-                    }
-                    mImageAdapter = new ImageAdapter(mImages, getApplicationContext());
-                    mRecyclerView.setAdapter(mImageAdapter);
-                }
+                mImageAdapter.updateList(response.body());
             }
 
             @Override
@@ -190,69 +187,37 @@ public class RestApiActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void onCaptureImageResult(Intent data) {
-//        Bundle getExtrasImage = data.getExtras();
-//        Bitmap imageBitmap = null;
-//        if (getExtrasImage != null) {
-//            imageBitmap = (Bitmap) (getExtrasImage).get("data");
-//        }
-
+        Bundle getExtrasImage = data.getExtras();
+        Bitmap imageBitmap = null;
+        if (getExtrasImage != null) {
+            imageBitmap = (Bitmap) (getExtrasImage).get("data");
+        }
+        uploadImages(getImageUri(getApplicationContext(), imageBitmap));
     }
 
     private void uploadImages(Uri uriFile) {
         mService = ApiUtils.getSOServiceUpload();
-        File file = new File(Objects.requireNonNull(getRealPathImage(uriFile)));
-        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), getRealPathImage(uriFile));
-        MultipartBody.Part multipartBody = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
+        File file = new File(Objects.requireNonNull(RealPathUtil.getRealPath(getApplicationContext(), uriFile)));
+        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+        MultipartBody.Part multipartBody = MultipartBody.Part.createFormData("imagedata", file.getName(), requestFile);
         mService.uploadImage(ACCESS_TOKEN, multipartBody).enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                Log.d("xxxx", "success " + response.code());
-                Log.d("xxxx", "success " + response.message());
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                Log.d("xxxxxxxxx", "onResponse: " + response.code());
+                Log.d("xxxxxxxxx", "onResponse: " + response.message());
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Log.d("xxxx", "message = " + t.getMessage());
-                Log.d("xxxx", "cause = " + t.getCause());
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                Log.d("xxxxxxxxx", "onResponse: " + t.getMessage());
             }
         });
     }
 
-    //    private String getRealPathFromURI(Uri contentURI) {
-//        String result;
-//        Cursor cursor = getContentResolver().query(contentURI, null, null, null, null);
-//        if (cursor == null) {
-//            result = contentURI.getPath();
-//        } else {
-//            cursor.moveToFirst();
-//            int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
-//            result = cursor.getString(idx);
-//            Log.d("xxxxxxxxxxxxx", "getRealPathFromURI: "+result);
-//            cursor.close();
-//        }
-//        return result;
-//    }
-    /*public String GetRealPathFromURI(Uri contentUri) {
-        String mediaStoreImagesMediaData = "_data";
-        String[] projection = {mediaStoreImagesMediaData};
-        Cursor cursor = getContentResolver().query(contentUri, projection, null, null, null);
-        int columnIndex = cursor.getColumnIndex(mediaStoreImagesMediaData);
-        cursor.moveToFirst();
-        Log.d("xxxx", "GetRealPathFromURI: "+cursor.getString(columnIndex));
-        return cursor.getString(columnIndex);
-    }*/
-    private String getRealPathImage(Uri imageUri) {
-        String[] projection = {MediaStore.Images.Media.DATA};
-        Cursor cursor = getContentResolver().query(imageUri, projection, null, null, null);
-        if (cursor == null) {
-            return null;
-        }
-        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-        cursor.moveToFirst();
-        //String path = cursor.getString(column_index);
-        String path = cursor.getString(column_index);
-        cursor.close();
-        Log.d("xxxxxx", "getRealPathImage: "+path);
-        return path;
+    private Uri getImageUri(Context context, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), inImage, getString(R.string.title), null);
+        return Uri.parse(path);
     }
 }
