@@ -80,11 +80,11 @@ public class DrawerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
 
         private void onBind() {
-            DrawerItem item = mDrawerItems.get(getAdapterPosition()-1);
+            DrawerItem item = mDrawerItems.get(getAdapterPosition() - 1);
             mImgIcon.setImageResource(item.getIcon());
             mTvTitle.setText(item.getTitle());
             mTvTitle.setTextColor(itemView.getContext().getResources().getColorStateList(R.color.color_content));
-            itemView.setSelected(item.isChecked());
+            itemView.setSelected(item.getChecked());
         }
     }
 

@@ -4,12 +4,12 @@ public class DrawerItem {
 
     private int icon;
     private String title;
-    private Boolean checked;
+    private Boolean isChecked;
 
-    public DrawerItem(int icon, String title, Boolean checked) {
+    public DrawerItem(int icon, String title, Boolean isChecked) {
         this.icon = icon;
         this.title = title;
-        this.checked = checked;
+        this.isChecked = isChecked;
     }
 
     public int getIcon() {
@@ -28,11 +28,11 @@ public class DrawerItem {
         this.title = title;
     }
 
-    public Boolean isChecked() {
-        return checked;
+    public Boolean getChecked() {
+        return isChecked;
     }
 
-    public void setChecked(Boolean checked) {
-        this.checked = checked;
+    public void setChecked(Boolean isChecked) {
+        this.isChecked = isChecked;
     }
 }
