@@ -16,18 +16,20 @@ import java.util.List;
 import asiantech.internship.summer.R;
 import asiantech.internship.summer.model.ImageItem;
 
-public class ListImageAdapter extends RecyclerView.Adapter<ListImageAdapter.ViewHolder> {
+public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> {
     private List<ImageItem> mImageItems;
     private Context mContext;
-    ListImageAdapter(List<ImageItem> imageItems, Context context){
+
+    ImageAdapter(List<ImageItem> imageItems, Context context) {
         mImageItems = imageItems;
         mContext = context;
     }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View itemView = layoutInflater.inflate(R.layout.item_image,parent,false);
+        View itemView = layoutInflater.inflate(R.layout.item_image, parent, false);
         return new ViewHolder(itemView);
     }
 
@@ -47,6 +49,7 @@ public class ListImageAdapter extends RecyclerView.Adapter<ListImageAdapter.View
     public class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView mImgPhoto;
         private TextView mTvContent;
+
         public ViewHolder(View itemView) {
             super(itemView);
             mImgPhoto = itemView.findViewById(R.id.imgPhoto);

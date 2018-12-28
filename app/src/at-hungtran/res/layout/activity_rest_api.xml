@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -7,18 +8,19 @@
         android:id="@+id/llMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center">
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        tools:ignore="ButtonStyle">
 
         <Button
             android:id="@+id/btnGetImage"
-            style="?android:attr/buttonBarStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="30dp"
             android:text="@string/loadImage" />
 
         <Button
             android:id="@+id/btnUploadImage"
-            style="?android:attr/buttonBarStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/uploadImage" />

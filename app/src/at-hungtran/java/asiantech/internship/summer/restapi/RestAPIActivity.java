@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -33,7 +32,6 @@ import java.util.Objects;
 
 import asiantech.internship.summer.R;
 import asiantech.internship.summer.model.ImageItem;
-import asiantech.internship.summer.model.QueryImage;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -52,20 +50,17 @@ public class RestAPIActivity extends AppCompatActivity implements View.OnClickLi
 
     private static final int READ_PERMISSION_REQUEST_CAMERA = 1111;
     private static final int WRITE_PERMISSION_REQUEST_CAMERA = 1112;
-    private static final int READ_PERMISSION_REQUEST_GALLERY = 1113;
     private static final int WRITE_PERMISSION_REQUEST_CALLERY = 11114;
 
     private final CharSequence[] mChoiceOption = {"Camera", "Gallery"};
-    private final int FIRST_PAGE = 1;
     private APIImages mAPIImages;
-
     private boolean mIsLoading;
     private int mCurrentPage;
     private int mLastQueryImageNumber;
     private List<ImageItem> mImages = new ArrayList<>();
     private RecyclerView mRecyclerViewImage;
     private ProgressDialog mProgressDialog;
-    private ListImageAdapter mListImageAdapter;
+    private ImageAdapter mImageAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -89,8 +84,8 @@ public class RestAPIActivity extends AppCompatActivity implements View.OnClickLi
         mRecyclerViewImage.setHasFixedSize(true);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
         mRecyclerViewImage.setLayoutManager(gridLayoutManager);
-        mListImageAdapter = new ListImageAdapter(mImages, this);
-        mRecyclerViewImage.setAdapter(mListImageAdapter);
+        mImageAdapter = new ImageAdapter(mImages, this);
+        mRecyclerViewImage.setAdapter(mImageAdapter);
     }
 
     private void setUpApi() {
@@ -217,49 +212,47 @@ public class RestAPIActivity extends AppCompatActivity implements View.OnClickLi
         MultipartBody.Part image = MultipartBody.Part.createFormData("imagedata", file.getName(), requestBody);
 
         RequestBody token = RequestBody.create(MediaType.parse("text/plain"), APIImages.TOKEN);
-        mAPIImages.uploadImage(APIImages.UPLOAD_URL, token, image).enqueue(new Callback<Image>() {
+        mAPIImages.uploadImage(APIImages.UPLOAD_URL, token, image).enqueue(new Callback<ImageItem>() {
             @Override
-            public void onResponse(@NonNull Call<Image> call, @NonNull Response<Image> response) {
+            public void onResponse(@NonNull Call<ImageItem> call, @NonNull Response<ImageItem> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(RestAPIActivity.this, "Upload completed", Toast.LENGTH_SHORT).show();
+                    mImageAdapter.notifyItemInserted(0);
+                    Toast.makeText(RestAPIActivity.this, "Upload completed!", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
-            public void onFailure(@NonNull Call<Image> call, @NonNull Throwable t) {
-                Toast.makeText(RestAPIActivity.this, "Upload failed!!!", Toast.LENGTH_SHORT).show();
+            public void onFailure(@NonNull Call<ImageItem> call, @NonNull Throwable t) {
+                Toast.makeText(RestAPIActivity.this, "Upload failed!", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private void getListImages() {
         addProgressbarDialog();
-        mAPIImages.getImages(APIImages.TOKEN, mCurrentPage, APIImages.PER_PAGE)
-                .enqueue(new Callback<List<QueryImage>>() {
-                    @Override
-                    public void onResponse(@NonNull Call<List<QueryImage>> call,
-                                           @NonNull Response<List<QueryImage>> response) {
-                        if (response.isSuccessful()) {
-                            List<QueryImage> addImages = response.body();
-                            if (addImages != null) {
-                                mImages.addAll(addImages);
-                                mListImageAdapter.notifyDataSetChanged();
-                                mLastQueryImageNumber = addImages.size();
-                                mCurrentPage++;
-                                mIsLoading = false;
-                                mProgressDialog.dismiss();
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(@NonNull Call<List<QueryImage>> call, @NonNull Throwable t) {
+        mAPIImages.getImages(APIImages.TOKEN, mCurrentPage).enqueue(new Callback<List<ImageItem>>() {
+            @Override
+            public void onResponse(@NonNull Call<List<ImageItem>> call,
+                                   @NonNull Response<List<ImageItem>> response) {
+                if (response.isSuccessful()) {
+                    List<ImageItem> addImages = response.body();
+                    if (addImages != null) {
+                        mImages.addAll(addImages);
+                        mImageAdapter.notifyDataSetChanged();
+                        mLastQueryImageNumber = addImages.size();
+                        mCurrentPage++;
+                        mIsLoading = false;
                         mProgressDialog.dismiss();
-                        Toast.makeText(RestAPIActivity.this, "Get image OnFailure", Toast.LENGTH_LONG).show();
                     }
-                });
+                }
+            }
 
-
+            @Override
+            public void onFailure(@NonNull Call<List<ImageItem>> call, @NonNull Throwable t) {
+                mProgressDialog.dismiss();
+                Toast.makeText(RestAPIActivity.this, "Get image OnFailure", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     private void addProgressbarDialog() {
