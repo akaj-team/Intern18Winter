@@ -84,7 +84,7 @@ public class DrawerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             mImgIcon.setImageResource(item.getIcon());
             mTvTitle.setText(item.getTitle());
             mTvTitle.setTextColor(itemView.getContext().getResources().getColorStateList(R.color.color_content));
-            itemView.setSelected(item.getIsChecked());
+            itemView.setSelected(item.isChecked());
         }
     }
 
