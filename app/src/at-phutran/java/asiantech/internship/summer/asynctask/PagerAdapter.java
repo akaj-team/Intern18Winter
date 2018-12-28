@@ -1,15 +1,17 @@
 package asiantech.internship.summer.asynctask;
 
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 public class PagerAdapter extends FragmentPagerAdapter {
-    private int mNumPager;
 
-    public PagerAdapter(FragmentManager fm, int numPager) {
+    private static final String ASYNCTASK = "Asynctask";
+    private static final String THREAD = "Thread";
+    private static final String HANDLER = "Handler";
+    public PagerAdapter(FragmentManager fm) {
         super(fm);
-        mNumPager = numPager;
     }
 
     @Override
@@ -26,8 +28,21 @@ public class PagerAdapter extends FragmentPagerAdapter {
         }
     }
 
+    @Nullable
+    @Override
+    public CharSequence getPageTitle(int position) {
+        switch (position){
+            case 0:
+                return ASYNCTASK;
+            case 2:
+                return THREAD;
+            default:
+                return HANDLER;
+        }
+    }
+
     @Override
     public int getCount() {
-        return mNumPager;
+        return 3;
     }
 }
