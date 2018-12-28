@@ -11,13 +11,13 @@
     <application
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
-        tools:replace="android:allowBackup"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-
         android:theme="@style/AppTheme"
-        tools:ignore="AllowBackup,GoogleAppIndexingWarning">
+
+        tools:ignore="AllowBackup,GoogleAppIndexingWarning"
+        tools:replace="android:allowBackup">
         <activity android:name=".drawer.DrawerLayoutActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,6 +29,7 @@
         <activity android:name=".eventlistener.LoginActivity" />
         <activity android:name=".recyclerview.TimelineActivity" />
         <activity android:name=".activityfragment.LoginActivity" />
+        <activity android:name=".viewpager.PagerActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
