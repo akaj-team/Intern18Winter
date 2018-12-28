@@ -146,21 +146,21 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAda
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        DrawerItem draweritem = mDrawerItems.get(0);
+        //DrawerItem draweritem = mDrawerItems.get(0);
         if (resultCode == RESULT_CANCELED) {
             return;
         }
         if (requestCode == GALLERY) {
             if (data != null) {
                 Uri contentURI = data.getData();
-                draweritem.setAvatarUri(contentURI);
+                mAdapter.setImageUri(contentURI);
                 mAdapter.notifyItemChanged(0);
                 Toast.makeText(DrawerLayoutActivity.this, getString(R.string.imageSaved), Toast.LENGTH_LONG).show();
             }
         } else if (requestCode == CAMERA) {
             if (data != null) {
                 Bitmap cameraBitmap = (Bitmap) (Objects.requireNonNull(data.getExtras())).get(getString(R.string.data));
-                draweritem.setAvatarUri(getImageUri(getApplicationContext(), Objects.requireNonNull(cameraBitmap)));
+                mAdapter.setImageUri(getImageUri(getApplicationContext(), Objects.requireNonNull(cameraBitmap)));
                 mAdapter.notifyItemChanged(0);
                 Toast.makeText(DrawerLayoutActivity.this, R.string.imageSaved, Toast.LENGTH_LONG).show();
             }

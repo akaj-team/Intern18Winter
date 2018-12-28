@@ -1,5 +1,6 @@
 package asiantech.internship.summer.drawerlayout;
 
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ public class DrawerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private static final int TYPE_ITEM = 1;
     private List<DrawerItem> mItemList;
     private OnItemClickListener mListener;
+    private Uri mImageUri;
 
     DrawerAdapter(List<DrawerItem> listItems, OnItemClickListener listener) {
         mItemList = listItems;
@@ -64,6 +66,10 @@ public class DrawerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         return position == 0;
     }
 
+    void setImageUri(Uri imageUri) {
+        mImageUri = imageUri;
+    }
+
     public interface OnItemClickListener {
         void onAvatarClicked();
 
@@ -82,8 +88,8 @@ public class DrawerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
 
         void onBindHeaderView(DrawerItem header) {
-            if (header.getAvatarUri() != null) {
-                mImgAvatar.setImageURI(header.getAvatarUri());
+            if (mImageUri != null) {
+                mImgAvatar.setImageURI(mImageUri);
             } else {
                 mImgAvatar.setImageResource(header.getItemImage());
             }
