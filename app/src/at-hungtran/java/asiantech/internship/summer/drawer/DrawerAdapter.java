@@ -1,5 +1,7 @@
 package asiantech.internship.summer.drawer;
 
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -20,11 +22,21 @@ public class DrawerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private static final int REQUEST_CAMERA = 1;
     private static final int SELECT_FILE = 2;
     private OnItemClickListener mOnClickItem;
-    private List<DrawerItem> mDrawerItem;
+    private List<DrawerItem> mDrawerItems;
+    private Uri mSelectedImage;
+    private Bitmap mImage;
 
     DrawerAdapter(List<DrawerItem> drawerItems, DrawerLayoutActivity onClickItem) {
-        mDrawerItem = drawerItems;
+        mDrawerItems = drawerItems;
         mOnClickItem = onClickItem;
+    }
+
+    void setAvatarUri(Uri selectedImage) {
+        this.mSelectedImage = selectedImage;
+    }
+
+    void setAvartarBitmap(Bitmap image) {
+        this.mImage = image;
     }
 
     @NonNull
@@ -45,15 +57,15 @@ public class DrawerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof ItemViewHolder) {
-            ((ItemViewHolder) holder).onBind(position);
+            ((ItemViewHolder) holder).onBind();
         } else if (holder instanceof HeaderViewHolder) {
-            ((HeaderViewHolder) holder).onBind(position);
+            ((HeaderViewHolder) holder).onBind();
         }
     }
 
     @Override
     public int getItemCount() {
-        return mDrawerItem.size();
+        return mDrawerItems.size();
     }
 
     @Override
@@ -72,50 +84,46 @@ public class DrawerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     public class HeaderViewHolder extends RecyclerView.ViewHolder {
         private ImageView mImgAvt;
-        private TextView mGmail;
+        private TextView mTvGmail;
         private ImageView mImgCheck;
 
         HeaderViewHolder(View itemView) {
             super(itemView);
             mImgAvt = itemView.findViewById(R.id.imgAvt);
-            mGmail = itemView.findViewById(R.id.tvGmail);
+            mTvGmail = itemView.findViewById(R.id.tvGmail);
             mImgCheck = itemView.findViewById(R.id.imgIconCheck);
-            this.setIsRecyclable(false);
-        }
-        private void onBind(int position){
-            DrawerItem object = mDrawerItem.get(position);
-
-            if (mDrawerItem.get(position).getAvatarUri() != null) {
-                mImgAvt.setImageURI(object.getAvatarUri());
-            } else if (mDrawerItem.get(position).getAvtBitmap() != null) {
-                mImgAvt.setImageBitmap(object.getAvtBitmap());
-            } else {
-                mImgAvt.setImageResource(object.getIconResource());
-            }
             mImgAvt.setOnClickListener(v -> mOnClickItem.onAvatarClicked());
-            mGmail.setText(object.getGmail());
-            mImgCheck.setImageResource(object.getImgCheck());
+        }
+
+        private void onBind() {
+            if (mSelectedImage != null) {
+                mImgAvt.setImageURI(mSelectedImage);
+            } else if (mImage != null) {
+                mImgAvt.setImageBitmap(mImage);
+            }
+            mTvGmail.setText(R.string.gmail);
         }
     }
 
     public class ItemViewHolder extends RecyclerView.ViewHolder {
         private ImageView mIconImage;
-        private TextView mTitle;
+        private TextView mTvTitle;
         private LinearLayout mLlItem;
 
         ItemViewHolder(View itemView) {
             super(itemView);
             mIconImage = itemView.findViewById(R.id.imgIcon);
-            mTitle = itemView.findViewById(R.id.tvTitle);
+            mTvTitle = itemView.findViewById(R.id.tvTitle);
             mLlItem = itemView.findViewById(R.id.llItem);
+            mLlItem.setOnClickListener(view -> mOnClickItem.onItemClicked(getAdapterPosition()));
         }
-        private void onBind(int position){
-            mIconImage.setImageResource(mDrawerItem.get(position).getIconImage());
-            mTitle.setText(mDrawerItem.get(position).getCat());
 
-            mLlItem.setSelected(mDrawerItem.get(position).isChecked());
-            mTitle.setTextColor(itemView.getContext().getResources().getColorStateList(R.color.color_content));
-            mLlItem.setOnClickListener(view -> mOnClickItem.onItemClicked(position));
+        private void onBind() {
+            DrawerItem drawerItem = mDrawerItems.get(getAdapterPosition());
+            mIconImage.setImageResource(drawerItem.getIconResource());
+            mTvTitle.setText(drawerItem.getTitle());
+            mLlItem.setSelected(drawerItem.isChecked());
+            mTvTitle.setTextColor(itemView.getContext().getResources().getColorStateList(R.color.color_content));
         }
     }
 }
