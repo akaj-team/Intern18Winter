@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="asiantech.internship.summer">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".viewpager.PagerActivity">
+        <activity android:name=".restapi.RestAPIActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,5 +25,6 @@
         <activity android:name=".activity_fragment.LoginActivity"/>
         <activity android:name=".recyclerview.RecyclerViewActivity"/>
         <activity android:name=".viewpager.TimelineActivity"/>
+        <activity android:name=".viewpager.PagerActivity"/>
     </application>
 </manifest>

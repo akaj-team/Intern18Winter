@@ -40,4 +40,6 @@
     <string name="favourite">Favourite</string>
     <string name="addFavourite">Added to your Favourite</string>
     <string name="removeFavourite">Remove from your Favourite</string>
+    <string name="loadImage">Load Image</string>
+    <string name="uploadImage">Upload Image</string>
 </resources>
