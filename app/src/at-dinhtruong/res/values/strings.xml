@@ -59,4 +59,8 @@
     <string name="camera">Camera</string>
     <string name="library">Library</string>
     <string name="title">Title</string>
+    <string name="accept">Accept!</string>
+    <string name="selectPicture">Select picture!</string>
+    <string name="permissionDenied">Permission denied!</string>
+    <string name="data">data</string>
 </resources>

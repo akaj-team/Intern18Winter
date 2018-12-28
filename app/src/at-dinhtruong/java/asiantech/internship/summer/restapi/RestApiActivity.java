@@ -96,7 +96,7 @@ public class RestApiActivity extends AppCompatActivity implements View.OnClickLi
             case R.id.btnCamera: {
                 mActionUpload = REQUEST_IMAGE_CAPTURE;
                 if (!requestPermission()) {
-                    Toast.makeText(RestApiActivity.this, "accept", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RestApiActivity.this, R.string.accept, Toast.LENGTH_SHORT).show();
                 } else {
                     openCamera();
                 }
@@ -105,7 +105,7 @@ public class RestApiActivity extends AppCompatActivity implements View.OnClickLi
             case R.id.btnGallery: {
                 mActionUpload = REQUEST_SELECT_PICTURE;
                 if (!requestPermission()) {
-                    Toast.makeText(RestApiActivity.this, "accept", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RestApiActivity.this, R.string.accept, Toast.LENGTH_SHORT).show();
                 } else {
                     openGallery();
                 }
@@ -128,7 +128,7 @@ public class RestApiActivity extends AppCompatActivity implements View.OnClickLi
             Intent intent = new Intent();
             intent.setType("image/*");
             intent.setAction(Intent.ACTION_GET_CONTENT);
-            startActivityForResult(Intent.createChooser(intent, "select picture"), REQUEST_SELECT_PICTURE);
+            startActivityForResult(Intent.createChooser(intent, getString(R.string.selectPicture)), REQUEST_SELECT_PICTURE);
         }
     }
 
@@ -152,7 +152,7 @@ public class RestApiActivity extends AppCompatActivity implements View.OnClickLi
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     openCamera();
                 } else {
-                    Toast.makeText(RestApiActivity.this, "permission denied", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RestApiActivity.this, R.string.permissionDenied, Toast.LENGTH_SHORT).show();
                 }
                 break;
             }
@@ -160,7 +160,7 @@ public class RestApiActivity extends AppCompatActivity implements View.OnClickLi
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     openGallery();
                 } else {
-                    Toast.makeText(RestApiActivity.this, "permission denied", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RestApiActivity.this, R.string.permissionDenied, Toast.LENGTH_SHORT).show();
                 }
                 break;
             }
@@ -190,7 +190,7 @@ public class RestApiActivity extends AppCompatActivity implements View.OnClickLi
         Bundle getExtrasImage = data.getExtras();
         Bitmap imageBitmap = null;
         if (getExtrasImage != null) {
-            imageBitmap = (Bitmap) (getExtrasImage).get("data");
+            imageBitmap = (Bitmap) (getExtrasImage).get(getString(R.string.data));
         }
         uploadImages(getImageUri(getApplicationContext(), imageBitmap));
     }
