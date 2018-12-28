@@ -3,12 +3,12 @@ package asiantech.internship.summer.drawerlayout.model;
 public class DrawerItem {
     private int icon;
     private String title;
-    private boolean checkSelected;
+    private boolean isChecked;
 
     public DrawerItem(int icon, String title, boolean isSelected) {
         this.icon = icon;
         this.title = title;
-        this.checkSelected = isSelected;
+        this.isChecked = isSelected;
     }
 
     public int getItemImage() {
@@ -20,10 +20,10 @@ public class DrawerItem {
     }
 
     public boolean isSelected() {
-        return checkSelected;
+        return isChecked;
     }
 
     public void setIsSelected(boolean isSelected) {
-        this.checkSelected = isSelected;
+        this.isChecked = isSelected;
     }
 }
