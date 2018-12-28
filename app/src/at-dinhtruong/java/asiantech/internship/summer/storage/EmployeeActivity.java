@@ -93,6 +93,7 @@ public class EmployeeActivity extends AppCompatActivity implements EmployeeAdapt
                 break;
             }
             case R.id.btnInsert: {
+                employee.setIdEmployee(mEmployeesById.get(mEmployeesById.size() - 1).getIdEmployee() + 1);
                 if (employee.getNameEmployee().isEmpty()) {
                     Toast.makeText(getApplicationContext(), R.string.pleaseFillTheEmployeeName, Toast.LENGTH_LONG).show();
                 } else {
