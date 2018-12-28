@@ -39,7 +39,7 @@ public class DrawerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     @Override
     public int getItemCount() {
-        return (mDrawerItems.size() + 1);
+        return mDrawerItems.size() + 1;
     }
 
     @Override
@@ -76,11 +76,11 @@ public class DrawerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             super(itemView);
             mImgIcon = itemView.findViewById(R.id.imgIcon);
             mTvTitle = itemView.findViewById(R.id.tvTitle);
-            itemView.setOnClickListener(v -> mOnItemClickListener.onItemClicked((getAdapterPosition()+1)));
+            itemView.setOnClickListener(v -> mOnItemClickListener.onItemClicked(getAdapterPosition()));
         }
 
         private void onBind() {
-            DrawerItem item = mDrawerItems.get(getAdapterPosition() - 1);
+            DrawerItem item = mDrawerItems.get(getAdapterPosition()-1);
             mImgIcon.setImageResource(item.getIcon());
             mTvTitle.setText(item.getTitle());
             mTvTitle.setTextColor(itemView.getContext().getResources().getColorStateList(R.color.color_content));

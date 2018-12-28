@@ -115,12 +115,12 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAda
     @Override
     public void onItemClicked(int position) {
         if (mPositionSelected != -1) {
-            mDrawerItems.get(mPositionSelected).setChecked(false);
+            mDrawerItems.get(mPositionSelected-1).setChecked(false);
             mAdapterItem.notifyItemChanged(mPositionSelected);
         }
-        mPositionSelected = position - 2;
-        mDrawerItems.get(position - 2).setChecked(true);
-        mAdapterItem.notifyDataSetChanged();
+        mPositionSelected = position;
+        mDrawerItems.get(mPositionSelected-1).setChecked(true);
+        mAdapterItem.notifyItemChanged(mPositionSelected);
     }
 
     private void openCamera() {
