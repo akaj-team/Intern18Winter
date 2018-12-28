@@ -81,4 +81,5 @@
     <string name="danhSachCongTy">Danh Sách Công Ty</string>
     <string name="idCompany">idCompany</string>
     <string name="fileNameInternal">internalStorage.txt</string>
+    <string name="insertError">Insert Error!</string>
 </resources>

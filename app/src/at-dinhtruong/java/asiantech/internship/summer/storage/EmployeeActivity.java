@@ -27,7 +27,6 @@ public class EmployeeActivity extends AppCompatActivity implements EmployeeAdapt
     private Button mBtnDelete;
     private DBManager mDBManager;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,9 +96,12 @@ public class EmployeeActivity extends AppCompatActivity implements EmployeeAdapt
                 if (employee.getNameEmployee().isEmpty()) {
                     Toast.makeText(getApplicationContext(), R.string.pleaseFillTheEmployeeName, Toast.LENGTH_LONG).show();
                 } else {
-                    mDBManager.addEmployee(employee);
-                    mEmployeesById.add(employee);
-                    mEmployeeAdapter.notifyDataSetChanged();
+                    if (mDBManager.addEmployee(employee) > 0) {
+                        mEmployeesById.add(employee);
+                        mEmployeeAdapter.notifyDataSetChanged();
+                    } else {
+                        Toast.makeText(getApplicationContext(), R.string.insertError, Toast.LENGTH_LONG).show();
+                    }
                 }
                 break;
             }

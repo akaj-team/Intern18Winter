@@ -50,8 +50,7 @@ public class InternalExternalStoreFragment extends Fragment implements View.OnCl
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_internal_extarnal_store, container, false);
         initViews(view);
         return view;

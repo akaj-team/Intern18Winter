@@ -46,26 +46,15 @@ public class DBManager extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);
     }
 
-    void addEmployee(Employee employee) {
+    long addEmployee(Employee employee) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(ID_EMPLOYEE, employee.getIdEmployee());
         values.put(COMPANY_ID, employee.getCompanyId());
         values.put(NAME_EMPLOYEE, employee.getNameEmployee());
-        db.insert(TABLE_EMPLOYEE, null, values);
+        long insert = db.insert(TABLE_EMPLOYEE, null, values);
         db.close();
-    }
-
-    Employee getEmployeeById(int idEmployee, int companyID) {
-        SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.query(TABLE_EMPLOYEE, new String[]{ID_EMPLOYEE,
-                        COMPANY_ID, NAME_EMPLOYEE}, ID_EMPLOYEE + CHECK_DATA + AND_DATA + COMPANY_ID + CHECK_DATA,
-                new String[]{String.valueOf(idEmployee), String.valueOf(companyID)}, null, null, null, null);
-        cursor.moveToFirst();
-        Employee employee = new Employee(cursor.getInt(0), cursor.getInt(1), cursor.getString(2));
-        cursor.close();
-        db.close();
-        return employee;
+        return insert;
     }
 
     int updateEmployee(Employee employee) {

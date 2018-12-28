@@ -28,11 +28,6 @@ public class SharePreferenceFragment extends Fragment implements View.OnClickLis
     private String mPassWordShare;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_share_preference, container, false);
         initViews(view);
@@ -65,7 +60,6 @@ public class SharePreferenceFragment extends Fragment implements View.OnClickLis
             mUserNameShare = preferences.getString(USER_NAME, "");
             mPassWordShare = preferences.getString(PASS_WORD, "");
         }
-
     }
 
     @Override
