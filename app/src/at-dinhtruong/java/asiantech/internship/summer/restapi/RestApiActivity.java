@@ -34,7 +34,9 @@ import asiantech.internship.summer.models.Image;
 import asiantech.internship.summer.utils.RealPathUtil;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -49,6 +51,8 @@ public class RestApiActivity extends AppCompatActivity implements View.OnClickLi
     private static final int mPage = 1;
     private static final int mPerPage = 20;
     private static final String ACCESS_TOKEN = "6f5a48ac0e8aca77e0e8ef42e88962852b6ffaba01c16c5ba37ea13760c0317e";
+    private static final String BASE_URL = "https://api.gyazo.com/api/";
+    private static final String UPLOAD_URL = "https://upload.gyazo.com/api/upload";
     private int mActionUpload = 0;
     private ImageAdapter mImageAdapter;
     private SOService mService;
@@ -202,10 +206,10 @@ public class RestApiActivity extends AppCompatActivity implements View.OnClickLi
         File file = new File(Objects.requireNonNull(RealPathUtil.getRealPath(getApplicationContext(), imageUri)));
         RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
         MultipartBody.Part image = MultipartBody.Part.createFormData("imagedata", file.getName(), requestBody);
-        RequestBody token = RequestBody.create(MediaType.parse("text/plain"), SOService.TOKEN);
-        mService.uploadImage(SOService.UPLOAD_URL, token, image).enqueue(new Callback<Image>() {
+        RequestBody token = RequestBody.create(MediaType.parse("text/plain"), ACCESS_TOKEN);
+        mService.uploadImage(UPLOAD_URL, token, image).enqueue(new Callback<Image>() {
             @Override
-            public void onResponse(Call<Image> call, Response<Image> response) {
+            public void onResponse(@NonNull Call<Image> call, @NonNull Response<Image> response) {
                 if (response.isSuccessful()) {
                     mImageAdapter.notifyItemInserted(0);
                     Toast.makeText(RestApiActivity.this, "Upload completed!", Toast.LENGTH_SHORT).show();
@@ -213,7 +217,7 @@ public class RestApiActivity extends AppCompatActivity implements View.OnClickLi
             }
 
             @Override
-            public void onFailure(Call<Image> call, Throwable t) {
+            public void onFailure(@NonNull Call<Image> call, @NonNull Throwable t) {
                 Toast.makeText(RestApiActivity.this, "Upload failed!", Toast.LENGTH_SHORT).show();
             }
 
@@ -226,11 +230,17 @@ public class RestApiActivity extends AppCompatActivity implements View.OnClickLi
         String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), inImage, getString(R.string.title), null);
         return Uri.parse(path);
     }
+
     private void setUpApi() {
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(logging);
         Gson gson = new GsonBuilder().setLenient().create();
         Retrofit getImagesRetrofit = new Retrofit.Builder()
-                .baseUrl(SOService.BASE_URL)
+                .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
+                .client(httpClient.build())
                 .build();
         mService = getImagesRetrofit.create(SOService.class);
     }

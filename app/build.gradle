@@ -66,12 +66,10 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     implementation 'com.android.support:design:27.1.1'
     apply from: "../ci-java.gradle"
-    // Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'
-    // JSON Parsing
     implementation 'com.google.code.gson:gson:2.8.2'
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
-    // Glide v4 uses this new annotation processor -- see https://bumptech.github.io/glide/doc/generatedapi.html
     implementation 'com.github.bumptech.glide:glide:4.7.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.9.0'
 }
