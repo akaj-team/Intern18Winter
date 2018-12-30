@@ -232,7 +232,7 @@ public class VerticalChartView extends View {
         int i = 0;
 
         while (maxLineHeight - i * height / 24 >= height / 3) {
-            canvas.drawText("$" + String.valueOf(i * 20000), width / 24, maxLineHeight - i * height / 24, mPaint);
+            canvas.drawText("$" + i * 20000, width / 24, maxLineHeight - i * height / 24, mPaint);
             i++;
         }
     }
