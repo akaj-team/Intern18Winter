@@ -17,7 +17,7 @@ public class RetrofitAdapter extends RecyclerView.Adapter<RetrofitAdapter.ViewHo
     private List<ImageItem> mListImage;
     private Context mContext;
 
-    public RetrofitAdapter(List<ImageItem> listImage, Context context) {
+    RetrofitAdapter(List<ImageItem> listImage, Context context) {
         mListImage = listImage;
         mContext = context;
     }
@@ -47,10 +47,11 @@ public class RetrofitAdapter extends RecyclerView.Adapter<RetrofitAdapter.ViewHo
             super(itemView);
             imgContent = itemView.findViewById(R.id.imgContent);
             tvContent = itemView.findViewById(R.id.tvContent);
+//            this.setIsRecyclable(false);
         }
         private void onBind(ImageItem image) {
             if (!image.getImageId().isEmpty()) {
-                tvContent.setText("you are very beautiful");
+//                tvContent.setText("you are very beautiful");
                 Glide.with(mContext).load(image.getUrl()).into(imgContent);
             }
         }
