@@ -42,4 +42,18 @@
     <string name="removeFavourite">Remove from your Favourite</string>
     <string name="loadImage">Load Image</string>
     <string name="uploadImage">Upload Image</string>
+    <string name="selectAction">Select Action</string>
+    <string name="chooseGallery">Choose a photo from gallery</string>
+    <string name="captureCamera">Capture a photo from camera</string>
+    <string name="cancelAction">Cancel</string>
+    <string name="galleryPermissionAccepted">Gallery Permission Accepted</string>
+    <string name="galleryPermissionDenied">Gallery Permisison Denied</string>
+    <string name="cameraPermissionAccepted">Camera Permission Accepted</string>
+    <string name="cameraPermissionDenied">Camera Permission Denied</string>
+    <string name="data">data</string>
+    <string name="title">Title</string>
+    <string name="uploadSuccess">Upload Successfully</string>
+    <string name="uploadFailed">Upload Failed</string>
+    <string name="getImageFailed">Failed to load images</string>
+    <string name="LoadImagesDialogMessage">We are working with your image files</string>
 </resources>

@@ -20,9 +20,6 @@ public class ImageItem {
     @SerializedName("type")
     @Expose
     private String type;
-    @SerializedName("created_at")
-    @Expose
-    private String createdAt;
 
     public String getImageId() {
         return imageId;
@@ -62,13 +59,5 @@ public class ImageItem {
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    public String getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
     }
 }
