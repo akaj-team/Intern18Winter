@@ -82,4 +82,8 @@
     <string name="idCompany">idCompany</string>
     <string name="fileNameInternal">internalStorage.txt</string>
     <string name="insertError">Insert Error!</string>
+    <string name="canvas">Canvas</string>
+    <string name="salesAndExpenses">Sales and Expenses</string>
+    <string name="sales">Sales</string>
+    <string name="expenses">Expenses</string>
 </resources>
