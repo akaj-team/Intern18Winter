@@ -43,15 +43,17 @@ public class RetrofitAdapter extends RecyclerView.Adapter<RetrofitAdapter.ViewHo
     class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imgContent;
         TextView tvContent;
+
         public ViewHolder(View itemView) {
             super(itemView);
             imgContent = itemView.findViewById(R.id.imgContent);
             tvContent = itemView.findViewById(R.id.tvContent);
-//            this.setIsRecyclable(false);
+            this.setIsRecyclable(false);
         }
+
         private void onBind(ImageItem image) {
             if (!image.getImageId().isEmpty()) {
-//                tvContent.setText("you are very beautiful");
+                tvContent.setText(R.string.commentImage);
                 Glide.with(mContext).load(image.getUrl()).into(imgContent);
             }
         }

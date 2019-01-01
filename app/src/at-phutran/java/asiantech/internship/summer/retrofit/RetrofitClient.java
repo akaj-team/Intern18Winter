@@ -7,7 +7,7 @@ class RetrofitClient {
     private static Retrofit retrofit = null;
 
     static Retrofit getClient() {
-        if (retrofit==null) {
+        if (retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(ApiUtils.BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
