@@ -15,11 +15,11 @@ public class Money {
         return month;
     }
 
-    public int getDolphins() {
+    public int getSales() {
         return sale;
     }
 
-    public int getWhales() {
+    public int getExpenses() {
         return expense;
     }
 }

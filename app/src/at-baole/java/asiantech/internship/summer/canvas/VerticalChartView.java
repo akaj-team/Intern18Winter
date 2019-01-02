@@ -187,9 +187,9 @@ public class VerticalChartView extends View {
         for (int i = 0; i < size; i++) {
             largeColumnDistance = (i == 0) ? 25 : 150;
             mColumnPaint.setColor(getResources().getColor(R.color.colorBlue));
-            canvas.drawRect(startPosition + largeColumnDistance, height - (height / 4 + height / 12) - ((mMoneyLists.get(i).getDolphins() * height / 24) / 20000), startPosition + largeColumnDistance + COLUMN_WIDTH, height - (height / 4 + height / 12), mColumnPaint);
+            canvas.drawRect(startPosition + largeColumnDistance, height - (height / 4 + height / 12) - ((mMoneyLists.get(i).getSales() * height / 24) / 20000), startPosition + largeColumnDistance + COLUMN_WIDTH, height - (height / 4 + height / 12), mColumnPaint);
             mColumnPaint.setColor(getResources().getColor(R.color.colorOrange));
-            canvas.drawRect(startPosition + largeColumnDistance + COLUMN_WIDTH + smallColumnDistance, height - (height / 4 + height / 12) - ((mMoneyLists.get(i).getWhales() * height / 24) / 20000), startPosition + largeColumnDistance + COLUMN_WIDTH + smallColumnDistance + COLUMN_WIDTH, height - (height / 4 + height / 12), mColumnPaint);
+            canvas.drawRect(startPosition + largeColumnDistance + COLUMN_WIDTH + smallColumnDistance, height - (height / 4 + height / 12) - ((mMoneyLists.get(i).getExpenses() * height / 24) / 20000), startPosition + largeColumnDistance + COLUMN_WIDTH + smallColumnDistance + COLUMN_WIDTH, height - (height / 4 + height / 12), mColumnPaint);
 
             canvas.drawText(mMoneyLists.get(i).getYear(), startPosition + largeColumnDistance, height - (height / 4 + height / 12) + 40, mPaint);
             startPosition += largeColumnDistance + smallColumnDistance + 50;
