@@ -211,6 +211,7 @@ public class RestApiActivity extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onResponse(@NonNull Call<Image> call, @NonNull Response<Image> response) {
                 if (response.isSuccessful()) {
+                    loadImages();
                     mImageAdapter.notifyDataSetChanged();
                     Toast.makeText(RestApiActivity.this, R.string.uploadCompleted, Toast.LENGTH_SHORT).show();
                 }
