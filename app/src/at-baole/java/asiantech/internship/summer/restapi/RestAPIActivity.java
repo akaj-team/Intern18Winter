@@ -96,7 +96,7 @@ public class RestAPIActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btnGetImage: {
+            case R.id.btnLoadImage: {
                 loadListImages();
                 break;
             }
