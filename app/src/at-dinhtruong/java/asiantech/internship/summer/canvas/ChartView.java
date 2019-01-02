@@ -127,10 +127,10 @@ public class ChartView extends View {
         int height = getHeightScreen();
         int xDistance = width / 12;
         int yDistance = 4 * height / 5;
-        //drawColumn
-        drawColumnChart(height, xDistance, yDistance, canvas);
         //drawLine
         drawLineMoney(width, height, xDistance, yDistance, canvas);
+        //drawColumn
+        drawColumnChart(height, xDistance, yDistance, canvas);
         //drawCaption
         drawCaption(width, height, canvas);
         //draw note
