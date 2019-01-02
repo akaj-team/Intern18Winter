@@ -141,7 +141,7 @@ public class VerticalChartView extends View {
         setChartTitle(canvas, width, height);
         setSalesNote(canvas, width, height);
         setExpensesNote(canvas, width, height);
-        setChartNumber(canvas, width, height);
+        setMoneyValue(canvas, width, height);
         canvas.restore();
     }
 
@@ -225,7 +225,7 @@ public class VerticalChartView extends View {
         canvas.drawText(getResources().getString(R.string.noteExpenses), expensesWidthPosition + 20, expensesHeightPosition + 10, mPaint);
     }
 
-    private void setChartNumber(Canvas canvas, int width, int height) {
+    private void setMoneyValue(Canvas canvas, int width, int height) {
         mPaint.setStyle(Paint.Style.FILL);
         mPaint.setColor(Color.WHITE);
         canvas.drawRect(0, height / 20 + 10, width / 8, height * 19 / 20 - 10, mPaint);
@@ -248,12 +248,12 @@ public class VerticalChartView extends View {
         mMoneyLists.add(new Money(getResources().getString(R.string.abbrApril), 90000, 30000));
         mMoneyLists.add(new Money(getResources().getString(R.string.abbrMay), 105000, 45000));
         mMoneyLists.add(new Money(getResources().getString(R.string.abbrJune), 130000, 80000));
-        mMoneyLists.add(new Money(getResources().getString(R.string.abbrJuly), 135000, 85000));
-        mMoneyLists.add(new Money(getResources().getString(R.string.abbrAugust), 140000, 90000));
-        mMoneyLists.add(new Money(getResources().getString(R.string.abbrSeptember), 145000, 95000));
-        mMoneyLists.add(new Money(getResources().getString(R.string.abbrOctober), 150000, 100000));
-        mMoneyLists.add(new Money(getResources().getString(R.string.abbrNovember), 155000, 105000));
-        mMoneyLists.add(new Money(getResources().getString(R.string.abbrDecember), 160000, 110000));
+        mMoneyLists.add(new Money(getResources().getString(R.string.abbrJuly), 140000, 70000));
+        mMoneyLists.add(new Money(getResources().getString(R.string.abbrAugust), 120000, 60000));
+        mMoneyLists.add(new Money(getResources().getString(R.string.abbrSeptember), 135000, 70000));
+        mMoneyLists.add(new Money(getResources().getString(R.string.abbrOctober), 100000, 45000));
+        mMoneyLists.add(new Money(getResources().getString(R.string.abbrNovember), 115000, 50000));
+        mMoneyLists.add(new Money(getResources().getString(R.string.abbrDecember), 120000, 85000));
     }
 
     private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
