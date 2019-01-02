@@ -25,6 +25,7 @@ public class VerticalChartView extends View {
     private static final int ZOOM = 2;
     private static final int COLUMN_WIDTH = 50;
 
+
     private int mMode;
     private float mStartX = 0f;
     private float mStartY = 0f;
@@ -160,80 +161,83 @@ public class VerticalChartView extends View {
 
     private int getMaxChartWidth() {
         int count = mMoneyLists.size();
-        return (count * 60 + (count - 1) * 180);
+        return (count * (COLUMN_WIDTH * 2 + 130));
     }
 
     private void drawChartLine(Canvas canvas, int width, int height) {
         mPaint.setStyle(Paint.Style.STROKE);
-        canvas.drawRect(0, height / 4, width / 8 + getMaxChartWidth(), 3 * height / 4, mPaint);
-        int maxLineHeight = 2 * height / 3;
-        int i = 0;
+        int firstLineHeight = height * 3 / 4;
+        int startLinePosition = width / 8;
 
-        while (maxLineHeight - i * height / 24 >= height / 3) {
-            mPaint.setTextSize(getResources().getDimension(R.dimen.smallTextSize));
-            canvas.drawLine(width / 5, maxLineHeight - i * height / 24, width / 8 + getMaxChartWidth(), maxLineHeight - i * height / 24, mPaint);
-            i++;
+        for (int i = 0; i <= 7; i++) {
+            canvas.drawLine(startLinePosition, firstLineHeight - i * height / 14, startLinePosition + getMaxChartWidth(), firstLineHeight - i * height / 14, mPaint);
         }
     }
 
     private void drawChartColumn(Canvas canvas, int width, int height) {
-        int smallColumnDistance = 20;
+        int smallColumnDistance = 25;
         int largeColumnDistance;
-        int startPosition = width / 5;
-        int size = mMoneyLists.size();
+        int startColumnPosition = width / 8;
+        int startColumnHeight = height * 3 / 4;
+        int columnUnit = height / 14;
+        int moneyUnit = 20000;
         mPaint.setStyle(Paint.Style.FILL);
         mPaint.setTextSize(getResources().getDimension(R.dimen.smallTextSize));
 
-        for (int i = 0; i < size; i++) {
-            largeColumnDistance = (i == 0) ? 25 : 150;
+        for (int i = 0; i < mMoneyLists.size(); i++) {
+            largeColumnDistance = (i == 0) ? 50 : 150;
             mColumnPaint.setColor(getResources().getColor(R.color.colorBlue));
-            canvas.drawRect(startPosition + largeColumnDistance, height - (height / 4 + height / 12) - ((mMoneyLists.get(i).getSales() * height / 24) / 20000), startPosition + largeColumnDistance + COLUMN_WIDTH, height - (height / 4 + height / 12), mColumnPaint);
+            canvas.drawRect(startColumnPosition + largeColumnDistance, startColumnHeight - ((mMoneyLists.get(i).getSales() * columnUnit) / moneyUnit), startColumnPosition + largeColumnDistance + COLUMN_WIDTH, startColumnHeight, mColumnPaint);
             mColumnPaint.setColor(getResources().getColor(R.color.colorOrange));
-            canvas.drawRect(startPosition + largeColumnDistance + COLUMN_WIDTH + smallColumnDistance, height - (height / 4 + height / 12) - ((mMoneyLists.get(i).getExpenses() * height / 24) / 20000), startPosition + largeColumnDistance + COLUMN_WIDTH + smallColumnDistance + COLUMN_WIDTH, height - (height / 4 + height / 12), mColumnPaint);
+            canvas.drawRect(startColumnPosition + largeColumnDistance + COLUMN_WIDTH + smallColumnDistance, startColumnHeight - ((mMoneyLists.get(i).getExpenses() * columnUnit) / moneyUnit), startColumnPosition + largeColumnDistance + smallColumnDistance + COLUMN_WIDTH * 2, startColumnHeight, mColumnPaint);
 
-            canvas.drawText(mMoneyLists.get(i).getYear(), startPosition + largeColumnDistance, height - (height / 4 + height / 12) + 40, mPaint);
-            startPosition += largeColumnDistance + smallColumnDistance + 50;
+            canvas.drawText(mMoneyLists.get(i).getYear(), startColumnPosition + largeColumnDistance, startColumnHeight + 50, mPaint);
+            startColumnPosition += largeColumnDistance + smallColumnDistance + 50;
         }
     }
 
     private void setChartTitle(Canvas canvas, int width, int height) {
         mPaint.setTextSize(getResources().getDimension(R.dimen.largeTextSize));
         mPaint.getTextBounds(getResources().getString(R.string.chartName), 0, getResources().getString(R.string.chartName).length(), mBounds);
-        canvas.drawText(getResources().getString(R.string.chartName), width / 4, height / 4 + height / 16, mPaint);
+        canvas.drawText(getResources().getString(R.string.chartName), width / 3, height / 7, mPaint);
     }
 
     private void setSalesNote(Canvas canvas, int width, int height) {
+        int salesWidthPosition = width / 3;
+        int salesHeightPosition = height * 9 / 10;
         mPaint.setStyle(Paint.Style.FILL);
         mPointPaint.setColor(getResources().getColor(R.color.colorBlue));
-        canvas.drawPoint(width / 3, height - (height / 4 + height / 36), mPointPaint);
+        canvas.drawPoint(salesWidthPosition, salesHeightPosition, mPointPaint);
 
         mPaint.setTextSize(getResources().getDimension(R.dimen.mediumTexSize));
         mPaint.getTextBounds(getResources().getString(R.string.noteSales), 0, getResources().getString(R.string.noteSales).length(), mBounds);
-        canvas.drawText(getResources().getString(R.string.noteSales), width / 3 + 20, height - (height / 4 + height / 36 - 10), mPaint);
+        canvas.drawText(getResources().getString(R.string.noteSales), salesWidthPosition + 20, salesHeightPosition + 10, mPaint);
     }
 
     private void setExpensesNote(Canvas canvas, int width, int height) {
+        int expensesWidthPosition = width / 2;
+        int expensesHeightPosition = height * 9 / 10;
         mPointPaint.setColor(getResources().getColor(R.color.colorOrange));
-        canvas.drawPoint(width / 2, height - (height / 4 + height / 36), mPointPaint);
+        canvas.drawPoint(expensesWidthPosition, expensesHeightPosition, mPointPaint);
 
         mPaint.setTextSize(getResources().getDimension(R.dimen.mediumTexSize));
         mPaint.getTextBounds(getResources().getString(R.string.noteExpenses), 0, getResources().getString(R.string.noteExpenses).length(), mBounds);
-        canvas.drawText(getResources().getString(R.string.noteExpenses), width / 2 + 20, height - (height / 4 + height / 36 - 10), mPaint);
+        canvas.drawText(getResources().getString(R.string.noteExpenses), expensesWidthPosition + 20, expensesHeightPosition + 10, mPaint);
     }
 
     private void setChartNumber(Canvas canvas, int width, int height) {
         mPaint.setStyle(Paint.Style.FILL);
         mPaint.setColor(Color.WHITE);
-        canvas.drawRect(0, height / 4 + 100, width / 5, 3 * height / 4 - 1, mPaint);
+        canvas.drawRect(0, height / 20 + 10, width / 8, height * 19 / 20 - 10, mPaint);
 
         mPaint.setTextSize(getResources().getDimension(R.dimen.smallTextSize));
         mPaint.setColor(Color.BLACK);
-        int maxLineHeight = 2 * height / 3 + 10;
-        int i = 0;
+        int moneyUnit = 20000;
+        int startWidthPosition = 50;
+        int firstNumberHeight = height * 3 / 4;
 
-        while (maxLineHeight - i * height / 24 >= height / 3) {
-            canvas.drawText("$" + i * 20000, width / 24, maxLineHeight - i * height / 24, mPaint);
-            i++;
+        for (int i = 0; i <= 7; i++) {
+            canvas.drawText("$" + i * moneyUnit, startWidthPosition, firstNumberHeight - i * height / 14 + 15, mPaint);
         }
     }
 
