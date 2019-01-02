@@ -4,4 +4,5 @@
     <color name="colorColumnOrange">#FF8C00</color>
     <color name="colorTextBlack">#000000</color>
     <color name="colorLineGray">#BEBEBE</color>
+    <color name="colorBackgroundWhite">#ffffff</color>
 </resources>

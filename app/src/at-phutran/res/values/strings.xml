@@ -50,4 +50,16 @@
     <string name="thousan">,000</string>
     <string name="zero">$0</string>
     <string name="dola">$</string>
+    <string name="Jan">Jan</string>
+    <string name="Feb">Feb</string>
+    <string name="Mar">Mar</string>
+    <string name="Apr">Apr</string>
+    <string name="May">May</string>
+    <string name="June">June</string>
+    <string name="Jul">Jul</string>
+    <string name="Aug">Aug</string>
+    <string name="Sep">Sep</string>
+    <string name="Oct">Oct</string>
+    <string name="Nov">Nov</string>
+    <string name="Dec">Dec</string>
 </resources>
