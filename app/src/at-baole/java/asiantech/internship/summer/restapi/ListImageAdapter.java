@@ -18,11 +18,9 @@ import asiantech.internship.summer.restapi.model.ImageItem;
 
 public class ListImageAdapter extends RecyclerView.Adapter<ListImageAdapter.ViewHolder> {
     private List<ImageItem> mImageItems;
-    private Context mContext;
 
-    ListImageAdapter(List<ImageItem> imageItems, Context context) {
+    ListImageAdapter(List<ImageItem> imageItems) {
         mImageItems = imageItems;
-        mContext = context;
     }
 
     @NonNull
@@ -36,9 +34,7 @@ public class ListImageAdapter extends RecyclerView.Adapter<ListImageAdapter.View
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ImageItem item = mImageItems.get(position);
-        Glide.with(mContext).load(item.getUrl()).into(holder.mImgPhoto);
-        holder.mTvContent.setText(item.getType());
-
+        holder.bindView(item);
     }
 
     @Override
@@ -54,6 +50,11 @@ public class ListImageAdapter extends RecyclerView.Adapter<ListImageAdapter.View
             super(itemView);
             mImgPhoto = itemView.findViewById(R.id.imgPhoto);
             mTvContent = itemView.findViewById(R.id.tvContent);
+        }
+
+        public void bindView(ImageItem item) {
+            Glide.with(itemView.getContext()).load(item.getUrl()).into(mImgPhoto);
+            mTvContent.setText(item.getType());
         }
     }
 }

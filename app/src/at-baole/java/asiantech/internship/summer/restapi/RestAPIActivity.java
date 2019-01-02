@@ -50,17 +50,13 @@ public class RestAPIActivity extends AppCompatActivity implements View.OnClickLi
     private static final int GALLERY_PERMISSION_REQUEST_CODE = 201;
     private static final int CAMERA_PERMISSION_REQUEST_CODE = 202;
 
-
-    private final CharSequence[] mChoiceOption = {"Camera", "Gallery"};
     private APIImages mAPIImages;
-    private boolean mIsLoading;
     private int mCurrentPage;
-    private int mLastQueryImageNumber;
     private List<ImageItem> mImages = new ArrayList<>();
     private RecyclerView mRecyclerViewImage;
     private ProgressDialog mProgressDialog;
     private ListImageAdapter mImageAdapter;
-    private int mActionChangeAvatar = 79;
+    private int mActionUploadImage = 69;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -72,11 +68,11 @@ public class RestAPIActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void initView() {
-        Button mBtnGetImage = findViewById(R.id.btnGetImage);
+        Button mBtnLoadImage = findViewById(R.id.btnLoadImage);
         Button mBtnUploadImage = findViewById(R.id.btnUploadImage);
-        mRecyclerViewImage = findViewById(R.id.recycleViewRestful);
+        mRecyclerViewImage = findViewById(R.id.recyclerViewRestful);
 
-        mBtnGetImage.setOnClickListener(this);
+        mBtnLoadImage.setOnClickListener(this);
         mBtnUploadImage.setOnClickListener(this);
     }
 
@@ -84,7 +80,7 @@ public class RestAPIActivity extends AppCompatActivity implements View.OnClickLi
         mRecyclerViewImage.setHasFixedSize(true);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
         mRecyclerViewImage.setLayoutManager(gridLayoutManager);
-        mImageAdapter = new ListImageAdapter(mImages, this);
+        mImageAdapter = new ListImageAdapter(mImages);
         mRecyclerViewImage.setAdapter(mImageAdapter);
     }
 
@@ -122,14 +118,14 @@ public class RestAPIActivity extends AppCompatActivity implements View.OnClickLi
         pictureDialog.setItems(pictureDialogItems, (dialogInterface, position) -> {
             switch (position) {
                 case CHOOSE_GALLERY: {
-                    mActionChangeAvatar = 80;
+                    mActionUploadImage = 70;
                     if (requestPermission()) {
                         choosePhotosFromGallery();
                     }
                     break;
                 }
                 case CAPTURE_CAMERA: {
-                    mActionChangeAvatar = 81;
+                    mActionUploadImage = 71;
                     if (requestPermission()) {
                         CapturePhotosFromCamera();
                     }
@@ -143,11 +139,11 @@ public class RestAPIActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private boolean requestPermission() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED && mActionChangeAvatar == 80) {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED && mActionUploadImage == 70) {
             ActivityCompat.requestPermissions(RestAPIActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, GALLERY_PERMISSION_REQUEST_CODE);
             return false;
         }
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED && mActionChangeAvatar == 81) {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED && mActionUploadImage == 71) {
             ActivityCompat.requestPermissions(RestAPIActivity.this, new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION_REQUEST_CODE);
             return false;
         }
@@ -229,6 +225,7 @@ public class RestAPIActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void uploadImage(Uri imageUri) {
+        addProgressbarDialog();
         File file = new File(Objects.requireNonNull(getRealPathImage(imageUri)));
 
         RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
@@ -262,9 +259,7 @@ public class RestAPIActivity extends AppCompatActivity implements View.OnClickLi
                     if (addImages != null) {
                         mImages.addAll(addImages);
                         mImageAdapter.notifyDataSetChanged();
-                        mLastQueryImageNumber = addImages.size();
                         mCurrentPage++;
-                        mIsLoading = false;
                         mProgressDialog.dismiss();
                     }
                 }
