@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <attr name="saleColor" format="color" />
+    <declare-styleable name="ChartView">
+        <attr name="colorOfColumnSales" format="color" />
+        <attr name="colorOfColumnExpenses" format="color" />
+        <attr name="widthOfColumn" format="dimension" />
+    </declare-styleable>
 </resources>
