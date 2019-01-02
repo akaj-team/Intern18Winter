@@ -9,7 +9,7 @@
     <string name="password1char1num">Password must contain at least one character and one number</string>
     <string name="invalidEmail">Incorrect e-mail address format</string>
     <string name="signUpSuccessfully">Sign Up Successfully</string>
-    <string name="app_name">Inter18Winter</string>
+    <string name="app_name">BaoLe</string>
     <string name="bMaxwell">Beatrice Maxwell</string>
     <string name="profile">Profile</string>
     <string name="bookmarks">Bookmarks</string>
