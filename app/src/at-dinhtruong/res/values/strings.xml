@@ -86,4 +86,5 @@
     <string name="salesAndExpenses">Sales and Expenses</string>
     <string name="sales">Sales</string>
     <string name="expenses">Expenses</string>
+    <string name="usd">$</string>
 </resources>
