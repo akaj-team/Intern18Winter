@@ -127,7 +127,7 @@ public class RestAPIActivity extends AppCompatActivity implements View.OnClickLi
                 case CAPTURE_CAMERA: {
                     mActionUploadImage = 71;
                     if (requestPermission()) {
-                        CapturePhotosFromCamera();
+                        capturePhotosFromCamera();
                     }
                     break;
                 }
@@ -163,7 +163,7 @@ public class RestAPIActivity extends AppCompatActivity implements View.OnClickLi
             }
             case CAMERA_PERMISSION_REQUEST_CODE: {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    CapturePhotosFromCamera();
+                    capturePhotosFromCamera();
                     Toast.makeText(RestAPIActivity.this, R.string.cameraPermissionAccepted, Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(RestAPIActivity.this, R.string.cameraPermissionDenied, Toast.LENGTH_LONG).show();
@@ -181,7 +181,7 @@ public class RestAPIActivity extends AppCompatActivity implements View.OnClickLi
         startActivityForResult(pickIntent, GALLERY);
     }
 
-    private void CapturePhotosFromCamera() {
+    private void capturePhotosFromCamera() {
         Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(takePicture, CAMERA);
     }
