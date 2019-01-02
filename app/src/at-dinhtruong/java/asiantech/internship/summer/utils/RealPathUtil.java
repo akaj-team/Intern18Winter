@@ -13,12 +13,12 @@ import android.provider.MediaStore;
 public class RealPathUtil {
     public static String getRealPath(Context context, Uri fileUri) {
         String realPath;
-        realPath = RealPathUtil.getRealPathFromURI_API19(context, fileUri);
+        realPath = RealPathUtil.getRealPathFromURIAPI19(context, fileUri);
         return realPath;
     }
 
     @SuppressLint("NewApi")
-    private static String getRealPathFromURI_API19(final Context context, final Uri uri) {
+    private static String getRealPathFromURIAPI19(final Context context, final Uri uri) {
         final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
         // DocumentProvider
         if (isKitKat && DocumentsContract.isDocumentUri(context, uri)) {
@@ -34,7 +34,7 @@ public class RealPathUtil {
             // DownloadsProvider
             else if (isDownloadsDocument(uri)) {
                 final String id = DocumentsContract.getDocumentId(uri);
-                final Uri contentUri = ContentUris.withAppendedId(Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
+                final Uri contentUri = ContentUris.withAppendedId(Uri.parse("content://downloads/public_downloads"), Long.parseLong(id));
                 return getDataColumn(context, contentUri, null, null);
             }
             // MediaProvider
@@ -58,8 +58,9 @@ public class RealPathUtil {
         // MediaStore (and general)
         else if ("content".equalsIgnoreCase(uri.getScheme())) {
             // Return the remote address
-            if (isGooglePhotosUri(uri))
+            if (isGooglePhotosUri(uri)) {
                 return uri.getLastPathSegment();
+            }
             return getDataColumn(context, uri, null, null);
         }
         // File
