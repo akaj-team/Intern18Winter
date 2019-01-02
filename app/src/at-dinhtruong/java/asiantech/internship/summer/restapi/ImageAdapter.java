@@ -1,6 +1,5 @@
 package asiantech.internship.summer.restapi;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -23,11 +22,6 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
         mImages = images;
     }
 
-    void updateList(List<Image> images) {
-        mImages = images;
-        notifyDataSetChanged();
-    }
-
     @NonNull
     @Override
     public ImageViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
@@ -38,7 +32,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
 
     @Override
     public void onBindViewHolder(@NonNull ImageViewHolder holder, int position) {
-        holder.onBind(holder.itemView.getContext());
+        holder.onBind();
     }
 
     @Override
@@ -56,11 +50,13 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
             mTvItem = itView.findViewById(R.id.tvItem);
         }
 
-        private void onBind(Context context) {
+        private void onBind() {
             Image image = mImages.get(getAdapterPosition());
-            if (!image.getImageId().isEmpty()) {
-                mTvItem.setText(image.getImageId());
-                Glide.with(context).load(image.getUrl()).into(mImgItem);
+            if (image != null) {
+                if (!image.getImageId().isEmpty()) {
+                    mTvItem.setText(image.getImageId());
+                    Glide.with(itemView.getContext()).load(image.getUrl()).into(mImgItem);
+                }
             }
         }
     }

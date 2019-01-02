@@ -92,4 +92,5 @@
     <string name="data">data</string>
     <string name="uploadCompleted">Upload completed!</string>
     <string name="uploadFailed">Upload failed!</string>
+    <string name="loadImagesFailse">Load Images Failse!</string>
 </resources>

@@ -5,14 +5,13 @@
     android:layout_height="match_parent"
     android:layout_margin="5dp"
     android:orientation="vertical"
-    android:weightSum="12"
     tools:context="asiantech.internship.summer.restapi.RestApiActivity">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerViewItem"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="12" />
+        android:layout_weight="1" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -27,8 +26,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="@string/camera"
-            android:textStyle="bold"
-            tools:ignore="NestedWeights" />
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/btnGallery"

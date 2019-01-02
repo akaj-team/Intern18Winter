@@ -54,43 +54,54 @@ public class RestApiActivity extends AppCompatActivity implements View.OnClickLi
     private static final String BASE_URL = "https://api.gyazo.com/api/";
     private static final String UPLOAD_URL = "https://upload.gyazo.com/api/upload";
     private int mActionUpload = 0;
-    private ImageAdapter mImageAdapter;
     private SOService mService;
+    private List<Image> mImages;
+    private ImageAdapter mImageAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rest_api);
         initViews();
+        initRecyclerView();
     }
 
     private void initViews() {
         setUpApi();
-        List<Image> images = new ArrayList<>();
-        RecyclerView recyclerView = findViewById(R.id.recyclerViewItem);
-        recyclerView.setHasFixedSize(true);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
-        recyclerView.setLayoutManager(gridLayoutManager);
-        mImageAdapter = new ImageAdapter(images);
-        recyclerView.setAdapter(mImageAdapter);
-        recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL));
-        recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-        loadImages();
         Button btnCamera = findViewById(R.id.btnCamera);
         Button btnGallery = findViewById(R.id.btnGallery);
         btnCamera.setOnClickListener(this);
         btnGallery.setOnClickListener(this);
     }
 
+    private void initRecyclerView() {
+        mImages = new ArrayList<>();
+        RecyclerView recyclerView = findViewById(R.id.recyclerViewItem);
+        recyclerView.setHasFixedSize(true);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
+        recyclerView.setLayoutManager(gridLayoutManager);
+        mImageAdapter = new ImageAdapter(mImages);
+        recyclerView.setAdapter(mImageAdapter);
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL));
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        loadImages();
+    }
+
     private void loadImages() {
         mService.getImages(ACCESS_TOKEN, mPage, mPerPage).enqueue(new Callback<List<Image>>() {
             @Override
             public void onResponse(@NonNull Call<List<Image>> call, @NonNull Response<List<Image>> response) {
-                mImageAdapter.updateList(response.body());
+                mImages = response.body();
+                for (Image objImage :response.body()) {
+
+                }
+                mImageAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onFailure(@NonNull Call<List<Image>> call, @NonNull Throwable t) {
+                Toast.makeText(RestApiActivity.this, R.string.loadImagesFailse, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -100,7 +111,7 @@ public class RestApiActivity extends AppCompatActivity implements View.OnClickLi
         switch (view.getId()) {
             case R.id.btnCamera: {
                 mActionUpload = REQUEST_IMAGE_CAPTURE;
-                if (!requestPermission()) {
+                if (!checkAndRequestPermission()) {
                     Toast.makeText(RestApiActivity.this, R.string.accept, Toast.LENGTH_SHORT).show();
                 } else {
                     openCamera();
@@ -109,7 +120,7 @@ public class RestApiActivity extends AppCompatActivity implements View.OnClickLi
             }
             case R.id.btnGallery: {
                 mActionUpload = REQUEST_SELECT_PICTURE;
-                if (!requestPermission()) {
+                if (!checkAndRequestPermission()) {
                     Toast.makeText(RestApiActivity.this, R.string.accept, Toast.LENGTH_SHORT).show();
                 } else {
                     openGallery();
@@ -122,14 +133,14 @@ public class RestApiActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void openCamera() {
-        if (requestPermission()) {
+        if (checkAndRequestPermission()) {
             Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
         }
     }
 
     private void openGallery() {
-        if (requestPermission()) {
+        if (checkAndRequestPermission()) {
             Intent intent = new Intent();
             intent.setType("image/*");
             intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -137,7 +148,7 @@ public class RestApiActivity extends AppCompatActivity implements View.OnClickLi
         }
     }
 
-    private boolean requestPermission() {
+    private boolean checkAndRequestPermission() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED && mActionUpload == REQUEST_IMAGE_CAPTURE) {
             ActivityCompat.requestPermissions(RestApiActivity.this, new String[]{Manifest.permission.CAMERA}, REQUEST_CODE_ASK_PERMISSIONS_CAMERA);
             return false;
@@ -211,8 +222,6 @@ public class RestApiActivity extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onResponse(@NonNull Call<Image> call, @NonNull Response<Image> response) {
                 if (response.isSuccessful()) {
-                    loadImages();
-                    mImageAdapter.notifyDataSetChanged();
                     Toast.makeText(RestApiActivity.this, R.string.uploadCompleted, Toast.LENGTH_SHORT).show();
                 }
             }
