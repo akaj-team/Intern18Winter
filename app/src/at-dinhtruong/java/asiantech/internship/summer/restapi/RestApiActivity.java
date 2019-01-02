@@ -71,7 +71,7 @@ public class RestApiActivity extends AppCompatActivity implements View.OnClickLi
         recyclerView.setHasFixedSize(true);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(gridLayoutManager);
-        mImageAdapter = new ImageAdapter(images, getApplicationContext());
+        mImageAdapter = new ImageAdapter(images);
         recyclerView.setAdapter(mImageAdapter);
         recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL));
         recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
@@ -211,16 +211,15 @@ public class RestApiActivity extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onResponse(@NonNull Call<Image> call, @NonNull Response<Image> response) {
                 if (response.isSuccessful()) {
-                    mImageAdapter.notifyItemInserted(0);
-                    Toast.makeText(RestApiActivity.this, "Upload completed!", Toast.LENGTH_SHORT).show();
+                    mImageAdapter.notifyDataSetChanged();
+                    Toast.makeText(RestApiActivity.this, R.string.uploadCompleted, Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<Image> call, @NonNull Throwable t) {
-                Toast.makeText(RestApiActivity.this, "Upload failed!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RestApiActivity.this, R.string.uploadFailed, Toast.LENGTH_SHORT).show();
             }
-
         });
     }
 
