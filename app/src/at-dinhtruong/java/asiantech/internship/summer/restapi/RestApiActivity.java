@@ -58,7 +58,6 @@ public class RestApiActivity extends AppCompatActivity implements View.OnClickLi
     private List<Image> mImages;
     private ImageAdapter mImageAdapter;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,9 +91,8 @@ public class RestApiActivity extends AppCompatActivity implements View.OnClickLi
         mService.getImages(ACCESS_TOKEN, mPage, mPerPage).enqueue(new Callback<List<Image>>() {
             @Override
             public void onResponse(@NonNull Call<List<Image>> call, @NonNull Response<List<Image>> response) {
-                mImages = response.body();
-                for (Image objImage :response.body()) {
-
+                if (response.body() != null) {
+                    mImages.addAll(response.body());
                 }
                 mImageAdapter.notifyDataSetChanged();
             }
@@ -222,6 +220,8 @@ public class RestApiActivity extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onResponse(@NonNull Call<Image> call, @NonNull Response<Image> response) {
                 if (response.isSuccessful()) {
+                    mImages.add(0, response.body());
+                    mImageAdapter.notifyItemChanged(0);
                     Toast.makeText(RestApiActivity.this, R.string.uploadCompleted, Toast.LENGTH_SHORT).show();
                 }
             }
