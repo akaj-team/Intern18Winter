@@ -214,6 +214,7 @@ public class RestApiActivity extends AppCompatActivity implements View.OnClickLi
 
             @Override
             public void onFailure(@NonNull Call<List<Image>> call, @NonNull Throwable t) {
+                mProgressDialog.dismiss();
                 Toast.makeText(RestApiActivity.this, R.string.loadImagesFailse, Toast.LENGTH_SHORT).show();
             }
         });
@@ -230,7 +231,7 @@ public class RestApiActivity extends AppCompatActivity implements View.OnClickLi
             public void onResponse(@NonNull Call<Image> call, @NonNull Response<Image> response) {
                 if (response.isSuccessful()) {
                     mImages.add(0, response.body());
-                    mImageAdapter.notifyDataSetChanged();
+                    mImageAdapter.notifyItemInserted(0);
                     Toast.makeText(RestApiActivity.this, R.string.uploadCompleted, Toast.LENGTH_SHORT).show();
                 }
                 mProgressDialog.dismiss();
@@ -238,6 +239,7 @@ public class RestApiActivity extends AppCompatActivity implements View.OnClickLi
 
             @Override
             public void onFailure(@NonNull Call<Image> call, @NonNull Throwable t) {
+                mProgressDialog.dismiss();
                 Toast.makeText(RestApiActivity.this, R.string.uploadFailed, Toast.LENGTH_SHORT).show();
             }
         });
