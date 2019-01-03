@@ -48,7 +48,6 @@
     <string name="handler">Handler</string>
     <string name="exercise5">AsyncTask</string>
     <string name="download_image">Download image</string>
-    <string name="folder">sdcard/Pictures</string>
     <string name="image">downloaded_image.jpg</string>
     <string name="complete">Download complete</string>
     <string name="interruptedException">InterruptedException:</string>
