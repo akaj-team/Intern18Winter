@@ -3,4 +3,5 @@
     <dimen name="smallTextSize">14dp</dimen>
     <dimen name="mediumTexSize">16dp</dimen>
     <dimen name="largeTextSize">30dp</dimen>
+    <dimen name="columnWidth">50dp</dimen>
 </resources>

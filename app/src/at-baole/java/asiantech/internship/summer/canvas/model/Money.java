@@ -11,7 +11,7 @@ public class Money {
         this.expense = expense;
     }
 
-    public String getYear() {
+    public String getMonth() {
         return month;
     }
 

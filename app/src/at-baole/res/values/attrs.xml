@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="VerticalChartView">
+        <attr name="columnSalesColor" format="color" />
+        <attr name="columnExpensesColor" format="color" />
+        <attr name="columnWidth" format="dimension" />
+    </declare-styleable>
+</resources>

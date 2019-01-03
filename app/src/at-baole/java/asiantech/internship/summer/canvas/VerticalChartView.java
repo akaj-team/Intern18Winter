@@ -2,6 +2,7 @@ package asiantech.internship.summer.canvas;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -11,7 +12,9 @@ import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import asiantech.internship.summer.R;
@@ -38,18 +41,16 @@ public class VerticalChartView extends View {
 
     private List<Money> mMoneyLists = new ArrayList<>();
     private Paint mPaint;
-    private Paint mPointPaint;
-    private Paint mColumnPaint;
+    private Paint mPaintColumnSales;
+    private Paint mPaintColumnExpenses;
+    private Paint mPaintSalesNote;
+    private Paint mPaintExpensesNote;
     private Rect mBounds;
     private ScaleGestureDetector mScaleDetector;
 
 
     public VerticalChartView(Context context) {
         super(context);
-        addData();
-        mBounds = new Rect();
-        mScaleDetector = new ScaleGestureDetector(getContext(), new ScaleListener());
-        initPaintObjects();
     }
 
     public VerticalChartView(Context context, AttributeSet attrs) {
@@ -58,6 +59,24 @@ public class VerticalChartView extends View {
         mBounds = new Rect();
         mScaleDetector = new ScaleGestureDetector(getContext(), new ScaleListener());
         initPaintObjects();
+        getStyleableAttributes(context, attrs);
+    }
+
+    private void getStyleableAttributes(Context context, AttributeSet attrs) {
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.VerticalChartView);
+        try {
+            int colorOfColumnSales = a.getColor(R.styleable.VerticalChartView_columnSalesColor, 0);
+            int colorOfColumnExpenses = a.getColor(R.styleable.VerticalChartView_columnExpensesColor, 0);
+            float widthOfColumn = a.getDimension(R.styleable.VerticalChartView_columnWidth, 0);
+            mPaintColumnSales.setColor(colorOfColumnSales);
+            mPaintColumnSales.setStrokeWidth(widthOfColumn);
+            mPaintColumnExpenses.setColor(colorOfColumnExpenses);
+            mPaintColumnExpenses.setStrokeWidth(widthOfColumn);
+            mPaintSalesNote.setColor(colorOfColumnSales);
+            mPaintExpensesNote.setColor(colorOfColumnExpenses);
+        } finally {
+            a.recycle();
+        }
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -69,7 +88,6 @@ public class VerticalChartView extends View {
                 mStartX = event.getX() - mPreTranslateX;
                 mStartY = event.getY() - mPreTranslateY;
                 break;
-
             case MotionEvent.ACTION_MOVE:
                 mTranslateX = event.getX() - mStartX;
                 mTranslateY = event.getY() - mStartY;
@@ -79,18 +97,15 @@ public class VerticalChartView extends View {
                     mDragged = true;
                 }
                 break;
-
             case MotionEvent.ACTION_POINTER_DOWN:
                 mMode = ZOOM;
                 break;
-
             case MotionEvent.ACTION_UP:
                 mMode = NONE;
                 mDragged = false;
                 mPreTranslateX = mTranslateX;
                 mPreTranslateY = mTranslateY;
                 break;
-
             case MotionEvent.ACTION_POINTER_UP:
                 mMode = DRAG;
                 mPreTranslateX = mTranslateX;
@@ -113,13 +128,21 @@ public class VerticalChartView extends View {
         mPaint.setStyle(Paint.Style.FILL);
         mPaint.setStrokeWidth(2);
 
-        mPointPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mPointPaint.setStyle(Paint.Style.FILL);
-        mPointPaint.setStrokeWidth(20);
+        mPaintSalesNote = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mPaintSalesNote.setStyle(Paint.Style.FILL);
+        mPaintSalesNote.setStrokeWidth(20);
 
-        mColumnPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mColumnPaint.setStyle(Paint.Style.FILL);
-        mColumnPaint.setStrokeWidth(2);
+        mPaintExpensesNote = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mPaintExpensesNote.setStyle(Paint.Style.FILL);
+        mPaintExpensesNote.setStrokeWidth(20);
+
+        mPaintColumnSales = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mPaintColumnSales.setStyle(Paint.Style.FILL);
+        mPaintColumnSales.setStrokeWidth(2);
+
+        mPaintColumnExpenses = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mPaintColumnExpenses.setStyle(Paint.Style.FILL);
+        mPaintColumnExpenses.setStrokeWidth(2);
     }
 
     @Override
@@ -180,18 +203,15 @@ public class VerticalChartView extends View {
         int startColumnPosition = width / 8;
         int startColumnHeight = height * 3 / 4;
         int columnUnit = height / 14;
-        int moneyUnit = 20000;
         mPaint.setStyle(Paint.Style.FILL);
         mPaint.setTextSize(getResources().getDimension(R.dimen.smallTextSize));
 
         for (int i = 0; i < mMoneyLists.size(); i++) {
             largeColumnDistance = (i == 0) ? 50 : 150;
-            mColumnPaint.setColor(getResources().getColor(R.color.colorBlue));
-            canvas.drawRect(startColumnPosition + largeColumnDistance, startColumnHeight - ((mMoneyLists.get(i).getSales() * columnUnit) / moneyUnit), startColumnPosition + largeColumnDistance + COLUMN_WIDTH, startColumnHeight, mColumnPaint);
-            mColumnPaint.setColor(getResources().getColor(R.color.colorOrange));
-            canvas.drawRect(startColumnPosition + largeColumnDistance + COLUMN_WIDTH + smallColumnDistance, startColumnHeight - ((mMoneyLists.get(i).getExpenses() * columnUnit) / moneyUnit), startColumnPosition + largeColumnDistance + smallColumnDistance + COLUMN_WIDTH * 2, startColumnHeight, mColumnPaint);
+            canvas.drawRect(startColumnPosition + largeColumnDistance, (float) (startColumnHeight - ((mMoneyLists.get(i).getSales() * columnUnit) / moneyUnit())), startColumnPosition + largeColumnDistance + COLUMN_WIDTH, startColumnHeight, mPaintColumnSales);
+            canvas.drawRect(startColumnPosition + largeColumnDistance + COLUMN_WIDTH + smallColumnDistance, (float) (startColumnHeight - ((mMoneyLists.get(i).getExpenses() * columnUnit) / moneyUnit())), startColumnPosition + largeColumnDistance + smallColumnDistance + COLUMN_WIDTH * 2, startColumnHeight, mPaintColumnExpenses);
 
-            canvas.drawText(mMoneyLists.get(i).getYear(), startColumnPosition + largeColumnDistance, startColumnHeight + 50, mPaint);
+            canvas.drawText(mMoneyLists.get(i).getMonth(), startColumnPosition + largeColumnDistance, startColumnHeight + 50, mPaint);
             startColumnPosition += largeColumnDistance + smallColumnDistance + 50;
         }
     }
@@ -205,9 +225,7 @@ public class VerticalChartView extends View {
     private void setSalesNote(Canvas canvas, int width, int height) {
         int salesWidthPosition = width / 3;
         int salesHeightPosition = height * 9 / 10;
-        mPaint.setStyle(Paint.Style.FILL);
-        mPointPaint.setColor(getResources().getColor(R.color.colorBlue));
-        canvas.drawPoint(salesWidthPosition, salesHeightPosition, mPointPaint);
+        canvas.drawPoint(salesWidthPosition, salesHeightPosition, mPaintSalesNote);
 
         mPaint.setTextSize(getResources().getDimension(R.dimen.mediumTexSize));
         mPaint.getTextBounds(getResources().getString(R.string.noteSales), 0, getResources().getString(R.string.noteSales).length(), mBounds);
@@ -217,8 +235,7 @@ public class VerticalChartView extends View {
     private void setExpensesNote(Canvas canvas, int width, int height) {
         int expensesWidthPosition = width / 2;
         int expensesHeightPosition = height * 9 / 10;
-        mPointPaint.setColor(getResources().getColor(R.color.colorOrange));
-        canvas.drawPoint(expensesWidthPosition, expensesHeightPosition, mPointPaint);
+        canvas.drawPoint(expensesWidthPosition, expensesHeightPosition, mPaintExpensesNote);
 
         mPaint.setTextSize(getResources().getDimension(R.dimen.mediumTexSize));
         mPaint.getTextBounds(getResources().getString(R.string.noteExpenses), 0, getResources().getString(R.string.noteExpenses).length(), mBounds);
@@ -232,17 +249,44 @@ public class VerticalChartView extends View {
 
         mPaint.setTextSize(getResources().getDimension(R.dimen.smallTextSize));
         mPaint.setColor(Color.BLACK);
-        int moneyUnit = 20000;
+
         int startWidthPosition = 50;
         int firstNumberHeight = height * 3 / 4;
+        DecimalFormat df = new DecimalFormat("0");
+
 
         for (int i = 0; i <= 7; i++) {
-            canvas.drawText("$" + i * moneyUnit, startWidthPosition, firstNumberHeight - i * height / 14 + 15, mPaint);
+            canvas.drawText("$" + df.format(moneyUnit() * i), startWidthPosition, firstNumberHeight - i * height / 14 + 15, mPaint);
         }
     }
 
+    private double maxMoneyValue(List<Money> moneyList) {
+        List<Double> listChartValue = new ArrayList<>();
+
+        for (Money money : moneyList) {
+            listChartValue.add((double) money.getSales());
+            listChartValue.add((double) money.getExpenses());
+        }
+        return Collections.max(listChartValue);
+    }
+
+    private double moneyUnit() {
+        int countDigits = 0;
+        double twoFirstDigits = maxMoneyValue(mMoneyLists);
+        while (twoFirstDigits >= 100) {
+            twoFirstDigits = twoFirstDigits / 10;
+            countDigits++;
+        }
+
+        int quotient = (int) twoFirstDigits / 7;
+        int surplus = (int) twoFirstDigits % 7;
+        if (surplus == 0) {
+            return quotient * Math.pow(10, countDigits);
+        } else return (quotient + 1) * Math.pow(10, countDigits);
+    }
+
     private void addData() {
-        mMoneyLists.add(new Money(getResources().getString(R.string.abbrJanuary), 70000, 10000));
+        mMoneyLists.add(new Money(getResources().getString(R.string.abbrJanuary), 850000, 10000));
         mMoneyLists.add(new Money(getResources().getString(R.string.abbrFebruary), 80000, 15000));
         mMoneyLists.add(new Money(getResources().getString(R.string.abbrMarch), 75000, 20000));
         mMoneyLists.add(new Money(getResources().getString(R.string.abbrApril), 90000, 30000));
