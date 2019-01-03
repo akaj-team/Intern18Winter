@@ -46,4 +46,16 @@
     <string name="thread">Thread</string>
     <string name="handler">Handler</string>
     <string name="downloadSuccessfully">Download successfully</string>
+    <string name="musicPlaying">Playing</string>
+    <string name="musicPause">Pause</string>
+    <string name="musicName">Đừng quên tên anh - Hoa Vinh</string>
+    <string name="pauseMusicBeforeClosing">Please pause music before closing notification</string>
+    <string name="keyDurationTime">Key duration time</string>
+    <string name="keyCurrentTime">Key current time</string>
+    <string name="keyPauseNotification">Key pause notification</string>
+    <string name="keyPlayNotification">Key play notification</string>
+    <string name="keyCloseNotification">Key close notification</string>
+    <string name="keyStartActivity">Key start activity</string>
+    <string name="playingMusic">Playing Music</string>
+    <string name="channelId">My Channel</string>
 </resources>
