@@ -32,5 +32,4 @@
         <activity android:name=".viewpager.ViewPagerActivity" />
         <activity android:name=".retrofit.RetrofitActivity"></activity>
     </application>
-
 </manifest>

@@ -54,5 +54,7 @@
     <string name="action">Select Action</string>
     <string name="data">data</string>
     <string name="titles">Title</string>
-    <string name="commentImage">you are very beautiful</string>
+    <string name="commentImage">this is picture</string>
+    <string name="error">error</string>
+    <string name="successful">successful</string>
 </resources>

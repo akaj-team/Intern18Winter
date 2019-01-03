@@ -48,10 +48,10 @@ public class RetrofitAdapter extends RecyclerView.Adapter<RetrofitAdapter.ViewHo
             super(itemView);
             imgContent = itemView.findViewById(R.id.imgContent);
             tvContent = itemView.findViewById(R.id.tvContent);
-            this.setIsRecyclable(false);
         }
 
         private void onBind(ImageItem image) {
+            assert image != null;
             if (!image.getImageId().isEmpty()) {
                 tvContent.setText(R.string.commentImage);
                 Glide.with(mContext).load(image.getUrl()).into(imgContent);
