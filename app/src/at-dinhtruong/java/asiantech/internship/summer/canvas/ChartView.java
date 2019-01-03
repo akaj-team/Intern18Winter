@@ -44,7 +44,7 @@ public class ChartView extends View {
     private Paint mPaintNoteSales;
     private Paint mPaintNoteExpenses;
     private Paint mPaintRect;
-    private List<Money> mListMoney;
+    private List<Money> mListMoney = new ArrayList<>();
 
     public ChartView(Context context) {
         this(context, null);
@@ -57,6 +57,7 @@ public class ChartView extends View {
     public ChartView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initPaint();
+        //mock Data
         createListMoney();
         //zoom
         mScaleDetector = new ScaleGestureDetector(getContext(), new ScaleListener());
@@ -88,11 +89,11 @@ public class ChartView extends View {
 
         mPaintTextItem = new Paint();
         mPaintTextItem.setColor(getResources().getColor(R.color.colorBlack));
-        mPaintTextItem.setTextSize(35);
+        mPaintTextItem.setTextSize(getContext().getResources().getDimension(R.dimen.sizeTextItem));
 
         mPaintTextCaption = new Paint();
         mPaintTextCaption.setColor(getResources().getColor(R.color.colorBlack));
-        mPaintTextCaption.setTextSize(60);
+        mPaintTextCaption.setTextSize(getContext().getResources().getDimension(R.dimen.sizeTextCaption));
 
         mPaintColumnSales = new Paint(Paint.ANTI_ALIAS_FLAG);
 
@@ -101,7 +102,7 @@ public class ChartView extends View {
         mPaintColumnMoney = new Paint();
         mPaintColumnMoney.setColor(getResources().getColor(R.color.colorBlack));
         mPaintColumnMoney.setTextAlign(Paint.Align.RIGHT);
-        mPaintColumnMoney.setTextSize(35);
+        mPaintColumnMoney.setTextSize(getContext().getResources().getDimension(R.dimen.sizeTextItem));
 
         mPaintLine = new Paint();
         mPaintLine.setColor(getResources().getColor(R.color.colorBlack));
@@ -185,7 +186,8 @@ public class ChartView extends View {
     }
 
     private void drawColumnChart(int height, int xDistance, int yDistance, Canvas canvas) {
-        for (int i = 0; i < mListMoney.size(); i++) {
+        int size = mListMoney.size();
+        for (int i = 0; i < size; i++) {
             canvas.drawLine((float) (1.8 * xDistance + 260 * i), yDistance, (float) (1.8 * xDistance + 260 * i), yDistance - (mListMoney.get(i).getSale() * height) / 200000, mPaintColumnSales);
             canvas.drawLine((float) (2.1 * xDistance + 260 * i), yDistance, (float) (2.1 * xDistance + 260 * i), (yDistance - mListMoney.get(i).getExpense() * height / 200000), mPaintColumnExpenses);
             canvas.drawText(mListMoney.get(i).getMonth(), (float) (1.8 * xDistance + 260 * i), yDistance + yDistance / 20, mPaintTextItem);
@@ -193,7 +195,6 @@ public class ChartView extends View {
     }
 
     private void createListMoney() {
-        mListMoney = new ArrayList<>();
         mListMoney.add(new Money(getContext().getString(R.string.jan), 70000, 10000));
         mListMoney.add(new Money(getContext().getString(R.string.feb), 80000, 18000));
         mListMoney.add(new Money(getContext().getString(R.string.mar), 75000, 20000));
@@ -218,7 +219,6 @@ public class ChartView extends View {
                 mStartX = event.getX() - mPreTranslateX;
                 mStartY = event.getY() - mPreTranslateY;
                 break;
-
             case MotionEvent.ACTION_MOVE:
                 mTranslateX = event.getX() - mStartX;
                 mTranslateY = event.getY() - mStartY;
@@ -231,14 +231,12 @@ public class ChartView extends View {
             case MotionEvent.ACTION_POINTER_DOWN:
                 mMode = ZOOM;
                 break;
-
             case MotionEvent.ACTION_UP:
                 mMode = NONE;
                 mDragged = false;
                 mPreTranslateX = mTranslateX;
                 mPreTranslateY = mTranslateY;
                 break;
-
             case MotionEvent.ACTION_POINTER_UP:
                 mMode = DRAG;
                 mPreTranslateX = mTranslateX;
@@ -263,7 +261,5 @@ public class ChartView extends View {
             invalidate();
             return true;
         }
-
     }
 }
-
