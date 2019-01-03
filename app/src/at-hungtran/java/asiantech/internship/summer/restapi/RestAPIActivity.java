@@ -54,7 +54,6 @@ public class RestAPIActivity extends AppCompatActivity implements View.OnClickLi
 
     private final CharSequence[] mChoiceOption = {"Camera", "Gallery"};
     private APIImages mAPIImages;
-    private boolean mIsLoading;
     private int mCurrentPage;
     private int mLastQueryImageNumber;
     private List<ImageItem> mImages = new ArrayList<>();
@@ -84,7 +83,7 @@ public class RestAPIActivity extends AppCompatActivity implements View.OnClickLi
         mRecyclerViewImage.setHasFixedSize(true);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
         mRecyclerViewImage.setLayoutManager(gridLayoutManager);
-        mImageAdapter = new ImageAdapter(mImages, this);
+        mImageAdapter = new ImageAdapter(mImages);
         mRecyclerViewImage.setAdapter(mImageAdapter);
     }
 
@@ -206,6 +205,7 @@ public class RestAPIActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void uploadImage(Uri imageUri) {
+        addProgressbarDialog();
         File file = new File(Objects.requireNonNull(getRealPathImage(imageUri)));
 
         RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
@@ -216,7 +216,7 @@ public class RestAPIActivity extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onResponse(@NonNull Call<ImageItem> call, @NonNull Response<ImageItem> response) {
                 if (response.isSuccessful()) {
-                    mImageAdapter.notifyItemInserted(0);
+                    mProgressDialog.dismiss();
                     Toast.makeText(RestAPIActivity.this, "Upload completed!", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -239,9 +239,6 @@ public class RestAPIActivity extends AppCompatActivity implements View.OnClickLi
                     if (addImages != null) {
                         mImages.addAll(addImages);
                         mImageAdapter.notifyDataSetChanged();
-                        mLastQueryImageNumber = addImages.size();
-                        mCurrentPage++;
-                        mIsLoading = false;
                         mProgressDialog.dismiss();
                     }
                 }

@@ -18,11 +18,9 @@ import asiantech.internship.summer.model.ImageItem;
 
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> {
     private List<ImageItem> mImageItems;
-    private Context mContext;
 
-    ImageAdapter(List<ImageItem> imageItems, Context context) {
+    ImageAdapter(List<ImageItem> imageItems) {
         mImageItems = imageItems;
-        mContext = context;
     }
 
     @NonNull
@@ -36,9 +34,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ImageItem item = mImageItems.get(position);
-        Glide.with(mContext).load(item.getUrl()).into(holder.mImgPhoto);
-        holder.mTvContent.setText(item.getType());
-
+        holder.bindView(item);
     }
 
     @Override
@@ -54,6 +50,11 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
             super(itemView);
             mImgPhoto = itemView.findViewById(R.id.imgPhoto);
             mTvContent = itemView.findViewById(R.id.tvContent);
+        }
+
+        private void bindView(ImageItem item) {
+            Glide.with(itemView.getContext()).load(item.getUrl()).into(mImgPhoto);
+            mTvContent.setText(item.getType());
         }
     }
 }
