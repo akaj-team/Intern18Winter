@@ -10,23 +10,33 @@ import asiantech.internship.summer.asynctask.AsyncTaskThreadHandlerActivity;
 import asiantech.internship.summer.eventlistener.SignUpActivity;
 import asiantech.internship.summer.fragment.LoginActivity;
 import asiantech.internship.summer.recyclerview.RecyclerViewActivity;
+import asiantech.internship.summer.viewpager.ViewPagerActivity;
 
 public class ListActivity extends AppCompatActivity implements View.OnClickListener {
+
+    private Button mBtnView;
+    private Button mBtnListener;
+    private Button mBtnRecyclerView;
+    private Button mBtnFragment;
+    private Button mBtnViewPager;
+    private Button mBtnAsyncTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
-        Button btnView = findViewById(R.id.btnExercise1);
-        Button btnListener = findViewById(R.id.btnExercise2);
-        Button btnFragment = findViewById(R.id.btnExercise3);
-        Button btnRecyclerView = findViewById(R.id.btnExercise4);
-        Button btnAsyncTask = findViewById(R.id.btnExercise5);
-        btnView.setOnClickListener(this);
-        btnListener.setOnClickListener(this);
-        btnFragment.setOnClickListener(this);
-        btnRecyclerView.setOnClickListener(this);
-        btnAsyncTask.setOnClickListener(this);
+        mBtnView = findViewById(R.id.btnExercise1);
+        mBtnListener = findViewById(R.id.btnExercise2);
+        mBtnFragment = findViewById(R.id.btnExercise3);
+        mBtnRecyclerView = findViewById(R.id.btnExercise4);
+        mBtnViewPager = findViewById(R.id.btnExercise5);
+        mBtnAsyncTask = findViewById(R.id.btnExercise6);
+        mBtnView.setOnClickListener(this);
+        mBtnListener.setOnClickListener(this);
+        mBtnFragment.setOnClickListener(this);
+        mBtnRecyclerView.setOnClickListener(this);
+        mBtnViewPager.setOnClickListener(this);
+        mBtnAsyncTask.setOnClickListener(this);
     }
 
     @Override
@@ -53,6 +63,11 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             }
             case R.id.btnExercise5: {
+                Intent intent = new Intent(ListActivity.this, ViewPagerActivity.class);
+                startActivity(intent);
+                break;
+            }
+            case R.id.btnExercise6: {
                 Intent intent = new Intent(ListActivity.this, AsyncTaskThreadHandlerActivity.class);
                 startActivity(intent);
                 break;

@@ -38,7 +38,7 @@
     <string name="exercise3">Fragment</string>
     <string name="success">success !</string>
     <string name="username">Trần Thị Thanh</string>
-    <string name="comment">Xinh quá đi</string>
+    <string name="comment">Đẹp lắm</string>
     <string name="like">like</string>
     <string name="likes">likes</string>
     <string name="abc">abc</string>
@@ -46,7 +46,10 @@
     <string name="asyncTask">AsyncTask</string>
     <string name="thread">Thread</string>
     <string name="handler">Handler</string>
-    <string name="exercise5">AsyncTask</string>
+    <string name="timeline">timeline</string>
+    <string name="favourite">favourite</string>
+    <string name="exercise5">viewpager</string>
+    <string name="exercise6">AsyncTask</string>
     <string name="download_image">Download image</string>
     <string name="image">downloaded_image.jpg</string>
     <string name="complete">Download complete</string>

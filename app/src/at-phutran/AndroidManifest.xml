@@ -29,6 +29,7 @@
         <activity android:name=".fragment.LoginActivity" />
         <activity android:name=".fragment.WelcomeActivity" />
         <activity android:name=".recyclerview.RecyclerViewActivity" />
+        <activity android:name=".viewpager.ViewPagerActivity" />
         <activity android:name=".asynctask.AsyncTaskThreadHandlerActivity" />
     </application>
 </manifest>
