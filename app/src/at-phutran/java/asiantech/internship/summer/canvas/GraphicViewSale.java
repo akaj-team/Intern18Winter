@@ -2,6 +2,7 @@ package asiantech.internship.summer.canvas;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
@@ -57,16 +58,44 @@ public class GraphicViewSale extends View {
 
     public GraphicViewSale(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initPaintSale();
-        initPaintExpense();
-        initPaintText();
-        initPaintTextMoney();
-        initPaintTextContent();
-        initPaintLine();
-        initPaintNoteSale();
-        initPaintNoteExpense();
+        initPaint();
         initListMoney();
         mScaleDetector = new ScaleGestureDetector(context, new ScaleListener());
+        getStyleableAttributes(context, attrs);
+    }
+
+    private void getStyleableAttributes(Context context, AttributeSet attrs) {
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.GraphicViewSale);
+        try {
+            int colorOfLine = typedArray.getColor(R.styleable.GraphicViewSale_colorOfLine, 0);
+            int colorOfSale = typedArray.getColor(R.styleable.GraphicViewSale_colorOfSale, 0);
+            int colorOfExpense = typedArray.getColor(R.styleable.GraphicViewSale_colorOfExpense, 0);
+            int colorOfText = typedArray.getColor(R.styleable.GraphicViewSale_colorOfText, 0);
+            int colorOfBackground = typedArray.getColor(R.styleable.GraphicViewSale_colorOfBackground, 0);
+            float widthOfColumn = typedArray.getDimension(R.styleable.GraphicViewSale_widthOfColumn, 0);
+            float widthOfNoteColumn = typedArray.getDimension(R.styleable.GraphicViewSale_widthOfNoteColumn, 0);
+            float textNote = typedArray.getDimension(R.styleable.GraphicViewSale_textNote, 0);
+            float textContent = typedArray.getDimension(R.styleable.GraphicViewSale_textContent, 0);
+            mPaintLine.setColor(colorOfLine);
+            mPaintSale.setColor(colorOfSale);
+            mPaintSale.setStrokeWidth(widthOfColumn);
+            mPaintNoteSale.setColor(colorOfSale);
+            mPaintNoteSale.setStrokeWidth(widthOfNoteColumn);
+            mPaintExpense.setColor(colorOfExpense);
+            mPaintExpense.setStrokeWidth(widthOfColumn);
+            mPaintNoteExpense.setColor(colorOfExpense);
+            mPaintNoteExpense.setStrokeWidth(widthOfNoteColumn);
+            mPaintText.setColor(colorOfText);
+            mPaintTextMoney.setColor(colorOfText);
+            mPaintTextContent.setColor(colorOfText);
+            mPaintBackground.setColor(colorOfBackground);
+            mPaintTextMoney.setTextSize(textNote);
+            mPaintTextMoney.setTextAlign(Paint.Align.RIGHT);
+            mPaintText.setTextSize(textNote);
+            mPaintTextContent.setTextSize(textContent);
+        } finally {
+            typedArray.recycle();
+        }
     }
 
     private void initListMoney() {
@@ -166,12 +195,12 @@ public class GraphicViewSale extends View {
         canvas.save();
         canvas.scale(mScaleFactor, mScaleFactor, mScaleDetector.getFocusX(), mScaleDetector.getFocusY());
         drawNoteChart(canvas);
-
+        drawLine(canvas);
         canvas.save();
         canvas.translate(mTranslateX / mScaleFactor, 0);
         drawChart(canvas);
         canvas.restore();
-        drawLineAndSale(canvas);
+        drawTextSale(canvas);
     }
 
     private void drawNoteChart(Canvas canvas) {
@@ -182,18 +211,23 @@ public class GraphicViewSale extends View {
         canvas.drawText(EXPENSE, getWidthScreen() / 2 + getHeightScreen() / 40, 9 * getHeightScreen() / 10, mPaintText);
     }
 
-    private void drawLineAndSale(Canvas canvas) {
+    private void drawLine(Canvas canvas) {
+        for (int i = 0; i < 8; i++) {
+            canvas.drawLine(mBeginWidth - getWidthScreen() / 50, mBeginHeight - getHeightScreen() / 10 * i, getWidthScreen(), mBeginHeight - getHeightScreen() / 10 * i, mPaintLine);
+        }
+    }
+
+    private void drawTextSale(Canvas canvas) {
         canvas.drawRect(0, 0, mBeginWidth - getWidthScreen() / 50, getHeightScreen(), mPaintBackground);
         for (int i = 0; i < 8; i++) {
             if (i == 0) {
                 canvas.drawText(getContext().getString(R.string.zero), mPaintTextMoney.measureText(DEFAULT_STRING), mBeginHeight - getHeightScreen() / 10 * i, mPaintTextMoney);
-                canvas.drawLine(mBeginWidth - getWidthScreen() / 50, mBeginHeight, getWidthScreen(), mBeginHeight, mPaintLine);
             } else {
                 canvas.drawText(getContext().getString(R.string.dola) + 20 * i + getContext().getString(R.string.thousan), mPaintTextMoney.measureText(DEFAULT_STRING), mBeginHeight - getHeightScreen() / 10 * i, mPaintTextMoney);
-                canvas.drawLine(mBeginWidth - getWidthScreen() / 50, mBeginHeight - getHeightScreen() / 10 * i, getWidthScreen(), mBeginHeight - getHeightScreen() / 10 * i, mPaintLine);
             }
         }
     }
+
     private void drawChart(Canvas canvas) {
         for (int i = 0; i < mListMoney.size(); i++) {
             canvas.drawLine(mBeginWidth + 250 * i + getWidthScreen() / 50, mBeginHeight, mBeginWidth + 250 * i + getWidthScreen() / 50, (mBeginHeight - mListMoney.get(i).getSale() * getHeightScreen() / 200), mPaintSale);
@@ -201,6 +235,7 @@ public class GraphicViewSale extends View {
             canvas.drawText(mListMoney.get(i).getMonth(), mBeginWidth + 250 * i + getWidthScreen() / 50 + getHeightScreen() / 70, mBeginHeight + getHeightScreen() / 40, mPaintText);
         }
     }
+
     private void setChartSize(int width, int height) {
         if ((mTranslateX * -1) < 0) {
             mTranslateX = 0;
@@ -219,54 +254,16 @@ public class GraphicViewSale extends View {
         return mBeginWidth + 250 * 11 + getWidthScreen() / 50;
     }
 
-    private void initPaintSale() {
+    private void initPaint() {
         mPaintSale = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mPaintSale.setColor(getResources().getColor(R.color.colorColumnBlue));
-        mPaintSale.setStrokeWidth(getWidthScreen() / 40);
-    }
-
-    private void initPaintExpense() {
         mPaintExpense = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mPaintExpense.setColor(getResources().getColor(R.color.colorColumnOrange));
-        mPaintExpense.setStrokeWidth(getWidthScreen() / 40);
-    }
-
-    private void initPaintText() {
+        mPaintNoteSale = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mPaintNoteExpense = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaintText = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mPaintText.setColor(getResources().getColor(R.color.colorTextBlack));
-        mPaintText.setTextSize(30);
-    }
-
-    private void initPaintTextMoney() {
-        mPaintTextMoney = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mPaintTextMoney.setColor(getResources().getColor(R.color.colorTextBlack));
-        mPaintTextMoney.setTextAlign(Paint.Align.RIGHT);
-        mPaintTextMoney.setTextSize(30);
-    }
-
-    private void initPaintLine() {
         mPaintLine = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaintBackground = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mPaintLine.setColor(getResources().getColor(R.color.colorLineGray));
-        mPaintBackground.setColor(getResources().getColor(R.color.colorWhite));
-    }
-
-    private void initPaintTextContent() {
         mPaintTextContent = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mPaintTextContent.setColor(getResources().getColor(R.color.colorTextBlack));
-        mPaintTextContent.setTextSize(60);
-    }
-
-    private void initPaintNoteSale() {
-        mPaintNoteSale = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mPaintNoteSale.setColor(getResources().getColor(R.color.colorColumnBlue));
-        mPaintNoteSale.setStrokeWidth(getWidthScreen() / 80);
-    }
-
-    private void initPaintNoteExpense() {
-        mPaintNoteExpense = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mPaintNoteExpense.setColor(getResources().getColor(R.color.colorColumnOrange));
-        mPaintNoteExpense.setStrokeWidth(getWidthScreen() / 80);
+        mPaintTextMoney = new Paint(Paint.ANTI_ALIAS_FLAG);
     }
 
     private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
