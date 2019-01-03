@@ -55,7 +55,6 @@ public class RestAPIActivity extends AppCompatActivity implements View.OnClickLi
     private final CharSequence[] mChoiceOption = {"Camera", "Gallery"};
     private APIImages mAPIImages;
     private int mCurrentPage;
-    private int mLastQueryImageNumber;
     private List<ImageItem> mImages = new ArrayList<>();
     private RecyclerView mRecyclerViewImage;
     private ProgressDialog mProgressDialog;
