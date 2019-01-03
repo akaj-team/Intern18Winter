@@ -76,8 +76,8 @@ public class HandlerFragment extends Fragment {
         private String mImageUrl;
 
         private ImageDownloadThread(ImageDownloadMessageHandler imageDownloadMessageHandler, String imageUrl) {
-            this.mImageDownloadMessageHandler = imageDownloadMessageHandler;
-            this.mImageUrl = imageUrl;
+            mImageDownloadMessageHandler = imageDownloadMessageHandler;
+            mImageUrl = imageUrl;
         }
 
         @Override
