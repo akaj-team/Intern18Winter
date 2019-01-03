@@ -12,7 +12,8 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
 
-        <activity android:name=".viewpager.PagerActivity">
+        <activity android:name=".canvas.CanvasActivity"
+            android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,6 +23,7 @@
         <activity android:name=".view.HomeActivity" />
         <activity android:name=".eventlistener.LoginActivity"/>
         <activity android:name=".activityfragment.LoginActivity"/>
+        <activity android:name=".viewpager.PagerActivity" />
     </application>
 
 </manifest>
