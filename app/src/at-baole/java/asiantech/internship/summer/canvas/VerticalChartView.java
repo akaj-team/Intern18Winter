@@ -26,8 +26,6 @@ public class VerticalChartView extends View {
     private static final int NONE = 0;
     private static final int DRAG = 1;
     private static final int ZOOM = 2;
-    private static final int COLUMN_WIDTH = 50;
-
 
     private int mMode;
     private float mStartX = 0f;
@@ -184,7 +182,7 @@ public class VerticalChartView extends View {
 
     private int getMaxChartWidth() {
         int count = mMoneyLists.size();
-        return (count * (COLUMN_WIDTH * 2 + 130));
+        return (count * (50 * 2 + 130));
     }
 
     private void drawChartLine(Canvas canvas, int width, int height) {
@@ -208,8 +206,8 @@ public class VerticalChartView extends View {
 
         for (int i = 0; i < mMoneyLists.size(); i++) {
             largeColumnDistance = (i == 0) ? 50 : 150;
-            canvas.drawRect(startColumnPosition + largeColumnDistance, (float) (startColumnHeight - ((mMoneyLists.get(i).getSales() * columnUnit) / moneyUnit())), startColumnPosition + largeColumnDistance + COLUMN_WIDTH, startColumnHeight, mPaintColumnSales);
-            canvas.drawRect(startColumnPosition + largeColumnDistance + COLUMN_WIDTH + smallColumnDistance, (float) (startColumnHeight - ((mMoneyLists.get(i).getExpenses() * columnUnit) / moneyUnit())), startColumnPosition + largeColumnDistance + smallColumnDistance + COLUMN_WIDTH * 2, startColumnHeight, mPaintColumnExpenses);
+            canvas.drawRect(startColumnPosition + largeColumnDistance, (float) (startColumnHeight - ((mMoneyLists.get(i).getSales() * columnUnit) / moneyUnit())), startColumnPosition + largeColumnDistance + 50, startColumnHeight, mPaintColumnSales);
+            canvas.drawRect(startColumnPosition + largeColumnDistance + 50 + smallColumnDistance, (float) (startColumnHeight - ((mMoneyLists.get(i).getExpenses() * columnUnit) / moneyUnit())), startColumnPosition + largeColumnDistance + smallColumnDistance + 50 * 2, startColumnHeight, mPaintColumnExpenses);
 
             canvas.drawText(mMoneyLists.get(i).getMonth(), startColumnPosition + largeColumnDistance, startColumnHeight + 50, mPaint);
             startColumnPosition += largeColumnDistance + smallColumnDistance + 50;
@@ -282,7 +280,9 @@ public class VerticalChartView extends View {
         int surplus = (int) twoFirstDigits % 7;
         if (surplus == 0) {
             return quotient * Math.pow(10, countDigits);
-        } else return (quotient + 1) * Math.pow(10, countDigits);
+        } else {
+            return (quotient + 1) * Math.pow(10, countDigits);
+        }
     }
 
     private void addData() {
