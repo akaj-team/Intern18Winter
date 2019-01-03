@@ -63,8 +63,8 @@ public class RestAPIActivity extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rest_api);
         initView();
-        setUpApi();
         initRecyclerView();
+        initApi();
     }
 
     private void initView() {
@@ -84,7 +84,7 @@ public class RestAPIActivity extends AppCompatActivity implements View.OnClickLi
         mRecyclerViewImage.setAdapter(mImageAdapter);
     }
 
-    private void setUpApi() {
+    private void initApi() {
         Gson gson = new GsonBuilder().setLenient().create();
         Retrofit getImagesRetrofit = new Retrofit.Builder()
                 .baseUrl(APIImages.LOAD_URL)
@@ -94,39 +94,39 @@ public class RestAPIActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
+    public void onClick(View view) {
+        switch (view.getId()) {
             case R.id.btnLoadImage: {
                 loadListImages();
                 break;
             }
             case R.id.btnUploadImage: {
-                showPictureDialog();
+                showImageOptionsDialog();
                 break;
             }
         }
     }
 
-    private void showPictureDialog() {
-        AlertDialog.Builder pictureDialog = new AlertDialog.Builder(this);
-        pictureDialog.setTitle(R.string.selectAction);
-        String pictureDialogItems[] = {
+    private void showImageOptionsDialog() {
+        AlertDialog.Builder imagesDialog = new AlertDialog.Builder(this);
+        imagesDialog.setTitle(R.string.selectAction);
+        String imagesDialogItems[] = {
                 getString(R.string.chooseGallery),
                 getString(R.string.captureCamera),
                 getString(R.string.cancelAction)
         };
-        pictureDialog.setItems(pictureDialogItems, (dialogInterface, position) -> {
-            switch (position) {
+        imagesDialog.setItems(imagesDialogItems, (dialogInterface, option) -> {
+            switch (option) {
                 case CHOOSE_GALLERY: {
                     mActionUploadImage = 70;
-                    if (requestPermission()) {
+                    if (checkAndRequestPermission()) {
                         choosePhotosFromGallery();
                     }
                     break;
                 }
                 case CAPTURE_CAMERA: {
                     mActionUploadImage = 71;
-                    if (requestPermission()) {
+                    if (checkAndRequestPermission()) {
                         capturePhotosFromCamera();
                     }
                     break;
@@ -135,10 +135,10 @@ public class RestAPIActivity extends AppCompatActivity implements View.OnClickLi
                     dialogInterface.dismiss();
             }
         });
-        pictureDialog.show();
+        imagesDialog.show();
     }
 
-    private boolean requestPermission() {
+    private boolean checkAndRequestPermission() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED && mActionUploadImage == 70) {
             ActivityCompat.requestPermissions(RestAPIActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, GALLERY_PERMISSION_REQUEST_CODE);
             return false;

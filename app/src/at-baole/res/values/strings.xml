@@ -61,5 +61,5 @@
     <string name="uploadSuccess">Upload Successfully</string>
     <string name="uploadFailed">Upload Failed</string>
     <string name="getImageFailed">Failed to load images</string>
-    <string name="LoadImagesDialogMessage">We are working with your image files</string>
+    <string name="LoadImagesDialogMessage">We are working with your image files, please wait...</string>
 </resources>

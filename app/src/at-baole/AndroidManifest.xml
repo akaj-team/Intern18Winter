@@ -30,5 +30,4 @@
         <activity android:name=".viewpager.PagerActivity" />
         <activity android:name=".asynctaskthreadhandler.AsyncTaskThreadHandlerActivity" />
     </application>
-
 </manifest>

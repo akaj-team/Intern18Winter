@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -11,17 +12,19 @@
 
         <Button
             android:id="@+id/btnLoadImage"
-            style="?android:attr/buttonBarStyle"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/loadImage" />
+            android:layout_weight="1"
+            android:text="@string/loadImage"
+            tools:ignore="ButtonStyle" />
 
         <Button
             android:id="@+id/btnUploadImage"
-            style="?android:attr/buttonBarStyle"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/uploadImage" />
+            android:layout_weight="1"
+            android:text="@string/uploadImage"
+            tools:ignore="ButtonStyle" />
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
