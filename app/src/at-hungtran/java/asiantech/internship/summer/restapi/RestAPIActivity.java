@@ -153,6 +153,29 @@ public class RestAPIActivity extends AppCompatActivity implements View.OnClickLi
         Dialog dialog = builder.create();
         dialog.show();
     }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case WRITE_PERMISSION_REQUEST_CAMERA: {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    openCamera();
+                } else {
+                    Toast.makeText(RestAPIActivity.this, R.string.permissionDenied, Toast.LENGTH_SHORT).show();
+                }
+                break;
+            }
+            case WRITE_PERMISSION_REQUEST_CALLERY: {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    openGallery();
+                } else {
+                    Toast.makeText(RestAPIActivity.this, R.string.permissionDenied, Toast.LENGTH_SHORT).show();
+                }
+                break;
+            }
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
 
     private void openGallery() {
         Intent pickIntent = new Intent(Intent.ACTION_PICK,
@@ -222,6 +245,7 @@ public class RestAPIActivity extends AppCompatActivity implements View.OnClickLi
 
             @Override
             public void onFailure(@NonNull Call<ImageItem> call, @NonNull Throwable t) {
+                mProgressDialog.dismiss();
                 Toast.makeText(RestAPIActivity.this, "Upload failed!", Toast.LENGTH_SHORT).show();
             }
         });

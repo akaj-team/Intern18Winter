@@ -34,4 +34,5 @@
     <string name="loadImage">Load Image</string>
     <string name="uploadImage">Upload Image</string>
     <string name="label_api_option">Option</string>
+    <string name="permissionDenied">Permission Denied</string>
 </resources>
