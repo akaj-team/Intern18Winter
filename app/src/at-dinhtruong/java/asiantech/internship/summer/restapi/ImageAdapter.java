@@ -32,7 +32,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
 
     @Override
     public void onBindViewHolder(@NonNull ImageViewHolder holder, int position) {
-        holder.onBind();
+        holder.onBind(mImages.get(position));
     }
 
     @Override
@@ -50,13 +50,10 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
             mTvItem = itView.findViewById(R.id.tvItem);
         }
 
-        private void onBind() {
-            Image image = mImages.get(getAdapterPosition());
+        private void onBind(Image image) {
             if (image != null) {
-                if (!image.getImageId().isEmpty()) {
-                    mTvItem.setText(image.getImageId());
-                    Glide.with(itemView.getContext()).load(image.getUrl()).into(mImgItem);
-                }
+                mTvItem.setText(image.getImageId());
+                Glide.with(itemView.getContext()).load(image.getUrl()).into(mImgItem);
             }
         }
     }

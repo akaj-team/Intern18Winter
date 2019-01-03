@@ -2,6 +2,7 @@ package asiantech.internship.summer.restapi;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -50,13 +51,14 @@ public class RestApiActivity extends AppCompatActivity implements View.OnClickLi
     private static final int REQUEST_CODE_ASK_PERMISSIONS_GALLERY = 124;
     private static final int mPage = 1;
     private static final int mPerPage = 20;
-    private static final String ACCESS_TOKEN = "6f5a48ac0e8aca77e0e8ef42e88962852b6ffaba01c16c5ba37ea13760c0317e";
+    private static final String ACCESS_TOKEN = "604d1f2a63e1620f8e496970f675f0322671a3de0ba9f44c850e9ddc193f4476";
     private static final String BASE_URL = "https://api.gyazo.com/api/";
     private static final String UPLOAD_URL = "https://upload.gyazo.com/api/upload";
     private int mActionUpload = 0;
     private SOService mService;
     private List<Image> mImages;
     private ImageAdapter mImageAdapter;
+    private ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,23 +87,6 @@ public class RestApiActivity extends AppCompatActivity implements View.OnClickLi
         recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL));
         recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         loadImages();
-    }
-
-    private void loadImages() {
-        mService.getImages(ACCESS_TOKEN, mPage, mPerPage).enqueue(new Callback<List<Image>>() {
-            @Override
-            public void onResponse(@NonNull Call<List<Image>> call, @NonNull Response<List<Image>> response) {
-                if (response.body() != null) {
-                    mImages.addAll(response.body());
-                }
-                mImageAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<List<Image>> call, @NonNull Throwable t) {
-                Toast.makeText(RestApiActivity.this, R.string.loadImagesFailse, Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     @Override
@@ -211,7 +196,31 @@ public class RestApiActivity extends AppCompatActivity implements View.OnClickLi
         }
     }
 
+    private void loadImages() {
+        onProgressbarDialog();
+        mService.getImages(ACCESS_TOKEN, mPage, mPerPage).enqueue(new Callback<List<Image>>() {
+            @Override
+            public void onResponse(@NonNull Call<List<Image>> call, @NonNull Response<List<Image>> response) {
+                if (response.body() != null) {
+                    for (Image objImage : response.body()) {
+                        if (!objImage.getImageId().isEmpty()) {
+                            mImages.add(objImage);
+                        }
+                    }
+                }
+                mImageAdapter.notifyDataSetChanged();
+                mProgressDialog.dismiss();
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<List<Image>> call, @NonNull Throwable t) {
+                Toast.makeText(RestApiActivity.this, R.string.loadImagesFailse, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     private void uploadImage(Uri imageUri) {
+        onProgressbarDialog();
         File file = new File(Objects.requireNonNull(RealPathUtil.getRealPath(getApplicationContext(), imageUri)));
         RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
         MultipartBody.Part image = MultipartBody.Part.createFormData("imagedata", file.getName(), requestBody);
@@ -221,9 +230,10 @@ public class RestApiActivity extends AppCompatActivity implements View.OnClickLi
             public void onResponse(@NonNull Call<Image> call, @NonNull Response<Image> response) {
                 if (response.isSuccessful()) {
                     mImages.add(0, response.body());
-                    mImageAdapter.notifyItemChanged(0);
+                    mImageAdapter.notifyDataSetChanged();
                     Toast.makeText(RestApiActivity.this, R.string.uploadCompleted, Toast.LENGTH_SHORT).show();
                 }
+                mProgressDialog.dismiss();
             }
 
             @Override
@@ -252,5 +262,12 @@ public class RestApiActivity extends AppCompatActivity implements View.OnClickLi
                 .client(httpClient.build())
                 .build();
         mService = getImagesRetrofit.create(SOService.class);
+    }
+
+    private void onProgressbarDialog() {
+        mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        mProgressDialog.setMessage(getString(R.string.loading));
+        mProgressDialog.show();
     }
 }
