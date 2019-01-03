@@ -2,6 +2,7 @@ package asiantech.internship.summer.canvas;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.AttributeSet;
@@ -42,7 +43,6 @@ public class ChartView extends View {
     private Paint mPaintColumnExpenses;
     private Paint mPaintNoteSales;
     private Paint mPaintNoteExpenses;
-    //test
     private Paint mPaintRect;
     private List<Money> mListMoney;
 
@@ -60,6 +60,22 @@ public class ChartView extends View {
         createListMoney();
         //zoom
         mScaleDetector = new ScaleGestureDetector(getContext(), new ScaleListener());
+        getStyleableAttributes(context, attrs);
+    }
+
+    private void getStyleableAttributes(Context context, AttributeSet attrs) {
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ChartView);
+        try {
+            int colorOfColumnSales = a.getColor(R.styleable.ChartView_colorOfColumnSales, 0);
+            int colorOfColumnExpenses = a.getColor(R.styleable.ChartView_colorOfColumnExpenses, 0);
+            float widthOfColumn = a.getDimension(R.styleable.ChartView_widthOfColumn, 0);
+            mPaintColumnSales.setColor(colorOfColumnSales);
+            mPaintColumnSales.setStrokeWidth(widthOfColumn);
+            mPaintColumnExpenses.setColor(colorOfColumnExpenses);
+            mPaintColumnExpenses.setStrokeWidth(widthOfColumn);
+        } finally {
+            a.recycle();
+        }
     }
 
     @SuppressLint("ResourceType")
@@ -79,12 +95,8 @@ public class ChartView extends View {
         mPaintTextCaption.setTextSize(60);
 
         mPaintColumnSales = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mPaintColumnSales.setColor(getResources().getColor(R.color.colorBlue));
-        mPaintColumnSales.setStrokeWidth(40);
 
         mPaintColumnExpenses = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mPaintColumnExpenses.setColor(getResources().getColor(R.color.colorOrange));
-        mPaintColumnExpenses.setStrokeWidth(40);
 
         mPaintColumnMoney = new Paint();
         mPaintColumnMoney.setColor(getResources().getColor(R.color.colorBlack));
@@ -97,7 +109,6 @@ public class ChartView extends View {
         mPaintRect = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaintRect.setColor(getResources().getColor(R.color.colorColumnMoney));
         mPaintRect.setStrokeWidth(50);
-
     }
 
     @Override
@@ -183,18 +194,18 @@ public class ChartView extends View {
 
     private void createListMoney() {
         mListMoney = new ArrayList<>();
-        mListMoney.add(new Money("Jan", 70000, 10000));
-        mListMoney.add(new Money("Feb", 80000, 18000));
-        mListMoney.add(new Money("Mar", 75000, 20000));
-        mListMoney.add(new Money("Apr", 90000, 30000));
-        mListMoney.add(new Money("May", 105000, 42000));
-        mListMoney.add(new Money("Jun", 130000, 80000));
-        mListMoney.add(new Money("Jul", 78000, 10000));
-        mListMoney.add(new Money("Aug", 82000, 18000));
-        mListMoney.add(new Money("Sep", 77000, 20000));
-        mListMoney.add(new Money("Oct", 93000, 30000));
-        mListMoney.add(new Money("Nov", 115000, 42000));
-        mListMoney.add(new Money("Dec", 125000, 80000));
+        mListMoney.add(new Money(getContext().getString(R.string.jan), 70000, 10000));
+        mListMoney.add(new Money(getContext().getString(R.string.feb), 80000, 18000));
+        mListMoney.add(new Money(getContext().getString(R.string.mar), 75000, 20000));
+        mListMoney.add(new Money(getContext().getString(R.string.apr), 90000, 30000));
+        mListMoney.add(new Money(getContext().getString(R.string.may), 105000, 42000));
+        mListMoney.add(new Money(getContext().getString(R.string.jun), 130000, 80000));
+        mListMoney.add(new Money(getContext().getString(R.string.jul), 78000, 10000));
+        mListMoney.add(new Money(getContext().getString(R.string.aug), 82000, 18000));
+        mListMoney.add(new Money(getContext().getString(R.string.sep), 77000, 20000));
+        mListMoney.add(new Money(getContext().getString(R.string.oct), 93000, 30000));
+        mListMoney.add(new Money(getContext().getString(R.string.nov), 115000, 42000));
+        mListMoney.add(new Money(getContext().getString(R.string.dec), 125000, 80000));
     }
 
     //zoom in zoom out
