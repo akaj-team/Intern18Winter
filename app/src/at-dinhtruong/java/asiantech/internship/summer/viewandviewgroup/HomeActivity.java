@@ -11,6 +11,7 @@ import asiantech.internship.summer.activityandfragment.LoginActivity;
 import asiantech.internship.summer.asynctaskthreadhandler.AsyncTaskThreadHandlerActivity;
 import asiantech.internship.summer.eventandlistener.EventAndListenerActivity;
 import asiantech.internship.summer.recyclerview.RecyclerViewActivity;
+import asiantech.internship.summer.restapi.RestApiActivity;
 import asiantech.internship.summer.storage.FileStoreActivity;
 import asiantech.internship.summer.viewpager.ViewPagerActivity;
 
@@ -30,6 +31,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         Button btnRecyclerView = findViewById(R.id.btnRecyclerView);
         Button btnViewPager = findViewById(R.id.btnViewPager);
         Button btnFileStorage = findViewById(R.id.btnFileStorage);
+        Button btnRestApi = findViewById(R.id.btnRestApi);
         Button btnAsyncThreadHandler = findViewById(R.id.btnAsyncThreadHandler);
         btnViewGroup.setOnClickListener(this);
         btnEventAndListener.setOnClickListener(this);
@@ -37,6 +39,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         btnRecyclerView.setOnClickListener(this);
         btnViewPager.setOnClickListener(this);
         btnFileStorage.setOnClickListener(this);
+        btnRestApi.setOnClickListener(this);
         btnAsyncThreadHandler.setOnClickListener(this);
     }
 
@@ -70,6 +73,11 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             }
             case R.id.btnFileStorage: {
                 Intent intent = new Intent(HomeActivity.this, FileStoreActivity.class);
+                startActivity(intent);
+                break;
+            }
+            case R.id.btnRestApi: {
+                Intent intent = new Intent(HomeActivity.this, RestApiActivity.class);
                 startActivity(intent);
                 break;
             }
