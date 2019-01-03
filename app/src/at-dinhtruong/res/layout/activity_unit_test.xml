@@ -15,15 +15,81 @@
         android:orientation="vertical">
 
         <TextView
-            android:visibility="gone"
-            android:background="@drawable/bg_incorrect_password"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/bg_incorrect_password"
             android:padding="10dp"
             android:text="@string/incorrectPassword"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textColor="@color/colorRed"
+            android:textSize="20sp"
+            android:visibility="visible" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:autofillHints="@string/userName"
+            android:background="@drawable/bg_username_password"
+            android:inputType="textNoSuggestions"
+            android:padding="10dp"
+            tools:ignore="LabelFor,UnusedAttribute" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:autofillHints="@string/userName"
+            android:background="@drawable/bg_username_password"
+            android:inputType="textNoSuggestions"
+            android:padding="10dp"
+            tools:ignore="LabelFor,UnusedAttribute" />
+
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bg_button_login"
+            android:text="@string/login"
+            android:textColor="@color/colorWhite" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:text="@string/orLogInUsingASocialAccount"
+            android:textAlignment="center"
+            android:textColor="@color/colorBlack" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:padding="10dp"
+                android:paddingEnd="35dp"
+                android:paddingStart="35dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/colorRed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/google_plus"/>
+            <ImageView
+                android:padding="10dp"
+                android:paddingEnd="35dp"
+                android:paddingStart="35dp"
+                android:background="@color/colorBlue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/facebook_box"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 

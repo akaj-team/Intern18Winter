@@ -22,4 +22,6 @@
     <color name="colorWhile">#ffffff</color>
     <color name="colorRedPink">#e9c3c5</color>
     <color name="colorRed">#e24f56</color>
+    <color name="colorCream">#f5f6fb</color>
+    <color name="colorGreenCream">#54e7af</color>
 </resources>
