@@ -82,4 +82,6 @@
     <string name="idCompany">idCompany</string>
     <string name="fileNameInternal">internalStorage.txt</string>
     <string name="insertError">Insert Error!</string>
+    <string name="unitTest">Unit Test</string>
+    <string name="incorrectPassword">Incorrect password</string>
 </resources>

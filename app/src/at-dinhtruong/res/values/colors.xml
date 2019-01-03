@@ -20,4 +20,6 @@
     <color name="colorVioletWhile">#BCBED8</color>
     <color name="colorOrange">#fd6512</color>
     <color name="colorWhile">#ffffff</color>
+    <color name="colorRedPink">#e9c3c5</color>
+    <color name="colorRed">#e24f56</color>
 </resources>
