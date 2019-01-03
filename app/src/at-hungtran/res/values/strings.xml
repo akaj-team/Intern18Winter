@@ -31,4 +31,7 @@
     <string name="helloWorld">hello world :))</string>
     <string name="like">%s like</string>
     <string name="likes">%s likes</string>
+    <string name="play">Playing</string>
+    <string name="pause">Paused</string>
+    <string name="currentTime">00:00</string>
 </resources>
