@@ -21,7 +21,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.ViewActivity" />
         <activity android:name=".eventlistener.LoginActivity" />
         <activity android:name=".filestorage.FileStorageActivity" />
         <activity android:name=".filestorage.EmployeeActivity" />

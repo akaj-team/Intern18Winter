@@ -37,11 +37,6 @@
     <string name="delete">Delete</string>
     <string name="update">Update</string>
     <string name="insert">Insert</string>
-    <string name="activityFragment">Activity Fragment</string>
-    <string name="view">View and ViewGroup</string>
-    <string name="eventListener">Event and Listener</string>
-    <string name="recyclerView">Android RecyclerView</string>
-    <string name="fileStorage">File Storage</string>
     <string name="external">EXTERNAL</string>
     <string name="internal">INTERNAL</string>
     <string name="utf8">UTF-8</string>
