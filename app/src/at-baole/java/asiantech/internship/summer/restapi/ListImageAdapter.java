@@ -52,8 +52,10 @@ public class ListImageAdapter extends RecyclerView.Adapter<ListImageAdapter.View
         }
 
         void bindView(ImageItem item) {
-            Glide.with(itemView.getContext()).load(item.getUrl()).into(mImgPhoto);
-            mTvContent.setText(item.getType());
+            if (item != null) {
+                Glide.with(itemView.getContext()).load(item.getUrl()).into(mImgPhoto);
+                mTvContent.setText(item.getType());
+            }
         }
     }
 }

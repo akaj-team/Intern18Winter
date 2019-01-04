@@ -237,6 +237,7 @@ public class RestAPIActivity extends AppCompatActivity implements View.OnClickLi
             public void onResponse(@NonNull Call<ImageItem> call, @NonNull Response<ImageItem> response) {
                 if (response.isSuccessful()) {
                     mImageAdapter.notifyItemInserted(0);
+                    mProgressDialog.dismiss();
                     Toast.makeText(RestAPIActivity.this, getString(R.string.uploadSuccess), Toast.LENGTH_SHORT).show();
                 }
             }

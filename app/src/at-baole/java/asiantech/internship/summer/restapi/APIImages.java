@@ -14,7 +14,7 @@ import retrofit2.http.Query;
 import retrofit2.http.Url;
 
 public interface APIImages {
-    String TOKEN = "6f5a48ac0e8aca77e0e8ef42e88962852b6ffaba01c16c5ba37ea13760c0317e";
+    String TOKEN = "604d1f2a63e1620f8e496970f675f0322671a3de0ba9f44c850e9ddc193f4476";
     String LOAD_URL = "https://api.gyazo.com/api/";
     String UPLOAD_URL = "https://upload.gyazo.com/api/upload";
 
