@@ -247,6 +247,7 @@ public class VerticalChartView extends View {
         mPaintText.setColor(Color.WHITE);
         canvas.drawRect(0, height / 20 + 10, width / 8, height * 19 / 20 - 10, mPaintText);
 
+        mPaintText.setColor(Color.BLACK);
         mPaintText.setTextSize(getResources().getDimension(R.dimen.smallTextSize));
         int startWidthPosition = 50;
         int firstNumberHeight = height * 3 / 4;
