@@ -60,4 +60,5 @@
     <string name="save">Image Saved!</string>
     <string name="permission">All permissions are granted by user!</string>
     <string name="error">Some Error!</string>
+    <string name="deny">deny</string>
 </resources>

@@ -3,7 +3,6 @@ package asiantech.internship.summer.drawerlayout;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -12,6 +11,7 @@ import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -24,8 +24,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -119,30 +117,59 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerLay
                     switch (which) {
                         case CHOOSE_GALLERY:
                             mActionChangeAvatar = GALLERY;
-                            choosePhotoFromGallery();
+                            if (checkPermission()) {
+                                chooseGallery();
+                            }
                             break;
                         case CHOOSE_CAMERA:
                             mActionChangeAvatar = CAMERA;
-                            takePhotoFromCamera();
+                            if (checkPermission()) {
+                                chooseCamera();
+                            }
                             break;
                     }
                 });
         pictureDialog.show();
     }
 
-    public void choosePhotoFromGallery() {
-        if(requestPermission()){
+    public void chooseGallery() {
+        if (checkPermission()) {
             Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             startActivityForResult(galleryIntent, GALLERY);
         }
     }
 
-    private void takePhotoFromCamera() {
-        if(requestPermission()){
+    private void chooseCamera() {
+        if (checkPermission()) {
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             startActivityForResult(intent, CAMERA);
         }
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_CODE_ASK_PERMISSIONS_CAMERA: {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    chooseCamera();
+                } else {
+                    Toast.makeText(DrawerLayoutActivity.this, R.string.deny, Toast.LENGTH_SHORT).show();
+                }
+                break;
+            }
+            case REQUEST_CODE_ASK_PERMISSIONS_GALLERY: {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    chooseGallery();
+                } else {
+                    Toast.makeText(DrawerLayoutActivity.this, R.string.deny, Toast.LENGTH_SHORT).show();
+                }
+                break;
+            }
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -175,7 +202,7 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerLay
         mDrawerLayoutAdapter.notifyItemChanged(0);
     }
 
-    private boolean requestPermission() {
+    private boolean checkPermission() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED && mActionChangeAvatar == CAMERA) {
             ActivityCompat.requestPermissions(DrawerLayoutActivity.this, new String[]{Manifest.permission.CAMERA}, REQUEST_CODE_ASK_PERMISSIONS_CAMERA);
             return false;
@@ -186,12 +213,7 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerLay
         }
         return true;
     }
-    private Uri getImageUri(Context context, Bitmap inImage) {
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), inImage, getString(R.string.title), null);
-        return Uri.parse(path);
-    }
+
     @Override
     public void onItemChecked(int i) {
         if (mPosition >= 0) {
