@@ -63,7 +63,7 @@ public class RetrofitActivity extends AppCompatActivity {
     private void initRecyclerView() {
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 2);
         mRecyclerView.setLayoutManager(layoutManager);
-        mAdapter = new RetrofitAdapter(mImageItems, getApplicationContext());
+        mAdapter = new RetrofitAdapter(mImageItems);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setHasFixedSize(true);
         RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
@@ -134,7 +134,7 @@ public class RetrofitActivity extends AppCompatActivity {
 
     private boolean checkPermission() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED && mActionChangeAvatar == CAMERA) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, CAMERA);
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 333);
             return false;
         }
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED && mActionChangeAvatar == GALLERY) {
@@ -154,8 +154,8 @@ public class RetrofitActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<ImageItem> call, @NonNull Response<ImageItem> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(RetrofitActivity.this, R.string.successful, Toast.LENGTH_SHORT).show();
                     mAdapter.notifyDataSetChanged();
+                    Toast.makeText(RetrofitActivity.this, R.string.successful, Toast.LENGTH_SHORT).show();
                     mProgressDialog.dismiss();
                 }
             }

@@ -30,6 +30,6 @@
         <activity android:name=".fragment.WelcomeActivity" />
         <activity android:name=".recyclerview.RecyclerViewActivity" />
         <activity android:name=".viewpager.ViewPagerActivity" />
-        <activity android:name=".retrofit.RetrofitActivity"></activity>
+        <activity android:name=".retrofit.RetrofitActivity" />
     </application>
 </manifest>

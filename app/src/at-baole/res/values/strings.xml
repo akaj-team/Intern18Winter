@@ -40,4 +40,10 @@
     <string name="favourite">Favourite</string>
     <string name="addFavourite">Added to your Favourite</string>
     <string name="removeFavourite">Remove from your Favourite</string>
+    <string name="download">download</string>
+    <string name="downloading">Downloading...</string>
+    <string name="asyncTask">AsyncTask</string>
+    <string name="thread">Thread</string>
+    <string name="handler">Handler</string>
+    <string name="downloadSuccessfully">Download successfully</string>
 </resources>

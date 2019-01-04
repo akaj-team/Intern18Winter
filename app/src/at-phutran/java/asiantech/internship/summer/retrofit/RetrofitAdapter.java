@@ -15,11 +15,9 @@ import asiantech.internship.summer.model.ImageItem;
 
 public class RetrofitAdapter extends RecyclerView.Adapter<RetrofitAdapter.ViewHolder> {
     private List<ImageItem> mListImage;
-    private Context mContext;
 
-    RetrofitAdapter(List<ImageItem> listImage, Context context) {
+    RetrofitAdapter(List<ImageItem> listImage) {
         mListImage = listImage;
-        mContext = context;
     }
 
     @NonNull
@@ -54,7 +52,7 @@ public class RetrofitAdapter extends RecyclerView.Adapter<RetrofitAdapter.ViewHo
             assert image != null;
             if (!image.getImageId().isEmpty()) {
                 tvContent.setText(R.string.commentImage);
-                Glide.with(mContext).load(image.getUrl()).into(imgContent);
+                Glide.with(itemView.getContext()).load(image.getUrl()).into(imgContent);
             }
         }
     }
