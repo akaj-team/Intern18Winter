@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
@@ -82,17 +83,17 @@ public class ChartView extends View {
     @SuppressLint("ResourceType")
     private void initPaint() {
         mPaintNoteSales = new Paint();
-        mPaintNoteSales.setColor(getResources().getColor(R.color.colorBlue));
+        mPaintNoteSales.setColor(ContextCompat.getColor(getContext(),R.color.colorBlue));
 
         mPaintNoteExpenses = new Paint();
-        mPaintNoteExpenses.setColor(getResources().getColor(R.color.colorOrange));
+        mPaintNoteExpenses.setColor(ContextCompat.getColor(getContext(),R.color.colorOrange));
 
         mPaintTextItem = new Paint();
-        mPaintTextItem.setColor(getResources().getColor(R.color.colorBlack));
+        mPaintTextItem.setColor(ContextCompat.getColor(getContext(),R.color.colorBlack));
         mPaintTextItem.setTextSize(getContext().getResources().getDimension(R.dimen.sizeTextItem));
 
         mPaintTextCaption = new Paint();
-        mPaintTextCaption.setColor(getResources().getColor(R.color.colorBlack));
+        mPaintTextCaption.setColor(ContextCompat.getColor(getContext(),R.color.colorBlack));
         mPaintTextCaption.setTextSize(getContext().getResources().getDimension(R.dimen.sizeTextCaption));
 
         mPaintColumnSales = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -100,15 +101,15 @@ public class ChartView extends View {
         mPaintColumnExpenses = new Paint(Paint.ANTI_ALIAS_FLAG);
 
         mPaintColumnMoney = new Paint();
-        mPaintColumnMoney.setColor(getResources().getColor(R.color.colorBlack));
+        mPaintColumnMoney.setColor(ContextCompat.getColor(getContext(),R.color.colorBlack));
         mPaintColumnMoney.setTextAlign(Paint.Align.RIGHT);
         mPaintColumnMoney.setTextSize(getContext().getResources().getDimension(R.dimen.sizeTextItem));
 
         mPaintLine = new Paint();
-        mPaintLine.setColor(getResources().getColor(R.color.colorBlack));
+        mPaintLine.setColor(ContextCompat.getColor(getContext(),R.color.colorBlack));
 
         mPaintRect = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mPaintRect.setColor(getResources().getColor(R.color.colorColumnMoney));
+        mPaintRect.setColor(ContextCompat.getColor(getContext(),R.color.colorColumnMoney));
         mPaintRect.setStrokeWidth(getContext().getResources().getDimension(R.dimen.sizeColumnMoney));
     }
 
