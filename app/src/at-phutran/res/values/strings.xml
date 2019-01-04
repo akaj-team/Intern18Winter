@@ -62,4 +62,8 @@
     <string name="Oct">Oct</string>
     <string name="Nov">Nov</string>
     <string name="Dec">Dec</string>
+    <string name="saleAndExpense">Sales and Expenses</string>
+    <string name="sale">Sales</string>
+    <string name="expense">Expenses</string>
+    <string name="defaulString">$1,000,000</string>
 </resources>

@@ -1,22 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<asiantech.internship.summer.canvas.GraphicViewChart xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="asiantech.internship.summer.canvas.CanvasActivity">
-
-    <asiantech.internship.summer.canvas.GraphicViewSale
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:colorOfBackground="@color/colorWhite"
-        app:colorOfExpense="@color/colorColumnOrange"
-        app:colorOfLine="@color/colorLineGray"
-        app:colorOfSale="@color/colorColumnBlue"
-        app:colorOfText="@color/colorTextBlack"
-        app:textContent="@dimen/textContent"
-        app:textNote="@dimen/textNote"
-        app:widthOfColumn="@dimen/widthColumn"
-        app:widthOfNoteColumn="@dimen/widthNoteColumn" />
-</RelativeLayout>
+    app:colorOfBackground="@color/colorWhite"
+    app:colorOfExpense="@color/colorColumnOrange"
+    app:colorOfLine="@color/colorLineGray"
+    app:colorOfSale="@color/colorColumnBlue"
+    app:colorOfText="@color/colorTextBlack"
+    app:textContent="@dimen/textContent"
+    app:textNote="@dimen/textNote"
+    app:widthOfColumn="@dimen/widthColumn"
+    app:widthOfNoteColumn="@dimen/widthNoteColumn"
+    tools:context="asiantech.internship.summer.canvas.CanvasActivity" />

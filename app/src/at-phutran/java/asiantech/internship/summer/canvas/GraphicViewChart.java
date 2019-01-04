@@ -5,23 +5,17 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.Point;
 import android.util.AttributeSet;
-import android.view.Display;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
-import android.view.WindowManager;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import asiantech.internship.summer.R;
 import asiantech.internship.summer.model.Money;
 
-public class GraphicViewSale extends View {
-    private static final String CONTENT = "Sales and Expenses";
-    private static final String SALE = "Sales";
-    private static final String EXPENSE = "Expenses";
-    private static final String DEFAULT_STRING = "$140,000";
+public class GraphicViewChart extends View {
     private static final int DRAG = 1;
     private static final int NONE = 0;
     private static final int ZOOM = 2;
@@ -38,25 +32,26 @@ public class GraphicViewSale extends View {
     private Paint mPaintNoteExpense;
     private Paint mPaintBackground;
     private int mMode;
+    private int mSize;
     private float mStartX = 0f;
     private float mStartY = 0f;
     private float mTranslateX = 0f;
     private float mTranslateY = 0f;
     private float mPreTranslateX = 0f;
     private float mPreTranslateY = 0f;
-    private List<Money> mListMoney;
+    private List<Money> mListMoney = new ArrayList<>();
     private ScaleGestureDetector mScaleDetector;
     private float mScaleFactor = 1.f;
 
-    public GraphicViewSale(Context context) {
+    public GraphicViewChart(Context context) {
         this(context, null);
     }
 
-    public GraphicViewSale(Context context, AttributeSet attrs) {
+    public GraphicViewChart(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public GraphicViewSale(Context context, AttributeSet attrs, int defStyleAttr) {
+    public GraphicViewChart(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initPaint();
         initListMoney();
@@ -64,18 +59,31 @@ public class GraphicViewSale extends View {
         getStyleableAttributes(context, attrs);
     }
 
+    private int getMaxOfList() {
+        List<Integer> listSale = new ArrayList<>();
+        List<Integer> listExpense = new ArrayList<>();
+        for (int i = 0; i < mSize; i++) {
+            listSale.add(mListMoney.get(i).getSale());
+            listExpense.add(mListMoney.get(i).getExpense());
+        }
+        int max = Collections.max(listSale);
+        if (max <= Collections.max(listExpense))
+            return Collections.max(listExpense);
+        return max;
+    }
+
     private void getStyleableAttributes(Context context, AttributeSet attrs) {
-        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.GraphicViewSale);
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.GraphicViewChart);
         try {
-            int colorOfLine = typedArray.getColor(R.styleable.GraphicViewSale_colorOfLine, 0);
-            int colorOfSale = typedArray.getColor(R.styleable.GraphicViewSale_colorOfSale, 0);
-            int colorOfExpense = typedArray.getColor(R.styleable.GraphicViewSale_colorOfExpense, 0);
-            int colorOfText = typedArray.getColor(R.styleable.GraphicViewSale_colorOfText, 0);
-            int colorOfBackground = typedArray.getColor(R.styleable.GraphicViewSale_colorOfBackground, 0);
-            float widthOfColumn = typedArray.getDimension(R.styleable.GraphicViewSale_widthOfColumn, 0);
-            float widthOfNoteColumn = typedArray.getDimension(R.styleable.GraphicViewSale_widthOfNoteColumn, 0);
-            float textNote = typedArray.getDimension(R.styleable.GraphicViewSale_textNote, 0);
-            float textContent = typedArray.getDimension(R.styleable.GraphicViewSale_textContent, 0);
+            int colorOfLine = typedArray.getColor(R.styleable.GraphicViewChart_colorOfLine, 0);
+            int colorOfSale = typedArray.getColor(R.styleable.GraphicViewChart_colorOfSale, 0);
+            int colorOfExpense = typedArray.getColor(R.styleable.GraphicViewChart_colorOfExpense, 0);
+            int colorOfText = typedArray.getColor(R.styleable.GraphicViewChart_colorOfText, 0);
+            int colorOfBackground = typedArray.getColor(R.styleable.GraphicViewChart_colorOfBackground, 0);
+            float widthOfColumn = typedArray.getDimension(R.styleable.GraphicViewChart_widthOfColumn, 0);
+            float widthOfNoteColumn = typedArray.getDimension(R.styleable.GraphicViewChart_widthOfNoteColumn, 0);
+            float textNote = typedArray.getDimension(R.styleable.GraphicViewChart_textNote, 0);
+            float textContent = typedArray.getDimension(R.styleable.GraphicViewChart_textContent, 0);
             mPaintLine.setColor(colorOfLine);
             mPaintSale.setColor(colorOfSale);
             mPaintSale.setStrokeWidth(widthOfColumn);
@@ -99,46 +107,19 @@ public class GraphicViewSale extends View {
     }
 
     private void initListMoney() {
-        mListMoney = new ArrayList<>();
-        //10 000$ = 1/20 height
-        mListMoney.add(new Money(getContext().getString(R.string.Jan), 70, 10));
+        mListMoney.add(new Money(getContext().getString(R.string.Jan), 200, 10));
         mListMoney.add(new Money(getContext().getString(R.string.Feb), 80, 15));
         mListMoney.add(new Money(getContext().getString(R.string.Mar), 75, 20));
         mListMoney.add(new Money(getContext().getString(R.string.Apr), 90, 30));
         mListMoney.add(new Money(getContext().getString(R.string.May), 105, 45));
         mListMoney.add(new Money(getContext().getString(R.string.June), 130, 80));
-        mListMoney.add(new Money(getContext().getString(R.string.Jul), 115, 50));
+        mListMoney.add(new Money(getContext().getString(R.string.Jul), 115, 200));
         mListMoney.add(new Money(getContext().getString(R.string.Aug), 100, 40));
         mListMoney.add(new Money(getContext().getString(R.string.Sep), 90, 20));
         mListMoney.add(new Money(getContext().getString(R.string.Oct), 80, 20));
         mListMoney.add(new Money(getContext().getString(R.string.Nov), 120, 40));
         mListMoney.add(new Money(getContext().getString(R.string.Dec), 140, 80));
-    }
-
-    private int getWidthScreen() {
-        WindowManager windowManager = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
-        assert windowManager != null;
-        Display display = windowManager.getDefaultDisplay();
-        Point size = new Point();
-        try {
-            display.getRealSize(size);
-        } catch (NoSuchMethodError err) {
-            display.getSize(size);
-        }
-        return size.x;
-    }
-
-    private int getHeightScreen() {
-        WindowManager windowManager = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
-        assert windowManager != null;
-        Display display = windowManager.getDefaultDisplay();
-        Point size = new Point();
-        try {
-            display.getRealSize(size);
-        } catch (NoSuchMethodError err) {
-            display.getSize(size);
-        }
-        return size.y;
+        mSize = mListMoney.size();
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -150,7 +131,6 @@ public class GraphicViewSale extends View {
                 mStartX = event.getX() - mPreTranslateX;
                 mStartY = event.getY() - mPreTranslateY;
                 break;
-
             case MotionEvent.ACTION_MOVE:
                 mTranslateX = event.getX() - mStartX;
                 mTranslateY = event.getY() - mStartY;
@@ -163,14 +143,12 @@ public class GraphicViewSale extends View {
             case MotionEvent.ACTION_POINTER_DOWN:
                 mMode = ZOOM;
                 break;
-
             case MotionEvent.ACTION_UP:
                 mMode = NONE;
                 mDragged = false;
                 mPreTranslateX = mTranslateX;
                 mPreTranslateY = mTranslateY;
                 break;
-
             case MotionEvent.ACTION_POINTER_UP:
                 mMode = DRAG;
                 mPreTranslateX = mTranslateX;
@@ -190,8 +168,8 @@ public class GraphicViewSale extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        mBeginWidth = getWidthScreen() / 10;
-        mBeginHeight = 4 * getHeightScreen() / 5;
+        mBeginWidth = getWidth() / 10;
+        mBeginHeight = 5 * getHeight() / 6;
         canvas.save();
         canvas.scale(mScaleFactor, mScaleFactor, mScaleDetector.getFocusX(), mScaleDetector.getFocusY());
         drawNoteChart(canvas);
@@ -204,35 +182,36 @@ public class GraphicViewSale extends View {
     }
 
     private void drawNoteChart(Canvas canvas) {
-        canvas.drawText(CONTENT, getWidthScreen() / 2 - mPaintTextContent.measureText(CONTENT) / 2, getHeightScreen() / 20, mPaintTextContent);
-        canvas.drawLine(getWidthScreen() / 2 - mPaintTextContent.measureText(EXPENSE) - getHeightScreen() / 40, 9 * getHeightScreen() / 10, getWidthScreen() / 2 - mPaintTextContent.measureText(EXPENSE) - getHeightScreen() / 40, 9 * getHeightScreen() / 10 - 30, mPaintNoteSale);
-        canvas.drawText(SALE, getWidthScreen() / 2 - mPaintTextContent.measureText(EXPENSE), 9 * getHeightScreen() / 10, mPaintText);
-        canvas.drawLine(getWidthScreen() / 2, 9 * getHeightScreen() / 10, getWidthScreen() / 2, 9 * getHeightScreen() / 10 - 30, mPaintNoteExpense);
-        canvas.drawText(EXPENSE, getWidthScreen() / 2 + getHeightScreen() / 40, 9 * getHeightScreen() / 10, mPaintText);
+        canvas.drawText(getContext().getString(R.string.saleAndExpense), getWidth() / 2 - mPaintTextContent.measureText(getContext().getString(R.string.saleAndExpense)) / 2, getHeight() / 20, mPaintTextContent);
+        canvas.drawLine(getWidth() / 2 - mPaintTextContent.measureText(getContext().getString(R.string.expense)) / 2 - getHeight() / 40, 11 * getHeight() / 12, getWidth() / 2 - mPaintTextContent.measureText(getContext().getString(R.string.expense)) / 2 - getHeight() / 40, 11 * getHeight() / 12 - 30, mPaintNoteSale);
+        canvas.drawText(getContext().getString(R.string.sale), getWidth() / 2 - mPaintTextContent.measureText(getContext().getString(R.string.expense)) / 2, 11 * getHeight() / 12, mPaintText);
+        canvas.drawLine(getWidth() / 2, 11 * getHeight() / 12, getWidth() / 2, 11 * getHeight() / 12 - 30, mPaintNoteExpense);
+        canvas.drawText(getContext().getString(R.string.expense), getWidth() / 2 + getHeight() / 40, 11 * getHeight() / 12, mPaintText);
     }
 
     private void drawLine(Canvas canvas) {
-        for (int i = 0; i < 8; i++) {
-            canvas.drawLine(mBeginWidth - getWidthScreen() / 50, mBeginHeight - getHeightScreen() / 10 * i, getWidthScreen(), mBeginHeight - getHeightScreen() / 10 * i, mPaintLine);
+        for (int i = 0; i < 12; i++) {
+            canvas.drawLine(mBeginWidth - getWidth() / 50, mBeginHeight - 2 * getHeight() / 30 * i, getWidth(), mBeginHeight - 2 * getHeight() / 30 * i, mPaintLine);
         }
     }
 
     private void drawTextSale(Canvas canvas) {
-        canvas.drawRect(0, 0, mBeginWidth - getWidthScreen() / 50, getHeightScreen(), mPaintBackground);
-        for (int i = 0; i < 8; i++) {
+        canvas.drawRect(0, 0, mBeginWidth - getWidth() / 50, getHeight(), mPaintBackground);
+        for (int i = 0; i < 12; i++) {
             if (i == 0) {
-                canvas.drawText(getContext().getString(R.string.zero), mPaintTextMoney.measureText(DEFAULT_STRING), mBeginHeight - getHeightScreen() / 10 * i, mPaintTextMoney);
+                canvas.drawText(getContext().getString(R.string.zero), mPaintTextMoney.measureText(getContext().getString(R.string.defaulString)), mBeginHeight - 2 * getHeight() / 30 * i, mPaintTextMoney);
             } else {
-                canvas.drawText(getContext().getString(R.string.dola) + 20 * i + getContext().getString(R.string.thousan), mPaintTextMoney.measureText(DEFAULT_STRING), mBeginHeight - getHeightScreen() / 10 * i, mPaintTextMoney);
+                canvas.drawText(getContext().getString(R.string.dola) + getMaxOfList() / 10 * i + getContext().getString(R.string.thousan), mPaintTextMoney.measureText(getContext().getString(R.string.defaulString)), mBeginHeight - 2 * getHeight() / 30 * i, mPaintTextMoney);
             }
         }
     }
 
     private void drawChart(Canvas canvas) {
-        for (int i = 0; i < mListMoney.size(); i++) {
-            canvas.drawLine(mBeginWidth + 250 * i + getWidthScreen() / 50, mBeginHeight, mBeginWidth + 250 * i + getWidthScreen() / 50, (mBeginHeight - mListMoney.get(i).getSale() * getHeightScreen() / 200), mPaintSale);
-            canvas.drawLine(mBeginWidth + 250 * i + getWidthScreen() / 50 + getWidthScreen() / 30, mBeginHeight, mBeginWidth + 250 * i + getWidthScreen() / 30 + getWidthScreen() / 50, (mBeginHeight - mListMoney.get(i).getExpense() * getHeightScreen() / 200), mPaintExpense);
-            canvas.drawText(mListMoney.get(i).getMonth(), mBeginWidth + 250 * i + getWidthScreen() / 50 + getHeightScreen() / 70, mBeginHeight + getHeightScreen() / 40, mPaintText);
+        // max = 2/3 height
+        for (int i = 0; i < mSize; i++) {
+            canvas.drawLine(mBeginWidth + 250 * i + getWidth() / 50, mBeginHeight, mBeginWidth + 250 * i + getWidth() / 50, (mBeginHeight - mListMoney.get(i).getSale() * 2 * getHeight() / (3 * getMaxOfList())), mPaintSale);
+            canvas.drawLine(mBeginWidth + 250 * i + getWidth() / 50 + getWidth() / 30, mBeginHeight, mBeginWidth + 250 * i + getWidth() / 30 + getWidth() / 50, (mBeginHeight - mListMoney.get(i).getExpense() * 2 * getHeight() / (3 * getMaxOfList())), mPaintExpense);
+            canvas.drawText(mListMoney.get(i).getMonth(), mBeginWidth + 250 * i + getWidth() / 50 + getHeight() / 70, mBeginHeight + getHeight() / 40, mPaintText);
         }
     }
 
@@ -251,7 +230,7 @@ public class GraphicViewSale extends View {
     }
 
     private int getMaxChartWidth() {
-        return mBeginWidth + 250 * 11 + getWidthScreen() / 50;
+        return mBeginWidth + 250 * 11 + getWidth() / 50;
     }
 
     private void initPaint() {
