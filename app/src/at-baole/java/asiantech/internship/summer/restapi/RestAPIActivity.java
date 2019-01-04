@@ -192,10 +192,10 @@ public class RestAPIActivity extends AppCompatActivity implements View.OnClickLi
         if (resultCode == RESULT_OK && data != null) {
             if (requestCode == CAMERA) {
                 Bundle extras = data.getExtras();
-                Bitmap photo = (Bitmap) Objects.requireNonNull(extras).get(getString(R.string.data));
-                if (photo != null) {
-                    final Uri photoUri = getUriImageCamera(photo);
-                    uploadImage(photoUri);
+                Bitmap imageBitmap = (Bitmap) Objects.requireNonNull(extras).get(getString(R.string.data));
+                if (imageBitmap != null) {
+                    final Uri ImageUri = getCameraImageUri(imageBitmap);
+                    uploadImage(ImageUri);
                 }
             } else if (requestCode == GALLERY) {
                 final Uri imageUri = data.getData();
@@ -210,22 +210,22 @@ public class RestAPIActivity extends AppCompatActivity implements View.OnClickLi
         if (cursor == null) {
             return null;
         }
-        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        int index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
         cursor.moveToFirst();
-        String path = cursor.getString(column_index);
+        String path = cursor.getString(index);
         cursor.close();
         return path;
     }
 
-    private Uri getUriImageCamera(Bitmap photo) {
+    private Uri getCameraImageUri(Bitmap imageBitmap) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        photo.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        String path = MediaStore.Images.Media.insertImage(getContentResolver(), photo, getString(R.string.title), null);
+        imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(getContentResolver(), imageBitmap, getString(R.string.title), null);
         return Uri.parse(path);
     }
 
     private void uploadImage(Uri imageUri) {
-        addProgressbarDialog();
+        showProgressbarDialog();
         File file = new File(Objects.requireNonNull(getRealPathImage(imageUri)));
 
         RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
@@ -250,7 +250,7 @@ public class RestAPIActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void loadListImages() {
-        addProgressbarDialog();
+        showProgressbarDialog();
         mAPIImages.getImages(APIImages.TOKEN, mCurrentPage).enqueue(new Callback<List<ImageItem>>() {
             @Override
             public void onResponse(@NonNull Call<List<ImageItem>> call,
@@ -274,7 +274,7 @@ public class RestAPIActivity extends AppCompatActivity implements View.OnClickLi
         });
     }
 
-    private void addProgressbarDialog() {
+    private void showProgressbarDialog() {
         mProgressDialog = new ProgressDialog(this);
         mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         mProgressDialog.setMessage(getString(R.string.LoadImagesDialogMessage));
