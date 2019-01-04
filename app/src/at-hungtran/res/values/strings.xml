@@ -31,8 +31,12 @@
     <string name="helloWorld">hello world :))</string>
     <string name="like">%s like</string>
     <string name="likes">%s likes</string>
+    <string name="loadImage">Load Image</string>
+    <string name="uploadImage">Upload Image</string>
+    <string name="label_api_option">Option</string>
+    <string name="permissionDenied">Permission Denied</string>
     <string name="title_chart">Sales and Expense</string>
     <string name="sale">Sale</string>
     <string name="expense">Expense</string>
-    <string name="dola">$</string>
+    <string name="usd">$</string>
 </resources>

@@ -151,7 +151,7 @@ public class GraphicViewSale extends View {
         int n = 0;
         mPaintColorText.setStyle(Paint.Style.FILL);
         while (n <= 7) {
-            canvas.drawText(getResources().getString(R.string.dola) + n * maxChartValue(mMoney) / 7, 10, top - n * top / 12 + 10, mPaintColorText);
+            canvas.drawText(getResources().getString(R.string.usd) + n * maxChartValue(mMoney) / 7, 10, top - n * top / 12 + 10, mPaintColorText);
             n++;
         }
     }
