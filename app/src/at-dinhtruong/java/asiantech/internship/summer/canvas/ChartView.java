@@ -11,6 +11,7 @@ import android.view.ScaleGestureDetector;
 import android.view.View;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import asiantech.internship.summer.R;
@@ -170,7 +171,7 @@ public class ChartView extends View {
     private void drawColumnMoney(int xDistance, int yDistance, Canvas canvas) {
         canvas.drawText(String.valueOf(0), xDistance, yDistance, mPaintColumnMoney);
         for (int i = 1; i < 7; i++) {
-            canvas.drawText(getContext().getString(R.string.usd) + maxNumber() * i / 5, xDistance, yDistance - yDistance / 7 * i, mPaintColumnMoney);
+            canvas.drawText(getContext().getString(R.string.usd) + getMaxMoney() * i / 5, xDistance, yDistance - yDistance / 7 * i, mPaintColumnMoney);
         }
     }
 
@@ -184,8 +185,8 @@ public class ChartView extends View {
     private void drawColumnChart(int height, int xDistance, int yDistance, Canvas canvas) {
         int size = mListMoney.size();
         for (int i = 0; i < size; i++) {
-            canvas.drawLine((float) (1.8 * xDistance + 260 * i), yDistance, (float) (1.8 * xDistance + 260 * i), yDistance - (mListMoney.get(i).getSale() * height) / (maxNumber() * 7 / 4), mPaintColumnSales);
-            canvas.drawLine((float) (2.1 * xDistance + 260 * i), yDistance, (float) (2.1 * xDistance + 260 * i), (yDistance - mListMoney.get(i).getExpense() * height / (maxNumber() * 7 / 4)), mPaintColumnExpenses);
+            canvas.drawLine((float) (1.8 * xDistance + 260 * i), yDistance, (float) (1.8 * xDistance + 260 * i), yDistance - (mListMoney.get(i).getSale() * height) / (getMaxMoney() * 7 / 4), mPaintColumnSales);
+            canvas.drawLine((float) (2.1 * xDistance + 260 * i), yDistance, (float) (2.1 * xDistance + 260 * i), (yDistance - mListMoney.get(i).getExpense() * height / (getMaxMoney() * 7 / 4)), mPaintColumnExpenses);
             canvas.drawText(mListMoney.get(i).getMonth(), (float) (1.8 * xDistance + 260 * i), yDistance + yDistance / 20, mPaintTextItem);
         }
     }
@@ -205,14 +206,15 @@ public class ChartView extends View {
         mListMoney.add(new Money(getContext().getString(R.string.dec), 125000, 180000));
     }
 
-    private int maxNumber() {
-        int maxSale = 0;
-        int maxExpenses = 0;
-        for (int i = 0; i < mListMoney.size(); i++) {
-            maxSale = maxSale > mListMoney.get(i).getSale() ? maxSale : mListMoney.get(i).getSale();
-            maxExpenses = maxExpenses > mListMoney.get(i).getExpense() ? maxSale : mListMoney.get(i).getExpense();
+    private int getMaxMoney() {
+        List<Integer> listMoney = new ArrayList<>();
+        if (mListMoney != null) {
+            for (Money objMoney : mListMoney) {
+                listMoney.add(objMoney.getSale());
+                listMoney.add(objMoney.getExpense());
+            }
         }
-        return maxSale > maxExpenses ? maxSale : maxExpenses;
+        return Collections.max(listMoney);
     }
 
     //zoom in zoom out
