@@ -44,6 +44,7 @@ public class GraphicViewSale extends View {
     private Paint mPaintColumnExpense = new Paint(Paint.ANTI_ALIAS_FLAG);
     private Paint mPaintColorText = new Paint(Paint.ANTI_ALIAS_FLAG);
     private Paint mPaintColorWhite = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private float widthOfColumn;
 
     public GraphicViewSale(Context context) {
         super(context);
@@ -66,13 +67,14 @@ public class GraphicViewSale extends View {
     }
 
     private void init(AttributeSet attrs) {
-        final TypedArray typedArray = getContext().obtainStyledAttributes(
+        TypedArray typedArray = getContext().obtainStyledAttributes(
                 attrs, R.styleable.GraphicViewSale, 0, 0);
         try {
             int colorBlue = typedArray.getColor(R.styleable.GraphicViewSale_colorBlue, 0);
             int colorOrange = typedArray.getColor(R.styleable.GraphicViewSale_colorOrange, 0);
             int colorGrey = typedArray.getColor(R.styleable.GraphicViewSale_colorGray, 0);
             int colorWhite = typedArray.getColor(R.styleable.GraphicViewSale_colorWhite, 0);
+            widthOfColumn = typedArray.getDimension(R.styleable.GraphicViewSale_widthOfColumn, 0);
 
             mPaintColumnSale.setColor(colorBlue);
             mPaintColumnExpense.setColor(colorOrange);
@@ -170,10 +172,10 @@ public class GraphicViewSale extends View {
     private void drawRectSaleandExpense(Canvas canvas, float top, float unit) {
         mPaintColorText.setStyle(Paint.Style.FILL);
         mPaintColorText.setTextSize(getContext().getResources().getDimension(R.dimen.text_size_name));
-        canvas.drawText(getResources().getString(R.string.sale), 800, top + 90, mPaintColorText);
-        canvas.drawText(getResources().getString(R.string.expense), 1000, top + 90, mPaintColorText);
-        canvas.drawRect(770, top + 70, 790, top + 90, mPaintColumnSale);
-        canvas.drawRect(960, top + 70, 980, top + 90, mPaintColumnExpense);
+        canvas.drawText(getResources().getString(R.string.sale), getHeight() * 3 / 4 + 40, top + 90, mPaintColorText);
+        canvas.drawText(getResources().getString(R.string.expense), getHeight() - 20, top + 90, mPaintColorText);
+        canvas.drawRect(getHeight() * 3 / 4, top + 65, getHeight() * 3 / 4 + widthOfColumn, top + 65 + widthOfColumn, mPaintColumnSale);
+        canvas.drawRect(getHeight() * 3 / 4 + 200, top + 65, getHeight() * 3 / 4 + 200 + widthOfColumn, top + 65 + widthOfColumn, mPaintColumnExpense);
     }
 
     private void drawLine(Canvas canvas, float top) {

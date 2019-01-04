@@ -2,4 +2,5 @@
     <dimen name="text_size_title">25sp</dimen>
     <dimen name="text_size_name">13sp</dimen>
     <dimen name="text_size_month">9sp</dimen>
+    <dimen name="widthOfColumn">10dp</dimen>
 </resources>

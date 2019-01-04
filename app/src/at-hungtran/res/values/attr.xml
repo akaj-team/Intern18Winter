@@ -5,5 +5,6 @@
         <attr name="colorBlue" format="color" />
         <attr name="colorGray" format="color" />
         <attr name="colorWhite" format="color" />
+        <attr name="widthOfColumn" format="dimension" />
     </declare-styleable>
 </resources>

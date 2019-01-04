@@ -8,4 +8,5 @@
     app:colorGray="@color/colorGray"
     app:colorOrange="@color/colorOrange"
     app:colorWhite="@color/colorWhite"
+    app:widthOfColumn="@dimen/widthOfColumn"
     android:background="@color/colorWhite" />
