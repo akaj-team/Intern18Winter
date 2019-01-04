@@ -51,7 +51,6 @@ public class RestAPIActivity extends AppCompatActivity implements View.OnClickLi
     private static final int CAMERA_PERMISSION_REQUEST_CODE = 202;
 
     private APIImages mAPIImages;
-    private int mCurrentPage;
     private List<ImageItem> mImages = new ArrayList<>();
     private RecyclerView mRecyclerViewImage;
     private ProgressDialog mProgressDialog;
@@ -236,6 +235,7 @@ public class RestAPIActivity extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onResponse(@NonNull Call<ImageItem> call, @NonNull Response<ImageItem> response) {
                 if (response.isSuccessful()) {
+                    mImages.add(0, response.body());
                     mImageAdapter.notifyItemInserted(0);
                     mProgressDialog.dismiss();
                     Toast.makeText(RestAPIActivity.this, getString(R.string.uploadSuccess), Toast.LENGTH_SHORT).show();
@@ -251,18 +251,18 @@ public class RestAPIActivity extends AppCompatActivity implements View.OnClickLi
 
     private void loadListImages() {
         showProgressbarDialog();
-        mAPIImages.getImages(APIImages.TOKEN, mCurrentPage).enqueue(new Callback<List<ImageItem>>() {
+        mAPIImages.getImages(APIImages.TOKEN).enqueue(new Callback<List<ImageItem>>() {
             @Override
             public void onResponse(@NonNull Call<List<ImageItem>> call,
                                    @NonNull Response<List<ImageItem>> response) {
-                if (response.isSuccessful()) {
-                    List<ImageItem> addImages = response.body();
-                    if (addImages != null) {
-                        mImages.addAll(addImages);
-                        mImageAdapter.notifyDataSetChanged();
-                        mCurrentPage++;
-                        mProgressDialog.dismiss();
+                if (response.isSuccessful() && response.body() != null) {
+                    for (ImageItem imageItem : response.body()) {
+                        if (!imageItem.getImageId().isEmpty()) {
+                            mImages.add(imageItem);
+                        }
                     }
+                    mImageAdapter.notifyDataSetChanged();
+                    mProgressDialog.dismiss();
                 }
             }
 

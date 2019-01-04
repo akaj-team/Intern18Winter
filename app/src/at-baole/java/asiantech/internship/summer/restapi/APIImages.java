@@ -19,8 +19,7 @@ public interface APIImages {
     String UPLOAD_URL = "https://upload.gyazo.com/api/upload";
 
     @GET("images")
-    Call<List<ImageItem>> getImages(@Query("access_token") String token,
-                                    @Query("page") int page);
+    Call<List<ImageItem>> getImages(@Query("access_token") String token);
     @Multipart
     @POST
     Call<ImageItem> uploadImage(@Url String url, @Part("access_token") RequestBody token, @Part MultipartBody.Part image);
