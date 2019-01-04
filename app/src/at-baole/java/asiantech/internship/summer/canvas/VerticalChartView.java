@@ -252,7 +252,6 @@ public class VerticalChartView extends View {
         int firstNumberHeight = height * 3 / 4;
         DecimalFormat df = new DecimalFormat("0");
 
-
         for (int i = 0; i <= 7; i++) {
             canvas.drawText("$" + df.format(moneyUnit() * i), startWidthPosition, firstNumberHeight - i * height / 14 + 15, mPaint);
         }
@@ -286,7 +285,7 @@ public class VerticalChartView extends View {
     }
 
     private void addData() {
-        mMoneyLists.add(new Money(getResources().getString(R.string.abbrJanuary), 850000, 10000));
+        mMoneyLists.add(new Money(getResources().getString(R.string.abbrJanuary), 700000, 10000));
         mMoneyLists.add(new Money(getResources().getString(R.string.abbrFebruary), 80000, 15000));
         mMoneyLists.add(new Money(getResources().getString(R.string.abbrMarch), 75000, 20000));
         mMoneyLists.add(new Money(getResources().getString(R.string.abbrApril), 90000, 30000));
