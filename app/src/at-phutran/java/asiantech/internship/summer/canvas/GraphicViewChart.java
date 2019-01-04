@@ -67,9 +67,11 @@ public class GraphicViewChart extends View {
             listExpense.add(mListMoney.get(i).getExpense());
         }
         int max = Collections.max(listSale);
-        if (max <= Collections.max(listExpense))
+        if (max <= Collections.max(listExpense)) {
             return Collections.max(listExpense);
-        return max;
+        } else {
+            return max;
+        }
     }
 
     private void getStyleableAttributes(Context context, AttributeSet attrs) {
