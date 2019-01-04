@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
@@ -66,51 +65,47 @@ public class ChartView extends View {
     }
 
     private void getStyleableAttributes(Context context, AttributeSet attrs) {
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ChartView);
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.ChartView);
         try {
-            int colorOfColumnSales = a.getColor(R.styleable.ChartView_colorOfColumnSales, 0);
-            int colorOfColumnExpenses = a.getColor(R.styleable.ChartView_colorOfColumnExpenses, 0);
-            float widthOfColumn = a.getDimension(R.styleable.ChartView_widthOfColumn, 0);
+            int colorOfColumnSales = typedArray.getColor(R.styleable.ChartView_colorOfColumnSales, 0);
+            int colorOfColumnExpenses = typedArray.getColor(R.styleable.ChartView_colorOfColumnExpenses, 0);
+            int colorOfText = typedArray.getColor(R.styleable.ChartView_colorOfText, 0);
+            int colorOfLine = typedArray.getColor(R.styleable.ChartView_colorOfLine, 0);
+            int colorOfColumnRect = typedArray.getColor(R.styleable.ChartView_colorOfColumnRect, 0);
+            float widthOfColumn = typedArray.getDimension(R.styleable.ChartView_widthOfColumn, 0);
+            float sizeOfTextCaption = typedArray.getDimension(R.styleable.ChartView_sizeOfTextCaption, 0);
+            float sizeOfTextItem = typedArray.getDimension(R.styleable.ChartView_sizeOfTextItem, 0);
             mPaintColumnSales.setColor(colorOfColumnSales);
             mPaintColumnSales.setStrokeWidth(widthOfColumn);
             mPaintColumnExpenses.setColor(colorOfColumnExpenses);
             mPaintColumnExpenses.setStrokeWidth(widthOfColumn);
+            mPaintNoteSales.setColor(colorOfColumnSales);
+            mPaintNoteExpenses.setColor(colorOfColumnExpenses);
+            mPaintTextItem.setColor(colorOfText);
+            mPaintTextCaption.setColor(colorOfText);
+            mPaintColumnMoney.setColor(colorOfText);
+            mPaintLine.setColor(colorOfLine);
+            mPaintTextCaption.setTextSize(sizeOfTextCaption);
+            mPaintTextItem.setTextSize(sizeOfTextItem);
+            mPaintColumnMoney.setTextSize(sizeOfTextItem);
+            mPaintRect.setColor(colorOfColumnRect);
         } finally {
-            a.recycle();
+            typedArray.recycle();
         }
     }
 
     @SuppressLint("ResourceType")
     private void initPaint() {
-        mPaintNoteSales = new Paint();
-        mPaintNoteSales.setColor(ContextCompat.getColor(getContext(),R.color.colorBlue));
-
-        mPaintNoteExpenses = new Paint();
-        mPaintNoteExpenses.setColor(ContextCompat.getColor(getContext(),R.color.colorOrange));
-
+        mPaintNoteSales = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mPaintNoteExpenses = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaintTextItem = new Paint();
-        mPaintTextItem.setColor(ContextCompat.getColor(getContext(),R.color.colorBlack));
-        mPaintTextItem.setTextSize(getContext().getResources().getDimension(R.dimen.sizeTextItem));
-
         mPaintTextCaption = new Paint();
-        mPaintTextCaption.setColor(ContextCompat.getColor(getContext(),R.color.colorBlack));
-        mPaintTextCaption.setTextSize(getContext().getResources().getDimension(R.dimen.sizeTextCaption));
-
         mPaintColumnSales = new Paint(Paint.ANTI_ALIAS_FLAG);
-
         mPaintColumnExpenses = new Paint(Paint.ANTI_ALIAS_FLAG);
-
-        mPaintColumnMoney = new Paint();
-        mPaintColumnMoney.setColor(ContextCompat.getColor(getContext(),R.color.colorBlack));
+        mPaintColumnMoney = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaintColumnMoney.setTextAlign(Paint.Align.RIGHT);
-        mPaintColumnMoney.setTextSize(getContext().getResources().getDimension(R.dimen.sizeTextItem));
-
-        mPaintLine = new Paint();
-        mPaintLine.setColor(ContextCompat.getColor(getContext(),R.color.colorBlack));
-
+        mPaintLine = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaintRect = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mPaintRect.setColor(ContextCompat.getColor(getContext(),R.color.colorColumnMoney));
-        mPaintRect.setStrokeWidth(getContext().getResources().getDimension(R.dimen.sizeColumnMoney));
     }
 
     @Override
@@ -175,7 +170,7 @@ public class ChartView extends View {
     private void drawColumnMoney(int xDistance, int yDistance, Canvas canvas) {
         canvas.drawText(String.valueOf(0), xDistance, yDistance, mPaintColumnMoney);
         for (int i = 1; i < 7; i++) {
-            canvas.drawText(getContext().getString(R.string.usd) + maxNumber() * i/5, xDistance, yDistance - yDistance / 7 * i, mPaintColumnMoney);
+            canvas.drawText(getContext().getString(R.string.usd) + maxNumber() * i / 5, xDistance, yDistance - yDistance / 7 * i, mPaintColumnMoney);
         }
     }
 
@@ -189,8 +184,8 @@ public class ChartView extends View {
     private void drawColumnChart(int height, int xDistance, int yDistance, Canvas canvas) {
         int size = mListMoney.size();
         for (int i = 0; i < size; i++) {
-            canvas.drawLine((float) (1.8 * xDistance + 260 * i), yDistance, (float) (1.8 * xDistance + 260 * i), yDistance - (mListMoney.get(i).getSale() * height)/ (maxNumber()*7/4), mPaintColumnSales);
-            canvas.drawLine((float) (2.1 * xDistance + 260 * i), yDistance, (float) (2.1 * xDistance + 260 * i), (yDistance - mListMoney.get(i).getExpense() * height / (maxNumber()*7/4)), mPaintColumnExpenses);
+            canvas.drawLine((float) (1.8 * xDistance + 260 * i), yDistance, (float) (1.8 * xDistance + 260 * i), yDistance - (mListMoney.get(i).getSale() * height) / (maxNumber() * 7 / 4), mPaintColumnSales);
+            canvas.drawLine((float) (2.1 * xDistance + 260 * i), yDistance, (float) (2.1 * xDistance + 260 * i), (yDistance - mListMoney.get(i).getExpense() * height / (maxNumber() * 7 / 4)), mPaintColumnExpenses);
             canvas.drawText(mListMoney.get(i).getMonth(), (float) (1.8 * xDistance + 260 * i), yDistance + yDistance / 20, mPaintTextItem);
         }
     }

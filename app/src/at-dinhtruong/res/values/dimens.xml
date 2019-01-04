@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--width column-->
-    <dimen name="widthColumn">15dp</dimen>
-    <dimen name="sizeTextItem">13sp</dimen>
-    <dimen name="sizeTextCaption">25sp</dimen>
-    <dimen name="sizeColumnMoney">25dp</dimen>
+    <dimen name="widthOfColumn">15dp</dimen>
+    <dimen name="widthOfColumnMoney">25dp</dimen>
+    <dimen name="sizeOfTextItem">13sp</dimen>
+    <dimen name="sizeOfTextCaption">25sp</dimen>
 </resources>
