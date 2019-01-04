@@ -4,4 +4,6 @@
     <dimen name="mediumTexSize">16dp</dimen>
     <dimen name="largeTextSize">30dp</dimen>
     <dimen name="columnWidth">50dp</dimen>
+    <dimen name="noteWidth">14dp</dimen>
+    <dimen name="lineWidth">1dp</dimen>
 </resources>

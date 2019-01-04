@@ -38,7 +38,8 @@ public class VerticalChartView extends View {
     private boolean mDragged = false;
 
     private List<Money> mMoneyLists = new ArrayList<>();
-    private Paint mPaint;
+    private Paint mPaintText;
+    private Paint mPaintLine;
     private Paint mPaintColumnSales;
     private Paint mPaintColumnExpenses;
     private Paint mPaintSalesNote;
@@ -61,19 +62,24 @@ public class VerticalChartView extends View {
     }
 
     private void getStyleableAttributes(Context context, AttributeSet attrs) {
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.VerticalChartView);
+        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.VerticalChartView);
         try {
-            int colorOfColumnSales = a.getColor(R.styleable.VerticalChartView_columnSalesColor, 0);
-            int colorOfColumnExpenses = a.getColor(R.styleable.VerticalChartView_columnExpensesColor, 0);
-            float widthOfColumn = a.getDimension(R.styleable.VerticalChartView_columnWidth, 0);
-            mPaintColumnSales.setColor(colorOfColumnSales);
-            mPaintColumnSales.setStrokeWidth(widthOfColumn);
-            mPaintColumnExpenses.setColor(colorOfColumnExpenses);
-            mPaintColumnExpenses.setStrokeWidth(widthOfColumn);
-            mPaintSalesNote.setColor(colorOfColumnSales);
-            mPaintExpensesNote.setColor(colorOfColumnExpenses);
+            int salesColor = array.getColor(R.styleable.VerticalChartView_columnSalesColor, 0);
+            int expensesColor = array.getColor(R.styleable.VerticalChartView_columnExpensesColor, 0);
+            float columnWidth = array.getDimension(R.styleable.VerticalChartView_columnWidth, 0);
+            float noteWidth = array.getDimension(R.styleable.VerticalChartView_noteWidth, 0);
+            float lineWidth = array.getDimension(R.styleable.VerticalChartView_lineWidth, 0);
+            mPaintColumnSales.setColor(salesColor);
+            mPaintColumnSales.setStrokeWidth(columnWidth);
+            mPaintColumnExpenses.setColor(expensesColor);
+            mPaintColumnExpenses.setStrokeWidth(columnWidth);
+            mPaintSalesNote.setColor(salesColor);
+            mPaintExpensesNote.setColor(expensesColor);
+            mPaintSalesNote.setStrokeWidth(noteWidth);
+            mPaintExpensesNote.setStrokeWidth(noteWidth);
+            mPaintLine.setStrokeWidth(lineWidth);
         } finally {
-            a.recycle();
+            array.recycle();
         }
     }
 
@@ -121,26 +127,25 @@ public class VerticalChartView extends View {
     }
 
     private void initPaintObjects() {
-        mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mPaint.setColor(Color.BLACK);
-        mPaint.setStyle(Paint.Style.FILL);
-        mPaint.setStrokeWidth(2);
+        mPaintText = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mPaintText.setColor(Color.BLACK);
+        mPaintText.setStyle(Paint.Style.FILL);
+
+        mPaintLine = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mPaintLine.setColor(Color.BLACK);
+        mPaintLine.setStyle(Paint.Style.STROKE);
 
         mPaintSalesNote = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaintSalesNote.setStyle(Paint.Style.FILL);
-        mPaintSalesNote.setStrokeWidth(20);
 
         mPaintExpensesNote = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaintExpensesNote.setStyle(Paint.Style.FILL);
-        mPaintExpensesNote.setStrokeWidth(20);
 
         mPaintColumnSales = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaintColumnSales.setStyle(Paint.Style.FILL);
-        mPaintColumnSales.setStrokeWidth(2);
 
         mPaintColumnExpenses = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaintColumnExpenses.setStyle(Paint.Style.FILL);
-        mPaintColumnExpenses.setStrokeWidth(2);
     }
 
     @Override
@@ -186,12 +191,11 @@ public class VerticalChartView extends View {
     }
 
     private void drawChartLine(Canvas canvas, int width, int height) {
-        mPaint.setStyle(Paint.Style.STROKE);
         int firstLineHeight = height * 3 / 4;
         int startLinePosition = width / 8;
 
         for (int i = 0; i <= 7; i++) {
-            canvas.drawLine(startLinePosition, firstLineHeight - i * height / 14, startLinePosition + getMaxChartWidth(), firstLineHeight - i * height / 14, mPaint);
+            canvas.drawLine(startLinePosition, firstLineHeight - i * height / 14, startLinePosition + getMaxChartWidth(), firstLineHeight - i * height / 14, mPaintLine);
         }
     }
 
@@ -201,23 +205,21 @@ public class VerticalChartView extends View {
         int startColumnPosition = width / 8;
         int startColumnHeight = height * 3 / 4;
         int columnUnit = height / 14;
-        mPaint.setStyle(Paint.Style.FILL);
-        mPaint.setTextSize(getResources().getDimension(R.dimen.smallTextSize));
-
+        mPaintText.setTextSize(getResources().getDimension(R.dimen.smallTextSize));
         for (int i = 0; i < mMoneyLists.size(); i++) {
             largeColumnDistance = (i == 0) ? 50 : 150;
             canvas.drawRect(startColumnPosition + largeColumnDistance, (float) (startColumnHeight - ((mMoneyLists.get(i).getSales() * columnUnit) / moneyUnit())), startColumnPosition + largeColumnDistance + 50, startColumnHeight, mPaintColumnSales);
             canvas.drawRect(startColumnPosition + largeColumnDistance + 50 + smallColumnDistance, (float) (startColumnHeight - ((mMoneyLists.get(i).getExpenses() * columnUnit) / moneyUnit())), startColumnPosition + largeColumnDistance + smallColumnDistance + 50 * 2, startColumnHeight, mPaintColumnExpenses);
 
-            canvas.drawText(mMoneyLists.get(i).getMonth(), startColumnPosition + largeColumnDistance, startColumnHeight + 50, mPaint);
+            canvas.drawText(mMoneyLists.get(i).getMonth(), startColumnPosition + largeColumnDistance, startColumnHeight + 50, mPaintText);
             startColumnPosition += largeColumnDistance + smallColumnDistance + 50;
         }
     }
 
     private void setChartTitle(Canvas canvas, int width, int height) {
-        mPaint.setTextSize(getResources().getDimension(R.dimen.largeTextSize));
-        mPaint.getTextBounds(getResources().getString(R.string.chartName), 0, getResources().getString(R.string.chartName).length(), mBounds);
-        canvas.drawText(getResources().getString(R.string.chartName), width / 3, height / 7, mPaint);
+        mPaintText.setTextSize(getResources().getDimension(R.dimen.largeTextSize));
+        mPaintText.getTextBounds(getResources().getString(R.string.chartName), 0, getResources().getString(R.string.chartName).length(), mBounds);
+        canvas.drawText(getResources().getString(R.string.chartName), width / 3, height / 7, mPaintText);
     }
 
     private void setSalesNote(Canvas canvas, int width, int height) {
@@ -225,9 +227,9 @@ public class VerticalChartView extends View {
         int salesHeightPosition = height * 9 / 10;
         canvas.drawPoint(salesWidthPosition, salesHeightPosition, mPaintSalesNote);
 
-        mPaint.setTextSize(getResources().getDimension(R.dimen.mediumTexSize));
-        mPaint.getTextBounds(getResources().getString(R.string.noteSales), 0, getResources().getString(R.string.noteSales).length(), mBounds);
-        canvas.drawText(getResources().getString(R.string.noteSales), salesWidthPosition + 20, salesHeightPosition + 10, mPaint);
+        mPaintText.setTextSize(getResources().getDimension(R.dimen.mediumTexSize));
+        mPaintText.getTextBounds(getResources().getString(R.string.noteSales), 0, getResources().getString(R.string.noteSales).length(), mBounds);
+        canvas.drawText(getResources().getString(R.string.noteSales), salesWidthPosition + 30, salesHeightPosition + 20, mPaintText);
     }
 
     private void setExpensesNote(Canvas canvas, int width, int height) {
@@ -235,29 +237,29 @@ public class VerticalChartView extends View {
         int expensesHeightPosition = height * 9 / 10;
         canvas.drawPoint(expensesWidthPosition, expensesHeightPosition, mPaintExpensesNote);
 
-        mPaint.setTextSize(getResources().getDimension(R.dimen.mediumTexSize));
-        mPaint.getTextBounds(getResources().getString(R.string.noteExpenses), 0, getResources().getString(R.string.noteExpenses).length(), mBounds);
-        canvas.drawText(getResources().getString(R.string.noteExpenses), expensesWidthPosition + 20, expensesHeightPosition + 10, mPaint);
+        mPaintText.setTextSize(getResources().getDimension(R.dimen.mediumTexSize));
+        mPaintText.getTextBounds(getResources().getString(R.string.noteExpenses), 0, getResources().getString(R.string.noteExpenses).length(), mBounds);
+        canvas.drawText(getResources().getString(R.string.noteExpenses), expensesWidthPosition + 30, expensesHeightPosition + 20, mPaintText);
     }
 
     private void setMoneyValue(Canvas canvas, int width, int height) {
-        mPaint.setStyle(Paint.Style.FILL);
-        mPaint.setColor(Color.WHITE);
-        canvas.drawRect(0, height / 20 + 10, width / 8, height * 19 / 20 - 10, mPaint);
+        mPaintText.setStyle(Paint.Style.FILL);
+        mPaintText.setColor(Color.WHITE);
+        canvas.drawRect(0, height / 20 + 10, width / 8, height * 19 / 20 - 10, mPaintText);
 
-        mPaint.setTextSize(getResources().getDimension(R.dimen.smallTextSize));
-        mPaint.setColor(Color.BLACK);
+        mPaintText.setTextSize(getResources().getDimension(R.dimen.smallTextSize));
+        mPaintText.setColor(Color.BLACK);
 
         int startWidthPosition = 50;
         int firstNumberHeight = height * 3 / 4;
         DecimalFormat df = new DecimalFormat("0");
 
         for (int i = 0; i <= 7; i++) {
-            canvas.drawText("$" + df.format(moneyUnit() * i), startWidthPosition, firstNumberHeight - i * height / 14 + 15, mPaint);
+            canvas.drawText("$" + df.format(moneyUnit() * i), startWidthPosition, firstNumberHeight - i * height / 14 + 15, mPaintText);
         }
     }
 
-    private double maxMoneyValue(List<Money> moneyList) {
+    private double maxMoneyInput(List<Money> moneyList) {
         List<Double> listChartValue = new ArrayList<>();
 
         for (Money money : moneyList) {
@@ -269,7 +271,7 @@ public class VerticalChartView extends View {
 
     private double moneyUnit() {
         int countDigits = 0;
-        double twoFirstDigits = maxMoneyValue(mMoneyLists);
+        double twoFirstDigits = maxMoneyInput(mMoneyLists);
         while (twoFirstDigits >= 100) {
             twoFirstDigits = twoFirstDigits / 10;
             countDigits++;
