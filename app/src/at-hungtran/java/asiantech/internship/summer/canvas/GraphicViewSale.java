@@ -3,9 +3,11 @@ package asiantech.internship.summer.canvas;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
@@ -38,6 +40,10 @@ public class GraphicViewSale extends View {
     private float mPreviousTranslateY = 0f;
     private boolean mDragged = false;
     private float mTotalWidth = 0;
+    private Paint mPaintColumnSale = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private Paint mPaintColumnExpense = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private Paint mPaintColorText = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private Paint mPaintColorWhite = new Paint(Paint.ANTI_ALIAS_FLAG);
 
     public GraphicViewSale(Context context) {
         super(context);
@@ -49,12 +55,32 @@ public class GraphicViewSale extends View {
         super(context, attrs);
         initPaint();
         mDetector = new ScaleGestureDetector(context, new ScaleListener());
+        init(attrs);
     }
 
     public GraphicViewSale(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initPaint();
         mDetector = new ScaleGestureDetector(context, new ScaleListener());
+
+    }
+
+    private void init(AttributeSet attrs) {
+        final TypedArray typedArray = getContext().obtainStyledAttributes(
+                attrs, R.styleable.GraphicViewSale, 0, 0);
+        try {
+            int colorBlue = typedArray.getColor(R.styleable.GraphicViewSale_colorBlue, 0);
+            int colorOrange = typedArray.getColor(R.styleable.GraphicViewSale_colorOrange, 0);
+            int colorGrey = typedArray.getColor(R.styleable.GraphicViewSale_colorGray, 0);
+            int colorWhite = typedArray.getColor(R.styleable.GraphicViewSale_colorWhite, 0);
+
+            mPaintColumnSale.setColor(colorBlue);
+            mPaintColumnExpense.setColor(colorOrange);
+            mPaintColorText.setColor(colorGrey);
+            mPaintColorWhite.setColor(colorWhite);
+        } finally {
+            typedArray.recycle();
+        }
     }
 
     @Override
@@ -68,10 +94,6 @@ public class GraphicViewSale extends View {
         if (-mTranslateX >= mTotalWidth - getWidth() + 80) {
             mTranslateX = -(mTotalWidth - getWidth() + 80);
         }
-        mPaint.setColor(getResources().getColor(R.color.colorGray));
-        mPaint.setTextSize(getContext().getResources().getDimension(R.dimen.text_size_title));
-
-        mPaint.setStyle(Paint.Style.FILL);
         float top = getHeight() * 3 / 4.0f;
         float unit = (getHeight() - 2 * (getHeight() - top) - 40) / maxChartValue(mMoney);
         int exponent = (int) Math.log10(maxChartValue(mMoney) / 13);
@@ -85,10 +107,9 @@ public class GraphicViewSale extends View {
         canvas.restore();
         canvas.scale(mScaleFactor, mScaleFactor, mDetector.getFocusX(), mDetector.getFocusY());
         drawRectBackground(canvas, top, unit);
-        drawTextSaleandExpense(canvas, top);
+        drawTextSaleandExpense(canvas, top, space, distance);
     }
 
-    @SuppressWarnings("deprecation")
     private void initPaint() {
         createListMoney();
         WindowManager w = ((Activity) getContext()).getWindowManager();
@@ -96,13 +117,13 @@ public class GraphicViewSale extends View {
         mTotalWidth = 80 + 7 * element * mMoney.size() + 6 * element * (mMoney.size() - 1);
         setFadingEdgeLength(0);
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mPaint.setColor(getResources().getColor(R.color.colorGray));
+        mPaint.setColor(ContextCompat.getColor(getContext(), R.color.colorGray));
         mPaint.setStrokeWidth(1);
     }
 
     private void createListMoney() {
-        mMoney.add(new Money("Jan", 75000, 10000));
-        mMoney.add(new Money("Feb", 80000, 15000));
+        mMoney.add(new Money("Jan", 700000, 10000));
+        mMoney.add(new Money("Feb", 350000, 15000));
         mMoney.add(new Money("Mar", 56000, 20000));
         mMoney.add(new Money("Apr", 90000, 25000));
         mMoney.add(new Money("May", 100000, 30000));
@@ -115,58 +136,51 @@ public class GraphicViewSale extends View {
         mMoney.add(new Money("Dec", 134000, 64000));
     }
 
-    private float maxChartValue(List<Money> moneyList) {
-        List<Float> listChartValue = new ArrayList<>();
+    private int maxChartValue(List<Money> moneyList) {
+        List<Integer> listChartValue = new ArrayList<>();
         for (Money money : moneyList) {
-            listChartValue.add((float) money.getSale());
-            listChartValue.add((float) money.getExpense());
+            listChartValue.add(money.getSale());
+            listChartValue.add(money.getExpense());
         }
         return Collections.max(listChartValue);
     }
 
-    private void drawTextSaleandExpense(Canvas canvas, float top) {
+    private void drawTextSaleandExpense(Canvas canvas, float top, float space, float distance) {
         int n = 0;
-        mPaint.setStyle(Paint.Style.FILL);
-        mPaint.setColor(getResources().getColor(R.color.colorGray));
+        mPaintColorText.setStyle(Paint.Style.FILL);
         while (n <= 7) {
-            canvas.drawText(getResources().getString(R.string.dola) + n * 20000, 10, top - n * top / 12 + 10, mPaint);
+            canvas.drawText(getResources().getString(R.string.dola) + n * maxChartValue(mMoney) / 7, 10, top - n * top / 12 + 10, mPaintColorText);
             n++;
         }
     }
 
     private void drawRectBackground(Canvas canvas, float top, float unit) {
-        mPaint.setColor(getResources().getColor(R.color.colorWhite));
-        mPaint.setStyle(Paint.Style.FILL);
-        canvas.drawRect(getWidth() - 5, top - 150 - unit * maxChartValue(mMoney), getWidth(), top + 50, mPaint);
-        canvas.drawRect(0, top - 150 - unit * maxChartValue(mMoney), 120, top + 50, mPaint);
-        mPaint.setColor(getResources().getColor(R.color.colorGray));
+        mPaintColorWhite.setStyle(Paint.Style.FILL);
+        canvas.drawRect(getWidth() - 5, top - 150 - unit * maxChartValue(mMoney), getWidth(), top + 50, mPaintColorWhite);
+        canvas.drawRect(0, top - 150 - unit * maxChartValue(mMoney), 120, top + 50, mPaintColorWhite);
         mPaint.setStyle(Paint.Style.STROKE);
         canvas.drawRect(5, top - 150 - unit * maxChartValue(mMoney), getWidth() - 5, top + 100, mPaint);
-
     }
 
     private void drawSetTitle(Canvas canvas, float top, float unit) {
-        canvas.drawText(getResources().getString(R.string.title_chart), (getWidth() - 500) / 2.0f, top - 80 - unit * maxChartValue(mMoney), mPaint);
-        mPaint.setStyle(Paint.Style.FILL);
-        mPaint.setTextSize(getContext().getResources().getDimension(R.dimen.text_size_name));
+        mPaintColorText.setTextSize(getContext().getResources().getDimension(R.dimen.text_size_title));
+        canvas.drawText(getResources().getString(R.string.title_chart), (getWidth() - 500) / 2.0f, top - 80 - unit * maxChartValue(mMoney), mPaintColorText);
     }
 
     private void drawRectSaleandExpense(Canvas canvas, float top, float unit) {
-
-        canvas.drawText(getResources().getString(R.string.sale), 800, top + 70, mPaint);
-        canvas.drawText(getResources().getString(R.string.expense), 1000, top + 70, mPaint);
-        mPaint.setColor(getResources().getColor(R.color.blue));
-        canvas.drawRect(770, top + 50, 790, top + 70, mPaint);
-        mPaint.setColor(getResources().getColor(R.color.colorOrange));
-        canvas.drawRect(960, top + 50, 980, top + 70, mPaint);
+        mPaintColorText.setStyle(Paint.Style.FILL);
+        mPaintColorText.setTextSize(getContext().getResources().getDimension(R.dimen.text_size_name));
+        canvas.drawText(getResources().getString(R.string.sale), 800, top + 90, mPaintColorText);
+        canvas.drawText(getResources().getString(R.string.expense), 1000, top + 90, mPaintColorText);
+        canvas.drawRect(770, top + 70, 790, top + 90, mPaintColumnSale);
+        canvas.drawRect(960, top + 70, 980, top + 90, mPaintColumnExpense);
     }
 
     private void drawLine(Canvas canvas, float top) {
         int n = 0;
         mPaint.setStyle(Paint.Style.FILL);
-        mPaint.setColor(getResources().getColor(R.color.colorGray));
         while (n <= 7) {
-            canvas.drawLine(120, top - n * top / 12, getWidth() * 2, top - n * top / 12, mPaint);
+            canvas.drawLine(120, top - n * top / 12, getWidth() * 2, top - n * top / 12, mPaintColorText);
             n++;
         }
     }
@@ -177,34 +191,28 @@ public class GraphicViewSale extends View {
         int n = 0;
         mPaint.setStyle(Paint.Style.FILL);
         float totalWidth = left + 7 * element * mMoney.size() + 6 * element * (mMoney.size() - 1);
-        mPaint.setColor(getResources().getColor(R.color.colorGray));
         float line = top;
         if (totalWidth + 30 > getWidth()) {
             while (n <= maxChartValue(mMoney) + distance) {
-                canvas.drawLine(180, line, totalWidth, line, mPaint);
+                canvas.drawLine(180, line, totalWidth, line, mPaintColorText);
                 line -= space;
                 n += distance;
             }
         } else {
             while (n <= maxChartValue(mMoney) + distance) {
-                canvas.drawLine(180, line, getWidth() - 30 - 3 * element, line, mPaint);
+                canvas.drawLine(180, line, getWidth() - 30 - 3 * element, line, mPaintColorText);
                 line -= space;
                 n += distance;
             }
         }
-        mPaint.setColor(getResources().getColor(R.color.colorGray));
         mPaint.setStyle(Paint.Style.FILL);
         for (Money money : mMoney) {
-            mPaint.setColor(getResources().getColor(R.color.colorGray));
-            mPaint.setTextSize(25);
-            canvas.drawText(String.valueOf(money.getMonth()), left + 60, top + 25, mPaint);
-            mPaint.setColor(getResources().getColor(R.color.blue));
-            canvas.drawRect(left, top, left += element * 3, top - money.getSale() * top / 12 / 20000, mPaint);
-            mPaint.setColor(getResources().getColor(R.color.colorOrange));
-            canvas.drawRect(left += element, top, left += element * 3, top - money.getExpense() * top / 12 / 20000, mPaint);
+            mPaintColorText.setTextSize(getContext().getResources().getDimension(R.dimen.text_size_month));
+            canvas.drawText(String.valueOf(money.getMonth()), left + 60, top + 35, mPaintColorText);
+            canvas.drawRect(left, top, left += element * 3, top - money.getSale() * top / 12 / maxChartValue(mMoney) * 7, mPaintColumnSale);
+            canvas.drawRect(left += element, top, left += element * 3, top - money.getExpense() * top / 12 / maxChartValue(mMoney) * 7, mPaintColumnExpense);
             left += element * 6;
         }
-        mPaint.setColor(getResources().getColor(R.color.colorGray));
         mPaint.setStyle(Paint.Style.FILL);
     }
 
