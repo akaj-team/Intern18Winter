@@ -4,4 +4,5 @@
     <dimen name="widthColumn">15dp</dimen>
     <dimen name="sizeTextItem">13sp</dimen>
     <dimen name="sizeTextCaption">25sp</dimen>
+    <dimen name="sizeColumnMoney">25dp</dimen>
 </resources>

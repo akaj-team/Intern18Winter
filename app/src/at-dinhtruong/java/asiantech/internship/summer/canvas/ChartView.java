@@ -109,7 +109,7 @@ public class ChartView extends View {
 
         mPaintRect = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaintRect.setColor(getResources().getColor(R.color.colorColumnMoney));
-        mPaintRect.setStrokeWidth(50);
+        mPaintRect.setStrokeWidth(getContext().getResources().getDimension(R.dimen.sizeColumnMoney));
     }
 
     @Override
@@ -126,7 +126,7 @@ public class ChartView extends View {
         //draw note
         drawNote(width, height, canvas);
         // drawline
-        drawLineMoney(width, height, xDistance, yDistance, canvas);
+        drawLineMoney(width, xDistance, yDistance, canvas);
         //zoom
         canvas.save();
         canvas.translate(mTranslateX / mScaleFactor, 0);
@@ -161,7 +161,7 @@ public class ChartView extends View {
     }
 
     private void drawCaption(int width, int height, Canvas canvas) {
-        canvas.drawText(getContext().getString(R.string.salesAndExpenses), (float) ((width) / (2.5)), height / 20, mPaintTextCaption);
+        canvas.drawText(getContext().getString(R.string.salesAndExpenses), (float) ((width) / (2.5)), height / 15, mPaintTextCaption);
     }
 
     private void drawNote(int width, int height, Canvas canvas) {
@@ -173,40 +173,50 @@ public class ChartView extends View {
 
     private void drawColumnMoney(int xDistance, int yDistance, Canvas canvas) {
         canvas.drawText(String.valueOf(0), xDistance, yDistance, mPaintColumnMoney);
-        for (int i = 1; i < 8; i++) {
-            canvas.drawText(getContext().getString(R.string.usd) + 20000 * i, xDistance, yDistance - yDistance / 8 * i, mPaintColumnMoney);
+        for (int i = 1; i < 7; i++) {
+            canvas.drawText(getContext().getString(R.string.usd) + maxNumber() * i/5, xDistance, yDistance - yDistance / 7 * i, mPaintColumnMoney);
         }
     }
 
-    private void drawLineMoney(int width, int height, int xDistance, int yDistance, Canvas canvas) {
+    private void drawLineMoney(int width, int xDistance, int yDistance, Canvas canvas) {
         canvas.drawLine(xDistance + xDistance / 3, yDistance, width, yDistance, mPaintColumnMoney);
-        for (int i = 1; i < 8; i++) {
-            canvas.drawLine(xDistance + xDistance / 3, yDistance - height / 10 * i, width, yDistance - height / 10 * i, mPaintLine);
+        for (int i = 1; i < 7; i++) {
+            canvas.drawLine(xDistance + xDistance / 3, yDistance - yDistance / 7 * i, width, yDistance - yDistance / 7 * i, mPaintLine);
         }
     }
 
     private void drawColumnChart(int height, int xDistance, int yDistance, Canvas canvas) {
         int size = mListMoney.size();
         for (int i = 0; i < size; i++) {
-            canvas.drawLine((float) (1.8 * xDistance + 260 * i), yDistance, (float) (1.8 * xDistance + 260 * i), yDistance - (mListMoney.get(i).getSale() * height) / 200000, mPaintColumnSales);
-            canvas.drawLine((float) (2.1 * xDistance + 260 * i), yDistance, (float) (2.1 * xDistance + 260 * i), (yDistance - mListMoney.get(i).getExpense() * height / 200000), mPaintColumnExpenses);
+            canvas.drawLine((float) (1.8 * xDistance + 260 * i), yDistance, (float) (1.8 * xDistance + 260 * i), yDistance - (mListMoney.get(i).getSale() * height)/ (maxNumber()*7/4), mPaintColumnSales);
+            canvas.drawLine((float) (2.1 * xDistance + 260 * i), yDistance, (float) (2.1 * xDistance + 260 * i), (yDistance - mListMoney.get(i).getExpense() * height / (maxNumber()*7/4)), mPaintColumnExpenses);
             canvas.drawText(mListMoney.get(i).getMonth(), (float) (1.8 * xDistance + 260 * i), yDistance + yDistance / 20, mPaintTextItem);
         }
     }
 
     private void createListMoney() {
-        mListMoney.add(new Money(getContext().getString(R.string.jan), 70000, 10000));
-        mListMoney.add(new Money(getContext().getString(R.string.feb), 80000, 18000));
-        mListMoney.add(new Money(getContext().getString(R.string.mar), 75000, 20000));
-        mListMoney.add(new Money(getContext().getString(R.string.apr), 90000, 30000));
+        mListMoney.add(new Money(getContext().getString(R.string.jan), 750000, 100000));
+        mListMoney.add(new Money(getContext().getString(R.string.feb), 600000, 180000));
+        mListMoney.add(new Money(getContext().getString(R.string.mar), 350000, 200000));
+        mListMoney.add(new Money(getContext().getString(R.string.apr), 300000, 300000));
         mListMoney.add(new Money(getContext().getString(R.string.may), 105000, 42000));
         mListMoney.add(new Money(getContext().getString(R.string.jun), 130000, 80000));
-        mListMoney.add(new Money(getContext().getString(R.string.jul), 78000, 10000));
-        mListMoney.add(new Money(getContext().getString(R.string.aug), 82000, 18000));
-        mListMoney.add(new Money(getContext().getString(R.string.sep), 77000, 20000));
-        mListMoney.add(new Money(getContext().getString(R.string.oct), 93000, 30000));
-        mListMoney.add(new Money(getContext().getString(R.string.nov), 115000, 42000));
-        mListMoney.add(new Money(getContext().getString(R.string.dec), 125000, 80000));
+        mListMoney.add(new Money(getContext().getString(R.string.jul), 150000, 100000));
+        mListMoney.add(new Money(getContext().getString(R.string.aug), 182000, 180000));
+        mListMoney.add(new Money(getContext().getString(R.string.sep), 177000, 200000));
+        mListMoney.add(new Money(getContext().getString(R.string.oct), 193000, 300000));
+        mListMoney.add(new Money(getContext().getString(R.string.nov), 115000, 420000));
+        mListMoney.add(new Money(getContext().getString(R.string.dec), 125000, 180000));
+    }
+
+    private int maxNumber() {
+        int maxSale = 0;
+        int maxExpenses = 0;
+        for (int i = 0; i < mListMoney.size(); i++) {
+            maxSale = maxSale > mListMoney.get(i).getSale() ? maxSale : mListMoney.get(i).getSale();
+            maxExpenses = maxExpenses > mListMoney.get(i).getExpense() ? maxSale : mListMoney.get(i).getExpense();
+        }
+        return maxSale > maxExpenses ? maxSale : maxExpenses;
     }
 
     //zoom in zoom out
