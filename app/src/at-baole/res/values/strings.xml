@@ -46,4 +46,8 @@
     <string name="thread">Thread</string>
     <string name="handler">Handler</string>
     <string name="downloadSuccessfully">Download successfully</string>
+    <string name="usernameTest">username</string>
+    <string name="usernamePasswordNotEmpty">Username and password must not be empty</string>
+    <string name="usernameNotEmpty">Username must not be empty</string>
+    <string name="passwordNotEmpty">Password must not be empty</string>
 </resources>
