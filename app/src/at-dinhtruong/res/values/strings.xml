@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Intern18Summer</string>
+    <string name="app_name">DinhTruong</string>
     <string name="signUpActivity">SignUpActivity</string>
     <string name="userName">Username</string>
     <string name="passWord">Password</string>
@@ -82,10 +82,22 @@
     <string name="idCompany">idCompany</string>
     <string name="fileNameInternal">internalStorage.txt</string>
     <string name="insertError">Insert Error!</string>
+    <string name="restApi">REST API</string>
+    <string name="camera">Camera</string>
+    <string name="library">Library</string>
+    <string name="title">Title</string>
+    <string name="accept">Accept!</string>
+    <string name="selectPicture">Select picture!</string>
+    <string name="permissionDenied">Permission denied!</string>
+    <string name="data">data</string>
+    <string name="uploadCompleted">Upload completed!</string>
+    <string name="uploadFailed">Upload failed!</string>
+    <string name="loadImagesFailse">Load Images Failse!</string>
+    <string name="loading">Loading...</string>
     <string name="unitTest">Unit Test</string>
     <string name="incorrectPassword">Incorrect password</string>
     <string name="orLogInUsingASocialAccount">Or log in using a social account</string>
-    <string name="usernameShouldHave920Characters">Username should have 9-20 characters</string>
+    <string name="usernameShouldHave920Characters">Username should have 9–20 characters</string>
     <string name="usernameDoNotStartWithCapitalLettersOrNumbers">Username do not start with capital letters or numbers</string>
     <string name="usernameShouldHaveAtLeast2NonConsecutiveUpperCaseLetters">Username should have at least 2 non-consecutive uppercase letters</string>
     <string name="theUsernameShouldHaveAtMost2ConsecutiveNumericCharacters">The Username should have at most 2 consecutive numeric characters</string>
@@ -95,4 +107,5 @@
     <string name="passwordShouldNotLoopCharacterMoreThanTwoTimesInARow">Password should not loop character more than two times in a row</string>
     <string name="passwordDoNotEndWithDigitOrSpecialCharacter">Password do not end with digit or special character</string>
     <string name="passwordAtMostThreeConsecutiveNumericCharacters">Password at most three consecutive numeric characters</string>
+
 </resources>
