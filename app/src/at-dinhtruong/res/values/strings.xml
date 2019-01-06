@@ -85,4 +85,14 @@
     <string name="unitTest">Unit Test</string>
     <string name="incorrectPassword">Incorrect password</string>
     <string name="orLogInUsingASocialAccount">Or log in using a social account</string>
+    <string name="usernameShouldHave920Characters">Username should have 9-20 characters</string>
+    <string name="usernameDoNotStartWithCapitalLettersOrNumbers">Username do not start with capital letters or numbers</string>
+    <string name="usernameShouldHaveAtLeast2NonConsecutiveUpperCaseLetters">Username should have at least 2 non-consecutive uppercase letters</string>
+    <string name="theUsernameShouldHaveAtMost2ConsecutiveNumericCharacters">The Username should have at most 2 consecutive numeric characters</string>
+    <string name="theUsernameShouldNotHaveSpecialCharacters">The username should not have special characters</string>
+    <string name="theUsernameAndPasswordMustBeDifferent">The username and password must be different</string>
+    <string name="passwordShouldHasAtLeastTwoSpecialCharactersOrNumbers">Password should has at least two special characters or numbers</string>
+    <string name="passwordShouldNotLoopCharacterMoreThanTwoTimesInARow">Password should not loop character more than two times in a row</string>
+    <string name="passwordDoNotEndWithDigitOrSpecialCharacter">Password do not end with digit or special character</string>
+    <string name="passwordAtMostThreeConsecutiveNumericCharacters">Password at most three consecutive numeric characters</string>
 </resources>

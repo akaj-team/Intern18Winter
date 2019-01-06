@@ -15,6 +15,7 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/tvNotificationError"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
@@ -25,9 +26,10 @@
             android:textAlignment="center"
             android:textColor="@color/colorRed"
             android:textSize="20sp"
-            android:visibility="visible" />
+            android:visibility="gone" />
 
         <EditText
+            android:id="@+id/editUserName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
@@ -38,6 +40,7 @@
             tools:ignore="LabelFor,UnusedAttribute" />
 
         <EditText
+            android:id="@+id/edtPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
@@ -46,7 +49,7 @@
             android:background="@drawable/bg_username_password"
             android:inputType="textNoSuggestions"
             android:padding="10dp"
-            tools:ignore="LabelFor,UnusedAttribute" />
+            tools:ignore="LabelFor,TextFields,UnusedAttribute" />
 
         <Button
             android:id="@+id/btnLogin"
@@ -72,22 +75,23 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:padding="10dp"
-                android:paddingEnd="35dp"
-                android:paddingStart="35dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
                 android:background="@color/colorRed"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/google_plus"/>
-            <ImageView
                 android:padding="10dp"
-                android:paddingEnd="35dp"
                 android:paddingStart="35dp"
-                android:background="@color/colorBlue"
+                android:paddingEnd="35dp"
+                android:src="@drawable/google_plus" />
+
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/facebook_box"/>
+                android:background="@color/colorBlue"
+                android:padding="10dp"
+                android:paddingStart="35dp"
+                android:paddingEnd="35dp"
+                android:src="@drawable/facebook_box" />
 
         </LinearLayout>
 
