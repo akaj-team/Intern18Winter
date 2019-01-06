@@ -13,16 +13,18 @@ public class UtilValidate {
     public final static String END_PASSWORD = "Password don't finish with special character or digit";
     public final static String UPPER_PASSWORD = "Password must have at least 3 non consecutive capital character";
     public final static String SUCCESSFUL = "Successful!!!";
+    public final static String USER = "trandinhphu";
+    public final static String USER_UPCASE = "TranDinhPhu";
+    public final static String USERNAME_RIGHT = "tranDinhPhu";
+    public final static String PASS = "trandinhphu";
 
     private UtilValidate() {
     }
 
-    // check length username
     public static boolean isLengthUsernameRight(String username) {
         return username.length() > 8 && username.length() < 21;
-    }
+    } // check length username
 
-    // sum upper case of username
     public static int containUpcase(String string) {
         int n = 0;
         int size = string.length();
@@ -32,9 +34,8 @@ public class UtilValidate {
             }
         }
         return n;
-    }
+    } // sum upper case of username
 
-    // check Username must have at least 2 non consecutive capital character
     public static boolean isUpcaseNotContinous(String string, int number) {
         int size = string.length();
         int n = 0;
@@ -48,7 +49,7 @@ public class UtilValidate {
             }
             return n <= 0;
         }
-    }
+    } // check Username must have at least 2 non consecutive capital character
 
     // check Username haven't special character and space
     public static boolean isUsernameNotSpecialCharacter(String username) {
@@ -73,7 +74,6 @@ public class UtilValidate {
         return n;
     }
 
-    // check Username must less 3 next digit
     public static boolean isUsernameHaveNotMoreTwoDigitContinous(String username) {
         int size = username.length();
         int n = 0;
@@ -87,19 +87,16 @@ public class UtilValidate {
             }
             return n <= 0;
         }
-    }
+    } // check Username must less 3 next digit
 
-    // check Username can't begin with upper cases and digit
     public static boolean isUsernameStartLowerCase(String username) {
         return Character.isLowerCase(username.charAt(0));
-    }
+    } // check Username can't begin with upper cases and digit
 
-    // check password must different with username
     public static boolean isPasswordNotUser(String username, String password) {
         return username.length() != password.length() || !password.contains(username);
-    }
+    } // check password must different with username
 
-    // check password have least 2 special character or digit
     public static boolean isPasswordContainsDigitAndSpecial(String password) {
         int n = 0;
         int size = password.length();
@@ -109,14 +106,12 @@ public class UtilValidate {
             }
         }
         return n >= 2;
-    }
+    }// check password have least 2 special character or digit
 
-    // check length password
     public static boolean isLengthPasswordRight(String password) {
         return password.length() >= 8;
-    }
+    } // check length password
 
-    // check password isn't loop 1 character too 2 times next
     public static boolean isPasswordNotRepeatCharacter(String password) {
         int size = password.length();
         int n = 0;
@@ -126,14 +121,12 @@ public class UtilValidate {
             }
         }
         return n <= 0;
-    }
+    } // check password isn't loop 1 character too 2 times next
 
-    // Password don't finish with special character or digit
     public static boolean isPasswordDoNotEndWithDigitOrCharacter(String password) {
         return Character.isLetter(password.charAt(password.length() - 1));
-    }
+    } // Password don't finish with special character or digit
 
-    // check password must have at least 3 non consecutive capital character
     public static boolean isUpcaseNotMoreTwoUpperCaseContinous(String string, int number) {
         int size = string.length();
         int n = 0;
@@ -147,9 +140,8 @@ public class UtilValidate {
             }
             return n <= 0;
         }
-    }
+    } // check password must have at least 3 non consecutive capital character
 
-    // return value login when error and successful
     public static String resultLogin(String username, String password) {
         if (!isLengthUsernameRight(username)) {
             return CHECK_LENGTH_USERNAME;
@@ -185,5 +177,5 @@ public class UtilValidate {
             return UPPER_PASSWORD;
         }
         return SUCCESSFUL;
-    }
+    } // return value login when error and successful
 }
