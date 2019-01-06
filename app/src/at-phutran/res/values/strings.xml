@@ -31,7 +31,7 @@
     <string name="sign_up">Signup?</string>
     <string name="titleInput">Please input email and password:</string>
     <string name="titleResult">Your email and password:</string>
-    <string name="login">LOGIN</string>
+    <string name="login">login</string>
     <string name="signUp">SIGN UP</string>
     <string name="checkInput">Please check your email and password</string>
     <string name="checkInputSignUp">Please check again</string>
@@ -46,4 +46,8 @@
     <string name="timeline">timeline</string>
     <string name="favourite">favourite</string>
     <string name="exercise5">viewpager</string>
+    <string name="exercise10">unit test</string>
+    <string name="socialAccount">or log in using a social account</string>
+    <string name="askAccount">Don\'t have a account yet?</string>
+    <string name="askPassword">Forgot your password ?</string>
 </resources>
