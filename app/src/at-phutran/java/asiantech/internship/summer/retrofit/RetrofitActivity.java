@@ -1,6 +1,7 @@
 package asiantech.internship.summer.retrofit;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -33,11 +34,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+@SuppressLint("Registered")
 public class RetrofitActivity extends AppCompatActivity {
     private static final int CHOOSE_GALLERY = 0;
     private static final int CHOOSE_CAMERA = 1;
     private static final int GALLERY = 111;
     private static final int CAMERA = 222;
+    private static final int REQUEST_CODE_ASK_PERMISSIONS_CAMERA = 333;
+    private static final int REQUEST_CODE_ASK_PERMISSIONS_GALLERY = 444;
     private static final String ACCESS_TOKEN = "604d1f2a63e1620f8e496970f675f0322671a3de0ba9f44c850e9ddc193f4476";
     private static final String UPLOAD_URL = "https://upload.gyazo.com/api/upload";
     private int mActionChangeAvatar;
@@ -79,11 +83,15 @@ public class RetrofitActivity extends AppCompatActivity {
                     switch (which) {
                         case CHOOSE_GALLERY:
                             mActionChangeAvatar = GALLERY;
-                            chooseGallery();
+                            if (checkPermission()) {
+                                chooseGallery();
+                            }
                             break;
                         case CHOOSE_CAMERA:
                             mActionChangeAvatar = CAMERA;
-                            chooseCamera();
+                            if (checkPermission()) {
+                                chooseCamera();
+                            }
                             break;
                     }
                 });
@@ -101,6 +109,30 @@ public class RetrofitActivity extends AppCompatActivity {
         if (checkPermission()) {
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             startActivityForResult(intent, CAMERA);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_CODE_ASK_PERMISSIONS_CAMERA: {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    chooseCamera();
+                } else {
+                    Toast.makeText(RetrofitActivity.this, R.string.deny, Toast.LENGTH_SHORT).show();
+                }
+                break;
+            }
+            case REQUEST_CODE_ASK_PERMISSIONS_GALLERY: {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    chooseGallery();
+                } else {
+                    Toast.makeText(RetrofitActivity.this, R.string.deny, Toast.LENGTH_SHORT).show();
+                }
+                break;
+            }
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
 
@@ -134,11 +166,11 @@ public class RetrofitActivity extends AppCompatActivity {
 
     private boolean checkPermission() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED && mActionChangeAvatar == CAMERA) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 333);
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, REQUEST_CODE_ASK_PERMISSIONS_CAMERA);
             return false;
         }
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED && mActionChangeAvatar == GALLERY) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, GALLERY);
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_ASK_PERMISSIONS_GALLERY);
             return false;
         }
         return true;
@@ -146,7 +178,7 @@ public class RetrofitActivity extends AppCompatActivity {
 
     private void uploadImage(Uri imageUri) {
         onProgressbarDialog();
-        File file = new File(Objects.requireNonNull(RealPathUtil.getRealPathFromURI_API11to18(getApplicationContext(), imageUri)));
+        File file = new File(Objects.requireNonNull(RealPathUtil.getRealPathFromUriAPI11to18(getApplicationContext(), imageUri)));
         RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
         MultipartBody.Part image = MultipartBody.Part.createFormData("imagedata", file.getName(), requestBody);
         RequestBody token = RequestBody.create(MediaType.parse("text/plain"), ACCESS_TOKEN);

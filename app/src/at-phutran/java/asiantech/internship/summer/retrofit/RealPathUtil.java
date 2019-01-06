@@ -9,7 +9,7 @@ import android.provider.MediaStore;
 
 class RealPathUtil {
     @SuppressLint("NewApi")
-    static String getRealPathFromURI_API11to18(Context context, Uri contentUri) {
+    static String getRealPathFromUriAPI11to18(Context context, Uri contentUri) {
         String[] array = {MediaStore.Images.Media.DATA};
         String result = null;
         CursorLoader cursorLoader = new CursorLoader(context, contentUri, array, null, null, null);

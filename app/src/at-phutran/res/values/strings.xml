@@ -57,4 +57,5 @@
     <string name="commentImage">this is picture</string>
     <string name="error">error</string>
     <string name="successful">successful</string>
+    <string name="deny">deny</string>
 </resources>
