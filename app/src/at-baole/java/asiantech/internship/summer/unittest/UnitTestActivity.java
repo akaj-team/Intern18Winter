@@ -7,6 +7,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import asiantech.internship.summer.R;
+import asiantech.internship.summer.unittest.model.User;
+import asiantech.internship.summer.unittest.utils.Validate;
 
 public class UnitTestActivity extends AppCompatActivity {
     private TextView mTvNotification;
@@ -19,21 +21,34 @@ public class UnitTestActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_unit_test);
         initView();
-        onLickLogin();
+        onClickLogin();
     }
 
     private void initView() {
         mTvNotification = findViewById(R.id.tvNotification);
+        mTvNotification.setTextColor(getResources().getColor(R.color.colorRed));
         mEdtUsername = findViewById(R.id.edtUsername);
         mEdtPassword = findViewById(R.id.edtPassword);
         mBtnLogin = findViewById(R.id.btnLogin);
     }
 
-    public void onLickLogin() {
+    private void onClickLogin() {
         mBtnLogin.setOnClickListener(view -> {
             String username = mEdtUsername.getText().toString().trim();
             String password = mEdtPassword.getText().toString().trim();
-            mTvNotification.setTextColor(getResources().getColor(R.color.colorRed));
+            User user = new User(username, password);
+            String checkResult;
+
+            if (Validate.isEmptyUsername(user)) {
+                mTvNotification.setText(R.string.usernameNotEmpty);
+            } else if (Validate.isEmptyPassword(user)) {
+                mTvNotification.setText(R.string.passwordNotEmpty);
+            } else {
+                checkResult = getResources().getString(Validate.validateUserName(username))
+                        + "\n" + getResources().getString(Validate.validatePassword(password))
+                        + "\n" + getResources().getString(Validate.checkUserName(user));
+                mTvNotification.setText(checkResult);
+            }
         });
     }
 }
