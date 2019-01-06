@@ -18,7 +18,6 @@ public class Validate {
     private static Pattern Password_Not_End_With_Digits_Or_Special_Characters;
     private static Pattern Password_At_Least_3_NonConsecutive_Uppercase_Letters;
 
-
     private static void compileRegex(){
         Username_Length_More_Than_8_And_Less_Than_21 = Pattern.compile("^.{9,20}$");
         Username_At_Least_2_NonConsecutive_Uppercase_Letters = Pattern.compile("^.*[A-Z].+[A-Z]");

@@ -1,6 +1,5 @@
 package asiantech.internship.summer.unittest;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -24,7 +23,7 @@ public class UsernameTest {
     }
 
     @Test
-    public void usernameNotEmpty(){
+    public void usernameNotEmpty() {
         when(mUser.getUsername()).thenReturn("a");
         assertFalse(Validate.isEmptyUsername(mUser));
     }
@@ -48,7 +47,7 @@ public class UsernameTest {
     }
 
     @Test
-    public void usernameContainsSpecialLetter(){
+    public void usernameContainsSpecialLetter() {
         when(mUser.getUsername()).thenReturn("leQuocBao!@#");
         assertEquals(Validate.validateUserName(mUser.getUsername()), R.string.errorUsernameNotContainSpecialCharacters);
     }

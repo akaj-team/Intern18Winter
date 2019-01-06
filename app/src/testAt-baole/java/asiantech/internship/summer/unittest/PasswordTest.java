@@ -1,6 +1,5 @@
 package asiantech.internship.summer.unittest;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
