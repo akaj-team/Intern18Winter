@@ -32,7 +32,7 @@ public class UsernameTest {
     @Test
     public void usernameLengthLessThan8Letters() {
         when(mUser.getUsername()).thenReturn("baole");
-        Assert.assertEquals(Validate.validateUserName(mUser.getUsername()), R.string.errorUsernameLengthMoreThan8AndLessThan21);
+        assertEquals(Validate.validateUserName(mUser.getUsername()), R.string.errorUsernameLengthMoreThan8AndLessThan21);
     }
 
     @Test

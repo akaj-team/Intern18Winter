@@ -32,7 +32,7 @@ public class PasswordTest {
     @Test
     public void passwordNotAtLeast2SpecialCharactersOrDigits() {
         doReturn("BaoLe").when(mUser).getPassword();
-        Assert.assertEquals(Validate.validatePassword(mUser.getPassword()), R.string.errorPasswordAtLeast2SpecialCharactersOrDigits);
+        assertEquals(Validate.validatePassword(mUser.getPassword()), R.string.errorPasswordAtLeast2SpecialCharactersOrDigits);
     }
 
     @Test
