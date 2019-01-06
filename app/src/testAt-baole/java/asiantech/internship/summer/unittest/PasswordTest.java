@@ -65,15 +65,15 @@ public class PasswordTest {
     }
 
     @Test
-    public void passwordAndUsernameMatch() {
+    public void passwordMatchesUsername() {
         doReturn("BaoDepTrai").when(mUser).getPassword();
-        assertEquals(Validate.checkUserName(mUser), R.string.PasswordMatchesUsername);
+        assertEquals(Validate.checkPasswordMatchesUsername(mUser), R.string.PasswordMatchesUsername);
     }
 
     @Test
-    public void passwordAndUsernameNotMatch() {
+    public void passwordNotMatchUsername() {
         doReturn("BaoDepTrai123").when(mUser).getPassword();
-        assertEquals(Validate.checkUserName(mUser), R.string.PasswordNotMatchUsername);
+        assertEquals(Validate.checkPasswordMatchesUsername(mUser), R.string.PasswordNotMatchUsername);
     }
 
     @Test

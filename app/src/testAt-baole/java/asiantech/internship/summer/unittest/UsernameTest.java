@@ -47,6 +47,12 @@ public class UsernameTest {
     }
 
     @Test
+    public void usernameNotContainSpace() {
+        when(mUser.getUsername()).thenReturn(" leQuocBao ");
+        assertEquals(Validate.validateUserName(mUser.getUsername()), R.string.errorUsernameNotContainSpace);
+    }
+
+    @Test
     public void usernameContainsSpecialLetter() {
         when(mUser.getUsername()).thenReturn("leQuocBao!@#");
         assertEquals(Validate.validateUserName(mUser.getUsername()), R.string.errorUsernameNotContainSpecialCharacters);

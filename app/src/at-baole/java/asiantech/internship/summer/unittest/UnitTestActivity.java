@@ -26,7 +26,7 @@ public class UnitTestActivity extends AppCompatActivity {
 
     private void initView() {
         mTvNotification = findViewById(R.id.tvNotification);
-        mTvNotification.setTextColor(getResources().getColor(R.color.colorRed));
+        mTvNotification.setTextColor(getResources().getColor(R.color.colorDarkRed));
         mEdtUsername = findViewById(R.id.edtUsername);
         mEdtPassword = findViewById(R.id.edtPassword);
         mBtnLogin = findViewById(R.id.btnLogin);
@@ -38,6 +38,7 @@ public class UnitTestActivity extends AppCompatActivity {
             String password = mEdtPassword.getText().toString().trim();
             User user = new User(username, password);
             String checkResult;
+            mTvNotification.setBackground(getResources().getDrawable(R.drawable.bg_shape_stroke_red));
 
             if (Validate.isEmptyUsername(user)) {
                 mTvNotification.setText(R.string.usernameNotEmpty);
@@ -46,7 +47,7 @@ public class UnitTestActivity extends AppCompatActivity {
             } else {
                 checkResult = getResources().getString(Validate.validateUserName(username))
                         + "\n" + getResources().getString(Validate.validatePassword(password))
-                        + "\n" + getResources().getString(Validate.checkUserName(user));
+                        + "\n" + getResources().getString(Validate.checkPasswordMatchesUsername(user));
                 mTvNotification.setText(checkResult);
             }
         });

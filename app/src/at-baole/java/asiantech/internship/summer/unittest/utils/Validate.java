@@ -18,7 +18,7 @@ public class Validate {
     private static Pattern Password_Not_End_With_Digits_Or_Special_Characters;
     private static Pattern Password_At_Least_3_NonConsecutive_Uppercase_Letters;
 
-    private static void compileRegex(){
+    private static void compileRegex() {
         Username_Length_More_Than_8_And_Less_Than_21 = Pattern.compile("^.{9,20}$");
         Username_At_Least_2_NonConsecutive_Uppercase_Letters = Pattern.compile("^.*[A-Z].+[A-Z]");
         Username_Not_Contain_Special_Characters = Pattern.compile("[^A-Za-z0-9]");
@@ -40,12 +40,13 @@ public class Validate {
         if (!Username_At_Least_2_NonConsecutive_Uppercase_Letters.matcher(username).find()) {
             return R.string.errorUsenameAtLeast2NonConsecutiveUppercaseLetters;
         }
+        if (username.contains(" ")) {
+            return R.string.errorUsernameNotContainSpace;
+        }
         if (Username_Not_Contain_Special_Characters.matcher(username).find()) {
             return R.string.errorUsernameNotContainSpecialCharacters;
         }
-//        if (username.contains(" ")){
-//            return R.string.errorUsernameNotContainSpace;
-//        }
+
         if (Username_At_Most_2_Consecutive_Digits.matcher(username).find()) {
             return R.string.errorUsernameAtMost2ConsecutiveDigits;
         }
@@ -75,7 +76,7 @@ public class Validate {
         return R.string.validPassword;
     }
 
-    public static int checkUserName(User user) {
+    public static int checkPasswordMatchesUsername(User user) {
         if (!user.getUsername().isEmpty() && !user.getPassword().isEmpty()) {
             if (user.getUsername().equals(user.getPassword())) {
                 return R.string.PasswordMatchesUsername;
@@ -84,11 +85,11 @@ public class Validate {
         return R.string.PasswordNotMatchUsername;
     }
 
-    public static boolean isEmptyUsername(User user){
+    public static boolean isEmptyUsername(User user) {
         return user.getUsername().isEmpty();
     }
 
-    public static boolean isEmptyPassword(User user){
+    public static boolean isEmptyPassword(User user) {
         return user.getPassword().isEmpty();
     }
 }
