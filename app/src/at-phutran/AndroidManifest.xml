@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="asiantech.internship.summer">
+
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
@@ -28,8 +29,10 @@
         <activity android:name=".fragment.WelcomeActivity" />
         <activity android:name=".recyclerview.RecyclerViewActivity" />
         <activity android:name=".viewpager.ViewPagerActivity" />
+        <activity
+            android:name=".canvas.CanvasActivity"
+            android:screenOrientation="landscape" />
+        <activity android:name=".file_storage.EmployeeActivity" />
         <activity android:name=".file_storage.FileStorageActivity" />
-        <activity android:name=".file_storage.EmployeeActivity"/>
     </application>
-
 </manifest>

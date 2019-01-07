@@ -22,6 +22,7 @@
         android:layout_marginTop="30dp"
         android:background="@color/colorGreen"
         android:text="@string/exercise2" />
+
     <Button
         android:id="@+id/btnExercise3"
         android:layout_width="match_parent"
@@ -29,13 +30,15 @@
         android:layout_marginTop="30dp"
         android:background="@color/colorGreen"
         android:text="@string/exercise3" />
+
     <Button
         android:id="@+id/btnExercise4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:background="@color/colorGreen"
-    android:text="@string/exercise4" />
+        android:text="@string/exercise4" />
+
     <Button
         android:id="@+id/btnExercise5"
         android:layout_width="match_parent"
@@ -43,6 +46,15 @@
         android:layout_marginTop="30dp"
         android:background="@color/colorGreen"
         android:text="@string/exercise5" />
+
+    <Button
+        android:id="@+id/btnExercise9"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:background="@color/colorGreen"
+        android:text="@string/exercise9" />
+
     <Button
         android:id="@+id/btnExercise6"
         android:layout_width="match_parent"

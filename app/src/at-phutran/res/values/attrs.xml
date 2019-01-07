@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="GraphicViewChart">
+        <attr name="colorOfSale" format="color"/>
+        <attr name="colorOfExpense" format="color"/>
+        <attr name="colorOfText" format="color"/>
+        <attr name="colorOfLine" format="color"/>
+        <attr name="colorOfBackground" format="color"/>
+        <attr name="widthOfColumn" format="dimension" />
+        <attr name="widthOfNoteColumn" format="dimension" />
+        <attr name="textNote" format="dimension" />
+        <attr name="textContent" format="dimension" />
+    </declare-styleable>
+</resources>
