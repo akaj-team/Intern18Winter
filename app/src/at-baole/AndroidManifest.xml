@@ -15,6 +15,7 @@
         android:theme="@style/AppTheme">
 
         <activity android:name=".drawerlayout.DrawerLayoutActivity">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,6 +29,9 @@
         <activity android:name=".recyclerview.RecyclerViewActivity" />
         <activity android:name=".viewpager.TimelineActivity" />
         <activity android:name=".viewpager.PagerActivity" />
-        <activity android:name=".asynctaskthreadhandler.AsyncTaskThreadHandlerActivity"/>
+        <activity android:name=".asynctaskthreadhandler.AsyncTaskThreadHandlerActivity" />
+        <activity
+            android:name=".canvas.CanvasActivity"
+            android:screenOrientation="landscape" />
     </application>
 </manifest>
