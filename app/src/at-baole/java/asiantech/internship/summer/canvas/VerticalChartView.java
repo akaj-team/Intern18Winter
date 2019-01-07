@@ -205,9 +205,10 @@ public class VerticalChartView extends View {
         int startColumnPosition = width / 8;
         int startColumnHeight = height * 3 / 4;
         int columnUnit = height / 14;
+        int size = mMoneyLists.size();
         mPaintText.setTextSize(getResources().getDimension(R.dimen.smallTextSize));
 
-        for (int i = 0; i < mMoneyLists.size(); i++) {
+        for (int i = 0; i < size; i++) {
             largeColumnDistance = (i == 0) ? 50 : 150;
             canvas.drawRect(startColumnPosition + largeColumnDistance, (float) (startColumnHeight - ((mMoneyLists.get(i).getSales() * columnUnit) / moneyUnit())), startColumnPosition + largeColumnDistance + 50, startColumnHeight, mPaintColumnSales);
             canvas.drawRect(startColumnPosition + largeColumnDistance + 50 + smallColumnDistance, (float) (startColumnHeight - ((mMoneyLists.get(i).getExpenses() * columnUnit) / moneyUnit())), startColumnPosition + largeColumnDistance + smallColumnDistance + 50 * 2, startColumnHeight, mPaintColumnExpenses);
