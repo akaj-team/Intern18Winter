@@ -10,7 +10,6 @@ import asiantech.internship.summer.unittest.model.User;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.doReturn;
 
 public class PasswordTest {
@@ -25,7 +24,7 @@ public class PasswordTest {
     @Test
     public void isPasswordEmpty() {
         doReturn("").when(mUser).getPassword();
-        assertTrue(ValidateUtils.isEmptyPassword(mUser));
+        assertFalse(ValidateUtils.isEmptyPassword(mUser));
     }
 
     @Test
