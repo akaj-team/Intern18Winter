@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
-        android:textSize="15sp" />
+        android:textSize="@dimen/textSize15dp" />
 
     <EditText
         android:id="@+id/edtUsername"
@@ -19,10 +19,11 @@
         android:layout_height="50dp"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
+        android:autofillHints="@string/usernameTest"
         android:background="@drawable/bg_shape_stroke_cyan"
         android:hint="@string/usernameTest"
         android:inputType="text"
-        tools:ignore="Autofill" />
+        tools:targetApi="27" />
 
     <EditText
         android:id="@+id/edtPassword"
@@ -30,10 +31,11 @@
         android:layout_height="50dp"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
+        android:autofillHints="@string/password"
         android:background="@drawable/bg_shape_stroke_cyan"
         android:hint="@string/password"
         android:inputType="textPassword"
-        tools:ignore="Autofill" />
+        tools:targetApi="27" />
 
     <Button
         android:id="@+id/btnLogin"
@@ -44,7 +46,7 @@
         android:background="@drawable/bg_shape_solid_cyan"
         android:text="@string/logIn"
         android:textColor="@color/colorWhite"
-        android:textSize="18sp" />
+        android:textSize="@dimen/textSize18dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -53,7 +55,7 @@
         android:layout_marginTop="20dp"
         android:text="@string/loginWithSocialAccount"
         android:textColor="@color/colorBlack"
-        android:textSize="16sp" />
+        android:textSize="@dimen/mediumTexSize" />
 
     <LinearLayout
         android:layout_width="200dp"
@@ -87,7 +89,7 @@
         android:layout_marginTop="25dp"
         android:text="@string/dontHaveAnAccountYet"
         android:textColor="@color/colorCyan"
-        android:textSize="18sp" />
+        android:textSize="@dimen/textSize18dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -96,6 +98,6 @@
         android:layout_marginTop="20dp"
         android:text="@string/forgotYourPassword"
         android:textColor="@color/colorCyan"
-        android:textSize="18sp" />
+        android:textSize="@dimen/textSize18dp" />
 
 </LinearLayout>

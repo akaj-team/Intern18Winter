@@ -1,11 +1,13 @@
-package asiantech.internship.summer.unittest.utils;
+package asiantech.internship.summer.unittest;
+
+import android.text.TextUtils;
 
 import java.util.regex.Pattern;
 
 import asiantech.internship.summer.R;
 import asiantech.internship.summer.unittest.model.User;
 
-public class Validate {
+public final class ValidateUtils {
     private static Pattern Username_Length_More_Than_8_And_Less_Than_21;
     private static Pattern Username_At_Least_2_NonConsecutive_Uppercase_Letters;
     private static Pattern Username_Not_Contain_Special_Characters;
@@ -17,6 +19,10 @@ public class Validate {
     private static Pattern Password_At_Most_2_Consecutive_Repeated_Letters;
     private static Pattern Password_Not_End_With_Digits_Or_Special_Characters;
     private static Pattern Password_At_Least_3_NonConsecutive_Uppercase_Letters;
+
+    private ValidateUtils() {
+        // No-op
+    }
 
     private static void compileRegex() {
         Username_Length_More_Than_8_And_Less_Than_21 = Pattern.compile("^.{9,20}$");
@@ -85,10 +91,10 @@ public class Validate {
     }
 
     public static boolean isEmptyUsername(User user) {
-        return user.getUsername().isEmpty();
+        return TextUtils.isEmpty(user.getUsername());
     }
 
     public static boolean isEmptyPassword(User user) {
-        return user.getPassword().isEmpty();
+        return TextUtils.isEmpty(user.getPassword());
     }
 }

@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import asiantech.internship.summer.R;
 import asiantech.internship.summer.unittest.model.User;
-import asiantech.internship.summer.unittest.utils.Validate;
 
 public class UnitTestActivity extends AppCompatActivity {
     private TextView mTvNotification;
@@ -40,14 +39,14 @@ public class UnitTestActivity extends AppCompatActivity {
             String checkResult;
             mTvNotification.setBackground(getResources().getDrawable(R.drawable.bg_shape_stroke_red));
 
-            if (Validate.isEmptyUsername(user)) {
+            if (ValidateUtils.isEmptyUsername(user)) {
                 mTvNotification.setText(R.string.usernameNotEmpty);
-            } else if (Validate.isEmptyPassword(user)) {
+            } else if (ValidateUtils.isEmptyPassword(user)) {
                 mTvNotification.setText(R.string.passwordNotEmpty);
             } else {
-                checkResult = getResources().getString(Validate.validateUserName(username))
-                        + "\n" + getResources().getString(Validate.validatePassword(password))
-                        + "\n" + getResources().getString(Validate.checkPasswordMatchesUsername(user));
+                checkResult = getResources().getString(ValidateUtils.validateUserName(username))
+                        + "\n" + getResources().getString(ValidateUtils.validatePassword(password))
+                        + "\n" + getResources().getString(ValidateUtils.checkPasswordMatchesUsername(user));
                 mTvNotification.setText(checkResult);
             }
         });

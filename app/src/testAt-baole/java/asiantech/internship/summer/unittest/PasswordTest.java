@@ -7,7 +7,6 @@ import org.mockito.Spy;
 
 import asiantech.internship.summer.R;
 import asiantech.internship.summer.unittest.model.User;
-import asiantech.internship.summer.unittest.utils.Validate;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -24,68 +23,68 @@ public class PasswordTest {
     }
 
     @Test
-    public void passwordEmpty(){
+    public void isPasswordEmpty() {
         doReturn("").when(mUser).getPassword();
-        assertTrue(Validate.isEmptyPassword(mUser));
+        assertTrue(ValidateUtils.isEmptyPassword(mUser));
     }
 
     @Test
     public void passwordNotEmpty() {
         doReturn("a").when(mUser).getPassword();
-        assertFalse(Validate.isEmptyPassword(mUser));
+        assertFalse(ValidateUtils.isEmptyPassword(mUser));
     }
 
     @Test
     public void passwordNotAtLeast2SpecialCharactersOrDigits() {
         doReturn("BaoLe").when(mUser).getPassword();
-        assertEquals(Validate.validatePassword(mUser.getPassword()), R.string.errorPasswordAtLeast2SpecialCharactersOrDigits);
+        assertEquals(ValidateUtils.validatePassword(mUser.getPassword()), R.string.errorPasswordAtLeast2SpecialCharactersOrDigits);
     }
 
     @Test
     public void passwordLengthLessThan8() {
         doReturn("Bao123").when(mUser).getPassword();
-        assertEquals(Validate.validatePassword(mUser.getPassword()), R.string.errorPasswordLengthAtLeast8);
+        assertEquals(ValidateUtils.validatePassword(mUser.getPassword()), R.string.errorPasswordLengthAtLeast8);
     }
 
     @Test
     public void passwordNotAtMost2ConsecutiveRepeatedLetters() {
         doReturn("LeQuocBao999").when(mUser).getPassword();
-        assertEquals(Validate.validatePassword(mUser.getPassword()), R.string.errorPasswordAtMost2ConsecutiveRepeatedLetters);
+        assertEquals(ValidateUtils.validatePassword(mUser.getPassword()), R.string.errorPasswordAtMost2ConsecutiveRepeatedLetters);
     }
 
     @Test
     public void passwordEndWithDigit() {
         doReturn("LeQuocBao#1").when(mUser).getPassword();
-        assertEquals(Validate.validatePassword(mUser.getPassword()), R.string.errorPasswordNotEndWithDigitsOrSpecialLetters);
+        assertEquals(ValidateUtils.validatePassword(mUser.getPassword()), R.string.errorPasswordNotEndWithDigitsOrSpecialLetters);
     }
 
     @Test
     public void passwordEndWithSpecialCharacter() {
         doReturn("LeQuocBao1#").when(mUser).getPassword();
-        assertEquals(Validate.validatePassword(mUser.getPassword()), R.string.errorPasswordNotEndWithDigitsOrSpecialLetters);
+        assertEquals(ValidateUtils.validatePassword(mUser.getPassword()), R.string.errorPasswordNotEndWithDigitsOrSpecialLetters);
     }
 
     @Test
     public void passwordNotAtLeast3NonConsecutiveUppercaseLetters() {
         doReturn("quocbao#1deptrai").when(mUser).getPassword();
-        assertEquals(Validate.validatePassword(mUser.getPassword()), R.string.errorPasswordAtLeast3NonConsecutiveUppercaseLetters);
+        assertEquals(ValidateUtils.validatePassword(mUser.getPassword()), R.string.errorPasswordAtLeast3NonConsecutiveUppercaseLetters);
     }
 
     @Test
     public void passwordMatchesUsername() {
         doReturn("BaoDepTrai").when(mUser).getPassword();
-        assertEquals(Validate.checkPasswordMatchesUsername(mUser), R.string.PasswordMatchesUsername);
+        assertEquals(ValidateUtils.checkPasswordMatchesUsername(mUser), R.string.PasswordMatchesUsername);
     }
 
     @Test
     public void passwordNotMatchUsername() {
         doReturn("BaoDepTrai123").when(mUser).getPassword();
-        assertEquals(Validate.checkPasswordMatchesUsername(mUser), R.string.PasswordNotMatchUsername);
+        assertEquals(ValidateUtils.checkPasswordMatchesUsername(mUser), R.string.PasswordNotMatchUsername);
     }
 
     @Test
     public void passwordValid() {
         doReturn("QuocBao#1DepTrai").when(mUser).getPassword();
-        assertEquals(Validate.validatePassword(mUser.getPassword()), R.string.validPassword);
+        assertEquals(ValidateUtils.validatePassword(mUser.getPassword()), R.string.validPassword);
     }
 }
