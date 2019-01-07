@@ -117,13 +117,13 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerLay
                     switch (which) {
                         case CHOOSE_GALLERY:
                             mActionChangeAvatar = GALLERY;
-                            if (checkPermission()) {
+                            if (checkPermissionForGallery()) {
                                 chooseGallery();
                             }
                             break;
                         case CHOOSE_CAMERA:
                             mActionChangeAvatar = CAMERA;
-                            if (checkPermission()) {
+                            if (checkPermissionForCamera()) {
                                 chooseCamera();
                             }
                             break;
@@ -133,14 +133,14 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerLay
     }
 
     public void chooseGallery() {
-        if (checkPermission()) {
+        if (checkPermissionForGallery()) {
             Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             startActivityForResult(galleryIntent, GALLERY);
         }
     }
 
     private void chooseCamera() {
-        if (checkPermission()) {
+        if (checkPermissionForCamera()) {
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             startActivityForResult(intent, CAMERA);
         }
@@ -202,11 +202,14 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerLay
         mDrawerLayoutAdapter.notifyItemChanged(0);
     }
 
-    private boolean checkPermission() {
+    private boolean checkPermissionForCamera() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED && mActionChangeAvatar == CAMERA) {
-            ActivityCompat.requestPermissions(DrawerLayoutActivity.this, new String[]{Manifest.permission.CAMERA}, REQUEST_CODE_ASK_PERMISSIONS_CAMERA);
+            ActivityCompat.requestPermissions(DrawerLayoutActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, REQUEST_CODE_ASK_PERMISSIONS_CAMERA);
             return false;
         }
+        return true;
+    }
+    private boolean checkPermissionForGallery() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED && mActionChangeAvatar == GALLERY) {
             ActivityCompat.requestPermissions(DrawerLayoutActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_ASK_PERMISSIONS_GALLERY);
             return false;
