@@ -12,24 +12,30 @@ class Validate {
         return username.length() > 8 && username.length() < 21;
     }
 
-    private static boolean isUsernameAtLeastTwoNonConsecutiveUppercaseLetters(String username) {
-        int length = username.length();
-        List<Integer> positions = new ArrayList<>();
-        for (int i = 0; i < length; i++) {
-            if (Character.isUpperCase(username.charAt(i))) {
-                positions.add(i);
+    private static int containUpcase(String string) {
+        int n = 0;
+        int size = string.length();
+        for (int i = 0; i < size; i++) {
+            if (Character.isUpperCase(string.charAt(i))) {
+                n++;
             }
         }
-        int size = positions.size();
-        if (size > 1) {
+        return n;
+    }
+
+    private static boolean isUsernameAtLeastTwoNonConsecutiveUppercaseLetters(String string) {
+        int size = string.length();
+        int n = 0;
+        if (containUpcase(string) < 2) {
+            return false;
+        } else {
             for (int i = 0; i < size - 1; i++) {
-                if (positions.get(i + 1) - positions.get(i) == 1) {
-                    return false;
+                if (Character.isUpperCase(string.charAt(i)) && Character.isUpperCase(string.charAt(i + 1))) {
+                    n++;
                 }
             }
-            return true;
+            return n < 1;
         }
-        return false;
     }
 
     private static boolean isUsernameSpecialCharacters(String username) {
@@ -42,20 +48,63 @@ class Validate {
         return true;
     }
 
-    private static boolean isUsernameAtMostTwoConsecutiveNumericCharacters(String username) {
-        return username.equals("");
+    private static int containDigit(String string) {
+        int n = 0;
+        int size = string.length();
+        for (int i = 0; i < size; i++) {
+            if (Character.isDigit(string.charAt(i))) {
+                n++;
+            }
+        }
+        return n;
     }
+
+    private static boolean isUsernameAtMostTwoConsecutiveNumericCharacters(String string) {
+        int length = string.length();
+        int count = 0;
+        if (containDigit(string) < 3) {
+            return false;
+        } else {
+            for (int i = 0; i < length - 2; i++) {
+                if (Character.isDigit(string.charAt(i)) && Character.isDigit(string.charAt(i + 1)) && Character.isDigit(string.charAt(i + 2))) {
+                    count++;
+                }
+            }
+            return count < 1;
+        }
+    }
+
+//    private static boolean isUsernameAtMostTwoConsecutiveNumericCharacters(String username) {
+//        int length = username.length();
+//        List<Integer> positions = new ArrayList<>();
+//        for (int i = 0; i < length; i++) {
+//            if (Character.isDigit(username.charAt(i))) {
+//                positions.add(i);
+//            }
+//        }
+//        int size = positions.size();
+//        if (size <= 2) {
+//            return true;
+//        } else {
+//            for (int i = 0; i < size - 2; i++) {
+//                if (Character.isDigit(username.charAt(i)) && Character.isDigit(username.charAt(i + 1)) && Character.isDigit(username.charAt(i + 2))) {
+//                    return false;
+//                }
+//            }
+//            return true;
+//        }
+//    }
 
     private static boolean isUsernameDoNotStartWithCapitalLettersOrNumbers(String username) {
         Character firstChar = username.charAt(0);
         return !Character.isUpperCase(firstChar) && !Character.isDigit(firstChar);
     }
 
-    private static boolean isPasswordDifferentUsername(User user) {
+    static boolean isPasswordDifferentUsername(User user) {
         return !user.getUsername().equals(user.getPassword());
     }
 
-    private static boolean isPasswordAtLeastTwoSpecialCharactersOrNumbers(String password) {
+    static boolean isPasswordAtLeastTwoSpecialCharactersOrNumbers(String password) {
         int count = 0;
         int length = password.length();
         for (int i = 0; i < length; i++) {
@@ -66,7 +115,7 @@ class Validate {
         return count > 1;
     }
 
-    private static boolean isPasswordLoopCharacterMoreThanTwoTimesInARow(String password) {
+    static boolean isPasswordLoopCharacterMoreThanTwoTimesInARow(String password) {
         int length = password.length();
         if (length > 7) {
             for (int i = 0; i < length - 2; i++) {
@@ -79,12 +128,12 @@ class Validate {
         return false;
     }
 
-    private static boolean isPasswordDoNotEndWithDigitOrSpecialCharacter(String password) {
+    static boolean isPasswordDoNotEndWithDigitOrSpecialCharacter(String password) {
         int length = password.length();
         return Character.isLetter(password.charAt(length - 1));
     }
 
-    private static boolean isPasswordAtMostThreeConsecutiveNumericCharacters(String password) {
+    static boolean isPasswordAtMostThreeConsecutiveNumericCharacters(String password) {
         int length = password.length();
         List<Integer> positions = new ArrayList<>();
         for (int i = 0; i < length; i++) {
@@ -104,7 +153,7 @@ class Validate {
         return false;
     }
 
-     static int checkLogin(User user) {
+    static int checkLogin(User user) {
         if (!Validate.isUsernameLength(user.getUsername())) {
             return R.string.usernameShouldHave920Characters;
         }
@@ -115,10 +164,10 @@ class Validate {
             return R.string.usernameShouldHaveAtLeast2NonConsecutiveUpperCaseLetters;
         }
         if (!Validate.isUsernameAtMostTwoConsecutiveNumericCharacters(user.getUsername())) {
-            return R.string.theUsernameShouldHaveAtMost2ConsecutiveNumericCharacters;
+            return R.string.usernameShouldHaveAtMost2ConsecutiveNumericCharacters;
         }
         if (!Validate.isUsernameSpecialCharacters(user.getUsername())) {
-            return R.string.theUsernameShouldNotHaveSpecialCharacters;
+            return R.string.usernameShouldNotHaveSpecialCharacters;
         }
         if (!Validate.isPasswordDifferentUsername(user)) {
             return R.string.theUsernameAndPasswordMustBeDifferent;
