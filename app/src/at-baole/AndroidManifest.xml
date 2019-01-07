@@ -31,5 +31,8 @@
         <activity android:name=".viewpager.TimelineActivity" />
         <activity android:name=".viewpager.PagerActivity" />
         <activity android:name=".asynctaskthreadhandler.AsyncTaskThreadHandlerActivity" />
+        <activity
+            android:name=".canvas.CanvasActivity"
+            android:screenOrientation="landscape" />
     </application>
 </manifest>
