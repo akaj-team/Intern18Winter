@@ -139,12 +139,10 @@ public class RestAPIActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private boolean checkAndRequestCameraPermission() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED && mActionUploadImage == 71) {
-            ActivityCompat.requestPermissions(RestAPIActivity.this, new String[]{Manifest.permission.CAMERA}, READ_CAMERA_PERMISSION_REQUEST_CODE);
-            return false;
-        }
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED && mActionUploadImage == 71) {
-            ActivityCompat.requestPermissions(RestAPIActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, WRITE_CAMERA_PERMISSION_REQUEST_CODE);
+        if ((ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
+                || ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+                && mActionUploadImage == 71) {
+            ActivityCompat.requestPermissions(RestAPIActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, WRITE_CAMERA_PERMISSION_REQUEST_CODE);
             return false;
         }
         return true;
@@ -185,14 +183,14 @@ public class RestAPIActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void choosePhotosFromGallery() {
-        Intent pickIntent = new Intent(Intent.ACTION_PICK,
+        Intent galleryIntent = new Intent(Intent.ACTION_PICK,
                 android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(pickIntent, GALLERY);
+        startActivityForResult(galleryIntent, GALLERY);
     }
 
     private void capturePhotosFromCamera() {
-        Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(takePicture, CAMERA);
+        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(cameraIntent, CAMERA);
     }
 
     @Override
