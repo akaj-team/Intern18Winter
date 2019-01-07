@@ -48,7 +48,8 @@ public class RestAPIActivity extends AppCompatActivity implements View.OnClickLi
     private static final int CAPTURE_CAMERA = 1;
     private static final int CANCEL_ACTION = 99;
     private static final int GALLERY_PERMISSION_REQUEST_CODE = 201;
-    private static final int CAMERA_PERMISSION_REQUEST_CODE = 202;
+    private static final int READ_CAMERA_PERMISSION_REQUEST_CODE = 202;
+    private static final int WRITE_CAMERA_PERMISSION_REQUEST_CODE = 203;
 
     private APIImages mAPIImages;
     private List<ImageItem> mImages = new ArrayList<>();
@@ -118,14 +119,14 @@ public class RestAPIActivity extends AppCompatActivity implements View.OnClickLi
             switch (option) {
                 case CHOOSE_GALLERY: {
                     mActionUploadImage = 70;
-                    if (checkAndRequestPermission()) {
+                    if (checkAndRequestGalleryPermission()) {
                         choosePhotosFromGallery();
                     }
                     break;
                 }
                 case CAPTURE_CAMERA: {
                     mActionUploadImage = 71;
-                    if (checkAndRequestPermission()) {
+                    if (checkAndRequestCameraPermission()) {
                         capturePhotosFromCamera();
                     }
                     break;
@@ -137,19 +138,28 @@ public class RestAPIActivity extends AppCompatActivity implements View.OnClickLi
         imagesDialog.show();
     }
 
-    private boolean checkAndRequestPermission() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED && mActionUploadImage == 70) {
-            ActivityCompat.requestPermissions(RestAPIActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, GALLERY_PERMISSION_REQUEST_CODE);
+    private boolean checkAndRequestCameraPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED && mActionUploadImage == 71) {
+            ActivityCompat.requestPermissions(RestAPIActivity.this, new String[]{Manifest.permission.CAMERA}, READ_CAMERA_PERMISSION_REQUEST_CODE);
             return false;
         }
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED && mActionUploadImage == 71) {
-            ActivityCompat.requestPermissions(RestAPIActivity.this, new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION_REQUEST_CODE);
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED && mActionUploadImage == 71) {
+            ActivityCompat.requestPermissions(RestAPIActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, WRITE_CAMERA_PERMISSION_REQUEST_CODE);
             return false;
         }
         return true;
     }
 
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    private boolean checkAndRequestGalleryPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED && mActionUploadImage == 70) {
+            ActivityCompat.requestPermissions(RestAPIActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, GALLERY_PERMISSION_REQUEST_CODE);
+            return false;
+        }
+        return true;
+    }
+
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
         switch (requestCode) {
             case GALLERY_PERMISSION_REQUEST_CODE: {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -160,7 +170,7 @@ public class RestAPIActivity extends AppCompatActivity implements View.OnClickLi
                 }
                 break;
             }
-            case CAMERA_PERMISSION_REQUEST_CODE: {
+            case WRITE_CAMERA_PERMISSION_REQUEST_CODE: {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     capturePhotosFromCamera();
                     Toast.makeText(RestAPIActivity.this, R.string.cameraPermissionAccepted, Toast.LENGTH_LONG).show();
