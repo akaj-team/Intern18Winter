@@ -244,8 +244,8 @@ public class RestAPIActivity extends AppCompatActivity implements View.OnClickLi
 
             @Override
             public void onFailure(@NonNull Call<ImageItem> call, @NonNull Throwable t) {
-                mProgressDialog.dismiss();
                 Toast.makeText(RestAPIActivity.this, getString(R.string.uploadFailed), Toast.LENGTH_SHORT).show();
+                mProgressDialog.dismiss();
             }
         });
     }
