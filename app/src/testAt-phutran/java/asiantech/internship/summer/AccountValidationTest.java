@@ -111,19 +111,19 @@ public class AccountValidationTest {
     @Test
     public void testCaseResultLogin() {
         when(mAccountUsername.getUsername()).thenReturn("phu");
-        doReturn(UtilValidate.PASS).when(mAccountPassword).getPassword();
+        doReturn(UtilValidate.USER).when(mAccountPassword).getPassword();
         assertEquals(UtilValidate.resultLogin(mAccountUsername.getUsername(), mAccountPassword.getPassword()), UtilValidate.CHECK_LENGTH_USERNAME);
         when(mAccountUsername.getUsername()).thenReturn(UtilValidate.USER);
-        doReturn(UtilValidate.PASS).when(mAccountPassword).getPassword();
+        doReturn(UtilValidate.USER).when(mAccountPassword).getPassword();
         assertEquals(UtilValidate.resultLogin(mAccountUsername.getUsername(), mAccountPassword.getPassword()), UtilValidate.UPPER_USERNAME);
         when(mAccountUsername.getUsername()).thenReturn("tran DinhPhu");
-        doReturn(UtilValidate.PASS).when(mAccountPassword).getPassword();
+        doReturn(UtilValidate.USER).when(mAccountPassword).getPassword();
         assertEquals(UtilValidate.resultLogin(mAccountUsername.getUsername(), mAccountPassword.getPassword()), UtilValidate.USERNAME_IS_NOT_SPECIAL);
         when(mAccountUsername.getUsername()).thenReturn("tranDinhPhu234");
-        doReturn(UtilValidate.PASS).when(mAccountPassword).getPassword();
+        doReturn(UtilValidate.USER).when(mAccountPassword).getPassword();
         assertEquals(UtilValidate.resultLogin(mAccountUsername.getUsername(), mAccountPassword.getPassword()), UtilValidate.USERNAME_CONTAIN_DIGIT);
         when(mAccountUsername.getUsername()).thenReturn(UtilValidate.USER_UPCASE);
-        doReturn(UtilValidate.PASS).when(mAccountPassword).getPassword();
+        doReturn(UtilValidate.USER).when(mAccountPassword).getPassword();
         assertEquals(UtilValidate.resultLogin(mAccountUsername.getUsername(), mAccountPassword.getPassword()), UtilValidate.START_USERNAME);
         when(mAccountUsername.getUsername()).thenReturn(UtilValidate.USERNAME_RIGHT);
         doReturn(UtilValidate.USERNAME_RIGHT).when(mAccountPassword).getPassword();

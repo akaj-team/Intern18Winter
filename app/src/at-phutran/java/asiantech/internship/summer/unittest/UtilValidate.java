@@ -16,7 +16,6 @@ public class UtilValidate {
     public final static String USER = "trandinhphu";
     public final static String USER_UPCASE = "TranDinhPhu";
     public final static String USERNAME_RIGHT = "tranDinhPhu";
-    public final static String PASS = "trandinhphu";
 
     private UtilValidate() {
     }
