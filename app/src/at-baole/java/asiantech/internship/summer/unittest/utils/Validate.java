@@ -46,7 +46,6 @@ public class Validate {
         if (Username_Not_Contain_Special_Characters.matcher(username).find()) {
             return R.string.errorUsernameNotContainSpecialCharacters;
         }
-
         if (Username_At_Most_2_Consecutive_Digits.matcher(username).find()) {
             return R.string.errorUsernameAtMost2ConsecutiveDigits;
         }

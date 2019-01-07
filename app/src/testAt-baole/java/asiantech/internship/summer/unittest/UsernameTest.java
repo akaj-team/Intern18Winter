@@ -11,6 +11,7 @@ import asiantech.internship.summer.unittest.utils.Validate;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
 public class UsernameTest {
@@ -18,8 +19,14 @@ public class UsernameTest {
     private User mUser;
 
     @Before
-    public void initMockitoAnnotations() {
+    public void initMockito() {
         MockitoAnnotations.initMocks(this);
+    }
+
+    @Test
+    public void usernameEmpty(){
+        when(mUser.getUsername()).thenReturn("");
+        assertTrue(Validate.isEmptyUsername(mUser));
     }
 
     @Test
@@ -48,7 +55,7 @@ public class UsernameTest {
 
     @Test
     public void usernameNotContainSpace() {
-        when(mUser.getUsername()).thenReturn(" leQuocBao ");
+        when(mUser.getUsername()).thenReturn("leQuoc Bao");
         assertEquals(Validate.validateUserName(mUser.getUsername()), R.string.errorUsernameNotContainSpace);
     }
 

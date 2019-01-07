@@ -11,6 +11,7 @@ import asiantech.internship.summer.unittest.utils.Validate;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.doReturn;
 
 public class PasswordTest {
@@ -18,8 +19,14 @@ public class PasswordTest {
     private User mUser;
 
     @Before
-    public void init() {
+    public void initMockito() {
         mUser = Mockito.spy(new User("BaoDepTrai", ""));
+    }
+
+    @Test
+    public void passwordEmpty(){
+        doReturn("").when(mUser).getPassword();
+        assertTrue(Validate.isEmptyPassword(mUser));
     }
 
     @Test
@@ -42,7 +49,7 @@ public class PasswordTest {
 
     @Test
     public void passwordNotAtMost2ConsecutiveRepeatedLetters() {
-        doReturn("LeQuocBao9999").when(mUser).getPassword();
+        doReturn("LeQuocBao999").when(mUser).getPassword();
         assertEquals(Validate.validatePassword(mUser.getPassword()), R.string.errorPasswordAtMost2ConsecutiveRepeatedLetters);
     }
 
