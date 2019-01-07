@@ -48,8 +48,7 @@ public class RestAPIActivity extends AppCompatActivity implements View.OnClickLi
     private static final int CAPTURE_CAMERA = 1;
     private static final int CANCEL_ACTION = 99;
     private static final int GALLERY_PERMISSION_REQUEST_CODE = 201;
-    private static final int READ_CAMERA_PERMISSION_REQUEST_CODE = 202;
-    private static final int WRITE_CAMERA_PERMISSION_REQUEST_CODE = 203;
+    private static final int WRITE_CAMERA_PERMISSION_REQUEST_CODE = 202;
 
     private APIImages mAPIImages;
     private List<ImageItem> mImages = new ArrayList<>();
