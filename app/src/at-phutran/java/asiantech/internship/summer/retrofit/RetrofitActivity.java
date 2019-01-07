@@ -83,13 +83,13 @@ public class RetrofitActivity extends AppCompatActivity {
                     switch (which) {
                         case CHOOSE_GALLERY:
                             mActionChangeAvatar = GALLERY;
-                            if (checkPermission()) {
+                            if (checkPermissionForGallery()) {
                                 chooseGallery();
                             }
                             break;
                         case CHOOSE_CAMERA:
                             mActionChangeAvatar = CAMERA;
-                            if (checkPermission()) {
+                            if (checkPermissionForCamera()) {
                                 chooseCamera();
                             }
                             break;
@@ -99,14 +99,14 @@ public class RetrofitActivity extends AppCompatActivity {
     }
 
     public void chooseGallery() {
-        if (checkPermission()) {
+        if (checkPermissionForGallery()) {
             Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             startActivityForResult(galleryIntent, GALLERY);
         }
     }
 
     private void chooseCamera() {
-        if (checkPermission()) {
+        if (checkPermissionForCamera()) {
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             startActivityForResult(intent, CAMERA);
         }
@@ -164,12 +164,16 @@ public class RetrofitActivity extends AppCompatActivity {
         }
     }
 
-    private boolean checkPermission() {
+    private boolean checkPermissionForCamera() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED && mActionChangeAvatar == CAMERA) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, REQUEST_CODE_ASK_PERMISSIONS_CAMERA);
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, REQUEST_CODE_ASK_PERMISSIONS_CAMERA);
             return false;
         }
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED && mActionChangeAvatar == GALLERY) {
+        return true;
+    }
+
+    private boolean checkPermissionForGallery() {
+        if (ContextCompat.checkSelfPermission( this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED && mActionChangeAvatar == GALLERY) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_ASK_PERMISSIONS_GALLERY);
             return false;
         }
@@ -177,7 +181,7 @@ public class RetrofitActivity extends AppCompatActivity {
     }
 
     private void uploadImage(Uri imageUri) {
-        onProgressbarDialog();
+        showProgressbarDialog();
         File file = new File(Objects.requireNonNull(RealPathUtil.getRealPathFromUriAPI11to18(getApplicationContext(), imageUri)));
         RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
         MultipartBody.Part image = MultipartBody.Part.createFormData("imagedata", file.getName(), requestBody);
@@ -186,6 +190,7 @@ public class RetrofitActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<ImageItem> call, @NonNull Response<ImageItem> response) {
                 if (response.isSuccessful()) {
+                    mImageItems.add(0, response.body());
                     mAdapter.notifyDataSetChanged();
                     Toast.makeText(RetrofitActivity.this, R.string.successful, Toast.LENGTH_SHORT).show();
                     mProgressDialog.dismiss();
@@ -209,7 +214,7 @@ public class RetrofitActivity extends AppCompatActivity {
     }
 
     private void loadData() {
-        onProgressbarDialog();
+        showProgressbarDialog();
         mService.getImages(ACCESS_TOKEN, 1, 20).enqueue(new Callback<List<ImageItem>>() {
             @Override
             public void onResponse(@NonNull Call<List<ImageItem>> call, @NonNull Response<List<ImageItem>> response) {
@@ -233,7 +238,7 @@ public class RetrofitActivity extends AppCompatActivity {
         });
     }
 
-    private void onProgressbarDialog() {
+    private void showProgressbarDialog() {
         mProgressDialog = new ProgressDialog(this);
         mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         mProgressDialog.setMessage(getString(R.string.loading));
