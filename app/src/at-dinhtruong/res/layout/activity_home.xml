@@ -50,4 +50,11 @@
         android:layout_margin="10dp"
         android:text="@string/fileStorage" />
 
+    <Button
+        android:id="@+id/btnRestApi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="@string/restApi" />
+
 </LinearLayout>

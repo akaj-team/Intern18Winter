@@ -31,5 +31,8 @@
         <activity android:name=".asynctaskthreadhandler.AsyncTaskThreadHandlerActivity" />
         <activity android:name=".filestorage.FileStorageActivity" />
         <activity android:name=".filestorage.EmployeeActivity" />
+        <activity
+            android:name=".canvas.CanvasActivity"
+            android:screenOrientation="landscape" />
     </application>
 </manifest>
