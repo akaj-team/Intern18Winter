@@ -30,6 +30,9 @@
         <activity android:name=".fragment.WelcomeActivity" />
         <activity android:name=".recyclerview.RecyclerViewActivity" />
         <activity android:name=".viewpager.ViewPagerActivity" />
+        <activity
+            android:name=".canvas.CanvasActivity"
+            android:screenOrientation="landscape" />
         <activity android:name=".retrofit.RetrofitActivity" />
     </application>
 </manifest>
