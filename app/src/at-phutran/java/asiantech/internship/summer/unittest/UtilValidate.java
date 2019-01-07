@@ -51,7 +51,6 @@ public class UtilValidate {
         }
     } // check Username must have at least 2 non consecutive capital character
 
-    // check Username haven't special character and space
     public static boolean isUsernameNotSpecialCharacter(String username) {
         int size = username.length();
         for (int i = 0; i < size; i++) {
@@ -60,9 +59,8 @@ public class UtilValidate {
             }
         }
         return true;
-    }
+    } // check Username haven't special character and space
 
-    // sum digit of username
     public static int sumNumberOfUsername(String username) {
         int n = 0;
         int size = username.length();
@@ -72,7 +70,7 @@ public class UtilValidate {
             }
         }
         return n;
-    }
+    } // sum digit of username
 
     public static boolean isUsernameHaveNotMoreTwoDigitContinous(String username) {
         int size = username.length();
