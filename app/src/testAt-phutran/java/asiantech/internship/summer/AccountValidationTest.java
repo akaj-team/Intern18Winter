@@ -9,7 +9,6 @@ import asiantech.internship.summer.model.Account;
 import asiantech.internship.summer.unittest.UtilValidate;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertTrue;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
 
@@ -24,8 +23,6 @@ public class AccountValidationTest {
     public void testCaseLengthUser() {
         when(mAccountUsername.getUsername()).thenReturn("");
         assertFalse(UtilValidate.isLengthUsernameRight(mAccountUsername.getUsername()));
-        when(mAccountUsername.getUsername()).thenReturn(UtilValidate.USER);
-        assertTrue(UtilValidate.isLengthUsernameRight(mAccountUsername.getUsername()));
         when(mAccountUsername.getUsername()).thenReturn("trandinhphuabcdefghij");
         assertFalse(UtilValidate.isLengthUsernameRight(mAccountUsername.getUsername()));
     }
@@ -42,8 +39,6 @@ public class AccountValidationTest {
         assertFalse(UtilValidate.isUpcaseNotContinous(mAccountUsername.getUsername(), 2));
         when(mAccountUsername.getUsername()).thenReturn("TranDinhPhuAA");
         assertFalse(UtilValidate.isUpcaseNotContinous(mAccountUsername.getUsername(), 2));
-        when(mAccountUsername.getUsername()).thenReturn("TranDinhPhuA");
-        assertTrue(UtilValidate.isUpcaseNotContinous(mAccountUsername.getUsername(), 2));
     }
 
     @Test
@@ -52,8 +47,6 @@ public class AccountValidationTest {
         assertFalse(UtilValidate.isUsernameNotSpecialCharacter(mAccountUsername.getUsername()));
         when(mAccountUsername.getUsername()).thenReturn("trandinhph#");
         assertFalse(UtilValidate.isUsernameNotSpecialCharacter(mAccountUsername.getUsername()));
-        when(mAccountUsername.getUsername()).thenReturn(UtilValidate.USER);
-        assertTrue(UtilValidate.isUsernameNotSpecialCharacter(mAccountUsername.getUsername()));
     }
 
     @Test
@@ -64,32 +57,18 @@ public class AccountValidationTest {
 
     @Test
     public void testCaseUsernameHaveNotMoreTwoDigitContinous() {
-        when(mAccountUsername.getUsername()).thenReturn(UtilValidate.USER);
-        assertTrue(UtilValidate.isUsernameHaveNotMoreTwoDigitContinous(mAccountUsername.getUsername()));
         when(mAccountUsername.getUsername()).thenReturn("trandinhphu123");
         assertFalse(UtilValidate.isUsernameHaveNotMoreTwoDigitContinous(mAccountUsername.getUsername()));
-        when(mAccountUsername.getUsername()).thenReturn("trandinhphu12");
-        assertTrue(UtilValidate.isUsernameHaveNotMoreTwoDigitContinous(mAccountUsername.getUsername()));
-        when(mAccountUsername.getUsername()).thenReturn("1phutrandinh12");
-        assertTrue(UtilValidate.isUsernameHaveNotMoreTwoDigitContinous(mAccountUsername.getUsername()));
     }
 
     @Test
     public void testCaseUsernameDoNotStartUpperCase() {
-        when(mAccountUsername.getUsername()).thenReturn(UtilValidate.USER);
-        assertTrue(UtilValidate.isUsernameStartLowerCase(mAccountUsername.getUsername()));
         when(mAccountUsername.getUsername()).thenReturn(UtilValidate.USER_UPCASE);
         assertFalse(UtilValidate.isUsernameStartLowerCase(mAccountUsername.getUsername()));
     }
 
     @Test
     public void testCasePasswordIsNotUser() {
-        when(mAccountUsername.getUsername()).thenReturn(UtilValidate.USER);
-        doReturn("dinhphu").when(mAccountPassword).getPassword();
-        assertTrue(UtilValidate.isPasswordNotUser(mAccountUsername.getUsername(), mAccountPassword.getPassword()));
-        when(mAccountUsername.getUsername()).thenReturn(UtilValidate.USER);
-        doReturn("Trandinhphu").when(mAccountPassword).getPassword();
-        assertTrue(UtilValidate.isPasswordNotUser(mAccountUsername.getUsername(), mAccountPassword.getPassword()));
         when(mAccountUsername.getUsername()).thenReturn(UtilValidate.USER);
         doReturn(UtilValidate.USER).when(mAccountPassword).getPassword();
         assertFalse(UtilValidate.isPasswordNotUser(mAccountUsername.getUsername(), mAccountPassword.getPassword()));
@@ -99,24 +78,18 @@ public class AccountValidationTest {
     public void testCasePasswordContainsDigitAndSpecial() {
         doReturn(UtilValidate.USER).when(mAccountPassword).getPassword();
         assertFalse(UtilValidate.isPasswordContainsDigitAndSpecial(mAccountPassword.getPassword()));
-        doReturn("tran  dinhphu").when(mAccountPassword).getPassword();
-        assertTrue(UtilValidate.isPasswordContainsDigitAndSpecial(mAccountPassword.getPassword()));
     }
 
     @Test
     public void testCaseCheckLengthPassword() {
         doReturn("phutran").when(mAccountPassword).getPassword();
         assertFalse(UtilValidate.isLengthPasswordRight(mAccountPassword.getPassword()));
-        doReturn("phutran123").when(mAccountPassword).getPassword();
-        assertTrue(UtilValidate.isLengthPasswordRight(mAccountPassword.getPassword()));
     }
 
     @Test
     public void testCasePasswordNotRepeatCharacter() {
         doReturn("trandinhphuu").when(mAccountPassword).getPassword();
         assertFalse(UtilValidate.isPasswordNotRepeatCharacter(mAccountPassword.getPassword()));
-        doReturn(UtilValidate.USER).when(mAccountPassword).getPassword();
-        assertTrue(UtilValidate.isPasswordNotRepeatCharacter(mAccountPassword.getPassword()));
     }
 
     @Test
@@ -125,8 +98,6 @@ public class AccountValidationTest {
         assertFalse(UtilValidate.isPasswordDoNotEndWithDigitOrCharacter(mAccountPassword.getPassword()));
         doReturn("phutran123#").when(mAccountPassword).getPassword();
         assertFalse(UtilValidate.isPasswordDoNotEndWithDigitOrCharacter(mAccountPassword.getPassword()));
-        doReturn(UtilValidate.PASS).when(mAccountPassword).getPassword();
-        assertTrue(UtilValidate.isPasswordDoNotEndWithDigitOrCharacter(mAccountPassword.getPassword()));
     }
 
     @Test
@@ -135,8 +106,6 @@ public class AccountValidationTest {
         assertFalse(UtilValidate.isUpcaseNotMoreTwoUpperCaseContinous(mAccountPassword.getPassword(), 3));
         doReturn("trandinhphuUUU").when(mAccountPassword).getPassword();
         assertFalse(UtilValidate.isUpcaseNotMoreTwoUpperCaseContinous(mAccountPassword.getPassword(), 3));
-        doReturn(UtilValidate.USER_UPCASE).when(mAccountPassword).getPassword();
-        assertTrue(UtilValidate.isUpcaseNotMoreTwoUpperCaseContinous(mAccountPassword.getPassword(), 3));
     }
 
     @Test
