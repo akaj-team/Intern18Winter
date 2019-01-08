@@ -42,4 +42,5 @@
     <string name="recyclerView">Android RecyclerView</string>
     <string name="viewPager">Android ViewPager</string>
     <string name="asyncTask">AsyncTask Thread Handler</string>
+    <string name="restAPI">Rest API with Retrofit and Gson</string>
 </resources>

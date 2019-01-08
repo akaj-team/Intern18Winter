@@ -10,6 +10,7 @@ import android.widget.Button;
 import asiantech.internship.summer.R;
 import asiantech.internship.summer.eventlistener.LoginActivity;
 import asiantech.internship.summer.recyclerview.TimelineActivity;
+import asiantech.internship.summer.restapi.RestAPIActivity;
 import asiantech.internship.summer.view.ViewActivity;
 import asiantech.internship.summer.viewpager.PagerActivity;
 
@@ -27,12 +28,14 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         Button btnRecyclerView = findViewById(R.id.btnRecyclerView);
         Button btnViewPager = findViewById(R.id.btnViewPager);
         Button btnFileStorage = findViewById(R.id.btnAsyncTask);
+        Button btnRestAPI = findViewById(R.id.btnRestAPI);
         btnViewGroup.setOnClickListener(this);
         btnEventAndListener.setOnClickListener(this);
         btnActivityFragment.setOnClickListener(this);
         btnRecyclerView.setOnClickListener(this);
         btnViewPager.setOnClickListener(this);
         btnFileStorage.setOnClickListener(this);
+        btnRestAPI.setOnClickListener(this);
     }
     @Override
     public void onClick(View v) {
@@ -64,6 +67,11 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             }
             case R.id.btnAsyncTask: {
                 Intent intent = new Intent(HomeActivity.this, ViewPagerActivity.class);
+                startActivity(intent);
+                break;
+            }
+            case R.id.btnRestAPI: {
+                Intent intent = new Intent(HomeActivity.this, RestAPIActivity.class);
                 startActivity(intent);
                 break;
             }
