@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import asiantech.internship.summer.R;
 import asiantech.internship.summer.asynctask.AsyncTaskThreadHandlerActivity;
+import asiantech.internship.summer.canvas.CanvasActivity;
 import asiantech.internship.summer.eventlistener.SignUpActivity;
 import asiantech.internship.summer.fragment.LoginActivity;
 import asiantech.internship.summer.recyclerview.RecyclerViewActivity;
@@ -20,6 +21,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
     private Button mBtnFragment;
     private Button mBtnViewPager;
     private Button mBtnAsyncTask;
+    private Button mBtnCanvas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,13 +32,15 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         mBtnFragment = findViewById(R.id.btnExercise3);
         mBtnRecyclerView = findViewById(R.id.btnExercise4);
         mBtnViewPager = findViewById(R.id.btnExercise5);
-        mBtnAsyncTask = findViewById(R.id.btnExercise6);
+        mBtnAsyncTask = findViewById(R.id.btnExercise11);
+        mBtnCanvas = findViewById(R.id.btnExercise9);
         mBtnView.setOnClickListener(this);
         mBtnListener.setOnClickListener(this);
         mBtnFragment.setOnClickListener(this);
         mBtnRecyclerView.setOnClickListener(this);
         mBtnViewPager.setOnClickListener(this);
         mBtnAsyncTask.setOnClickListener(this);
+        mBtnCanvas.setOnClickListener(this);
     }
 
     @Override
@@ -67,7 +71,12 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(intent);
                 break;
             }
-            case R.id.btnExercise6: {
+            case R.id.btnExercise9: {
+                Intent intent = new Intent(ListActivity.this, CanvasActivity.class);
+                startActivity(intent);
+                break;
+            }
+            case R.id.btnExercise11: {
                 Intent intent = new Intent(ListActivity.this, AsyncTaskThreadHandlerActivity.class);
                 startActivity(intent);
                 break;
