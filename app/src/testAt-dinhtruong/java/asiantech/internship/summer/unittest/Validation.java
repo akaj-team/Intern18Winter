@@ -20,7 +20,6 @@ import static org.mockito.Mockito.when;
 public class Validation {
     @Mock
     private User mUserUsername;
-
     @Spy
     private User mUserPassword;
 
