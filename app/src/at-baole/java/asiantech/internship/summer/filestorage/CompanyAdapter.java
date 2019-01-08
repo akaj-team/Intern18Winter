@@ -55,7 +55,7 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.CompanyV
             mTvNameCompany = itemView.findViewById(R.id.tvItemCompany);
             mTvNameCompany.setOnClickListener(v -> {
                 mOnClickCompanyListener.onSelectCompany(mCompanies.get(getAdapterPosition()).getCompanyId());
-                Toast.makeText(mContext, mContext.getString(R.string.selectedEmployeeID) + " "
+                Toast.makeText(mContext, mContext.getString(R.string.textSelected) + " "
                         + mCompanies.get(getAdapterPosition()).getCompanyName(), Toast.LENGTH_LONG).show();
             });
         }
