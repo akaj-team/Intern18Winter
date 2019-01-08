@@ -95,12 +95,11 @@ public class ChartView extends View {
         }
     }
 
-    @SuppressLint("ResourceType")
     private void initPaint() {
         mPaintNoteSales = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaintNoteExpenses = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mPaintTextItem = new Paint();
-        mPaintTextCaption = new Paint();
+        mPaintTextItem = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mPaintTextCaption = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaintColumnSales = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaintColumnExpenses = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaintColumnMoney = new Paint(Paint.ANTI_ALIAS_FLAG);
