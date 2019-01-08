@@ -12,4 +12,6 @@
     <color name="colorLightGrey">#e6e6e6</color>
     <color name="colorLightBlue">#9999ff</color>
     <color name="colorCyan">#33cccc</color>
+    <color name="colorColumnSales">#2c81f1</color>
+    <color name="colorColumnExpenses">#ff7043</color>
 </resources>

@@ -92,9 +92,6 @@
                 android:paddingStart="35dp"
                 android:paddingEnd="35dp"
                 android:src="@drawable/facebook_box" />
-
         </LinearLayout>
-
     </LinearLayout>
-
 </LinearLayout>

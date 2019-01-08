@@ -3,6 +3,7 @@ package asiantech.internship.summer.unittest;
 import java.util.ArrayList;
 import java.util.List;
 
+import asiantech.internship.summer.R;
 import asiantech.internship.summer.models.User;
 
 class Validate {
@@ -14,8 +15,9 @@ class Validate {
     static final String USERNAME_AND_PASSWORD_ARE_DIFFERENT = "Username and password are different";
     static final String PASSWORD_SHOULD_HAVE_2_SPECIAL_OR_NUMBER = "Password should have at least 2 special characters or numbers";
     static final String PASSWORD_SHOULD_NOT_LOOP_CHARACTER_TWO_TIMES = "Password should not loop character more than two times";
-    static final String PASSWORD_SHOULD_NOT_END_DIGIT_OR_SEPECIAL_CHAR= "Password do dot end with digit or special character";
-    static final String PASSWORD_AT_LEAST_3_UPPERCASE_NOT_CONSECUTIVE= "Password at least three uppercase not consecutive";
+    static final String PASSWORD_SHOULD_NOT_END_DIGIT_OR_SEPECIAL_CHAR = "Password do dot end with digit or special character";
+    static final String PASSWORD_AT_LEAST_3_UPPERCASE_NOT_CONSECUTIVE = "Password at least three uppercase not consecutive";
+
     static boolean isUsernameLength(String username) {
         return username.length() > 8 && username.length() < 21;
     }
@@ -151,7 +153,7 @@ class Validate {
             return USERNAME_SHOULD_NOT_HAVE_SPECIAL_CHARACTER;
         }
         if (!Validate.isUsernameAtMostTwoConsecutiveNumericCharacters(user.getUsername())) {
-           return USERNAME_SHOULD_HAVE_AT_MOST_2_NUMBER;
+            return USERNAME_SHOULD_HAVE_AT_MOST_2_NUMBER;
         }
 
         if (!Validate.isUsernameDoNotStartWithCapitalLettersOrNumbers(user.getUsername())) {
@@ -172,6 +174,6 @@ class Validate {
         if (!Validate.isPasswordAtMostThreeConsecutiveNumericCharacters(user.getPassword())) {
             return PASSWORD_AT_LEAST_3_UPPERCASE_NOT_CONSECUTIVE;
         }
-        return "Login successful";
+        return String.valueOf(R.string.loginSuccessful);
     }
 }
