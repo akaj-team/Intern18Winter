@@ -1,7 +1,5 @@
 package asiantech.internship.summer.utils;
 
-import android.text.TextUtils;
-
 import java.util.regex.Pattern;
 
 import asiantech.internship.summer.R;
@@ -20,10 +18,6 @@ public class Validate {
     private static final Pattern VALID_PASSWORD_AT_LEAST_3_UPPERCASE_NON_CONSECUTIVE_REGEX = Pattern.compile("^.*[A-Z].+[A-Z].+[A-Z]");
 
     public static int ValidateLogin(User user) {
-
-        if (TextUtils.isEmpty(user.getUserName())) {
-            return R.string.errorUsernameEmpty;
-        }
         if (user.getUserName().length() < 9 || user.getUserName().length() > 20) {
             return R.string.errorUsernameLength;
         }
@@ -40,9 +34,6 @@ public class Validate {
             return R.string.errorUserNameNotBeginWithUppercaseAndDigit;
         }
 
-        if (TextUtils.isEmpty(user.getPassword())) {
-            return R.string.errorPasswordEmpty;
-        }
         if (user.getUserName().equals(user.getPassword())) {
             return R.string.errorPasswordRepeatChar;
         }
