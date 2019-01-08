@@ -24,36 +24,36 @@ public class TestPassword {
     @Test
     public void passwordRepeatCharacters() {
         doReturn("faithBianQC09").when(mUser).getPassword();
-        assertEquals(Validate.ValidateLogin(mUser), R.string.errorPasswordRepeatChar);
+        assertEquals(Validate.validateLogin(mUser), R.string.errorPasswordRepeatChar);
     }
 
     @Test
     public void passwordNotHas2SpecialCharOrDigits() {
         doReturn("faithbian").when(mUser).getPassword();
-        assertEquals(Validate.ValidateLogin(mUser), R.string.errorPasswordNotHas2SpecialCharOrDigits);
+        assertEquals(Validate.validateLogin(mUser), R.string.errorPasswordNotHas2SpecialCharOrDigits);
     }
 
     @Test
     public void passwordSmallestLength8Char() {
         doReturn("33@uhio").when(mUser).getPassword();
-        assertEquals(Validate.ValidateLogin(mUser), R.string.errorPasswordSmallestLengthIs8Char);
+        assertEquals(Validate.validateLogin(mUser), R.string.errorPasswordSmallestLengthIs8Char);
     }
 
     @Test
     public void passwordNoMore2CharConsecutive() {
         doReturn("3@reeuertyuio").when(mUser).getPassword();
-        assertEquals(Validate.ValidateLogin(mUser), R.string.errorPasswordNoMore2CharConsecutive);
+        assertEquals(Validate.validateLogin(mUser), R.string.errorPasswordNoMore2CharConsecutive);
     }
 
     @Test
     public void passwordNotEndWithDigitOrSpecialChar() {
         doReturn("3@reuertyuio13ew2!").when(mUser).getPassword();
-        assertEquals(Validate.ValidateLogin(mUser), R.string.errorPasswordNotEndWithDigitOrSpecialChar);
+        assertEquals(Validate.validateLogin(mUser), R.string.errorPasswordNotEndWithDigitOrSpecialChar);
     }
 
     @Test
     public void passwordAtLeast3UppercaseNonConsecutive() {
         doReturn("342reuesfWiEo").when(mUser).getPassword();
-        assertEquals(Validate.ValidateLogin(mUser), R.string.errorPasswordAtLeast3UppercaseNonConsecutive);
+        assertEquals(Validate.validateLogin(mUser), R.string.errorPasswordAtLeast3UppercaseNonConsecutive);
     }
 }

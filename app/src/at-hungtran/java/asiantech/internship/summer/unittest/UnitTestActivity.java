@@ -39,7 +39,7 @@ public class UnitTestActivity extends AppCompatActivity {
             String password = mEdtPassword.getText().toString();
             User user = new User(username, password);
             mTvNotifycation.setBackground(getResources().getDrawable(R.drawable.border_error_rect));
-            String checkResult = getResources().getString(Validate.ValidateLogin(user));
+            String checkResult = getResources().getString(Validate.validateLogin(user));
             mTvNotifycation.setText(checkResult);
         });
     }

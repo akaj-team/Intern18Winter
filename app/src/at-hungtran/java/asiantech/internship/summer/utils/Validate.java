@@ -17,7 +17,7 @@ public class Validate {
     private static final Pattern VALID_PASSWORD_NOT_END_WITH_DIGIT_OR_SPECIAL_CHAR_REGEX = Pattern.compile("^.*?[a-zA-Z]$");
     private static final Pattern VALID_PASSWORD_AT_LEAST_3_UPPERCASE_NON_CONSECUTIVE_REGEX = Pattern.compile("^.*[A-Z].+[A-Z].+[A-Z]");
 
-    public static int ValidateLogin(User user) {
+    public static int validateLogin(User user) {
         if (user.getUserName().length() < 9 || user.getUserName().length() > 20) {
             return R.string.errorUsernameLength;
         }

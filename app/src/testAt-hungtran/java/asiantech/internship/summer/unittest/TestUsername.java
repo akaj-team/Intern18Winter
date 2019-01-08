@@ -24,30 +24,30 @@ public class TestUsername {
     @Test
     public void usernameLength() {
         when(mUser.getUserName()).thenReturn("dsaddd");
-        assertEquals(Validate.ValidateLogin(mUser), R.string.errorUsernameLength);
+        assertEquals(Validate.validateLogin(mUser), R.string.errorUsernameLength);
     }
 
     @Test
     public void usernameNotAtLeast2UppercasenonConsecutive() {
         when(mUser.getUserName()).thenReturn("dsaenjkDs");
-        assertEquals(Validate.ValidateLogin(mUser), R.string.errorUsernameLeastTwoNonConsecutiveUppercaseLetters);
+        assertEquals(Validate.validateLogin(mUser), R.string.errorUsernameLeastTwoNonConsecutiveUppercaseLetters);
     }
 
     @Test
     public void usernameHasSpaceAndSpecialCharacters() {
         when(mUser.getUserName()).thenReturn("dsaenjkDsD.");
-        assertEquals(Validate.ValidateLogin(mUser), R.string.errorUserNameNoSpecialCharactersAndSpace);
+        assertEquals(Validate.validateLogin(mUser), R.string.errorUserNameNoSpecialCharactersAndSpace);
     }
 
     @Test
     public void usernameMoreThan2DigitsConsecutive() {
         when(mUser.getUserName()).thenReturn("dsaenjkDsD321");
-        assertEquals(Validate.ValidateLogin(mUser), R.string.errorUserNameNoAtMost2ConsecivitiveDigits);
+        assertEquals(Validate.validateLogin(mUser), R.string.errorUserNameNoAtMost2ConsecivitiveDigits);
     }
 
     @Test
     public void usernameStartWithUppercaseAndDigit() {
         when(mUser.getUserName()).thenReturn("DdsaenjkDsD32");
-        assertEquals(Validate.ValidateLogin(mUser), R.string.errorUserNameNotBeginWithUppercaseAndDigit);
+        assertEquals(Validate.validateLogin(mUser), R.string.errorUserNameNotBeginWithUppercaseAndDigit);
     }
 }
