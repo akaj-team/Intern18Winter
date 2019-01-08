@@ -54,7 +54,6 @@ public class RestApiActivity extends AppCompatActivity implements View.OnClickLi
     private static final String ACCESS_TOKEN = "604d1f2a63e1620f8e496970f675f0322671a3de0ba9f44c850e9ddc193f4476";
     private static final String BASE_URL = "https://api.gyazo.com/api/";
     private static final String UPLOAD_URL = "https://upload.gyazo.com/api/upload";
-    private int mActionUpload = 0;
     private SOService mService;
     private List<Image> mImages;
     private ImageAdapter mImageAdapter;
@@ -93,8 +92,7 @@ public class RestApiActivity extends AppCompatActivity implements View.OnClickLi
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnCamera: {
-                mActionUpload = REQUEST_IMAGE_CAPTURE;
-                if (!checkAndRequestPermission()) {
+                if (!checkAndRequestCameraPermission()) {
                     Toast.makeText(RestApiActivity.this, R.string.accept, Toast.LENGTH_SHORT).show();
                 } else {
                     openCamera();
@@ -102,8 +100,7 @@ public class RestApiActivity extends AppCompatActivity implements View.OnClickLi
                 break;
             }
             case R.id.btnGallery: {
-                mActionUpload = REQUEST_SELECT_PICTURE;
-                if (!checkAndRequestPermission()) {
+                if (!checkAndRequestGalleryPermission()) {
                     Toast.makeText(RestApiActivity.this, R.string.accept, Toast.LENGTH_SHORT).show();
                 } else {
                     openGallery();
@@ -116,14 +113,14 @@ public class RestApiActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void openCamera() {
-        if (checkAndRequestPermission()) {
+        if (checkAndRequestCameraPermission()) {
             Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
         }
     }
 
     private void openGallery() {
-        if (checkAndRequestPermission()) {
+        if (checkAndRequestGalleryPermission()) {
             Intent intent = new Intent();
             intent.setType("image/*");
             intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -131,14 +128,19 @@ public class RestApiActivity extends AppCompatActivity implements View.OnClickLi
         }
     }
 
-    private boolean checkAndRequestPermission() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED && mActionUpload == REQUEST_IMAGE_CAPTURE) {
-            ActivityCompat.requestPermissions(RestApiActivity.this, new String[]{Manifest.permission.CAMERA}, REQUEST_CODE_ASK_PERMISSIONS_CAMERA);
-            return false;
-        }
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED && mActionUpload == REQUEST_SELECT_PICTURE) {
+    private boolean checkAndRequestGalleryPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat
                     .requestPermissions(RestApiActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_ASK_PERMISSIONS_GALLERY);
+            return false;
+        }
+        return true;
+    }
+
+    private boolean checkAndRequestCameraPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(RestApiActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, REQUEST_CODE_ASK_PERMISSIONS_CAMERA);
             return false;
         }
         return true;
