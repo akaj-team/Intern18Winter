@@ -31,6 +31,10 @@
     <string name="helloWorld">hello world :))</string>
     <string name="like">%s like</string>
     <string name="likes">%s likes</string>
+    <string name="loadImage">Load Image</string>
+    <string name="uploadImage">Upload Image</string>
+    <string name="label_api_option">Option</string>
+    <string name="permissionDenied">Permission Denied</string>
     <string name="errorPasswordEmpty">Password can not Empty</string>
     <string name="errorUsernameEmpty">Username can not Empty</string>
     <string name="errorUsernameLength">Length username from 8 to 21</string>
