@@ -1,7 +1,5 @@
 package asiantech.internship.summer.unittest;
 
-import android.text.TextUtils;
-
 import java.util.regex.Pattern;
 
 import asiantech.internship.summer.R;
@@ -63,11 +61,11 @@ public final class ValidateUtils {
 
     public static int validatePassword(String password) {
         compileRegex();
-        if (!Password_At_Least_2_Special_Characters_Or_Digits.matcher(password).find()) {
-            return R.string.errorPasswordAtLeast2SpecialCharactersOrDigits;
-        }
         if (!Password_Length_At_Least_8.matcher(password).find()) {
             return R.string.errorPasswordLengthAtLeast8;
+        }
+        if (!Password_At_Least_2_Special_Characters_Or_Digits.matcher(password).find()) {
+            return R.string.errorPasswordAtLeast2SpecialCharactersOrDigits;
         }
         if (Password_At_Most_2_Consecutive_Repeated_Letters.matcher(password).find()) {
             return R.string.errorPasswordAtMost2ConsecutiveRepeatedLetters;
@@ -88,13 +86,5 @@ public final class ValidateUtils {
             }
         }
         return R.string.PasswordNotMatchUsername;
-    }
-
-    public static boolean isEmptyUsername(User user) {
-        return TextUtils.isEmpty(user.getUsername());
-    }
-
-    public static boolean isEmptyPassword(User user) {
-        return TextUtils.isEmpty(user.getPassword());
     }
 }

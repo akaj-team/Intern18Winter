@@ -2,6 +2,7 @@ package asiantech.internship.summer.unittest;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -39,9 +40,9 @@ public class UnitTestActivity extends AppCompatActivity {
             String checkResult;
             mTvNotification.setBackground(getResources().getDrawable(R.drawable.bg_shape_stroke_red));
 
-            if (ValidateUtils.isEmptyUsername(user)) {
+            if (TextUtils.isEmpty(user.getUsername())) {
                 mTvNotification.setText(R.string.usernameNotEmpty);
-            } else if (ValidateUtils.isEmptyPassword(user)) {
+            } else if (TextUtils.isEmpty(user.getPassword())) {
                 mTvNotification.setText(R.string.passwordNotEmpty);
             } else {
                 checkResult = getResources().getString(ValidateUtils.validateUserName(username))
