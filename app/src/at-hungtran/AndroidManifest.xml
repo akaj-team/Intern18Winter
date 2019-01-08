@@ -12,7 +12,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
 
-        <activity android:name=".viewpager.PagerActivity">
+        <activity android:name=".unittest.UnitTestActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
