@@ -2,6 +2,7 @@ package asiantech.internship.summer.restapi;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -9,6 +10,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -27,7 +29,9 @@ import com.google.gson.GsonBuilder;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import asiantech.internship.summer.R;
@@ -47,7 +51,7 @@ public class RestAPIActivity extends AppCompatActivity implements View.OnClickLi
     private static final int CHOOSE_GALLERY = 0;
     private static final int CAPTURE_CAMERA = 1;
     private static final int CANCEL_ACTION = 99;
-    private static final int GALLERY_PERMISSION_REQUEST_CODE = 201;
+    private static final int WRITE_GALLERY_PERMISSION_REQUEST_CODE = 201;
     private static final int WRITE_CAMERA_PERMISSION_REQUEST_CODE = 202;
 
     private APIImages mAPIImages;
@@ -141,7 +145,7 @@ public class RestAPIActivity extends AppCompatActivity implements View.OnClickLi
         if ((ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
                 || ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
                 && mActionUploadImage == 71) {
-            ActivityCompat.requestPermissions(RestAPIActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, WRITE_CAMERA_PERMISSION_REQUEST_CODE);
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, WRITE_CAMERA_PERMISSION_REQUEST_CODE);
             return false;
         }
         return true;
@@ -149,7 +153,7 @@ public class RestAPIActivity extends AppCompatActivity implements View.OnClickLi
 
     private boolean checkAndRequestGalleryPermission() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED && mActionUploadImage == 70) {
-            ActivityCompat.requestPermissions(RestAPIActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, GALLERY_PERMISSION_REQUEST_CODE);
+            ActivityCompat.requestPermissions(RestAPIActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, WRITE_GALLERY_PERMISSION_REQUEST_CODE);
             return false;
         }
         return true;
@@ -158,27 +162,86 @@ public class RestAPIActivity extends AppCompatActivity implements View.OnClickLi
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
         switch (requestCode) {
-            case GALLERY_PERMISSION_REQUEST_CODE: {
+            case WRITE_GALLERY_PERMISSION_REQUEST_CODE: {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     choosePhotosFromGallery();
-                    Toast.makeText(RestAPIActivity.this, R.string.galleryPermissionAccepted, Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, R.string.galleryPermissionAccepted, Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(RestAPIActivity.this, R.string.galleryPermissionDenied, Toast.LENGTH_LONG).show();
+                    showDialog(getString(R.string.permissionNeeded), getString(R.string.accessMemoryPermissionDenied), getString(R.string.gotoSettings),
+                            (dialogInterface, i) -> {
+                                dialogInterface.dismiss();
+                                Intent toSettingsIntent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                                        Uri.fromParts("package", getPackageName(), null));
+                                toSettingsIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(toSettingsIntent);
+                            }, getString(R.string.backToApp), (dialogInterface, i) -> dialogInterface.dismiss(), true);
                 }
                 break;
             }
             case WRITE_CAMERA_PERMISSION_REQUEST_CODE: {
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                HashMap<String, Integer> permissionResults = new HashMap<>();
+                int deniedCount = 0;
+
+                for (int i = 0; i < grantResults.length; i++) {
+                    if (grantResults[i] == PackageManager.PERMISSION_DENIED) {
+                        permissionResults.put(permissions[i], grantResults[i]);
+                        deniedCount++;
+                    }
+                }
+                if (deniedCount == 0) {
                     capturePhotosFromCamera();
-                    Toast.makeText(RestAPIActivity.this, R.string.cameraPermissionAccepted, Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, R.string.cameraPermissionAccepted, Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(RestAPIActivity.this, R.string.cameraPermissionDenied, Toast.LENGTH_LONG).show();
+                    for (Map.Entry<String, Integer> entry : permissionResults.entrySet()) {
+                        String permissionName = entry.getKey();
+
+                        if (ActivityCompat.shouldShowRequestPermissionRationale(this, permissionName)) {
+                            showDialog(getString(R.string.permissionNeeded),
+                                    getString(R.string.needPermissionToRun),
+                                    getString(R.string.grantPermissionAgain),
+                                    (dialogInterface, i) -> {
+                                        dialogInterface.dismiss();
+                                        checkAndRequestCameraPermission();
+                                    },
+                                    getString(R.string.backToApp), (dialogInterface, i) -> dialogInterface.dismiss(), true);
+                        } else {
+                            showDialog(getString(R.string.permissionNeeded),
+                                    getString(R.string.accessCameraAndMemoryPermissionDenied),
+                                    getString(R.string.gotoSettings),
+                                    (dialogInterface, i) -> {
+                                        dialogInterface.dismiss();
+                                        Intent toSettingsIntent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                                                Uri.fromParts("package", getPackageName(), null));
+                                        toSettingsIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        startActivity(toSettingsIntent);
+                                    },
+                                    getString(R.string.backToApp), (dialogInterface, i) -> dialogInterface.dismiss(), true);
+                            break;
+                        }
+                    }
                 }
                 break;
             }
             default:
                 super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
+    }
+
+    private void showDialog(String title, String msg, String positiveLabel,
+                            DialogInterface.OnClickListener positiveOnClick,
+                            String negativeLabel, DialogInterface.OnClickListener negativeOnClick,
+                            boolean isCancelable) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(title);
+        builder.setMessage(msg);
+        builder.setPositiveButton(positiveLabel, positiveOnClick);
+        builder.setNegativeButton(negativeLabel, negativeOnClick);
+        builder.setCancelable(isCancelable);
+
+        AlertDialog alert = builder.create();
+        alert.show();
+        alert.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.colorDarkGreen));
+        alert.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getResources().getColor(R.color.colorDarkGreen));
     }
 
     private void choosePhotosFromGallery() {
