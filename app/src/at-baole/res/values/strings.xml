@@ -40,4 +40,25 @@
     <string name="favourite">Favourite</string>
     <string name="addFavourite">Added to your Favourite</string>
     <string name="removeFavourite">Remove from your Favourite</string>
+    <string name="download">download</string>
+    <string name="downloading">Downloading...</string>
+    <string name="asyncTask">AsyncTask</string>
+    <string name="thread">Thread</string>
+    <string name="handler">Handler</string>
+    <string name="downloadSuccessfully">Download successfully</string>
+    <string name="chartName">Sales And Expenses</string>
+    <string name="noteSales">Sales</string>
+    <string name="noteExpenses">Expenses</string>
+    <string name="abbrJanuary">Jan</string>
+    <string name="abbrFebruary">Feb</string>
+    <string name="abbrMarch">Mar</string>
+    <string name="abbrApril">Apr</string>
+    <string name="abbrMay">May</string>
+    <string name="abbrJune">Jun</string>
+    <string name="abbrJuly">Jul</string>
+    <string name="abbrAugust">Aug</string>
+    <string name="abbrSeptember">Sep</string>
+    <string name="abbrOctober">Oct</string>
+    <string name="abbrNovember">Nov</string>
+    <string name="abbrDecember">Dec</string>
 </resources>

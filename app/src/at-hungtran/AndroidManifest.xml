@@ -2,10 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="asiantech.internship.summer">
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
+    <uses-feature android:name="android.hardware.camera" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -14,7 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity android:name=".view.HomeActivity">
+        <activity android:name=".filestorage.FileStorageActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,10 +25,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".eventlistener.LoginActivity" />
-        <activity android:name=".filestorage.FileStorageActivity" />
+        <activity android:name=".view.HomeActivity" />
         <activity android:name=".filestorage.EmployeeActivity" />
         <activity android:name=".activityfragment.LoginActivity" />
         <activity android:name=".recyclerview.TimelineActivity" />
+        <activity android:name=".restapi.RestAPIActivity" />
         <activity android:name=".viewpager.PagerActivity" />
     </application>
 
