@@ -54,4 +54,5 @@
     <string name="errorPasswordNotEndWithDigitOrSpecialChar">Password not end with digit or special char</string>
     <string name="errorPasswordAtLeast3UppercaseNonConsecutive">Password at least 3 uppercase non consecutive</string>
     <string name="unitTest">Unit Test</string>
+    <string name="listMenu">List Issue</string>
 </resources>
