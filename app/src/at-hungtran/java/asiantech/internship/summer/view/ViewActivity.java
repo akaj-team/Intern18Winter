@@ -11,7 +11,7 @@ import java.util.List;
 import asiantech.internship.summer.R;
 import asiantech.internship.summer.model.Data;
 
-public class HomeActivity extends AppCompatActivity {
+public class ViewActivity extends AppCompatActivity {
     private static final int COLUMNS = 2;
     List<Data> data = new ArrayList<>();
 
