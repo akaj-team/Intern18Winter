@@ -88,12 +88,11 @@ public class ServicesBroadcastActivity extends AppCompatActivity implements View
     public void showNotification() {
         Intent intent = new Intent(getApplicationContext(), ServicesBroadcastActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, 0);
-
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getApplicationContext(), "notify_001");
         mBuilder.setContentIntent(pendingIntent);
-        mBuilder.setSmallIcon(R.drawable.ic_play_arrow_black_36dp);
+        mBuilder.setSmallIcon(R.drawable.ic_play_arrow_white_36dp);
         mBuilder.setLargeIcon(BitmapFactory.decodeResource(getApplicationContext().getResources(),
-                R.drawable.ic_play_arrow_black_36dp));
+                R.drawable.ic_play_arrow_white_36dp));
         mBuilder.setContentTitle("Play Music");
         mBuilder.setContentText("Da da di da");
         mBuilder.setPriority(Notification.PRIORITY_MAX);
