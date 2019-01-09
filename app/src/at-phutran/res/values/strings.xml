@@ -66,4 +66,13 @@
     <string name="sale">Sales</string>
     <string name="expense">Expenses</string>
     <string name="defaulString">$1,000,000</string>
+    <string name="asyncTask">AsyncTask</string>
+    <string name="thread">Thread</string>
+    <string name="handler">Handler</string>
+    <string name="exercise11">AsyncTask</string>
+    <string name="download_image">Download image</string>
+    <string name="image">downloaded_image.jpg</string>
+    <string name="complete">Download complete</string>
+    <string name="interruptedException">InterruptedException:</string>
+    <string name="exception">Exception</string>
 </resources>
