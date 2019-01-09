@@ -15,7 +15,6 @@ import asiantech.internship.summer.storage.FileStoreActivity;
 import asiantech.internship.summer.viewpager.ViewPagerActivity;
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

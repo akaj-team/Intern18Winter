@@ -94,4 +94,7 @@
     <string name="uploadFailed">Upload failed!</string>
     <string name="loadImagesFailse">Load Images Failse!</string>
     <string name="loading">Loading...</string>
+    <string name="checkPermission">Check permission!</string>
+    <string name="cancel">Cancel</string>
+    <string name="setting">Setting</string>
 </resources>

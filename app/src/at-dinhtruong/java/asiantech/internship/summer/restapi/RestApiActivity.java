@@ -5,14 +5,17 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
@@ -49,8 +52,11 @@ public class RestApiActivity extends AppCompatActivity implements View.OnClickLi
     private static final int REQUEST_SELECT_PICTURE = 201;
     private static final int REQUEST_CODE_ASK_PERMISSIONS_CAMERA = 123;
     private static final int REQUEST_CODE_ASK_PERMISSIONS_GALLERY = 124;
-    private static final int mPage = 1;
-    private static final int mPerPage = 20;
+    private static final int PAGE = 1;
+    private static final int PERPAGE = 20;
+    private static final String CHECK_DO_NOT_ASK_AGAIN = "dontAskAgain";
+    private static final String CHECK_CAMERA = "checkCamera";
+    private static final String CHECK_GALLERY = "checkGallery";
     private static final String ACCESS_TOKEN = "604d1f2a63e1620f8e496970f675f0322671a3de0ba9f44c850e9ddc193f4476";
     private static final String BASE_URL = "https://api.gyazo.com/api/";
     private static final String UPLOAD_URL = "https://upload.gyazo.com/api/upload";
@@ -93,7 +99,7 @@ public class RestApiActivity extends AppCompatActivity implements View.OnClickLi
         switch (view.getId()) {
             case R.id.btnCamera: {
                 if (!checkAndRequestCameraPermission()) {
-                    Toast.makeText(RestApiActivity.this, R.string.accept, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RestApiActivity.this, R.string.checkPermission, Toast.LENGTH_SHORT).show();
                 } else {
                     openCamera();
                 }
@@ -101,7 +107,7 @@ public class RestApiActivity extends AppCompatActivity implements View.OnClickLi
             }
             case R.id.btnGallery: {
                 if (!checkAndRequestGalleryPermission()) {
-                    Toast.makeText(RestApiActivity.this, R.string.accept, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RestApiActivity.this, R.string.checkPermission, Toast.LENGTH_SHORT).show();
                 } else {
                     openGallery();
                 }
@@ -148,12 +154,32 @@ public class RestApiActivity extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        SharedPreferences sharedPreferences = getSharedPreferences(CHECK_DO_NOT_ASK_AGAIN, MODE_PRIVATE);
         switch (requestCode) {
             case REQUEST_CODE_ASK_PERMISSIONS_CAMERA: {
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
                     openCamera();
                 } else {
-                    Toast.makeText(RestApiActivity.this, R.string.permissionDenied, Toast.LENGTH_SHORT).show();
+                    boolean isCheckedCamera = sharedPreferences.getBoolean(CHECK_CAMERA, false);
+                    int count = 0;
+                    int length = permissions.length;
+                    for (int i = 0; i < length; i++) {
+                        String permission = permissions[i];
+                        if (grantResults[i] == PackageManager.PERMISSION_DENIED) {
+                            boolean showRationale = ActivityCompat.shouldShowRequestPermissionRationale(this, permission);
+                            if (!showRationale) {
+                                count++;
+                            }
+                        }
+                    }
+                    if (count > 0) {
+                        if (isCheckedCamera) {
+                            onPermissionDialog();
+                        }
+                        SharedPreferences.Editor editor = getSharedPreferences(CHECK_DO_NOT_ASK_AGAIN, MODE_PRIVATE).edit();
+                        editor.putBoolean(CHECK_CAMERA, true);
+                        editor.apply();
+                    }
                 }
                 break;
             }
@@ -161,7 +187,26 @@ public class RestApiActivity extends AppCompatActivity implements View.OnClickLi
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     openGallery();
                 } else {
-                    Toast.makeText(RestApiActivity.this, R.string.permissionDenied, Toast.LENGTH_SHORT).show();
+                    boolean isCheckedGallery = sharedPreferences.getBoolean(CHECK_GALLERY, false);
+                    int count = 0;
+                    int length = permissions.length;
+                    for (int i = 0; i < length; i++) {
+                        String permission = permissions[i];
+                        if (grantResults[i] == PackageManager.PERMISSION_DENIED) {
+                            boolean showRationale = ActivityCompat.shouldShowRequestPermissionRationale(this, permission);
+                            if (!showRationale) {
+                                count++;
+                            }
+                        }
+                    }
+                    if (count > 0) {
+                        if (isCheckedGallery) {
+                            onPermissionDialog();
+                        }
+                        SharedPreferences.Editor editor = getSharedPreferences(CHECK_DO_NOT_ASK_AGAIN, MODE_PRIVATE).edit();
+                        editor.putBoolean(CHECK_GALLERY, true);
+                        editor.apply();
+                    }
                 }
                 break;
             }
@@ -200,7 +245,7 @@ public class RestApiActivity extends AppCompatActivity implements View.OnClickLi
 
     private void loadImages() {
         onProgressbarDialog();
-        mService.getImages(ACCESS_TOKEN, mPage, mPerPage).enqueue(new Callback<List<Image>>() {
+        mService.getImages(ACCESS_TOKEN, PAGE, PERPAGE).enqueue(new Callback<List<Image>>() {
             @Override
             public void onResponse(@NonNull Call<List<Image>> call, @NonNull Response<List<Image>> response) {
                 if (response.body() != null) {
@@ -210,8 +255,8 @@ public class RestApiActivity extends AppCompatActivity implements View.OnClickLi
                         }
                     }
                 }
-                mImageAdapter.notifyDataSetChanged();
                 mProgressDialog.dismiss();
+                mImageAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -273,5 +318,23 @@ public class RestApiActivity extends AppCompatActivity implements View.OnClickLi
         mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         mProgressDialog.setMessage(getString(R.string.loading));
         mProgressDialog.show();
+    }
+
+    private void onPermissionDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Accept dialog");
+        builder.setMessage("You have denied permission. Allow all permission at [Setting]->[Permission], go to [Setting]");
+        builder.setCancelable(false);
+        builder.setNegativeButton("Setting", (dialogInterface, i) -> {
+            dialogInterface.dismiss();
+            Intent intent = new Intent();
+            intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+            Uri uri = Uri.fromParts("package", getApplication().getPackageName(), null);
+            intent.setData(uri);
+            getApplicationContext().startActivity(intent);
+        });
+        builder.setPositiveButton("Cancle", (dialogInterface, i) -> Toast.makeText(RestApiActivity.this, "Không cho phep", Toast.LENGTH_SHORT).show());
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 }
