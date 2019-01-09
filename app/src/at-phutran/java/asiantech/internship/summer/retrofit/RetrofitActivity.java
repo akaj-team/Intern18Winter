@@ -2,14 +2,17 @@ package asiantech.internship.summer.retrofit;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -20,11 +23,13 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Button;
 import android.widget.Toast;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
 import asiantech.internship.summer.R;
 import asiantech.internship.summer.model.ImageItem;
 import okhttp3.MediaType;
@@ -36,6 +41,7 @@ import retrofit2.Response;
 
 @SuppressLint("Registered")
 public class RetrofitActivity extends AppCompatActivity {
+    public static final String MY_PREFS_NAME = "MyFile";
     private static final int CHOOSE_GALLERY = 0;
     private static final int CHOOSE_CAMERA = 1;
     private static final int GALLERY = 111;
@@ -44,12 +50,31 @@ public class RetrofitActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_ASK_PERMISSIONS_GALLERY = 444;
     private static final String ACCESS_TOKEN = "604d1f2a63e1620f8e496970f675f0322671a3de0ba9f44c850e9ddc193f4476";
     private static final String UPLOAD_URL = "https://upload.gyazo.com/api/upload";
-    private int mActionChangeAvatar;
+    boolean showRationaleCamera;
+    boolean showRationaleWrite;
+    SharedPreferences sharedPreferences;
     private RetrofitAdapter mAdapter;
     private RecyclerView mRecyclerView;
     private SOService mService;
     private List<ImageItem> mImageItems;
     private ProgressDialog mProgressDialog;
+    private boolean mIsShowAlert;
+    private boolean mIsShow;
+    private boolean mIsCheck;
+
+    public static void startInstalledAppDetailsActivity(final Activity context) {
+        if (context == null) {
+            return;
+        }
+        final Intent intent = new Intent();
+        intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        intent.addCategory(Intent.CATEGORY_DEFAULT);
+        intent.setData(Uri.parse("package:" + context.getPackageName()));
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+        intent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+        context.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +84,7 @@ public class RetrofitActivity extends AppCompatActivity {
         mService = RetrofitClient.getClient().create(SOService.class);
         mRecyclerView = findViewById(R.id.recyclerViewContent);
         Button btnInsert = findViewById(R.id.btnInsertImage);
+        sharedPreferences = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
         initRecyclerView();
         loadData();
         btnInsert.setOnClickListener(v -> eventHandle());
@@ -82,15 +108,24 @@ public class RetrofitActivity extends AppCompatActivity {
                 (dialog, which) -> {
                     switch (which) {
                         case CHOOSE_GALLERY:
-                            mActionChangeAvatar = GALLERY;
                             if (checkPermissionForGallery()) {
                                 chooseGallery();
+                            } else {
+                                mIsShowAlert = getValueShowInSharedPreferences(getString(R.string.noteCamera));
+                                mIsShow = getValueShowInSharedPreferences(getString(R.string.noteGallery));
+                                if (!showRationaleWrite && mIsShow || !showRationaleWrite && mIsShowAlert) {
+                                    showSettingsAlert(getString(R.string.noteGallery));
+                                }
                             }
                             break;
                         case CHOOSE_CAMERA:
-                            mActionChangeAvatar = CAMERA;
                             if (checkPermissionForCamera()) {
                                 chooseCamera();
+                            } else {
+                                mIsShowAlert = getValueShowInSharedPreferences(getString(R.string.noteCamera));
+                                if (!showRationaleWrite && !showRationaleCamera && mIsShowAlert) {
+                                    showSettingsAlert(getString(R.string.noteCamera));
+                                }
                             }
                             break;
                     }
@@ -116,10 +151,14 @@ public class RetrofitActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
             case REQUEST_CODE_ASK_PERMISSIONS_CAMERA: {
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
                     chooseCamera();
                 } else {
-                    Toast.makeText(RetrofitActivity.this, R.string.deny, Toast.LENGTH_SHORT).show();
+                    showRationaleCamera = ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA);
+                    showRationaleWrite = ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                    if (!showRationaleCamera && !showRationaleWrite) {
+                        saveValueShowInSharedPreferences(getString(R.string.noteCamera));
+                    }
                 }
                 break;
             }
@@ -127,7 +166,10 @@ public class RetrofitActivity extends AppCompatActivity {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     chooseGallery();
                 } else {
-                    Toast.makeText(RetrofitActivity.this, R.string.deny, Toast.LENGTH_SHORT).show();
+                    showRationaleWrite = ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                    if (!showRationaleWrite) {
+                        saveValueShowInSharedPreferences(getString(R.string.noteGallery));
+                    }
                 }
                 break;
             }
@@ -136,13 +178,42 @@ public class RetrofitActivity extends AppCompatActivity {
         }
     }
 
+    private void saveValueShowInSharedPreferences(String value) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(value, true);
+        editor.apply();
+    }
+
+    private boolean getValueShowInSharedPreferences(String value) {
+        if (sharedPreferences.contains(value)) {
+            mIsCheck = sharedPreferences.getBoolean(value, false);
+        }
+        return mIsCheck;
+    }
+
+    private void showSettingsAlert(String message) {
+        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+        alertDialog.setTitle(getString(R.string.optionChoose));
+        alertDialog.setMessage(getString(R.string.noteAccess) + " " + message);
+        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, getString(R.string.cancel),
+                (dialog, which) -> dialog.dismiss());
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(R.string.setting),
+                (dialog, which) -> {
+                    dialog.dismiss();
+                    startInstalledAppDetailsActivity(RetrofitActivity.this);
+                });
+        alertDialog.show();
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == GALLERY) {
-            openGallery(data);
-        } else {
-            openCamera(data);
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == GALLERY) {
+                openGallery(data);
+            } else {
+                openCamera(data);
+            }
         }
     }
 
@@ -165,7 +236,7 @@ public class RetrofitActivity extends AppCompatActivity {
     }
 
     private boolean checkPermissionForCamera() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED && mActionChangeAvatar == CAMERA) {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, REQUEST_CODE_ASK_PERMISSIONS_CAMERA);
             return false;
         }
@@ -173,7 +244,7 @@ public class RetrofitActivity extends AppCompatActivity {
     }
 
     private boolean checkPermissionForGallery() {
-        if (ContextCompat.checkSelfPermission( this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED && mActionChangeAvatar == GALLERY) {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_ASK_PERMISSIONS_GALLERY);
             return false;
         }
@@ -202,7 +273,6 @@ public class RetrofitActivity extends AppCompatActivity {
                 mProgressDialog.dismiss();
                 Toast.makeText(RetrofitActivity.this, R.string.error, Toast.LENGTH_SHORT).show();
             }
-
         });
     }
 
