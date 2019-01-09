@@ -161,18 +161,13 @@ public class RestApiActivity extends AppCompatActivity implements View.OnClickLi
                     openCamera();
                 } else {
                     boolean isCheckedCamera = sharedPreferences.getBoolean(CHECK_CAMERA, false);
-                    int count = 0;
-                    int length = permissions.length;
-                    for (int i = 0; i < length; i++) {
-                        String permission = permissions[i];
-                        if (grantResults[i] == PackageManager.PERMISSION_DENIED) {
-                            boolean showRationale = ActivityCompat.shouldShowRequestPermissionRationale(this, permission);
-                            if (!showRationale) {
-                                count++;
-                            }
-                        }
+                    boolean showRationale = false;
+                    boolean showRationaleWrite = false;
+                    if (grantResults[0] == PackageManager.PERMISSION_DENIED && grantResults[1] == PackageManager.PERMISSION_DENIED) {
+                        showRationale = ActivityCompat.shouldShowRequestPermissionRationale(this, permissions[0]);
+                        showRationaleWrite = ActivityCompat.shouldShowRequestPermissionRationale(this, permissions[1]);
                     }
-                    if (count > 0) {
+                    if (!showRationale && !showRationaleWrite) {
                         if (isCheckedCamera) {
                             onPermissionDialog();
                         }
@@ -188,18 +183,11 @@ public class RestApiActivity extends AppCompatActivity implements View.OnClickLi
                     openGallery();
                 } else {
                     boolean isCheckedGallery = sharedPreferences.getBoolean(CHECK_GALLERY, false);
-                    int count = 0;
-                    int length = permissions.length;
-                    for (int i = 0; i < length; i++) {
-                        String permission = permissions[i];
-                        if (grantResults[i] == PackageManager.PERMISSION_DENIED) {
-                            boolean showRationale = ActivityCompat.shouldShowRequestPermissionRationale(this, permission);
-                            if (!showRationale) {
-                                count++;
-                            }
-                        }
+                    boolean showRationaleWrite = false;
+                    if (grantResults[0] == PackageManager.PERMISSION_DENIED) {
+                        showRationaleWrite = ActivityCompat.shouldShowRequestPermissionRationale(this, permissions[0]);
                     }
-                    if (count > 0) {
+                    if (!showRationaleWrite) {
                         if (isCheckedGallery) {
                             onPermissionDialog();
                         }
