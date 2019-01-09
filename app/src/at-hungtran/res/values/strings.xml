@@ -7,7 +7,6 @@
     <string name="news">News</string>
     <string name="loadding">loadding</string>
     <string name="content">content</string>
-    <string name="viewgroup">W1-D3 View and ViewGroup</string>
     <string name="profile">Profile</string>
     <string name="todo">TODO</string>
     <string name="allowEmailFromOther">Allow email from other</string>
@@ -35,6 +34,15 @@
     <string name="uploadImage">Upload Image</string>
     <string name="label_api_option">Option</string>
     <string name="permissionDenied">Permission Denied</string>
+    <string name="downloading">Downloading</string>
+    <string name="download">Download Images AsyncTask</string>
+    <string name="activityFragment">Activity Fragment</string>
+    <string name="view">View and ViewGroup</string>
+    <string name="eventListener">Event and Listener</string>
+    <string name="recyclerView">Android RecyclerView</string>
+    <string name="viewPager">Android ViewPager</string>
+    <string name="asyncTask">AsyncTask Thread Handler</string>
+    <string name="restAPI">Rest API with Retrofit and Gson</string>
     <string name="errorPasswordEmpty">Password can not Empty</string>
     <string name="errorUsernameEmpty">Username can not Empty</string>
     <string name="errorUsernameLength">Length username from 8 to 21</string>
@@ -45,4 +53,5 @@
     <string name="errorPasswordNoMore2CharConsecutive">Password no more 2 char or digits consecutive</string>
     <string name="errorPasswordNotEndWithDigitOrSpecialChar">Password not end with digit or special char</string>
     <string name="errorPasswordAtLeast3UppercaseNonConsecutive">Password at least 3 uppercase non consecutive</string>
+    <string name="unitTest">Unit Test</string>
 </resources>
