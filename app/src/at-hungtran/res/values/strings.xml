@@ -7,7 +7,6 @@
     <string name="news">News</string>
     <string name="loadding">loadding</string>
     <string name="content">content</string>
-    <string name="viewgroup">W1-D3 View and ViewGroup</string>
     <string name="profile">Profile</string>
     <string name="todo">TODO</string>
     <string name="allowEmailFromOther">Allow email from other</string>
@@ -31,4 +30,17 @@
     <string name="helloWorld">hello world :))</string>
     <string name="like">%s like</string>
     <string name="likes">%s likes</string>
+    <string name="loadImage">Load Image</string>
+    <string name="uploadImage">Upload Image</string>
+    <string name="label_api_option">Option</string>
+    <string name="permissionDenied">Permission Denied</string>
+    <string name="downloading">Downloading</string>
+    <string name="download">Download Images AsyncTask</string>
+    <string name="activityFragment">Activity Fragment</string>
+    <string name="view">View and ViewGroup</string>
+    <string name="eventListener">Event and Listener</string>
+    <string name="recyclerView">Android RecyclerView</string>
+    <string name="viewPager">Android ViewPager</string>
+    <string name="asyncTask">AsyncTask Thread Handler</string>
+    <string name="restAPI">Rest API with Retrofit and Gson</string>
 </resources>

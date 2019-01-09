@@ -3,7 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="asiantech.internship.summer">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -30,6 +33,8 @@
         <activity android:name=".viewpager.ViewPagerActivity" />
         <activity android:name=".storage.FileStoreActivity" />
         <activity android:name=".storage.EmployeeActivity" />
+        <activity android:name=".restapi.RestApiActivity" />
+        <activity android:name=".asynctaskthreadhandler.AsyncTaskThreadHandlerActivity" />
     </application>
 
 </manifest>
