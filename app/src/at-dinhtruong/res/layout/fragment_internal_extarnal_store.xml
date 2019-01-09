@@ -1,0 +1,61 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:baselineAligned="false"
+    android:gravity="center"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/edtInternal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/internal"
+            android:inputType="textMultiLine"
+            android:lines="8"
+            android:maxLines="10"
+            android:textColor="@color/colorBlack"
+            android:textStyle="bold"
+            tools:ignore="Autofill" />
+
+        <Button
+            android:id="@+id/btnInternal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/internal" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/edtExternal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/external"
+            android:inputType="textMultiLine"
+            android:lines="8"
+            android:maxLines="10"
+            android:textColor="@color/colorBlack"
+            android:textStyle="bold"
+            tools:ignore="Autofill" />
+
+        <Button
+            android:id="@+id/btnExternal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/external" />
+    </LinearLayout>
+
+</LinearLayout>

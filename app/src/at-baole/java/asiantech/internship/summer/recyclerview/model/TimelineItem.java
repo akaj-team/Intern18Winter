@@ -7,6 +7,7 @@ public class TimelineItem {
     private String mUsername;
     private String mCommenter;
     private String mComment;
+    private boolean mIsChecked;
 
 
     public TimelineItem(int avatar, String username, int picture, int countLike, String commenter, String comment) {
@@ -52,5 +53,13 @@ public class TimelineItem {
 
     public void setComment(String comment) {
         this.mComment = comment;
+    }
+
+    public boolean isChecked() {
+        return mIsChecked;
+    }
+
+    public void setIsChecked(boolean isChecked) {
+        this.mIsChecked = isChecked;
     }
 }
