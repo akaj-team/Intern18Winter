@@ -8,6 +8,7 @@ import android.widget.Button;
 
 import asiantech.internship.summer.R;
 import asiantech.internship.summer.activityandfragment.LoginActivity;
+import asiantech.internship.summer.asynctaskthreadhandler.AsyncTaskThreadHandlerActivity;
 import asiantech.internship.summer.eventandlistener.EventAndListenerActivity;
 import asiantech.internship.summer.recyclerview.RecyclerViewActivity;
 import asiantech.internship.summer.restapi.RestApiActivity;
@@ -32,7 +33,11 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         Button btnViewPager = findViewById(R.id.btnViewPager);
         Button btnFileStorage = findViewById(R.id.btnFileStorage);
         Button btnRestApi = findViewById(R.id.btnRestApi);
+<<<<<<< HEAD
         Button btnUnitTest = findViewById(R.id.btnUnitTest);
+=======
+        Button btnAsyncThreadHandler = findViewById(R.id.btnAsyncThreadHandler);
+>>>>>>> master
         btnViewGroup.setOnClickListener(this);
         btnEventAndListener.setOnClickListener(this);
         btnActivityAndFragment.setOnClickListener(this);
@@ -40,7 +45,11 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         btnViewPager.setOnClickListener(this);
         btnFileStorage.setOnClickListener(this);
         btnRestApi.setOnClickListener(this);
+<<<<<<< HEAD
         btnUnitTest.setOnClickListener(this);
+=======
+        btnAsyncThreadHandler.setOnClickListener(this);
+>>>>>>> master
     }
 
     @Override
@@ -81,8 +90,13 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(intent);
                 break;
             }
+<<<<<<< HEAD
             case R.id.btnUnitTest: {
                 Intent intent = new Intent(HomeActivity.this, UnitTestActivity.class);
+=======
+            case R.id.btnAsyncThreadHandler: {
+                Intent intent = new Intent(HomeActivity.this, AsyncTaskThreadHandlerActivity.class);
+>>>>>>> master
                 startActivity(intent);
             }
             default:

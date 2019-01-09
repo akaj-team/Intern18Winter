@@ -41,6 +41,13 @@
             android:text="@string/recyclerView" />
 
         <Button
+            android:id="@+id/btnAsyncThreadHandler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="@string/asynctaskThreadHandler" />
+
+        <Button
             android:id="@+id/btnViewPager"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
