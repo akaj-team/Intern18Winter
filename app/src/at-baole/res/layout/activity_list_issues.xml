@@ -23,35 +23,49 @@
         android:id="@+id/btnToEventListener"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:text="@string/toEventListener" />
 
     <Button
         android:id="@+id/btnToActivityFragment"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:text="@string/toActivityFragment" />
 
     <Button
         android:id="@+id/btnToRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:text="@string/toRecyclerView" />
 
     <Button
         android:id="@+id/btnToViewPager"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:text="@string/toViewPager" />
 
     <Button
         android:id="@+id/btnToFileStorage"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:text="@string/toFileStorage" />
+
+    <Button
+        android:id="@+id/btnToAsyncTask"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="5dp"
+        android:text="@string/toAsyncTask" />
+
+    <Button
+        android:id="@+id/btnToCanvas"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="5dp"
+        android:text="@string/toCanvas" />
 
 </LinearLayout>

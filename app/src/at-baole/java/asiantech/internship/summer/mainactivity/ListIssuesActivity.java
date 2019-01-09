@@ -7,6 +7,8 @@ import android.widget.Button;
 
 import asiantech.internship.summer.R;
 import asiantech.internship.summer.activity_fragment.LoginActivity;
+import asiantech.internship.summer.asynctaskthreadhandler.AsyncTaskThreadHandlerActivity;
+import asiantech.internship.summer.canvas.CanvasActivity;
 import asiantech.internship.summer.event_listener.SignUpActivity;
 import asiantech.internship.summer.filestorage.FileStorageActivity;
 import asiantech.internship.summer.recyclerview.RecyclerViewActivity;
@@ -20,23 +22,26 @@ public class ListIssuesActivity extends AppCompatActivity {
     private Button mBtnToRecyclerView;
     private Button mBtnToViewPager;
     private Button mBtnToFileStorage;
-
+    private Button mBtnToAsyncTask;
+    private Button mBtnToCanvas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_issues);
-        mappingButton();
+        initView();
         onClick();
     }
 
-    private void mappingButton() {
+    private void initView() {
         mBtnToGroupView = findViewById(R.id.btnToGroupView);
         mBtnToEventListener = findViewById(R.id.btnToEventListener);
         mBtnToActivityFragment = findViewById(R.id.btnToActivityFragment);
         mBtnToRecyclerView = findViewById(R.id.btnToRecyclerView);
         mBtnToViewPager = findViewById(R.id.btnToViewPager);
         mBtnToFileStorage = findViewById(R.id.btnToFileStorage);
+        mBtnToAsyncTask = findViewById(R.id.btnToAsyncTask);
+        mBtnToCanvas = findViewById(R.id.btnToCanvas);
     }
 
     private void onClick() {
@@ -68,6 +73,16 @@ public class ListIssuesActivity extends AppCompatActivity {
         mBtnToFileStorage.setOnClickListener(toFileStorage -> {
             Intent intentFileStorage = new Intent(getApplication(), FileStorageActivity.class);
             startActivity(intentFileStorage);
+        });
+
+        mBtnToAsyncTask.setOnClickListener(toAsyncTask -> {
+            Intent intentAsyncTask = new Intent(getApplication(), AsyncTaskThreadHandlerActivity.class);
+            startActivity(intentAsyncTask);
+        });
+
+        mBtnToCanvas.setOnClickListener(toCanvas -> {
+            Intent intentCanvas = new Intent(getApplication(), CanvasActivity.class);
+            startActivity(intentCanvas);
         });
     }
 }
