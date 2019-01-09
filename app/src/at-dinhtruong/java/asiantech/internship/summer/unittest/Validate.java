@@ -59,14 +59,14 @@ class Validate {
     }
 
     private static int containDigit(String username) {
-        int n = 0;
-        int size = username.length();
-        for (int i = 0; i < size; i++) {
+        int count = 0;
+        int length = username.length();
+        for (int i = 0; i < length; i++) {
             if (Character.isDigit(username.charAt(i))) {
-                n++;
+                count++;
             }
         }
-        return n;
+        return count;
     }
 
     static boolean isUsernameAtMostTwoConsecutiveNumericCharacters(String usename) {
@@ -155,7 +155,6 @@ class Validate {
         if (!Validate.isUsernameAtMostTwoConsecutiveNumericCharacters(user.getUsername())) {
             return USERNAME_SHOULD_HAVE_AT_MOST_2_NUMBER;
         }
-
         if (!Validate.isUsernameDoNotStartWithCapitalLettersOrNumbers(user.getUsername())) {
             return USERNAME_SHOULD_NOT_START_WHITH_UPPER_CASE;
         }
