@@ -8,6 +8,7 @@ import android.widget.Button;
 
 import asiantech.internship.summer.R;
 import asiantech.internship.summer.activityandfragment.LoginActivity;
+import asiantech.internship.summer.asynctaskthreadhandler.AsyncTaskThreadHandlerActivity;
 import asiantech.internship.summer.eventandlistener.EventAndListenerActivity;
 import asiantech.internship.summer.recyclerview.RecyclerViewActivity;
 import asiantech.internship.summer.restapi.RestApiActivity;
@@ -32,6 +33,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         Button btnViewPager = findViewById(R.id.btnViewPager);
         Button btnFileStorage = findViewById(R.id.btnFileStorage);
         Button btnRestApi = findViewById(R.id.btnRestApi);
+        Button btnAsyncThreadHandler = findViewById(R.id.btnAsyncThreadHandler);
         Button btnServicesBroadcast = findViewById(R.id.btnServicesBroadcast);
         btnViewGroup.setOnClickListener(this);
         btnEventAndListener.setOnClickListener(this);
@@ -40,6 +42,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         btnViewPager.setOnClickListener(this);
         btnFileStorage.setOnClickListener(this);
         btnRestApi.setOnClickListener(this);
+        btnAsyncThreadHandler.setOnClickListener(this);
         btnServicesBroadcast.setOnClickListener(this);
     }
 
@@ -78,6 +81,11 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             }
             case R.id.btnRestApi: {
                 Intent intent = new Intent(HomeActivity.this, RestApiActivity.class);
+                startActivity(intent);
+                break;
+            }
+            case R.id.btnAsyncThreadHandler: {
+                Intent intent = new Intent(HomeActivity.this, AsyncTaskThreadHandlerActivity.class);
                 startActivity(intent);
                 break;
             }

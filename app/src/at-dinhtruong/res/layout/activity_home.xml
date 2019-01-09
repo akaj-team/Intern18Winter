@@ -41,11 +41,11 @@
             android:text="@string/recyclerView" />
 
         <Button
-            android:id="@+id/btnServicesBroadcast"
+            android:id="@+id/btnAsyncThreadHandler"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:text="@string/servicesBroadcast" />
+            android:text="@string/asynctaskThreadHandler" />
 
         <Button
             android:id="@+id/btnViewPager"
@@ -67,5 +67,12 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:text="@string/restApi" />
+
+        <Button
+            android:id="@+id/btnServicesBroadcast"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="@string/servicesBroadcast" />
     </LinearLayout>
 </ScrollView>
