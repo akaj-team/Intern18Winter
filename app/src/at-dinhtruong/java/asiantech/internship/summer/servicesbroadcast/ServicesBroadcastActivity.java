@@ -80,7 +80,6 @@ public class ServicesBroadcastActivity extends AppCompatActivity implements View
             mMediaPlayer.pause();
             mBtnPlay.setText(R.string.play);
         }
-
         showNotification();
         onUpdateSeekBarProgress();
     }
@@ -118,7 +117,6 @@ public class ServicesBroadcastActivity extends AppCompatActivity implements View
         if (notificationManager != null) {
             notificationManager.notify(1, notification);
         }
-
     }
 
     @SuppressLint("ClickableViewAccessibility")

@@ -37,6 +37,11 @@
         <activity android:name=".restapi.RestApiActivity" />
         <activity android:name=".asynctaskthreadhandler.AsyncTaskThreadHandlerActivity" />
         <activity android:name=".servicesbroadcast.ServicesBroadcastActivity" />
+        <receiver android:name=".servicesbroadcast.PlayMusicReceiver">
+            <intent-filter>
+                <action android:name="ACTION_CLICK"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
