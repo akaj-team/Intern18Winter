@@ -34,4 +34,16 @@
     <string name="play">Playing</string>
     <string name="pause">Paused</string>
     <string name="currentTime">00:00</string>
+    <string name="listen_music">Listen Music</string>
+    <string name="list_song">List song</string>
+    <string name="position">position</string>
+    <string name="move">move</string>
+    <string name="playAction">play action</string>
+    <string name="service">Service</string>
+    <string name="close_action">close action</string>
+    <string name="channel">channel</string>
+    <string name="current">current time</string>
+    <string name="play_action">play action</string>
+    <string name="channel_name">channel name</string>
+    <string name="preference">preference</string>
 </resources>
