@@ -97,4 +97,8 @@
     <string name="checkPermission">Check permission!</string>
     <string name="cancel">Cancel</string>
     <string name="setting">Setting</string>
+    <string name="acceptDialog">Accept dialog</string>
+    <string name="youHaveDeniedPermission"><![CDATA[You have denied permission. Allow all permission at [Setting]->[Permission], go to [Setting]]]></string>
+    <string name="cancle">Cancle</string>
+    <string name="denied">Denied</string>
 </resources>

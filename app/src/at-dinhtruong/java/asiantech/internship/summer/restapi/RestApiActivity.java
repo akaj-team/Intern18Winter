@@ -164,8 +164,8 @@ public class RestApiActivity extends AppCompatActivity implements View.OnClickLi
                     boolean showRationale = false;
                     boolean showRationaleWrite = false;
                     if (grantResults[0] == PackageManager.PERMISSION_DENIED && grantResults[1] == PackageManager.PERMISSION_DENIED) {
-                        showRationale = ActivityCompat.shouldShowRequestPermissionRationale(this, permissions[0]);
-                        showRationaleWrite = ActivityCompat.shouldShowRequestPermissionRationale(this, permissions[1]);
+                        showRationale = ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA);
+                        showRationaleWrite = ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
                     }
                     if (!showRationale && !showRationaleWrite) {
                         if (isCheckedCamera) {
@@ -185,7 +185,7 @@ public class RestApiActivity extends AppCompatActivity implements View.OnClickLi
                     boolean isCheckedGallery = sharedPreferences.getBoolean(CHECK_GALLERY, false);
                     boolean showRationaleWrite = false;
                     if (grantResults[0] == PackageManager.PERMISSION_DENIED) {
-                        showRationaleWrite = ActivityCompat.shouldShowRequestPermissionRationale(this, permissions[0]);
+                        showRationaleWrite = ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
                     }
                     if (!showRationaleWrite) {
                         if (isCheckedGallery) {
@@ -310,10 +310,10 @@ public class RestApiActivity extends AppCompatActivity implements View.OnClickLi
 
     private void onPermissionDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Accept dialog");
-        builder.setMessage("You have denied permission. Allow all permission at [Setting]->[Permission], go to [Setting]");
+        builder.setTitle(R.string.acceptDialog);
+        builder.setMessage(R.string.youHaveDeniedPermission);
         builder.setCancelable(false);
-        builder.setNegativeButton("Setting", (dialogInterface, i) -> {
+        builder.setNegativeButton(R.string.setting, (dialogInterface, i) -> {
             dialogInterface.dismiss();
             Intent intent = new Intent();
             intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
@@ -321,7 +321,7 @@ public class RestApiActivity extends AppCompatActivity implements View.OnClickLi
             intent.setData(uri);
             getApplicationContext().startActivity(intent);
         });
-        builder.setPositiveButton("Cancle", (dialogInterface, i) -> Toast.makeText(RestApiActivity.this, "Không cho phep", Toast.LENGTH_SHORT).show());
+        builder.setPositiveButton(R.string.cancle, (dialogInterface, i) -> Toast.makeText(RestApiActivity.this, R.string.denied, Toast.LENGTH_SHORT).show());
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
