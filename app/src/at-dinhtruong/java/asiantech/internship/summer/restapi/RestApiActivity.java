@@ -183,12 +183,13 @@ public class RestApiActivity extends AppCompatActivity implements View.OnClickLi
                     openGallery();
                 } else {
                     boolean isCheckedGallery = sharedPreferences.getBoolean(CHECK_GALLERY, false);
+                    boolean isCheckedCamera = sharedPreferences.getBoolean(CHECK_CAMERA, false);
                     boolean showRationaleWrite = false;
                     if (grantResults[0] == PackageManager.PERMISSION_DENIED) {
                         showRationaleWrite = ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
                     }
                     if (!showRationaleWrite) {
-                        if (isCheckedGallery) {
+                        if (isCheckedGallery || isCheckedCamera) {
                             onPermissionDialog();
                         }
                         SharedPreferences.Editor editor = getSharedPreferences(CHECK_DO_NOT_ASK_AGAIN, MODE_PRIVATE).edit();
