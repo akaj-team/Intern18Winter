@@ -78,10 +78,11 @@
     <string name="getImageFailed">Failed to load images</string>
     <string name="LoadImagesDialogMessage">We are working with your image files, please wait...</string>
     <string name="permissionNeeded">Permissions Needed</string>
-    <string name="accessMemoryPermissionDenied">You have denied memory access permission. Allow permissions at [Setting] -> [Permissions]</string>
+    <string name="permissionMessageGallery">phone memory</string>
+    <string name="permissionMessageCamera">camera and phone memory</string>
+    <string name="permissionsDialogMessageFirstHalf">This App needs to access your</string>
+    <string name="permissionsDialogMessageSecondHalf">to run properly.</string>
+    <string name="directionToSettings">Please go to Settings to grant permisisons.</string>
+    <string name="backToApp">Back to app.</string>
     <string name="gotoSettings">Go to Settings.</string>
-    <string name="backToApp">No, back to app.</string>
-    <string name="needPermissionToRun">This app needs camera and memory access permission to run properly.</string>
-    <string name="grantPermissionAgain">Grant permissions again</string>
-    <string name="accessCameraAndMemoryPermissionDenied">You have denied camera and memory access permission. Allow permissions at [Setting] -> [Permissions]</string>
 </resources>

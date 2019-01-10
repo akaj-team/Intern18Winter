@@ -2,8 +2,8 @@ package asiantech.internship.summer.restapi;
 
 import android.Manifest;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -19,6 +19,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -29,9 +30,7 @@ import com.google.gson.GsonBuilder;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 import asiantech.internship.summer.R;
@@ -53,13 +52,19 @@ public class RestAPIActivity extends AppCompatActivity implements View.OnClickLi
     private static final int CANCEL_ACTION = 99;
     private static final int WRITE_GALLERY_PERMISSION_REQUEST_CODE = 201;
     private static final int WRITE_CAMERA_PERMISSION_REQUEST_CODE = 202;
+    private static final String FREFERENCE_FILE_NAME = "MyFiles";
 
+    private boolean mIsShowCameraPermissionRationale = true;
+    private boolean mIsShowGalleryPermissionRationale = true;
+    private boolean mIsShowCameraAlertDialog;
+    private boolean mIsShowGalleryAlertDialog;
+    private boolean mIsCheck;
     private APIImages mAPIImages;
-    private List<ImageItem> mImages = new ArrayList<>();
     private RecyclerView mRecyclerViewImage;
     private ProgressDialog mProgressDialog;
     private ListImageAdapter mImageAdapter;
-    private int mActionUploadImage = 69;
+    private SharedPreferences mSharedPreferences;
+    private List<ImageItem> mImages = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -74,6 +79,7 @@ public class RestAPIActivity extends AppCompatActivity implements View.OnClickLi
         Button mBtnLoadImage = findViewById(R.id.btnLoadImage);
         Button mBtnUploadImage = findViewById(R.id.btnUploadImage);
         mRecyclerViewImage = findViewById(R.id.recyclerViewRestful);
+        mSharedPreferences = getSharedPreferences(FREFERENCE_FILE_NAME, MODE_PRIVATE);
 
         mBtnLoadImage.setOnClickListener(this);
         mBtnUploadImage.setOnClickListener(this);
@@ -121,16 +127,31 @@ public class RestAPIActivity extends AppCompatActivity implements View.OnClickLi
         imagesDialog.setItems(imagesDialogItems, (dialogInterface, option) -> {
             switch (option) {
                 case CHOOSE_GALLERY: {
-                    mActionUploadImage = 70;
                     if (checkAndRequestGalleryPermission()) {
                         choosePhotosFromGallery();
+                    } else {
+                        mIsShowCameraAlertDialog = getValueSharedPreferences(getString(R.string.permissionMessageCamera));
+                        mIsShowGalleryAlertDialog = getValueSharedPreferences(getString(R.string.permissionMessageGallery));
+                        Log.d("yyy", "mShowRationaleWrite: " + mIsShowGalleryPermissionRationale
+                                + "\nmIsShowGalleryAlertDialog: " + mIsShowGalleryAlertDialog);
+                        if (!mIsShowGalleryPermissionRationale && mIsShowGalleryAlertDialog) {
+                            showAlertDialog(getString(R.string.permissionMessageGallery));
+                        }
                     }
                     break;
                 }
                 case CAPTURE_CAMERA: {
-                    mActionUploadImage = 71;
                     if (checkAndRequestCameraPermission()) {
                         capturePhotosFromCamera();
+                    } else {
+                        mIsShowCameraAlertDialog = getValueSharedPreferences(getString(R.string.permissionMessageCamera));
+                        Log.d("xxx", "mShowRationaleWrite: " + mIsShowGalleryPermissionRationale
+                                + "\nmShowRationaleCamera: " + mIsShowCameraPermissionRationale
+                                + "\nmIsShowCameraAlertDialog: " + mIsShowCameraAlertDialog);
+                        if (!mIsShowGalleryPermissionRationale && !mIsShowCameraPermissionRationale && mIsShowCameraAlertDialog) {
+                            Log.d("kkk", "I AM HERE!");
+                            showAlertDialog(getString(R.string.permissionMessageCamera));
+                        }
                     }
                     break;
                 }
@@ -141,18 +162,30 @@ public class RestAPIActivity extends AppCompatActivity implements View.OnClickLi
         imagesDialog.show();
     }
 
+    private void saveValueSharedPreferences(String value) {
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putBoolean(value, true);
+        editor.apply();
+    }
+
+    private boolean getValueSharedPreferences(String value) {
+        if (mSharedPreferences.contains(value)) {
+            mIsCheck = mSharedPreferences.getBoolean(value, false);
+        }
+        return mIsCheck;
+    }
+
     private boolean checkAndRequestCameraPermission() {
         if ((ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
-                || ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
-                && mActionUploadImage == 71) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, WRITE_CAMERA_PERMISSION_REQUEST_CODE);
+                || ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, WRITE_CAMERA_PERMISSION_REQUEST_CODE);
             return false;
         }
         return true;
     }
 
     private boolean checkAndRequestGalleryPermission() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED && mActionUploadImage == 70) {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(RestAPIActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, WRITE_GALLERY_PERMISSION_REQUEST_CODE);
             return false;
         }
@@ -167,57 +200,22 @@ public class RestAPIActivity extends AppCompatActivity implements View.OnClickLi
                     choosePhotosFromGallery();
                     Toast.makeText(this, R.string.galleryPermissionAccepted, Toast.LENGTH_LONG).show();
                 } else {
-                    showDialog(getString(R.string.permissionNeeded), getString(R.string.accessMemoryPermissionDenied), getString(R.string.gotoSettings),
-                            (dialogInterface, i) -> {
-                                dialogInterface.dismiss();
-                                Intent toSettingsIntent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-                                        Uri.fromParts("package", getPackageName(), null));
-                                toSettingsIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                startActivity(toSettingsIntent);
-                            }, getString(R.string.backToApp), (dialogInterface, i) -> dialogInterface.dismiss(), true);
+                    mIsShowGalleryPermissionRationale = ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                    if (!mIsShowGalleryPermissionRationale) {
+                        saveValueSharedPreferences(getString(R.string.permissionMessageGallery));
+                    }
                 }
                 break;
             }
             case WRITE_CAMERA_PERMISSION_REQUEST_CODE: {
-                HashMap<String, Integer> permissionResults = new HashMap<>();
-                int deniedCount = 0;
-
-                for (int i = 0; i < grantResults.length; i++) {
-                    if (grantResults[i] == PackageManager.PERMISSION_DENIED) {
-                        permissionResults.put(permissions[i], grantResults[i]);
-                        deniedCount++;
-                    }
-                }
-                if (deniedCount == 0) {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
                     capturePhotosFromCamera();
                     Toast.makeText(this, R.string.cameraPermissionAccepted, Toast.LENGTH_LONG).show();
                 } else {
-                    for (Map.Entry<String, Integer> entry : permissionResults.entrySet()) {
-                        String permissionName = entry.getKey();
-
-                        if (ActivityCompat.shouldShowRequestPermissionRationale(this, permissionName)) {
-                            showDialog(getString(R.string.permissionNeeded),
-                                    getString(R.string.needPermissionToRun),
-                                    getString(R.string.grantPermissionAgain),
-                                    (dialogInterface, i) -> {
-                                        dialogInterface.dismiss();
-                                        checkAndRequestCameraPermission();
-                                    },
-                                    getString(R.string.backToApp), (dialogInterface, i) -> dialogInterface.dismiss(), true);
-                        } else {
-                            showDialog(getString(R.string.permissionNeeded),
-                                    getString(R.string.accessCameraAndMemoryPermissionDenied),
-                                    getString(R.string.gotoSettings),
-                                    (dialogInterface, i) -> {
-                                        dialogInterface.dismiss();
-                                        Intent toSettingsIntent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-                                                Uri.fromParts("package", getPackageName(), null));
-                                        toSettingsIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                        startActivity(toSettingsIntent);
-                                    },
-                                    getString(R.string.backToApp), (dialogInterface, i) -> dialogInterface.dismiss(), true);
-                            break;
-                        }
+                    mIsShowCameraPermissionRationale = ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA);
+                    mIsShowGalleryPermissionRationale = ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                    if (!mIsShowCameraPermissionRationale && !mIsShowGalleryPermissionRationale) {
+                        saveValueSharedPreferences(getString(R.string.permissionMessageCamera));
                     }
                 }
                 break;
@@ -227,21 +225,13 @@ public class RestAPIActivity extends AppCompatActivity implements View.OnClickLi
         }
     }
 
-    private void showDialog(String title, String msg, String positiveLabel,
-                            DialogInterface.OnClickListener positiveOnClick,
-                            String negativeLabel, DialogInterface.OnClickListener negativeOnClick,
-                            boolean isCancelable) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(title);
-        builder.setMessage(msg);
-        builder.setPositiveButton(positiveLabel, positiveOnClick);
-        builder.setNegativeButton(negativeLabel, negativeOnClick);
-        builder.setCancelable(isCancelable);
 
-        AlertDialog alert = builder.create();
-        alert.show();
-        alert.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.colorDarkGreen));
-        alert.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getResources().getColor(R.color.colorDarkGreen));
+    private void goToSettings() {
+        Intent intent = new Intent();
+        intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        Uri uri = Uri.fromParts("package", getPackageName(), null);
+        intent.setData(uri);
+        startActivity(intent);
     }
 
     private void choosePhotosFromGallery() {
@@ -350,5 +340,21 @@ public class RestAPIActivity extends AppCompatActivity implements View.OnClickLi
         mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         mProgressDialog.setMessage(getString(R.string.LoadImagesDialogMessage));
         mProgressDialog.show();
+    }
+
+    private void showAlertDialog(String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog alert = builder.create();
+        alert.setTitle(R.string.permissionNeeded);
+        alert.setMessage(getString(R.string.permissionsDialogMessageFirstHalf)
+                + " " + message + " "
+                + getString(R.string.permissionsDialogMessageSecondHalf) + " "
+                + getString(R.string.directionToSettings));
+        alert.setButton(AlertDialog.BUTTON_POSITIVE, getString(R.string.gotoSettings), (dialogInterface, positive) -> goToSettings());
+        alert.setButton(AlertDialog.BUTTON_NEGATIVE, getString(R.string.backToApp), (dialogInterface, negative) -> dialogInterface.dismiss());
+        alert.setCancelable(true);
+        alert.show();
+        alert.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.colorDarkGreen));
+        alert.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getResources().getColor(R.color.colorDarkGreen));
     }
 }
