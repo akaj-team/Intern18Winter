@@ -125,7 +125,7 @@ public class ServicesBroadcastActivity extends AppCompatActivity implements View
                 .setCustomContentView(notificationLayout)
                 .setContentIntent(pendingNotificationIntent)
                 .build();
-        NotificationManager notificationManager = (android.app.NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         if (notificationManager != null) {
             notificationManager.notify(1, notification);
         }
