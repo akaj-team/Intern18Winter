@@ -3,9 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg_music_player"
     android:gravity="center"
     android:orientation="vertical"
     tools:context="asiantech.internship.summer.servicesbroadcast.ServicesBroadcastActivity">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imgImage"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/img_avatar" />
 
     <SeekBar
         android:id="@+id/sbTimeElapsed"
@@ -28,7 +36,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/timeMusicPlayer" />
+            android:text="@string/timeMusicPlayer"
+            android:textColor="@color/colorBlack" />
 
         <TextView
             android:id="@+id/tvFinalTime"
@@ -36,12 +45,34 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="@string/timeMusicPlayer"
-            android:textAlignment="textEnd" />
+            android:textAlignment="textEnd"
+            android:textColor="@color/colorBlack" />
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btnPlay"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/play" />
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/ic_skip_previous_black_36dp" />
+
+        <ImageView
+            android:id="@+id/btnPlay"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/ic_play_arrow_black_36dp" />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/ic_skip_next_black_36dp" />
+    </LinearLayout>
 </LinearLayout>

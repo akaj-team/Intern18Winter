@@ -6,8 +6,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:allowBackup="true"
@@ -37,9 +37,12 @@
         <activity android:name=".restapi.RestApiActivity" />
         <activity android:name=".asynctaskthreadhandler.AsyncTaskThreadHandlerActivity" />
         <activity android:name=".servicesbroadcast.ServicesBroadcastActivity" />
-        <receiver android:name=".servicesbroadcast.PlayMusicReceiver">
+
+        <receiver
+            android:name=".servicesbroadcast.PlayMusicReceiver"
+            android:permission="true">
             <intent-filter>
-                <action android:name="ACTION_CLICK"/>
+                <action android:name="ACTION_CLICK" />
             </intent-filter>
         </receiver>
     </application>

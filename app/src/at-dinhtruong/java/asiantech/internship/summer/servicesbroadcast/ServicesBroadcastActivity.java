@@ -15,7 +15,9 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.RemoteViews;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -28,12 +30,14 @@ public class ServicesBroadcastActivity extends AppCompatActivity implements View
     public static final String ACTION_NOTIFICATION_BUTTON_CLICK = "ACTION_CLICK";
     public static final String EXTRA_BUTTON_CLICKED = "EXTRA_CLICK";
     private MediaPlayer mMediaPlayer;
-    private SeekBar mSeekBarProgress;
     private int mediaFileLengthInMilliseconds;
-    private Button mBtnPlay;
     private final Handler mHandler = new Handler();
     private TextView mTvFinalTime;
     private TextView mTvTimeElapsed;
+    private ImageView mImgImage;
+    private SeekBar mSeekBarProgress;
+    private ImageView mImgPlay;
+    private Animation mAnimation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,9 +50,11 @@ public class ServicesBroadcastActivity extends AppCompatActivity implements View
     @SuppressLint("ClickableViewAccessibility")
     private void initView() {
         mSeekBarProgress = findViewById(R.id.sbTimeElapsed);
-        mBtnPlay = findViewById(R.id.btnPlay);
+        mImgPlay = findViewById(R.id.btnPlay);
         mTvFinalTime = findViewById(R.id.tvFinalTime);
         mTvTimeElapsed = findViewById(R.id.tvTimeElapsed);
+        mImgImage = findViewById(R.id.imgImage);
+        mAnimation = AnimationUtils.loadAnimation(this, R.anim.image_rotate);
         mSeekBarProgress.setMax(99);
         mSeekBarProgress.setOnTouchListener(this);
         mMediaPlayer = new MediaPlayer();
@@ -56,7 +62,7 @@ public class ServicesBroadcastActivity extends AppCompatActivity implements View
         mMediaPlayer.setOnCompletionListener(this);
         mMediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.music);
         mediaFileLengthInMilliseconds = mMediaPlayer.getDuration();
-        mBtnPlay.setOnClickListener(this);
+        mImgPlay.setOnClickListener(this);
     }
 
     private void onUpdateSeekBarProgress() {
@@ -75,10 +81,12 @@ public class ServicesBroadcastActivity extends AppCompatActivity implements View
     public void onClick(View view) {
         if (!mMediaPlayer.isPlaying()) {
             mMediaPlayer.start();
-            mBtnPlay.setText(R.string.pause);
+            mImgPlay.setImageResource(R.drawable.ic_pause_black_36dp);
+            mImgImage.startAnimation(mAnimation);
         } else {
             mMediaPlayer.pause();
-            mBtnPlay.setText(R.string.play);
+            mImgPlay.setImageResource(R.drawable.ic_play_arrow_black_36dp);
+            mImgImage.clearAnimation();
         }
         showNotification();
         onUpdateSeekBarProgress();
@@ -105,6 +113,9 @@ public class ServicesBroadcastActivity extends AppCompatActivity implements View
     }
 
     public void showNotification() {
+        Intent notificationIntent = new Intent(this, ServicesBroadcastActivity.class);
+        PendingIntent pendingNotificationIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
+
         RemoteViews notificationLayout = new RemoteViews(getPackageName(), R.layout.custom_notification);
         notificationLayout.setOnClickPendingIntent(R.id.btnPlayOrPause, onButtonNotificationClick(R.id.btnPlayOrPause));
         notificationLayout.setOnClickPendingIntent(R.id.btnClose, onButtonNotificationClick(R.id.btnClose));
@@ -112,6 +123,7 @@ public class ServicesBroadcastActivity extends AppCompatActivity implements View
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .setSmallIcon(R.drawable.ic_play_arrow_white_36dp)
                 .setCustomContentView(notificationLayout)
+                .setContentIntent(pendingNotificationIntent)
                 .build();
         NotificationManager notificationManager = (android.app.NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         if (notificationManager != null) {
@@ -139,7 +151,7 @@ public class ServicesBroadcastActivity extends AppCompatActivity implements View
 
     @Override
     public void onCompletion(MediaPlayer mediaPlayer) {
-        mBtnPlay.setText(R.string.play);
+        mImgPlay.setImageResource(R.drawable.ic_play_arrow_black_36dp);
     }
 
     @Override
