@@ -106,4 +106,6 @@
     <string name="pause">Pause</string>
     <string name="play">Play</string>
     <string name="timeMusicPlayer">--:--</string>
+    <string name="channelName">Channel Notification</string>
+    <string name="channelDescription">Channel Notification Description</string>
 </resources>

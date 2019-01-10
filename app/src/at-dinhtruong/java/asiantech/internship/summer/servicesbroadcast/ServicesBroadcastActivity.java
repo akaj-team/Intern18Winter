@@ -5,18 +5,18 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.IdRes;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RemoteViews;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -24,6 +24,9 @@ import asiantech.internship.summer.R;
 
 @SuppressLint("Registered")
 public class ServicesBroadcastActivity extends AppCompatActivity implements View.OnClickListener, SeekBar.OnSeekBarChangeListener, View.OnTouchListener, MediaPlayer.OnBufferingUpdateListener, MediaPlayer.OnCompletionListener {
+    private static final String CHANNEL_ID = "TEST_CHANNEL";
+    public static final String ACTION_NOTIFICATION_BUTTON_CLICK = "ACTION_CLICK";
+    public static final String EXTRA_BUTTON_CLICKED = "EXTRA_CLICK";
     private MediaPlayer mMediaPlayer;
     private SeekBar mSeekBarProgress;
     private int mediaFileLengthInMilliseconds;
@@ -32,12 +35,12 @@ public class ServicesBroadcastActivity extends AppCompatActivity implements View
     private TextView mTvFinalTime;
     private TextView mTvTimeElapsed;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_services_broadcast);
         initView();
+        createNotificationChannel();
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -46,16 +49,13 @@ public class ServicesBroadcastActivity extends AppCompatActivity implements View
         mBtnPlay = findViewById(R.id.btnPlay);
         mTvFinalTime = findViewById(R.id.tvFinalTime);
         mTvTimeElapsed = findViewById(R.id.tvTimeElapsed);
-
         mSeekBarProgress.setMax(99);
         mSeekBarProgress.setOnTouchListener(this);
-
         mMediaPlayer = new MediaPlayer();
         mMediaPlayer.setOnBufferingUpdateListener(this);
         mMediaPlayer.setOnCompletionListener(this);
         mMediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.music);
         mediaFileLengthInMilliseconds = mMediaPlayer.getDuration();
-
         mBtnPlay.setOnClickListener(this);
     }
 
@@ -85,32 +85,40 @@ public class ServicesBroadcastActivity extends AppCompatActivity implements View
         onUpdateSeekBarProgress();
     }
 
-    public void showNotification() {
-        Intent intent = new Intent(getApplicationContext(), ServicesBroadcastActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, 0);
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getApplicationContext(), "notify_001");
-        mBuilder.setContentIntent(pendingIntent);
-        mBuilder.setSmallIcon(R.drawable.ic_play_arrow_white_36dp);
-        mBuilder.setLargeIcon(BitmapFactory.decodeResource(getApplicationContext().getResources(),
-                R.drawable.ic_play_arrow_white_36dp));
-        mBuilder.setContentTitle("Play Music");
-        mBuilder.setContentText("Da da di da");
-        mBuilder.setPriority(Notification.PRIORITY_MAX);
-        NotificationManager mNotificationManager = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
-
+    public void createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            String channelId = "YOUR_CHANNEL_ID";
-            NotificationChannel channel = new NotificationChannel(channelId,
-                    "Channel human readable title",
-                    NotificationManager.IMPORTANCE_DEFAULT);
-            assert mNotificationManager != null;
-            mNotificationManager.createNotificationChannel(channel);
-            mBuilder.setChannelId(channelId);
+            CharSequence name = getString(R.string.channelName);
+            String description = getString(R.string.channelDescription);
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            if (notificationManager != null) {
+                notificationManager.createNotificationChannel(channel);
+            }
+        }
+    }
+
+    private PendingIntent onButtonNotificationClick(@IdRes int id) {
+        Intent intent = new Intent(ACTION_NOTIFICATION_BUTTON_CLICK);
+        intent.putExtra(EXTRA_BUTTON_CLICKED, id);
+        return PendingIntent.getBroadcast(this, id, intent, 0);
+    }
+
+    public void showNotification() {
+        RemoteViews notificationLayout = new RemoteViews(getPackageName(), R.layout.custom_notification);
+        notificationLayout.setOnClickPendingIntent(R.id.btnPlayOrPause, onButtonNotificationClick(R.id.btnPlayOrPause));
+        notificationLayout.setOnClickPendingIntent(R.id.btnClose, onButtonNotificationClick(R.id.btnClose));
+        Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                .setSmallIcon(R.drawable.ic_play_arrow_white_36dp)
+                .setCustomContentView(notificationLayout)
+                .build();
+        NotificationManager notificationManager = (android.app.NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        if (notificationManager != null) {
+            notificationManager.notify(1, notification);
         }
 
-        if (mNotificationManager != null) {
-            mNotificationManager.notify(0, mBuilder.build());
-        }
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -152,21 +160,21 @@ public class ServicesBroadcastActivity extends AppCompatActivity implements View
         mMediaPlayer.seekTo(playPositionInMillisecconds);
     }
 
-    private String convertInttoString(int num) {
-        int sophut = num / 60;
-        int sogiay = num - sophut * 60;
-        String currentPositionString;
-        if (num < 10) {
-            currentPositionString = "00:0" + num;
-        } else if (num < 60) {
-            currentPositionString = "00:" + num;
+    private String convertInttoString(int timeTotal) {
+        int min = timeTotal / 60;
+        int second = timeTotal - min * 60;
+        String currentPosition;
+        if (timeTotal < 10) {
+            currentPosition = "00:0" + timeTotal;
+        } else if (timeTotal < 60) {
+            currentPosition = "00:" + timeTotal;
         } else {
-            if (sogiay < 10) {
-                currentPositionString = "0" + sophut + ":0" + sogiay;
+            if (second < 10) {
+                currentPosition = "0" + min + ":0" + second;
             } else {
-                currentPositionString = "0" + sophut + ":" + sogiay;
+                currentPosition = "0" + min + ":" + second;
             }
         }
-        return currentPositionString;
+        return currentPosition;
     }
 }
