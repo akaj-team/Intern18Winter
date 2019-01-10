@@ -11,7 +11,7 @@ import asiantech.internship.summer.canvas.CanvasActivity;
 import asiantech.internship.summer.eventlistener.SignUpActivity;
 import asiantech.internship.summer.fragment.LoginActivity;
 import asiantech.internship.summer.recyclerview.RecyclerViewActivity;
-import asiantech.internship.summer.retrofit.RetrofitActivity;
+import asiantech.internship.summer.service.ServiceActivity;
 import asiantech.internship.summer.viewpager.ViewPagerActivity;
 
 public class ListActivity extends AppCompatActivity implements View.OnClickListener {
@@ -20,9 +20,9 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
     private Button mBtnRecyclerView;
     private Button mBtnFragment;
     private Button mBtnViewPager;
-    private Button mBtnRetrofit;
     private Button mBtnAsyncTask;
     private Button mBtnCanvas;
+    private Button mBtnService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,17 +33,17 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         mBtnFragment = findViewById(R.id.btnExercise3);
         mBtnRecyclerView = findViewById(R.id.btnExercise4);
         mBtnViewPager = findViewById(R.id.btnExercise5);
-        mBtnRetrofit = findViewById(R.id.btnExercise8);
         mBtnAsyncTask = findViewById(R.id.btnExercise11);
         mBtnCanvas = findViewById(R.id.btnExercise9);
+        mBtnService = findViewById(R.id.btnExercise12);
         mBtnView.setOnClickListener(this);
         mBtnListener.setOnClickListener(this);
         mBtnFragment.setOnClickListener(this);
         mBtnRecyclerView.setOnClickListener(this);
         mBtnViewPager.setOnClickListener(this);
-        mBtnRetrofit.setOnClickListener(this);
         mBtnAsyncTask.setOnClickListener(this);
         mBtnCanvas.setOnClickListener(this);
+        mBtnService.setOnClickListener(this);
     }
 
     @Override
@@ -74,11 +74,6 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(intent);
                 break;
             }
-            case R.id.btnExercise8: {
-                Intent intent = new Intent(ListActivity.this, RetrofitActivity.class);
-                startActivity(intent);
-                break;
-            }
             case R.id.btnExercise9: {
                 Intent intent = new Intent(ListActivity.this, CanvasActivity.class);
                 startActivity(intent);
@@ -86,6 +81,11 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
             }
             case R.id.btnExercise11: {
                 Intent intent = new Intent(ListActivity.this, AsyncTaskThreadHandlerActivity.class);
+                startActivity(intent);
+                break;
+            }
+            case R.id.btnExercise12: {
+                Intent intent = new Intent(ListActivity.this, ServiceActivity.class);
                 startActivity(intent);
                 break;
             }

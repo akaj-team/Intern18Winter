@@ -75,23 +75,6 @@
     <string name="complete">Download complete</string>
     <string name="interruptedException">InterruptedException:</string>
     <string name="exception">Exception</string>
-    <string name="exercise8">retrofit</string>
-    <string name="imageLoaded">image loaded</string>
-    <string name="insertImage">insert image</string>
-    <string name="gallery">Select photo from gallery</string>
-    <string name="camera">Capture photo from camera</string>
-    <string name="action">Select Action</string>
-    <string name="data">data</string>
-    <string name="titles">Title</string>
-    <string name="commentImage">this is picture</string>
-    <string name="error">error</string>
-    <string name="successful">successful</string>
-    <string name="deny">deny</string>
-    <string name="show">isShow</string>
-    <string name="optionChoose">Please choose</string>
-    <string name="noteAccess">App needs to access the </string>
-    <string name="setting">SETTINGS</string>
-    <string name="cancel">don\'t allow</string>
-    <string name="noteGallery">gallery</string>
-    <string name="noteCamera">camera</string>
+    <string name="exercise12">service</string>
+    <string name="formatTime">00:00</string>
 </resources>
