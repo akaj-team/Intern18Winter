@@ -27,7 +27,7 @@ import asiantech.internship.summer.R;
 @SuppressLint("Registered")
 public class ServicesBroadcastActivity extends AppCompatActivity implements View.OnClickListener, SeekBar.OnSeekBarChangeListener, View.OnTouchListener, MediaPlayer.OnBufferingUpdateListener, MediaPlayer.OnCompletionListener {
     private static final String CHANNEL_ID = "TEST_CHANNEL";
-    public static final String ACTION_NOTIFICATION_BUTTON_CLICK = "ACTION_CLICK";
+    //public static final String ACTION_NOTIFICATION_BUTTON_CLICK = "ACTION_CLICK";
     public static final String EXTRA_BUTTON_CLICKED = "EXTRA_CLICK";
     private MediaPlayer mMediaPlayer;
     private int mediaFileLengthInMilliseconds;
@@ -75,6 +75,10 @@ public class ServicesBroadcastActivity extends AppCompatActivity implements View
             Runnable notification = this::onUpdateSeekBarProgress;
             mHandler.postDelayed(notification, 1000);
         }
+        if (currentPosition == getDuration) {
+            mImgImage.clearAnimation();
+            mImgPlay.setImageResource(R.drawable.ic_play_arrow_black_36dp);
+        }
     }
 
     @Override
@@ -107,7 +111,7 @@ public class ServicesBroadcastActivity extends AppCompatActivity implements View
     }
 
     private PendingIntent onButtonNotificationClick(@IdRes int id) {
-        Intent intent = new Intent(ACTION_NOTIFICATION_BUTTON_CLICK);
+        Intent intent = new Intent(this, PlayMusicReceiver.class);
         intent.putExtra(EXTRA_BUTTON_CLICKED, id);
         return PendingIntent.getBroadcast(this, id, intent, 0);
     }
@@ -115,7 +119,6 @@ public class ServicesBroadcastActivity extends AppCompatActivity implements View
     public void showNotification() {
         Intent notificationIntent = new Intent(this, ServicesBroadcastActivity.class);
         PendingIntent pendingNotificationIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
-
         RemoteViews notificationLayout = new RemoteViews(getPackageName(), R.layout.custom_notification);
         notificationLayout.setOnClickPendingIntent(R.id.btnPlayOrPause, onButtonNotificationClick(R.id.btnPlayOrPause));
         notificationLayout.setOnClickPendingIntent(R.id.btnClose, onButtonNotificationClick(R.id.btnClose));
