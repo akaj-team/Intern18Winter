@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<asiantech.internship.summer.canvas.GraphicViewChart xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:colorOfBackground="@color/colorWhite"
+    app:colorOfExpense="@color/colorColumnOrange"
+    app:colorOfLine="@color/colorLineGray"
+    app:colorOfSale="@color/colorColumnBlue"
+    app:colorOfText="@color/colorTextBlack"
+    app:textContent="@dimen/textContent"
+    app:textNote="@dimen/textNote"
+    app:widthOfColumn="@dimen/widthColumn"
+    app:widthOfNoteColumn="@dimen/widthNoteColumn"
+    tools:context="asiantech.internship.summer.canvas.CanvasActivity" />

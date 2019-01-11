@@ -62,20 +62,32 @@ public class MusicService extends Service implements View.OnClickListener {
                         mImgBtnPlay.get().setImageResource(R.drawable.ic_play_circle_outline_black_24dp);
                         mImgDisk.get().clearAnimation();
                     }
-                    mRemoteViews.setImageViewResource(R.id.imgPlay, R.drawable.ic_menu_play_gray);
+                    mRemoteViews.setImageViewResource(R.id.imgPlay, R.drawable.ic_play_arrow_black_24dp);
                     mMediaPlayer.pause();
                     mNotificationManager.notify(ID_NOTI, mBuilder.build());
                 } else {
                     if (mImgBtnPlay != null) {
-                        mImgBtnPlay.get().setImageResource(R.drawable.ic_pause);
+                        mImgBtnPlay.get().setImageResource(R.drawable.ic_pause_black_24dp);
                         mImgDisk.get().startAnimation(mRotateAnimation);
                     }
-                    mRemoteViews.setImageViewResource(R.id.imgPlay, R.drawable.ic_menu_pause_gray);
+                    mRemoteViews.setImageViewResource(R.id.imgPlay, R.drawable.ic_pause_black_24dp);
                     mMediaPlayer.start();
                     mNotificationManager.notify(ID_NOTI, mBuilder.build());
                 }
             }
-            if (Objects.equals(intent.getAction(), getResources().getString(R.string.close_action))) {
+
+            if (Objects.equals(intent.getAction(), getResources().getString(R.string.nextAction))) {
+                if (mMediaPlayer.isPlaying()) {
+                    if (mImgBtnNext != null) {
+                        mImgBtnNext.get().setImageResource(R.drawable.ic_skip_next_black_24dp);
+                        mImgDisk.get().startAnimation(mRotateAnimation);
+                    }
+                    mRemoteViews.setImageViewResource(R.id.imgNext, R.drawable.ic_skip_next_black_24dp);
+                    mMediaPlayer.start();
+                    mNotificationManager.notify(ID_NOTI, mBuilder.build());
+                }
+            }
+            if (Objects.equals(intent.getAction(), getResources().getString(R.string.closeAction))) {
                 if (!mMediaPlayer.isPlaying()) {
                     mIsShowNotification = false;
                     if (mNotificationManager != null) {
@@ -162,9 +174,9 @@ public class MusicService extends Service implements View.OnClickListener {
                     mMediaPlayer.pause();
                     mImgDisk.get().clearAnimation();
                     mTvState.get().setText(R.string.pause);
-                    mImgBtnPlay.get().setImageResource(R.drawable.ic_play);
+                    mImgBtnPlay.get().setImageResource(R.drawable.ic_play_arrow_black_24dp);
                     if (mNotificationManager != null) {
-                        mRemoteViews.setImageViewResource(R.id.imgPlay, R.drawable.ic_menu_play_gray);
+                        mRemoteViews.setImageViewResource(R.id.imgPlay, R.drawable.ic_play_arrow_black_24dp);
                         mNotificationManager.notify(ID_NOTI, mBuilder.build());
                     }
                 } else {
@@ -172,10 +184,10 @@ public class MusicService extends Service implements View.OnClickListener {
                     mMediaPlayer.start();
                     mTvState.get().setText(R.string.play);
                     mImgDisk.get().startAnimation(mRotateAnimation);
-                    mImgBtnPlay.get().setImageResource(R.drawable.ic_pause);
+                    mImgBtnPlay.get().setImageResource(R.drawable.ic_pause_black_24dp);
                     initNotification();
                     if (mNotificationManager != null) {
-                        mRemoteViews.setImageViewResource(R.id.imgPlay, R.drawable.ic_menu_pause_gray);
+                        mRemoteViews.setImageViewResource(R.id.imgPlay, R.drawable.ic_pause_black_24dp);
                         mNotificationManager.notify(ID_NOTI, mBuilder.build());
                     }
                 }
@@ -188,7 +200,7 @@ public class MusicService extends Service implements View.OnClickListener {
                     mPosition = 0;
                 }
                 if (mMediaPlayer.isPlaying()) {
-                    mMediaPlayer.stop();
+                    mMediaPlayer.start();
                     mMediaPlayer.release();
                     setCurrentSong();
                     mMediaPlayer.start();
@@ -198,8 +210,9 @@ public class MusicService extends Service implements View.OnClickListener {
                 saveIntPreference(mPosition, getResources().getString(R.string.position));
                 setTotalTime();
                 updateCurrentTime();
+                initNotification();
                 if (mNotificationManager != null) {
-                    setRemoteViews();
+                    mRemoteViews.setImageViewResource(R.id.imgNext, R.drawable.ic_skip_next_black_24dp);
                     mNotificationManager.notify(ID_NOTI, mBuilder.build());
                 }
                 break;
@@ -209,7 +222,7 @@ public class MusicService extends Service implements View.OnClickListener {
                     mPosition = mListSong.size() - 1;
                 }
                 if (mMediaPlayer.isPlaying()) {
-                    mMediaPlayer.stop();
+                    mMediaPlayer.start();
                     mMediaPlayer.release();
                     setCurrentSong();
                     mMediaPlayer.start();
@@ -219,8 +232,9 @@ public class MusicService extends Service implements View.OnClickListener {
                 saveIntPreference(mPosition, getResources().getString(R.string.position));
                 setTotalTime();
                 updateCurrentTime();
+                initNotification();
                 if (mNotificationManager != null) {
-                    setRemoteViews();
+                    mRemoteViews.setImageViewResource(R.id.imgPrev, R.drawable.ic_skip_previous_black_24dp);
                     mNotificationManager.notify(ID_NOTI, mBuilder.build());
                 }
                 break;
@@ -306,8 +320,10 @@ public class MusicService extends Service implements View.OnClickListener {
     private void initNotification() {
         mRemoteViews = new RemoteViews(getPackageName(), R.layout.custom_notification_music);
         setRemoteViews();
-        mRemoteViews.setOnClickPendingIntent(R.id.imgPlay, setOnClick(getResources().getString(R.string.play_action)));
-        mRemoteViews.setOnClickPendingIntent(R.id.imgClose, setOnClick(getResources().getString(R.string.close_action)));
+        mRemoteViews.setOnClickPendingIntent(R.id.imgPlay, setOnClick(getResources().getString(R.string.playAction)));
+        mRemoteViews.setOnClickPendingIntent(R.id.imgClose, setOnClick(getResources().getString(R.string.closeAction)));
+        mRemoteViews.setOnClickPendingIntent(R.id.imgPrev, setOnClick(getResources().getString(R.string.prevAction)));
+        mRemoteViews.setOnClickPendingIntent(R.id.imgNext, setOnClick(getResources().getString(R.string.nextAction)));
         mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         Intent intent = new Intent(this, ListenMusicActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -315,7 +331,7 @@ public class MusicService extends Service implements View.OnClickListener {
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
                 Intent.FLAG_ACTIVITY_SINGLE_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 1251, intent, PendingIntent.FLAG_ONE_SHOT);
-        mBuilder.setSmallIcon(R.drawable.ic_stat_music)
+        mBuilder.setSmallIcon(R.drawable.ic_music_note_black_24dp)
                 .setCustomBigContentView(mRemoteViews)
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true)

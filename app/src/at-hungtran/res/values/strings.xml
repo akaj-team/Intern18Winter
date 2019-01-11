@@ -7,7 +7,6 @@
     <string name="news">News</string>
     <string name="loadding">loadding</string>
     <string name="content">content</string>
-    <string name="viewgroup">W1-D3 View and ViewGroup</string>
     <string name="profile">Profile</string>
     <string name="todo">TODO</string>
     <string name="allowEmailFromOther">Allow email from other</string>
@@ -31,6 +30,19 @@
     <string name="helloWorld">hello world :))</string>
     <string name="like">%s like</string>
     <string name="likes">%s likes</string>
+    <string name="loadImage">Load Image</string>
+    <string name="uploadImage">Upload Image</string>
+    <string name="label_api_option">Option</string>
+    <string name="permissionDenied">Permission Denied</string>
+    <string name="downloading">Downloading</string>
+    <string name="download">Download Images AsyncTask</string>
+    <string name="activityFragment">Activity Fragment</string>
+    <string name="view">View and ViewGroup</string>
+    <string name="eventListener">Event and Listener</string>
+    <string name="recyclerView">Android RecyclerView</string>
+    <string name="viewPager">Android ViewPager</string>
+    <string name="asyncTask">AsyncTask Thread Handler</string>
+    <string name="restAPI">Rest API with Retrofit and Gson</string>
     <string name="play">Playing</string>
     <string name="pause">Paused</string>
     <string name="currentTime">00:00</string>
@@ -40,10 +52,12 @@
     <string name="move">move</string>
     <string name="playAction">play action</string>
     <string name="service">Service</string>
-    <string name="close_action">close action</string>
+    <string name="closeAction">close action</string>
     <string name="channel">channel</string>
     <string name="current">current time</string>
-    <string name="play_action">play action</string>
     <string name="channel_name">channel name</string>
     <string name="preference">preference</string>
+    <string name="serviceBroadcastReceiver">Service and Broadcast Receiver</string>
+    <string name="prevAction">previous</string>
+    <string name="nextAction">next action</string>
 </resources>

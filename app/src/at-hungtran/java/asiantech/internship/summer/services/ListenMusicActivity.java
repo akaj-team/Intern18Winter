@@ -1,6 +1,5 @@
 package asiantech.internship.summer.services;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -17,21 +16,13 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ListenMusicActivity extends AppCompatActivity {
     public static CircleImageView sImgDisk;
-    @SuppressLint("StaticFieldLeak")
     public static SeekBar sSeekBarPlay;
-    @SuppressLint("StaticFieldLeak")
     public static TextView sTvCurrentTime;
-    @SuppressLint("StaticFieldLeak")
     public static TextView sTvState;
-    @SuppressLint("StaticFieldLeak")
     public static TextView sTvTotalTime;
-    @SuppressLint("StaticFieldLeak")
     public static TextView sTvTitleSong;
-    @SuppressLint("StaticFieldLeak")
     public static ImageButton sImgBtnPrev;
-    @SuppressLint("StaticFieldLeak")
     public static ImageButton sImgBtnPlay;
-    @SuppressLint("StaticFieldLeak")
     public static ImageButton sImgBtnNext;
     private Toolbar mToolbarListenMusic;
     private Intent mPlayIntent;

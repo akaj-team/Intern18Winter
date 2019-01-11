@@ -17,10 +17,12 @@
             android:id="@+id/tvTitleSong"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
             android:gravity="center"
             android:padding="2dp"
             android:text="@string/service"
-            android:textColor="@color/colorWhite" />
+            android:textColor="@color/colorBlack" />
 
         <ImageView
             android:id="@+id/imgClose"
@@ -30,7 +32,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="2dp"
-            android:src="@drawable/ic_close" />
+            android:src="@drawable/ic_close_black_24dp" />
 
         <TextView
             android:id="@+id/tvCurrentTime"
@@ -39,7 +41,7 @@
             android:layout_below="@+id/tvTitleSong"
             android:gravity="center_horizontal"
             android:text="@string/currentTime"
-            android:textColor="@color/colorWhite" />
+            android:textColor="@color/colorBlack" />
 
         <TextView
             android:id="@+id/tvLine"
@@ -49,15 +51,35 @@
             android:layout_marginTop="5dp"
             android:background="@color/colorGrey" />
 
-        <ImageView
-            android:id="@+id/imgPlay"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvLine"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:background="@null"
-            android:src="@drawable/ic_menu_pause_gray" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="30dp"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/imgPrev"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:background="@null"
+                android:src="@drawable/ic_skip_previous_black_24dp" />
+
+            <ImageView
+                android:id="@+id/imgPlay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:background="@null"
+                android:src="@drawable/ic_play_arrow_black_24dp" />
+
+            <ImageView
+                android:id="@+id/imgNext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:src="@drawable/ic_skip_previous_black_24dp" />
+
+        </LinearLayout>
     </RelativeLayout>
 </LinearLayout>
