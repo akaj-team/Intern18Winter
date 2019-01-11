@@ -155,26 +155,33 @@ public class RestApiActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         SharedPreferences sharedPreferences = getSharedPreferences(CHECK_DO_NOT_ASK_AGAIN, MODE_PRIVATE);
+        boolean isCheckGallery;
         switch (requestCode) {
             case REQUEST_CODE_ASK_PERMISSIONS_CAMERA: {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
                     openCamera();
                 } else {
-                    boolean isCheckedCamera = sharedPreferences.getBoolean(CHECK_CAMERA, false);
+                    boolean isCheckCamera = sharedPreferences.getBoolean(CHECK_CAMERA, false);
+                    isCheckGallery = sharedPreferences.getBoolean(CHECK_GALLERY, false);
                     boolean showRationale = false;
                     boolean showRationaleWrite = false;
                     if (grantResults[0] == PackageManager.PERMISSION_DENIED && grantResults[1] == PackageManager.PERMISSION_DENIED) {
                         showRationale = ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA);
                         showRationaleWrite = ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
                     }
+                    SharedPreferences.Editor editor = getSharedPreferences(CHECK_DO_NOT_ASK_AGAIN, MODE_PRIVATE).edit();
                     if (!showRationale && !showRationaleWrite) {
-                        if (isCheckedCamera) {
+                        if (isCheckCamera && isCheckGallery) {
                             onPermissionDialog();
                         }
-                        SharedPreferences.Editor editor = getSharedPreferences(CHECK_DO_NOT_ASK_AGAIN, MODE_PRIVATE).edit();
                         editor.putBoolean(CHECK_CAMERA, true);
-                        editor.apply();
+                        editor.putBoolean(CHECK_GALLERY, true);
+                    } else if (!showRationale) {
+                        editor.putBoolean(CHECK_CAMERA, true);
+                    } else if (!showRationaleWrite) {
+                        editor.putBoolean(CHECK_GALLERY, true);
                     }
+                    editor.apply();
                 }
                 break;
             }
@@ -182,14 +189,13 @@ public class RestApiActivity extends AppCompatActivity implements View.OnClickLi
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     openGallery();
                 } else {
-                    boolean isCheckedGallery = sharedPreferences.getBoolean(CHECK_GALLERY, false);
-                    boolean isCheckedCamera = sharedPreferences.getBoolean(CHECK_CAMERA, false);
+                    isCheckGallery = sharedPreferences.getBoolean(CHECK_GALLERY, false);
                     boolean showRationaleWrite = false;
                     if (grantResults[0] == PackageManager.PERMISSION_DENIED) {
                         showRationaleWrite = ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
                     }
                     if (!showRationaleWrite) {
-                        if (isCheckedGallery || isCheckedCamera) {
+                        if (isCheckGallery) {
                             onPermissionDialog();
                         }
                         SharedPreferences.Editor editor = getSharedPreferences(CHECK_DO_NOT_ASK_AGAIN, MODE_PRIVATE).edit();
@@ -315,6 +321,10 @@ public class RestApiActivity extends AppCompatActivity implements View.OnClickLi
         builder.setMessage(R.string.youHaveDeniedPermission);
         builder.setCancelable(false);
         builder.setNegativeButton(R.string.setting, (dialogInterface, i) -> {
+            SharedPreferences.Editor editor = getSharedPreferences(CHECK_DO_NOT_ASK_AGAIN, MODE_PRIVATE).edit();
+            editor.putBoolean(CHECK_CAMERA, false);
+            editor.putBoolean(CHECK_GALLERY, false);
+            editor.apply();
             dialogInterface.dismiss();
             Intent intent = new Intent();
             intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
