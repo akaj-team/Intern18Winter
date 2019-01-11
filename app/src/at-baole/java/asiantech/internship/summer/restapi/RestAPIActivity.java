@@ -19,7 +19,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -54,10 +53,10 @@ public class RestAPIActivity extends AppCompatActivity implements View.OnClickLi
     private static final int WRITE_CAMERA_PERMISSION_REQUEST_CODE = 202;
     private static final String FREFERENCE_FILE_NAME = "MyFiles";
 
-    private boolean mIsShowCameraPermissionRationale = true;
-    private boolean mIsShowGalleryPermissionRationale = true;
-    private boolean mIsShowCameraAlertDialog;
-    private boolean mIsShowGalleryAlertDialog;
+    private boolean mIsNotAllowAskPermissionCamera;
+    private boolean mIsNotAllowAskPermissionGallery;
+    private boolean mIsNotAllowAskWriteExternal;
+    private boolean mIsNotAllowAskCamera;
     private boolean mIsCheck;
     private APIImages mAPIImages;
     private RecyclerView mRecyclerViewImage;
@@ -130,12 +129,14 @@ public class RestAPIActivity extends AppCompatActivity implements View.OnClickLi
                     if (checkAndRequestGalleryPermission()) {
                         choosePhotosFromGallery();
                     } else {
-                        mIsShowCameraAlertDialog = getValueSharedPreferences(getString(R.string.permissionMessageCamera));
-                        mIsShowGalleryAlertDialog = getValueSharedPreferences(getString(R.string.permissionMessageGallery));
-                        Log.d("yyy", "mShowRationaleWrite: " + mIsShowGalleryPermissionRationale
-                                + "\nmIsShowGalleryAlertDialog: " + mIsShowGalleryAlertDialog);
-                        if (!mIsShowGalleryPermissionRationale && mIsShowGalleryAlertDialog) {
+                        mIsNotAllowAskPermissionCamera = getValueSharedPreferences(getString(R.string.permissionMessageCamera));
+                        mIsNotAllowAskPermissionGallery = getValueSharedPreferences(getString(R.string.permissionMessageGallery));
+                        mIsNotAllowAskWriteExternal = getValueSharedPreferences(getString(R.string.isWrite));
+                        mIsNotAllowAskCamera = getValueSharedPreferences(getString(R.string.isCamera));
+
+                        if (mIsNotAllowAskPermissionGallery || mIsNotAllowAskPermissionCamera || mIsNotAllowAskWriteExternal) {
                             showAlertDialog(getString(R.string.permissionMessageGallery));
+                            mIsCheck = true;
                         }
                     }
                     break;
@@ -144,12 +145,8 @@ public class RestAPIActivity extends AppCompatActivity implements View.OnClickLi
                     if (checkAndRequestCameraPermission()) {
                         capturePhotosFromCamera();
                     } else {
-                        mIsShowCameraAlertDialog = getValueSharedPreferences(getString(R.string.permissionMessageCamera));
-                        Log.d("xxx", "mShowRationaleWrite: " + mIsShowGalleryPermissionRationale
-                                + "\nmShowRationaleCamera: " + mIsShowCameraPermissionRationale
-                                + "\nmIsShowCameraAlertDialog: " + mIsShowCameraAlertDialog);
-                        if (!mIsShowGalleryPermissionRationale && !mIsShowCameraPermissionRationale && mIsShowCameraAlertDialog) {
-                            Log.d("kkk", "I AM HERE!");
+                        mIsNotAllowAskPermissionCamera = getValueSharedPreferences(getString(R.string.permissionMessageCamera));
+                        if (mIsNotAllowAskPermissionCamera || mIsNotAllowAskCamera && mIsCheck) {
                             showAlertDialog(getString(R.string.permissionMessageCamera));
                         }
                     }
@@ -169,10 +166,7 @@ public class RestAPIActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private boolean getValueSharedPreferences(String value) {
-        if (mSharedPreferences.contains(value)) {
-            mIsCheck = mSharedPreferences.getBoolean(value, false);
-        }
-        return mIsCheck;
+        return mSharedPreferences.getBoolean(value, false);
     }
 
     private boolean checkAndRequestCameraPermission() {
@@ -194,14 +188,16 @@ public class RestAPIActivity extends AppCompatActivity implements View.OnClickLi
 
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
+        boolean isShowRationaleWrite;
+        boolean isShowRationaleCamera;
         switch (requestCode) {
             case WRITE_GALLERY_PERMISSION_REQUEST_CODE: {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     choosePhotosFromGallery();
                     Toast.makeText(this, R.string.galleryPermissionAccepted, Toast.LENGTH_LONG).show();
                 } else {
-                    mIsShowGalleryPermissionRationale = ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-                    if (!mIsShowGalleryPermissionRationale) {
+                    isShowRationaleWrite = ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                    if (!isShowRationaleWrite) {
                         saveValueSharedPreferences(getString(R.string.permissionMessageGallery));
                     }
                 }
@@ -212,10 +208,16 @@ public class RestAPIActivity extends AppCompatActivity implements View.OnClickLi
                     capturePhotosFromCamera();
                     Toast.makeText(this, R.string.cameraPermissionAccepted, Toast.LENGTH_LONG).show();
                 } else {
-                    mIsShowCameraPermissionRationale = ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA);
-                    mIsShowGalleryPermissionRationale = ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-                    if (!mIsShowCameraPermissionRationale && !mIsShowGalleryPermissionRationale) {
+                    isShowRationaleCamera = ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA);
+                    isShowRationaleWrite = ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                    if (!isShowRationaleCamera && !isShowRationaleWrite) {
                         saveValueSharedPreferences(getString(R.string.permissionMessageCamera));
+                    }
+                    if (!isShowRationaleWrite) {
+                        saveValueSharedPreferences(getString(R.string.isWrite));
+                    }
+                    if (!isShowRationaleCamera) {
+                        saveValueSharedPreferences(getString(R.string.isCamera));
                     }
                 }
                 break;
@@ -224,7 +226,6 @@ public class RestAPIActivity extends AppCompatActivity implements View.OnClickLi
                 super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
-
 
     private void goToSettings() {
         Intent intent = new Intent();

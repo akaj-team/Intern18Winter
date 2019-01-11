@@ -85,4 +85,6 @@
     <string name="directionToSettings">Please go to Settings to grant permisisons.</string>
     <string name="backToApp">Back to app.</string>
     <string name="gotoSettings">Go to Settings.</string>
+    <string name="isWrite">isWrite</string>
+    <string name="isCamera">isCamera</string>
 </resources>
