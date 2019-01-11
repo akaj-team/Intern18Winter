@@ -38,7 +38,9 @@
         <activity android:name=".asynctaskthreadhandler.AsyncTaskThreadHandlerActivity" />
         <activity android:name=".servicesbroadcast.ServicesBroadcastActivity" />
 
-        <service android:name=".servicesbroadcast.PlayMusicService" />
+        <service
+            android:name=".servicesbroadcast.PlayMusicService"
+            android:enabled="true" />
     </application>
 
 </manifest>

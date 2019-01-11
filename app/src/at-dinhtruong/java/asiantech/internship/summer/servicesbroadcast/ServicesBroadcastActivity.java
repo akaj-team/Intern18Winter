@@ -21,21 +21,22 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+
 import asiantech.internship.summer.R;
 
 public class ServicesBroadcastActivity extends AppCompatActivity implements View.OnClickListener, SeekBar.OnSeekBarChangeListener {
+    public static final String SEEK_BAR_PROGRESS_ACTION = "ACTION SEEK BAR PROGRESS";
+    public static final String PLAY_OR_PAUSE_ACTION = "ACTION PLAY OR PAUSE";
+    public static final String PLAY_OR_PAUSE_NOTIFICATION_ACTION = "ACTION PLAY OR PAUSE NOTIFICATION";
+    public static final String CLOSE_NOTIFICATION_ACTION = "ACTION CLOSE NOTIFICATION";
+    public static final String CREATE_ACTIVITY_ACTION = "ACTION CREATE ACTIVITY";
+    public static final String NOTIFICATION_PLAY_OR_PAUSE_ACTION = "ACTION MUSIC NOTIFICATION";
+    public static final String UPDATE_SEEK_BAR_ACTION = "ACTION UPDATE SEEKBAR";
+    public static final String SEEK_BAR_PROGRESS = "SEEK BAR PROGRESS";
+    public static final String IS_NOTIFICATION_PLAYING = "NOTIFICATION IS PLAYING";
     private static final String CHANNEL_ID = "TEST_CHANNEL";
-    public static final String SEEK_BAR_PROGRESS_ACTION = "Action pass progress";
-    public static final String PLAY_ACTION = "Action play";
-    public static final String PAUSE_ACTION = "Action pause";
-    public static final String FOCUS_IMAGE_NOTIFICATION_ACTION = "Action focus image";
-    public static final String CLOSE_ACTION = "Action close notification";
-    public static final String CREATE_ACTIVITY_ACTION = "Action create activity";
-    public static final String ACTION_NOTIFICATION_PAUSE = "Music notification pause";
-    public static final String ACTION_NOTIFICATION_PLAY = "Music notification play";
-    public static final String ACTION_UPDATE_SEEK_BAR = "Action update seek bar";
-    public static final String KEY_PASS_PROGRESS = "Pass progress seek bar";
-    public static final String KEY_IS_PLAYING = "Is play";
     private TextView mTvFinalTime;
     private TextView mTvTimeElapsed;
     private ImageView mImgImage;
@@ -45,7 +46,7 @@ public class ServicesBroadcastActivity extends AppCompatActivity implements View
     private NotificationManager mNotificationManager;
 
     private boolean mIsPlay = false;
-    private int mDurationTime = 0;
+    private int mDuration = 0;
     private int mCurrentTime = 0;
 
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
@@ -53,26 +54,23 @@ public class ServicesBroadcastActivity extends AppCompatActivity implements View
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction() != null) {
                 switch (intent.getAction()) {
-                    case ACTION_UPDATE_SEEK_BAR:
+                    case UPDATE_SEEK_BAR_ACTION:
                         onUpdateSeekBarProgress(intent);
                         break;
-                    case ACTION_NOTIFICATION_PAUSE:
-                        mImgPlay.setImageResource(R.drawable.ic_play_arrow_black_36dp);
-                        mImgImage.clearAnimation();
+                    case NOTIFICATION_PLAY_OR_PAUSE_ACTION:
                         if (intent.getExtras() != null) {
-                            mIsPlay = !intent.getExtras().getBoolean(PlayMusicService.PAUSE_NOTIFICATION);
+                            if (intent.getExtras().getBoolean(PlayMusicService.PLAY_OR_PAUSE_NOTIFICATION)) {
+                                mImgPlay.setImageResource(R.drawable.ic_play_arrow_black_36dp);
+                                mImgImage.clearAnimation();
+                            } else {
+                                mImgPlay.setImageResource(R.drawable.ic_pause_black_36dp);
+                                mImgImage.startAnimation(mAnimation);
+                            }
+                            mIsPlay = !intent.getExtras().getBoolean(PlayMusicService.PLAY_OR_PAUSE_NOTIFICATION);
+                            showNotification();
                         }
-                        showNotification();
                         break;
-                    case ACTION_NOTIFICATION_PLAY:
-                        mImgPlay.setImageResource(R.drawable.ic_pause_black_36dp);
-                        mImgImage.startAnimation(mAnimation);
-                        if (intent.getExtras() != null) {
-                            mIsPlay = !(intent.getExtras()).getBoolean(PlayMusicService.PLAY_NOTIFICATION);
-                        }
-                        showNotification();
-                        break;
-                    case CLOSE_ACTION:
+                    case CLOSE_NOTIFICATION_ACTION:
                         boolean isClose = false;
                         if (intent.getExtras() != null) {
                             isClose = intent.getExtras().getBoolean(PlayMusicService.CLOSE_NOTIFICATION);
@@ -110,10 +108,9 @@ public class ServicesBroadcastActivity extends AppCompatActivity implements View
         initView();
         createNotificationChannel();
         IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(ACTION_UPDATE_SEEK_BAR);
-        intentFilter.addAction(ACTION_NOTIFICATION_PLAY);
-        intentFilter.addAction(ACTION_NOTIFICATION_PAUSE);
-        intentFilter.addAction(CLOSE_ACTION);
+        intentFilter.addAction(UPDATE_SEEK_BAR_ACTION);
+        intentFilter.addAction(NOTIFICATION_PLAY_OR_PAUSE_ACTION);
+        intentFilter.addAction(CLOSE_NOTIFICATION_ACTION);
         intentFilter.addAction(CREATE_ACTIVITY_ACTION);
         this.registerReceiver(mReceiver, intentFilter);
         Intent startActivityIntent = new Intent(this, PlayMusicService.class);
@@ -134,16 +131,17 @@ public class ServicesBroadcastActivity extends AppCompatActivity implements View
 
     private void onUpdateSeekBarProgress(Intent intent) {
         if (intent.getExtras() != null) {
-            mDurationTime = (intent.getExtras()).getInt(PlayMusicService.DURATION_TIME);
+            mDuration = (intent.getExtras()).getInt(PlayMusicService.DURATION);
             mCurrentTime = intent.getExtras().getInt(PlayMusicService.CURRENT_TIME);
         }
-        mSeekBarProgress.setMax(mDurationTime);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("mm:ss", Locale.US);
+        mSeekBarProgress.setMax(mDuration);
         mSeekBarProgress.setProgress(mCurrentTime);
-        mTvFinalTime.setText(convertTime(mDurationTime / 1000));
-        mTvTimeElapsed.setText(convertTime(mCurrentTime / 1000));
-        if (mDurationTime - mCurrentTime <= 0) {
+        mTvFinalTime.setText(simpleDateFormat.format(mDuration));
+        mTvTimeElapsed.setText(simpleDateFormat.format(mCurrentTime));
+        if (mDuration - mCurrentTime <= 0) {
             mImgPlay.setImageResource(R.drawable.ic_play_arrow_black_36dp);
-            mTvFinalTime.setText(convertTime(mDurationTime / 1000));
+            mTvFinalTime.setText(simpleDateFormat.format(mDuration));
             mTvTimeElapsed.setText(getString(R.string.timeMusicPlayer));
             mImgImage.clearAnimation();
         }
@@ -157,16 +155,14 @@ public class ServicesBroadcastActivity extends AppCompatActivity implements View
                 if (!mIsPlay) {
                     mImgPlay.setImageResource(R.drawable.ic_pause_black_36dp);
                     mImgImage.startAnimation(mAnimation);
-                    Intent intentPlay = new Intent(this, PlayMusicService.class);
-                    intentPlay.setAction(PLAY_ACTION);
-                    startService(intentPlay);
                 } else {
                     mImgPlay.setImageResource(R.drawable.ic_play_arrow_black_36dp);
                     mImgImage.clearAnimation();
-                    Intent intentPause = new Intent(this, PlayMusicService.class);
-                    intentPause.setAction(PAUSE_ACTION);
-                    startService(intentPause);
                 }
+                Intent intentPlay = new Intent(this, PlayMusicService.class);
+                intentPlay.putExtra(PLAY_OR_PAUSE_ACTION, mIsPlay);
+                intentPlay.setAction(PLAY_OR_PAUSE_ACTION);
+                startService(intentPlay);
                 mIsPlay = !mIsPlay;
                 showNotification();
         }
@@ -194,18 +190,18 @@ public class ServicesBroadcastActivity extends AppCompatActivity implements View
         } else {
             remoteViews.setImageViewResource(R.id.btnPlayOrPause, R.drawable.ic_play_arrow_black_36dp);
         }
-        if (mDurationTime - mCurrentTime <= 0) {
+        if (mDuration - mCurrentTime <= 0) {
             remoteViews.setImageViewResource(R.id.btnPlayOrPause, R.drawable.ic_play_arrow_black_36dp);
             remoteViews.setTextViewText(R.id.tvCurrentTime, getString(R.string.timeMusicPlayer));
         }
         Intent playIntent = new Intent(getApplicationContext(), PlayMusicService.class);
-        playIntent.setAction(FOCUS_IMAGE_NOTIFICATION_ACTION);
-        playIntent.putExtra(KEY_IS_PLAYING, mIsPlay);
+        playIntent.setAction(PLAY_OR_PAUSE_NOTIFICATION_ACTION);
+        playIntent.putExtra(IS_NOTIFICATION_PLAYING, mIsPlay);
         PendingIntent pendingPauseOrPlayIntent = PendingIntent.getService(this, 0, playIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         remoteViews.setOnClickPendingIntent(R.id.btnPlayOrPause, pendingPauseOrPlayIntent);
 
         Intent closeIntent = new Intent(this, PlayMusicService.class);
-        closeIntent.setAction(CLOSE_ACTION);
+        closeIntent.setAction(CLOSE_NOTIFICATION_ACTION);
         PendingIntent pendingCloseIntent = PendingIntent.getService(this, 0, closeIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         remoteViews.setOnClickPendingIntent(R.id.btnClose, pendingCloseIntent);
 
@@ -239,26 +235,8 @@ public class ServicesBroadcastActivity extends AppCompatActivity implements View
     public void onStopTrackingTouch(SeekBar seekBar) {
         mSeekBarProgress.setProgress(seekBar.getProgress());
         Intent intent = new Intent(this, PlayMusicService.class);
-        intent.putExtra(KEY_PASS_PROGRESS, seekBar.getProgress());
+        intent.putExtra(SEEK_BAR_PROGRESS, seekBar.getProgress());
         intent.setAction(SEEK_BAR_PROGRESS_ACTION);
         startService(intent);
-    }
-
-    private String convertTime(int timeTotal) {
-        int min = timeTotal / 60;
-        int second = timeTotal - min * 60;
-        String currentPosition;
-        if (timeTotal < 10) {
-            currentPosition = "00:0" + timeTotal;
-        } else if (timeTotal < 60) {
-            currentPosition = "00:" + timeTotal;
-        } else {
-            if (second < 10) {
-                currentPosition = "0" + min + ":0" + second;
-            } else {
-                currentPosition = "0" + min + ":" + second;
-            }
-        }
-        return currentPosition;
     }
 }
