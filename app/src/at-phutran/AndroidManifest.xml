@@ -27,7 +27,6 @@
             android:name=".eventlistener.SignUpActivity"
             android:label="@string/title" />
         <activity android:name=".fragment.LoginActivity" />
-        <activity android:name=".fragment.WelcomeAgitctivity" />
         <activity android:name=".recyclerview.RecyclerViewActivity" />
         <activity android:name=".viewpager.ViewPagerActivity" />
         <activity
@@ -36,5 +35,4 @@
         <activity android:name=".asynctask.AsyncTaskThreadHandlerActivity" />
         <activity android:name=".service.ServiceActivity" />
     </application>
-
 </manifest>

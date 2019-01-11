@@ -1,25 +1,30 @@
 package asiantech.internship.summer.service;
 
-import android.annotation.SuppressLint;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.RemoteViews;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import asiantech.internship.summer.R;
 import asiantech.internship.summer.model.Song;
 
-@SuppressLint("SimpleDateFormat")
 public class ServiceActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TextView mTvNameOfMusic;
@@ -35,6 +40,7 @@ public class ServiceActivity extends AppCompatActivity implements View.OnClickLi
     private MediaPlayer mMediaPlayer;
     private Animation mAnimation;
     private ImageView mImgDisc;
+    private SimpleDateFormat mSimpleDateFormat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +49,7 @@ public class ServiceActivity extends AppCompatActivity implements View.OnClickLi
         mapping();
         initSong();
         mAnimation = AnimationUtils.loadAnimation(this, R.anim.disc_rotate);
-        creatMediaPlayer();
+        createMediaPlayer();
         mImgPlay.setOnClickListener(this);
         mImgStop.setOnClickListener(this);
         mImgNext.setOnClickListener(this);
@@ -77,11 +83,12 @@ public class ServiceActivity extends AppCompatActivity implements View.OnClickLi
         mImgDisc = findViewById(R.id.imgDisc);
     }
 
-    private void creatMediaPlayer() {
+    private void createMediaPlayer() {
         mMediaPlayer = MediaPlayer.create(ServiceActivity.this, mListSong.get(mPosition).getFile());
         mTvNameOfMusic.setText(mListSong.get(mPosition).getName());
         showTime();
         updateTimeSong();
+        showNotification();
     }
 
     private void initSong() {
@@ -102,8 +109,7 @@ public class ServiceActivity extends AppCompatActivity implements View.OnClickLi
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("mm:ss");
-                mTvTimeSong.setText(simpleDateFormat.format(mMediaPlayer.getCurrentPosition()));
+                mTvTimeSong.setText(mSimpleDateFormat.format(mMediaPlayer.getCurrentPosition()));
                 //update seekbar
                 mSeekbarSong.setProgress(mMediaPlayer.getCurrentPosition());
                 //set next song
@@ -113,10 +119,9 @@ public class ServiceActivity extends AppCompatActivity implements View.OnClickLi
         }, 100);
     }
 
-
     private void showTime() {
-        SimpleDateFormat formatTime = new SimpleDateFormat("mm:ss");
-        mTvTimeTotal.setText(formatTime.format(mMediaPlayer.getDuration()));
+        mSimpleDateFormat = new SimpleDateFormat("mm:ss", Locale.ENGLISH);
+        mTvTimeTotal.setText(mSimpleDateFormat.format(mMediaPlayer.getDuration()));
         mSeekbarSong.setMax(mMediaPlayer.getDuration());
     }
 
@@ -130,7 +135,7 @@ public class ServiceActivity extends AppCompatActivity implements View.OnClickLi
             mMediaPlayer.release();
         }
         mImgPlay.setImageResource(R.drawable.ic_pause_circle_filled_black_24dp);
-        creatMediaPlayer();
+        createMediaPlayer();
         mMediaPlayer.start();
     }
 
@@ -152,7 +157,7 @@ public class ServiceActivity extends AppCompatActivity implements View.OnClickLi
                 mMediaPlayer.stop();
                 mMediaPlayer.release();
                 mImgPlay.setImageResource(R.drawable.ic_play_circle_filled_black_24dp);
-                creatMediaPlayer();
+                createMediaPlayer();
                 break;
             case R.id.imgNext:
                 playNextSong();
@@ -167,9 +172,23 @@ public class ServiceActivity extends AppCompatActivity implements View.OnClickLi
                     mMediaPlayer.release();
                 }
                 mImgPlay.setImageResource(R.drawable.ic_pause_circle_filled_black_24dp);
-                creatMediaPlayer();
+                createMediaPlayer();
                 mMediaPlayer.start();
                 break;
         }
+    }
+
+    private void showNotification() {
+        final Handler handler = new Handler();
+        RemoteViews expandedView = new RemoteViews(getPackageName(), R.layout.notification);
+        expandedView.setTextViewText(R.id.tvNameOfMusic, mListSong.get(mPosition).getName());
+        expandedView.setTextViewText(R.id.tvTimeCurrent, "00:00");
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(ServiceActivity.this);
+        builder.setSmallIcon(R.drawable.ic_play_circle_filled_black_24dp)
+                .setCustomContentView(expandedView);
+        Notification notification = builder.build();
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        assert notificationManager != null;
+        notificationManager.notify(1, notification);
     }
 }
