@@ -11,6 +11,7 @@ import asiantech.internship.summer.canvas.CanvasActivity;
 import asiantech.internship.summer.eventlistener.SignUpActivity;
 import asiantech.internship.summer.fragment.LoginActivity;
 import asiantech.internship.summer.recyclerview.RecyclerViewActivity;
+import asiantech.internship.summer.service.ServiceActivity;
 import asiantech.internship.summer.viewpager.ViewPagerActivity;
 
 public class ListActivity extends AppCompatActivity implements View.OnClickListener {
@@ -22,6 +23,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
     private Button mBtnViewPager;
     private Button mBtnAsyncTask;
     private Button mBtnCanvas;
+    private Button mBtnService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         mBtnViewPager = findViewById(R.id.btnExercise5);
         mBtnAsyncTask = findViewById(R.id.btnExercise11);
         mBtnCanvas = findViewById(R.id.btnExercise9);
+        mBtnService = findViewById(R.id.btnExercise12);
         mBtnView.setOnClickListener(this);
         mBtnListener.setOnClickListener(this);
         mBtnFragment.setOnClickListener(this);
@@ -41,6 +44,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         mBtnViewPager.setOnClickListener(this);
         mBtnAsyncTask.setOnClickListener(this);
         mBtnCanvas.setOnClickListener(this);
+        mBtnService.setOnClickListener(this);
     }
 
     @Override
@@ -78,6 +82,11 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
             }
             case R.id.btnExercise11: {
                 Intent intent = new Intent(ListActivity.this, AsyncTaskThreadHandlerActivity.class);
+                startActivity(intent);
+                break;
+            }
+            case R.id.btnExercise12: {
+                Intent intent = new Intent(ListActivity.this, ServiceActivity.class);
                 startActivity(intent);
                 break;
             }

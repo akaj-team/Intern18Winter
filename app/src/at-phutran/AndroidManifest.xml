@@ -27,7 +27,7 @@
             android:name=".eventlistener.SignUpActivity"
             android:label="@string/title" />
         <activity android:name=".fragment.LoginActivity" />
-        <activity android:name=".fragment.WelcomeActivity" />
+        <activity android:name=".fragment.WelcomeAgitctivity" />
         <activity android:name=".recyclerview.RecyclerViewActivity" />
         <activity android:name=".viewpager.ViewPagerActivity" />
         <activity
