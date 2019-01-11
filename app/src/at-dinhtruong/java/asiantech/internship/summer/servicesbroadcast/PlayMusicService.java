@@ -103,6 +103,7 @@ public class PlayMusicService extends Service {
         mCountDownTimer.cancel();
         mMediaPlayer.stop();
         mMediaPlayer.release();
+        super.onDestroy();
     }
 }
 
