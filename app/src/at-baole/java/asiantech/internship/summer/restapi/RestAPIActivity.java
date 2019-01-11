@@ -2,6 +2,7 @@ package asiantech.internship.summer.restapi;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -51,18 +52,14 @@ public class RestAPIActivity extends AppCompatActivity implements View.OnClickLi
     private static final int CANCEL_ACTION = 99;
     private static final int WRITE_GALLERY_PERMISSION_REQUEST_CODE = 201;
     private static final int WRITE_CAMERA_PERMISSION_REQUEST_CODE = 202;
-    private static final String FREFERENCE_FILE_NAME = "MyFiles";
+    private static final String CHECK_DO_NOT_ASK_AGAIN = "dontAskAgain";
+    private static final String CHECK_CAMERA = "checkCamera";
+    private static final String CHECK_GALLERY = "checkGallery";
 
-    private boolean mIsNotAllowAskPermissionCamera;
-    private boolean mIsNotAllowAskPermissionGallery;
-    private boolean mIsNotAllowAskWriteExternal;
-    private boolean mIsNotAllowAskCamera;
-    private boolean mIsCheck;
     private APIImages mAPIImages;
     private RecyclerView mRecyclerViewImage;
     private ProgressDialog mProgressDialog;
     private ListImageAdapter mImageAdapter;
-    private SharedPreferences mSharedPreferences;
     private List<ImageItem> mImages = new ArrayList<>();
 
     @Override
@@ -78,7 +75,6 @@ public class RestAPIActivity extends AppCompatActivity implements View.OnClickLi
         Button mBtnLoadImage = findViewById(R.id.btnLoadImage);
         Button mBtnUploadImage = findViewById(R.id.btnUploadImage);
         mRecyclerViewImage = findViewById(R.id.recyclerViewRestful);
-        mSharedPreferences = getSharedPreferences(FREFERENCE_FILE_NAME, MODE_PRIVATE);
 
         mBtnLoadImage.setOnClickListener(this);
         mBtnUploadImage.setOnClickListener(this);
@@ -128,27 +124,14 @@ public class RestAPIActivity extends AppCompatActivity implements View.OnClickLi
                 case CHOOSE_GALLERY: {
                     if (checkAndRequestGalleryPermission()) {
                         choosePhotosFromGallery();
-                    } else {
-                        mIsNotAllowAskPermissionCamera = getValueSharedPreferences(getString(R.string.permissionMessageCamera));
-                        mIsNotAllowAskPermissionGallery = getValueSharedPreferences(getString(R.string.permissionMessageGallery));
-                        mIsNotAllowAskWriteExternal = getValueSharedPreferences(getString(R.string.isWrite));
-                        mIsNotAllowAskCamera = getValueSharedPreferences(getString(R.string.isCamera));
-
-                        if (mIsNotAllowAskPermissionGallery || mIsNotAllowAskPermissionCamera || mIsNotAllowAskWriteExternal) {
-                            showAlertDialog(getString(R.string.permissionMessageGallery));
-                            mIsCheck = true;
-                        }
+                        Toast.makeText(this, R.string.galleryPermissionAccepted, Toast.LENGTH_LONG).show();
                     }
                     break;
                 }
                 case CAPTURE_CAMERA: {
                     if (checkAndRequestCameraPermission()) {
                         capturePhotosFromCamera();
-                    } else {
-                        mIsNotAllowAskPermissionCamera = getValueSharedPreferences(getString(R.string.permissionMessageCamera));
-                        if (mIsNotAllowAskPermissionCamera || mIsNotAllowAskCamera && mIsCheck) {
-                            showAlertDialog(getString(R.string.permissionMessageCamera));
-                        }
+                        Toast.makeText(this, R.string.cameraPermissionAccepted, Toast.LENGTH_LONG).show();
                     }
                     break;
                 }
@@ -159,14 +142,15 @@ public class RestAPIActivity extends AppCompatActivity implements View.OnClickLi
         imagesDialog.show();
     }
 
-    private void saveValueSharedPreferences(String value) {
-        SharedPreferences.Editor editor = mSharedPreferences.edit();
-        editor.putBoolean(value, true);
-        editor.apply();
+    private void choosePhotosFromGallery() {
+        Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(galleryIntent, GALLERY);
     }
 
-    private boolean getValueSharedPreferences(String value) {
-        return mSharedPreferences.getBoolean(value, false);
+    private void capturePhotosFromCamera() {
+        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(cameraIntent, CAMERA);
     }
 
     private boolean checkAndRequestCameraPermission() {
@@ -188,17 +172,29 @@ public class RestAPIActivity extends AppCompatActivity implements View.OnClickLi
 
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
-        boolean isShowRationaleWrite;
-        boolean isShowRationaleCamera;
+        SharedPreferences sharedPreferences = getSharedPreferences(CHECK_DO_NOT_ASK_AGAIN, MODE_PRIVATE);
+        boolean isCheckGallery;
+
         switch (requestCode) {
             case WRITE_GALLERY_PERMISSION_REQUEST_CODE: {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     choosePhotosFromGallery();
                     Toast.makeText(this, R.string.galleryPermissionAccepted, Toast.LENGTH_LONG).show();
                 } else {
-                    isShowRationaleWrite = ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                    isCheckGallery = sharedPreferences.getBoolean(CHECK_GALLERY, false);
+                    boolean isShowRationaleWrite = false;
+
+                    if (grantResults[0] == PackageManager.PERMISSION_DENIED) {
+                        isShowRationaleWrite = ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                    }
                     if (!isShowRationaleWrite) {
-                        saveValueSharedPreferences(getString(R.string.permissionMessageGallery));
+                        if (isCheckGallery) {
+                            showAlertDialog(getString(R.string.permissionMessageGallery));
+                            Toast.makeText(this, R.string.noPermissionsGranted, Toast.LENGTH_LONG).show();
+                        }
+                        SharedPreferences.Editor editor = getSharedPreferences(CHECK_DO_NOT_ASK_AGAIN, MODE_PRIVATE).edit();
+                        editor.putBoolean(CHECK_GALLERY, true);
+                        editor.apply();
                     }
                 }
                 break;
@@ -208,42 +204,35 @@ public class RestAPIActivity extends AppCompatActivity implements View.OnClickLi
                     capturePhotosFromCamera();
                     Toast.makeText(this, R.string.cameraPermissionAccepted, Toast.LENGTH_LONG).show();
                 } else {
-                    isShowRationaleCamera = ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA);
-                    isShowRationaleWrite = ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-                    if (!isShowRationaleCamera && !isShowRationaleWrite) {
-                        saveValueSharedPreferences(getString(R.string.permissionMessageCamera));
+                    boolean isCheckCamera = sharedPreferences.getBoolean(CHECK_CAMERA, false);
+                    boolean isShowCameraPermissionRationale = false;
+                    boolean isShowWritePermissionRationale = false;
+                    isCheckGallery = sharedPreferences.getBoolean(CHECK_GALLERY, false);
+
+                    if (grantResults[0] == PackageManager.PERMISSION_DENIED && grantResults[1] == PackageManager.PERMISSION_DENIED) {
+                        isShowCameraPermissionRationale = ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA);
+                        isShowWritePermissionRationale = ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
                     }
-                    if (!isShowRationaleWrite) {
-                        saveValueSharedPreferences(getString(R.string.isWrite));
+                    SharedPreferences.Editor editor = getSharedPreferences(CHECK_DO_NOT_ASK_AGAIN, MODE_PRIVATE).edit();
+                    if (!isShowCameraPermissionRationale && !isShowWritePermissionRationale) {
+                        if (isCheckCamera && isCheckGallery) {
+                            showAlertDialog(getString(R.string.permissionMessageCamera));
+                            Toast.makeText(this, R.string.noPermissionsGranted, Toast.LENGTH_LONG).show();
+                        }
+                        editor.putBoolean(CHECK_CAMERA, true);
+                        editor.putBoolean(CHECK_GALLERY, true);
+                    } else if (!isShowCameraPermissionRationale) {
+                        editor.putBoolean(CHECK_CAMERA, true);
+                    } else if (!isShowWritePermissionRationale) {
+                        editor.putBoolean(CHECK_GALLERY, true);
                     }
-                    if (!isShowRationaleCamera) {
-                        saveValueSharedPreferences(getString(R.string.isCamera));
-                    }
+                    editor.apply();
                 }
                 break;
             }
             default:
                 super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
-    }
-
-    private void goToSettings() {
-        Intent intent = new Intent();
-        intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-        Uri uri = Uri.fromParts("package", getPackageName(), null);
-        intent.setData(uri);
-        startActivity(intent);
-    }
-
-    private void choosePhotosFromGallery() {
-        Intent galleryIntent = new Intent(Intent.ACTION_PICK,
-                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(galleryIntent, GALLERY);
-    }
-
-    private void capturePhotosFromCamera() {
-        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(cameraIntent, CAMERA);
     }
 
     @Override
@@ -347,15 +336,27 @@ public class RestAPIActivity extends AppCompatActivity implements View.OnClickLi
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         AlertDialog alert = builder.create();
         alert.setTitle(R.string.permissionNeeded);
-        alert.setMessage(getString(R.string.permissionsDialogMessageFirstHalf)
-                + " " + message + " "
-                + getString(R.string.permissionsDialogMessageSecondHalf) + " "
+        alert.setMessage(getString(R.string.permissionsDialogMessageFirstHalf) + " "
+                + message + " " + getString(R.string.permissionsDialogMessageSecondHalf) + " "
                 + getString(R.string.directionToSettings));
-        alert.setButton(AlertDialog.BUTTON_POSITIVE, getString(R.string.gotoSettings), (dialogInterface, positive) -> goToSettings());
+        alert.setButton(AlertDialog.BUTTON_POSITIVE, getString(R.string.gotoSettings), (dialogInterface, positive) -> goToSetting(dialogInterface));
         alert.setButton(AlertDialog.BUTTON_NEGATIVE, getString(R.string.backToApp), (dialogInterface, negative) -> dialogInterface.dismiss());
         alert.setCancelable(true);
         alert.show();
         alert.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.colorDarkGreen));
         alert.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getResources().getColor(R.color.colorDarkGreen));
+    }
+
+    private void goToSetting(DialogInterface dialogInterface) {
+        SharedPreferences.Editor editor = getSharedPreferences(CHECK_DO_NOT_ASK_AGAIN, MODE_PRIVATE).edit();
+        editor.putBoolean(CHECK_CAMERA, false);
+        editor.putBoolean(CHECK_GALLERY, false);
+        editor.apply();
+        dialogInterface.dismiss();
+        Intent intentToSettings = new Intent();
+        intentToSettings.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        Uri uri = Uri.fromParts("package", getApplication().getPackageName(), null);
+        intentToSettings.setData(uri);
+        getApplicationContext().startActivity(intentToSettings);
     }
 }

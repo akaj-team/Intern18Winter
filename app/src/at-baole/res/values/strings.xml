@@ -68,9 +68,7 @@
     <string name="captureCamera">Capture a photo from camera</string>
     <string name="cancelAction">Cancel</string>
     <string name="galleryPermissionAccepted">Gallery Permission Accepted</string>
-    <string name="galleryPermissionDenied">Gallery Permisison Denied</string>
     <string name="cameraPermissionAccepted">Camera Permission Accepted</string>
-    <string name="cameraPermissionDenied">Camera Permission Denied</string>
     <string name="data">data</string>
     <string name="title">Title</string>
     <string name="uploadSuccess">Upload Successfully</string>
@@ -85,6 +83,5 @@
     <string name="directionToSettings">Please go to Settings to grant permisisons.</string>
     <string name="backToApp">Back to app.</string>
     <string name="gotoSettings">Go to Settings.</string>
-    <string name="isWrite">isWrite</string>
-    <string name="isCamera">isCamera</string>
+    <string name="noPermissionsGranted">No permissions granted</string>
 </resources>
