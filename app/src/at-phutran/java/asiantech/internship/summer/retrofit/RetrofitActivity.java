@@ -23,13 +23,11 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Button;
 import android.widget.Toast;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
 import asiantech.internship.summer.R;
 import asiantech.internship.summer.model.ImageItem;
 import okhttp3.MediaType;
@@ -41,7 +39,7 @@ import retrofit2.Response;
 
 @SuppressLint("Registered")
 public class RetrofitActivity extends AppCompatActivity {
-    public static final String MY_PREFS_NAME = "MyFile";
+    private static final String MY_PREFS_NAME = "MyFile";
     private static final int CHOOSE_GALLERY = 0;
     private static final int CHOOSE_CAMERA = 1;
     private static final int GALLERY = 111;
@@ -50,16 +48,16 @@ public class RetrofitActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_ASK_PERMISSIONS_GALLERY = 444;
     private static final String ACCESS_TOKEN = "604d1f2a63e1620f8e496970f675f0322671a3de0ba9f44c850e9ddc193f4476";
     private static final String UPLOAD_URL = "https://upload.gyazo.com/api/upload";
-    boolean showRationaleCamera;
-    boolean showRationaleWrite;
-    SharedPreferences sharedPreferences;
+    private SharedPreferences isSharedPreferences;
     private RetrofitAdapter mAdapter;
     private RecyclerView mRecyclerView;
     private SOService mService;
     private List<ImageItem> mImageItems;
     private ProgressDialog mProgressDialog;
-    private boolean mIsShowAlert;
-    private boolean mIsShow;
+    private boolean mIsNotAllowAskPermissionCamera;
+    private boolean mIsNotAllowAskPermissionGallery;
+    private boolean mIsNotAllowAskWriteExternal;
+    private boolean mIsNotAllowAskCamera;
     private boolean mIsCheck;
 
     public static void startInstalledAppDetailsActivity(final Activity context) {
@@ -84,7 +82,7 @@ public class RetrofitActivity extends AppCompatActivity {
         mService = RetrofitClient.getClient().create(SOService.class);
         mRecyclerView = findViewById(R.id.recyclerViewContent);
         Button btnInsert = findViewById(R.id.btnInsertImage);
-        sharedPreferences = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+        isSharedPreferences = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
         initRecyclerView();
         loadData();
         btnInsert.setOnClickListener(v -> eventHandle());
@@ -111,10 +109,13 @@ public class RetrofitActivity extends AppCompatActivity {
                             if (checkPermissionForGallery()) {
                                 chooseGallery();
                             } else {
-                                mIsShowAlert = getValueShowInSharedPreferences(getString(R.string.noteCamera));
-                                mIsShow = getValueShowInSharedPreferences(getString(R.string.noteGallery));
-                                if (!showRationaleWrite && mIsShow || !showRationaleWrite && mIsShowAlert) {
+                                mIsNotAllowAskPermissionCamera = getValueShowInSharedPreferences(getString(R.string.noteCamera));
+                                mIsNotAllowAskPermissionGallery = getValueShowInSharedPreferences(getString(R.string.noteGallery));
+                                mIsNotAllowAskWriteExternal = getValueShowInSharedPreferences(getString(R.string.isWrite));
+                                mIsNotAllowAskCamera = getValueShowInSharedPreferences(getString(R.string.isCamera));
+                                if (mIsNotAllowAskPermissionGallery || mIsNotAllowAskPermissionCamera || mIsNotAllowAskWriteExternal) {
                                     showSettingsAlert(getString(R.string.noteGallery));
+                                    mIsCheck = true;
                                 }
                             }
                             break;
@@ -122,8 +123,8 @@ public class RetrofitActivity extends AppCompatActivity {
                             if (checkPermissionForCamera()) {
                                 chooseCamera();
                             } else {
-                                mIsShowAlert = getValueShowInSharedPreferences(getString(R.string.noteCamera));
-                                if (!showRationaleWrite && !showRationaleCamera && mIsShowAlert) {
+                                mIsNotAllowAskPermissionCamera = getValueShowInSharedPreferences(getString(R.string.noteCamera));
+                                if (mIsNotAllowAskPermissionCamera || mIsNotAllowAskCamera && mIsCheck) {
                                     showSettingsAlert(getString(R.string.noteCamera));
                                 }
                             }
@@ -149,15 +150,22 @@ public class RetrofitActivity extends AppCompatActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        boolean isShowRationaleWrite;
         switch (requestCode) {
             case REQUEST_CODE_ASK_PERMISSIONS_CAMERA: {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
                     chooseCamera();
                 } else {
-                    showRationaleCamera = ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA);
-                    showRationaleWrite = ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-                    if (!showRationaleCamera && !showRationaleWrite) {
+                    boolean isShowRationaleCamera = ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA);
+                    isShowRationaleWrite = ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                    if (!isShowRationaleCamera && !isShowRationaleWrite) {
                         saveValueShowInSharedPreferences(getString(R.string.noteCamera));
+                    }
+                    if (!isShowRationaleWrite) {
+                        saveValueShowInSharedPreferences(getString(R.string.isWrite));
+                    }
+                    if (!isShowRationaleCamera) {
+                        saveValueShowInSharedPreferences(getString(R.string.isCamera));
                     }
                 }
                 break;
@@ -166,8 +174,8 @@ public class RetrofitActivity extends AppCompatActivity {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     chooseGallery();
                 } else {
-                    showRationaleWrite = ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-                    if (!showRationaleWrite) {
+                    isShowRationaleWrite = ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                    if (!isShowRationaleWrite) {
                         saveValueShowInSharedPreferences(getString(R.string.noteGallery));
                     }
                 }
@@ -179,16 +187,13 @@ public class RetrofitActivity extends AppCompatActivity {
     }
 
     private void saveValueShowInSharedPreferences(String value) {
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+        SharedPreferences.Editor editor = isSharedPreferences.edit();
         editor.putBoolean(value, true);
         editor.apply();
     }
 
     private boolean getValueShowInSharedPreferences(String value) {
-        if (sharedPreferences.contains(value)) {
-            mIsCheck = sharedPreferences.getBoolean(value, false);
-        }
-        return mIsCheck;
+        return isSharedPreferences.getBoolean(value, false);
     }
 
     private void showSettingsAlert(String message) {

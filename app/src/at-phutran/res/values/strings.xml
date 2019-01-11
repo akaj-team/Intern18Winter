@@ -94,4 +94,6 @@
     <string name="cancel">don\'t allow</string>
     <string name="noteGallery">gallery</string>
     <string name="noteCamera">camera</string>
+    <string name="isWrite">isWrite</string>
+    <string name="isCamera">isCamera</string>
 </resources>
