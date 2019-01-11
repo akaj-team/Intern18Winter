@@ -105,7 +105,7 @@
     <string name="servicesBroadcast">Services Broadcast</string>
     <string name="pause">Pause</string>
     <string name="play">Play</string>
-    <string name="timeMusicPlayer">--:--</string>
+    <string name="timeMusicPlayer">00:00</string>
     <string name="channelName">Channel Notification</string>
     <string name="channelDescription">Channel Notification Description</string>
 </resources>

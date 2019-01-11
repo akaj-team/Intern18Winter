@@ -38,13 +38,7 @@
         <activity android:name=".asynctaskthreadhandler.AsyncTaskThreadHandlerActivity" />
         <activity android:name=".servicesbroadcast.ServicesBroadcastActivity" />
 
-        <receiver
-            android:name=".servicesbroadcast.PlayMusicReceiver"
-            android:permission="true">
-            <intent-filter>
-                <action android:name="ACTION_CLICK" />
-            </intent-filter>
-        </receiver>
+        <service android:name=".servicesbroadcast.PlayMusicService" />
     </application>
 
 </manifest>
