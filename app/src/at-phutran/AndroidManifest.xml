@@ -34,5 +34,7 @@
             android:name=".canvas.CanvasActivity"
             android:screenOrientation="landscape" />
         <activity android:name=".asynctask.AsyncTaskThreadHandlerActivity" />
+        <activity android:name=".service.ServiceActivity" />
     </application>
+
 </manifest>

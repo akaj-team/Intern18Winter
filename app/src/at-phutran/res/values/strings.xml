@@ -75,4 +75,6 @@
     <string name="complete">Download complete</string>
     <string name="interruptedException">InterruptedException:</string>
     <string name="exception">Exception</string>
+    <string name="exercise12">service</string>
+    <string name="formatTime">00:00</string>
 </resources>
