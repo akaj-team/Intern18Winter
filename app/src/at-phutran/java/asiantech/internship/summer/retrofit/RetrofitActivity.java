@@ -54,11 +54,6 @@ public class RetrofitActivity extends AppCompatActivity {
     private SOService mService;
     private List<ImageItem> mImageItems;
     private ProgressDialog mProgressDialog;
-    private boolean mIsNotAllowAskPermissionCamera;
-    private boolean mIsNotAllowAskPermissionGallery;
-    private boolean mIsNotAllowAskWriteExternal;
-    private boolean mIsNotAllowAskCamera;
-    private boolean mIsCheck;
 
     public static void startInstalledAppDetailsActivity(final Activity context) {
         if (context == null) {
@@ -108,25 +103,11 @@ public class RetrofitActivity extends AppCompatActivity {
                         case CHOOSE_GALLERY:
                             if (checkPermissionForGallery()) {
                                 chooseGallery();
-                            } else {
-                                mIsNotAllowAskPermissionCamera = getValueShowInSharedPreferences(getString(R.string.noteCamera));
-                                mIsNotAllowAskPermissionGallery = getValueShowInSharedPreferences(getString(R.string.noteGallery));
-                                mIsNotAllowAskWriteExternal = getValueShowInSharedPreferences(getString(R.string.isWrite));
-                                mIsNotAllowAskCamera = getValueShowInSharedPreferences(getString(R.string.isCamera));
-                                if (mIsNotAllowAskPermissionGallery || mIsNotAllowAskPermissionCamera || mIsNotAllowAskWriteExternal) {
-                                    showSettingsAlert(getString(R.string.noteGallery));
-                                    mIsCheck = true;
-                                }
                             }
                             break;
                         case CHOOSE_CAMERA:
                             if (checkPermissionForCamera()) {
                                 chooseCamera();
-                            } else {
-                                mIsNotAllowAskPermissionCamera = getValueShowInSharedPreferences(getString(R.string.noteCamera));
-                                if (mIsNotAllowAskPermissionCamera || mIsNotAllowAskCamera && mIsCheck) {
-                                    showSettingsAlert(getString(R.string.noteCamera));
-                                }
                             }
                             break;
                     }
@@ -150,6 +131,8 @@ public class RetrofitActivity extends AppCompatActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        boolean isNotAllowAskWriteExternal;
+        boolean isNotAllowAskCamera;
         boolean isShowRationaleWrite;
         switch (requestCode) {
             case REQUEST_CODE_ASK_PERMISSIONS_CAMERA: {
@@ -158,8 +141,12 @@ public class RetrofitActivity extends AppCompatActivity {
                 } else {
                     boolean isShowRationaleCamera = ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA);
                     isShowRationaleWrite = ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-                    if (!isShowRationaleCamera && !isShowRationaleWrite) {
-                        saveValueShowInSharedPreferences(getString(R.string.noteCamera));
+                    isNotAllowAskWriteExternal = getValueShowInSharedPreferences(getString(R.string.isWrite));
+                    isNotAllowAskCamera = getValueShowInSharedPreferences(getString(R.string.isCamera));
+                    if (!isShowRationaleWrite && !isShowRationaleCamera) {
+                        if (isNotAllowAskWriteExternal && isNotAllowAskCamera) {
+                            showSettingsAlert(getString(R.string.noteCamera));
+                        }
                     }
                     if (!isShowRationaleWrite) {
                         saveValueShowInSharedPreferences(getString(R.string.isWrite));
@@ -175,8 +162,12 @@ public class RetrofitActivity extends AppCompatActivity {
                     chooseGallery();
                 } else {
                     isShowRationaleWrite = ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                    isNotAllowAskWriteExternal = getValueShowInSharedPreferences(getString(R.string.isWrite));
                     if (!isShowRationaleWrite) {
-                        saveValueShowInSharedPreferences(getString(R.string.noteGallery));
+                        if (isNotAllowAskWriteExternal) {
+                            showSettingsAlert(getString(R.string.noteGallery));
+                        }
+                        saveValueShowInSharedPreferences(getString(R.string.isWrite));
                     }
                 }
                 break;
