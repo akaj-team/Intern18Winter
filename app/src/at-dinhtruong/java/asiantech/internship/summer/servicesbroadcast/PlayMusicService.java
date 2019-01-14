@@ -56,6 +56,7 @@ public class PlayMusicService extends Service {
                                     Intent timePlayerIntent = new Intent(ServicesBroadcastActivity.UPDATE_SEEK_BAR_ACTION);
                                     timePlayerIntent.putExtra(DURATION, mMediaPlayer.getDuration());
                                     timePlayerIntent.putExtra(CURRENT_TIME, mMediaPlayer.getCurrentPosition());
+                                    showNotification();
                                     sendBroadcast(timePlayerIntent);
                                 }
 
@@ -68,14 +69,12 @@ public class PlayMusicService extends Service {
                         } else {
                             mMediaPlayer.pause();
                         }
-                        showNotification();
                     }
                     break;
                 }
                 case ServicesBroadcastActivity.SEEK_BAR_PROGRESS_ACTION:
                     if (intent.getExtras() != null) {
                         mMediaPlayer.seekTo((intent.getExtras()).getInt(ServicesBroadcastActivity.SEEK_BAR_PROGRESS));
-                        showNotification();
                     }
                     break;
                 case ServicesBroadcastActivity.PLAY_OR_PAUSE_NOTIFICATION_ACTION:
@@ -91,12 +90,11 @@ public class PlayMusicService extends Service {
                         Intent musicPauseIntent = new Intent(ServicesBroadcastActivity.NOTIFICATION_PLAY_OR_PAUSE_ACTION);
                         musicPauseIntent.putExtra(PLAY_OR_PAUSE_NOTIFICATION, isPlayNotification);
                         sendBroadcast(musicPauseIntent);
-                        showNotification();
                     }
                     break;
                 case ServicesBroadcastActivity.CLOSE_NOTIFICATION_ACTION:
                     if (mMediaPlayer.isPlaying()) {
-                        Toast.makeText(this, "Please pause before close", Toast.LENGTH_LONG).show();
+                        Toast.makeText(this, R.string.pleasePauseBeforeClose, Toast.LENGTH_LONG).show();
                     } else {
                         NotificationManager notificationManager = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
                         if (notificationManager != null) {

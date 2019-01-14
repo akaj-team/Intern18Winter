@@ -108,4 +108,5 @@
     <string name="timeMusicPlayer">00:00</string>
     <string name="channelName">Channel Notification</string>
     <string name="channelDescription">Channel Notification Description</string>
+    <string name="pleasePauseBeforeClose">Please pause before close</string>
 </resources>

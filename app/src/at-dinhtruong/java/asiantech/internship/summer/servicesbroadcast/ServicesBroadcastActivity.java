@@ -60,7 +60,7 @@ public class ServicesBroadcastActivity extends AppCompatActivity implements View
                             mIsPlay = !intent.getExtras().getBoolean(PlayMusicService.PLAY_OR_PAUSE_NOTIFICATION);
                         }
                         break;
-                    case ServicesBroadcastActivity.START_SERVICE_ACTION:
+                    case START_SERVICE_ACTION: {
                         if (intent.getExtras() != null) {
                             mIsPlay = (intent.getExtras()).getBoolean(PlayMusicService.START_ACTIVITY);
                         }
@@ -71,6 +71,7 @@ public class ServicesBroadcastActivity extends AppCompatActivity implements View
                             mImgPlay.setImageResource(R.drawable.ic_play_arrow_black_36dp);
                         }
                         break;
+                    }
                 }
             }
         }
