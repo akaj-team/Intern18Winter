@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="GraphicViewSale">
+        <attr name="colorOrange" format="color" />
+        <attr name="colorBlue" format="color" />
+        <attr name="colorGray" format="color" />
+        <attr name="colorWhite" format="color" />
+        <attr name="widthOfColumn" format="dimension" />
+    </declare-styleable>
+</resources>
