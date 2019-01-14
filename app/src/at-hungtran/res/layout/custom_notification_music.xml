@@ -30,8 +30,11 @@
             android:layout_height="20dp"
             android:layout_above="@+id/tvCurrentTime"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="2dp"
+            android:layout_marginRight="5dp"
+            android:paddingLeft="5dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingRight="5dp"
             android:src="@drawable/ic_close_black_24dp" />
 
         <TextView
@@ -58,27 +61,16 @@
             android:gravity="center">
 
             <ImageView
-                android:id="@+id/imgPrev"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
-                android:background="@null"
-                android:src="@drawable/ic_skip_previous_black_24dp" />
-
-            <ImageView
                 android:id="@+id/imgPlay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="5dp"
+                android:paddingLeft="5dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:paddingRight="5dp"
                 android:background="@null"
                 android:src="@drawable/ic_play_arrow_black_24dp" />
-
-            <ImageView
-                android:id="@+id/imgNext"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                android:src="@drawable/ic_skip_previous_black_24dp" />
 
         </LinearLayout>
     </RelativeLayout>

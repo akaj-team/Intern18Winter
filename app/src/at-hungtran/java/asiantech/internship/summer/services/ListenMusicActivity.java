@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -62,13 +61,5 @@ public class ListenMusicActivity extends AppCompatActivity {
         sImgBtnNext = findViewById(R.id.imgBtnNext);
         sSeekBarPlay = findViewById(R.id.seekBarPlay);
         mToolbarListenMusic = findViewById(R.id.toolbarListenMusic);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            finish();
-        }
-        return super.onOptionsItemSelected(item);
     }
 }

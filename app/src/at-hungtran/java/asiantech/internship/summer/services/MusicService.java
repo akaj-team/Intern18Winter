@@ -75,18 +75,6 @@ public class MusicService extends Service implements View.OnClickListener {
                     mNotificationManager.notify(ID_NOTI, mBuilder.build());
                 }
             }
-
-            if (Objects.equals(intent.getAction(), getResources().getString(R.string.nextAction))) {
-                if (mMediaPlayer.isPlaying()) {
-                    if (mImgBtnNext != null) {
-                        mImgBtnNext.get().setImageResource(R.drawable.ic_skip_next_black_24dp);
-                        mImgDisk.get().startAnimation(mRotateAnimation);
-                    }
-                    mRemoteViews.setImageViewResource(R.id.imgNext, R.drawable.ic_skip_next_black_24dp);
-                    mMediaPlayer.start();
-                    mNotificationManager.notify(ID_NOTI, mBuilder.build());
-                }
-            }
             if (Objects.equals(intent.getAction(), getResources().getString(R.string.closeAction))) {
                 if (!mMediaPlayer.isPlaying()) {
                     mIsShowNotification = false;
@@ -136,7 +124,6 @@ public class MusicService extends Service implements View.OnClickListener {
     }
 
     private void initUI() {
-        mImgBtnPrev = new WeakReference<>(ListenMusicActivity.sImgBtnPrev);
         mImgBtnPlay = new WeakReference<>(ListenMusicActivity.sImgBtnPlay);
         mImgBtnNext = new WeakReference<>(ListenMusicActivity.sImgBtnNext);
         mImgBtnPrev = new WeakReference<>(ListenMusicActivity.sImgBtnPrev);
@@ -200,7 +187,7 @@ public class MusicService extends Service implements View.OnClickListener {
                     mPosition = 0;
                 }
                 if (mMediaPlayer.isPlaying()) {
-                    mMediaPlayer.start();
+                    mMediaPlayer.stop();
                     mMediaPlayer.release();
                     setCurrentSong();
                     mMediaPlayer.start();
@@ -210,9 +197,8 @@ public class MusicService extends Service implements View.OnClickListener {
                 saveIntPreference(mPosition, getResources().getString(R.string.position));
                 setTotalTime();
                 updateCurrentTime();
-                initNotification();
                 if (mNotificationManager != null) {
-                    mRemoteViews.setImageViewResource(R.id.imgNext, R.drawable.ic_skip_next_black_24dp);
+                    setRemoteViews();
                     mNotificationManager.notify(ID_NOTI, mBuilder.build());
                 }
                 break;
@@ -222,7 +208,7 @@ public class MusicService extends Service implements View.OnClickListener {
                     mPosition = mListSong.size() - 1;
                 }
                 if (mMediaPlayer.isPlaying()) {
-                    mMediaPlayer.start();
+                    mMediaPlayer.stop();
                     mMediaPlayer.release();
                     setCurrentSong();
                     mMediaPlayer.start();
@@ -232,9 +218,8 @@ public class MusicService extends Service implements View.OnClickListener {
                 saveIntPreference(mPosition, getResources().getString(R.string.position));
                 setTotalTime();
                 updateCurrentTime();
-                initNotification();
                 if (mNotificationManager != null) {
-                    mRemoteViews.setImageViewResource(R.id.imgPrev, R.drawable.ic_skip_previous_black_24dp);
+                    setRemoteViews();
                     mNotificationManager.notify(ID_NOTI, mBuilder.build());
                 }
                 break;
@@ -322,8 +307,6 @@ public class MusicService extends Service implements View.OnClickListener {
         setRemoteViews();
         mRemoteViews.setOnClickPendingIntent(R.id.imgPlay, setOnClick(getResources().getString(R.string.playAction)));
         mRemoteViews.setOnClickPendingIntent(R.id.imgClose, setOnClick(getResources().getString(R.string.closeAction)));
-        mRemoteViews.setOnClickPendingIntent(R.id.imgPrev, setOnClick(getResources().getString(R.string.prevAction)));
-        mRemoteViews.setOnClickPendingIntent(R.id.imgNext, setOnClick(getResources().getString(R.string.nextAction)));
         mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         Intent intent = new Intent(this, ListenMusicActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 import android.widget.LinearLayout;
 
 import java.util.List;
@@ -21,7 +20,6 @@ public class ServicesActivity extends AppCompatActivity {
     private RecyclerView mRecyclerViewSong;
 
     @Override
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_service);
@@ -43,13 +41,5 @@ public class ServicesActivity extends AppCompatActivity {
     private void initView() {
         mToolbar = findViewById(R.id.toolbarListSong);
         mRecyclerViewSong = findViewById(R.id.recyclerViewSong);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            finish();
-        }
-        return super.onOptionsItemSelected(item);
     }
 }
