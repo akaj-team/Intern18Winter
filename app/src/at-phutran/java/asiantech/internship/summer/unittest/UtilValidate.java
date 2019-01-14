@@ -1,6 +1,6 @@
 package asiantech.internship.summer.unittest;
 
-public class UtilValidate {
+public final class UtilValidate {
     public final static String CHECK_LENGTH_USERNAME = "Username must from 9 to 20 characters";
     public final static String UPPER_USERNAME = "Username must have at least 2 non consecutive capital character";
     public final static String USERNAME_IS_NOT_SPECIAL = "Username haven't special character and space";
@@ -17,12 +17,9 @@ public class UtilValidate {
     public final static String USER_UPCASE = "TranDinhPhu";
     public final static String USERNAME_RIGHT = "tranDinhPhu";
 
-    private UtilValidate() {
-    }
-
     public static boolean isLengthUsernameRight(String username) {
         return username.length() > 8 && username.length() < 21;
-    } // check length username
+    }
 
     public static int containUpcase(String string) {
         int n = 0;
@@ -33,7 +30,7 @@ public class UtilValidate {
             }
         }
         return n;
-    } // sum upper case of username
+    }
 
     public static boolean isUpcaseNotContinous(String string, int number) {
         int size = string.length();
@@ -48,7 +45,7 @@ public class UtilValidate {
             }
             return n <= 0;
         }
-    } // check Username must have at least 2 non consecutive capital character
+    }
 
     public static boolean isUsernameNotSpecialCharacter(String username) {
         int size = username.length();
@@ -58,7 +55,7 @@ public class UtilValidate {
             }
         }
         return true;
-    } // check Username haven't special character and space
+    }
 
     public static int sumNumberOfUsername(String username) {
         int n = 0;
@@ -69,7 +66,7 @@ public class UtilValidate {
             }
         }
         return n;
-    } // sum digit of username
+    }
 
     public static boolean isUsernameHaveNotMoreTwoDigitContinous(String username) {
         int size = username.length();
@@ -84,15 +81,15 @@ public class UtilValidate {
             }
             return n <= 0;
         }
-    } // check Username must less 3 next digit
+    }
 
     public static boolean isUsernameStartLowerCase(String username) {
         return Character.isLowerCase(username.charAt(0));
-    } // check Username can't begin with upper cases and digit
+    }
 
     public static boolean isPasswordNotUser(String username, String password) {
         return username.length() != password.length() || !password.contains(username);
-    } // check password must different with username
+    }
 
     public static boolean isPasswordContainsDigitAndSpecial(String password) {
         int n = 0;
@@ -103,11 +100,11 @@ public class UtilValidate {
             }
         }
         return n >= 2;
-    }// check password have least 2 special character or digit
+    }
 
     public static boolean isLengthPasswordRight(String password) {
         return password.length() >= 8;
-    } // check length password
+    }
 
     public static boolean isPasswordNotRepeatCharacter(String password) {
         int size = password.length();
@@ -118,11 +115,11 @@ public class UtilValidate {
             }
         }
         return n <= 0;
-    } // check password isn't loop 1 character too 2 times next
+    }
 
     public static boolean isPasswordDoNotEndWithDigitOrCharacter(String password) {
         return Character.isLetter(password.charAt(password.length() - 1));
-    } // Password don't finish with special character or digit
+    }
 
     public static boolean isUpcaseNotMoreTwoUpperCaseContinous(String string, int number) {
         int size = string.length();
@@ -137,7 +134,7 @@ public class UtilValidate {
             }
             return n <= 0;
         }
-    } // check password must have at least 3 non consecutive capital character
+    }
 
     public static String resultLogin(String username, String password) {
         if (!isLengthUsernameRight(username)) {
@@ -174,5 +171,5 @@ public class UtilValidate {
             return UPPER_PASSWORD;
         }
         return SUCCESSFUL;
-    } // return value login when error and successful
+    }
 }

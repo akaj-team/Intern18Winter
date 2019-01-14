@@ -2,6 +2,7 @@ package asiantech.internship.summer.unittest;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -22,9 +23,9 @@ public class UnitTestActivity extends AppCompatActivity {
         mTvResult = findViewById(R.id.tvResult);
         mBtnLogin = findViewById(R.id.btnLogin);
         mBtnLogin.setOnClickListener(v -> {
-            String username = mEdtUsername.getText().toString();
-            String password = mEdtPassword.getText().toString();
-            if (username.isEmpty() || password.isEmpty()) {
+            String username = mEdtUsername.getText().toString().trim();
+            String password = mEdtPassword.getText().toString().trim();
+            if (TextUtils.isEmpty(username) || TextUtils.isEmpty(password)) {
                 mTvResult.setText(R.string.pleaseInput);
             } else {
                 String checkResult = UtilValidate.resultLogin(username, password);

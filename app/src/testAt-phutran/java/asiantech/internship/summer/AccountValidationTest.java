@@ -109,40 +109,84 @@ public class AccountValidationTest {
     }
 
     @Test
-    public void testCaseResultLogin() {
+    public void testCaseErrorLengthUserLogin() {
         when(mAccountUsername.getUsername()).thenReturn("phu");
         doReturn(UtilValidate.USER).when(mAccountPassword).getPassword();
         assertEquals(UtilValidate.resultLogin(mAccountUsername.getUsername(), mAccountPassword.getPassword()), UtilValidate.CHECK_LENGTH_USERNAME);
+    }
+
+    @Test
+    public void testCaseErrorAtLeastTwoUpperCaseUserLogin() {
         when(mAccountUsername.getUsername()).thenReturn(UtilValidate.USER);
         doReturn(UtilValidate.USER).when(mAccountPassword).getPassword();
         assertEquals(UtilValidate.resultLogin(mAccountUsername.getUsername(), mAccountPassword.getPassword()), UtilValidate.UPPER_USERNAME);
+    }
+
+    @Test
+    public void testCaseErrorSpecialCharacterUserLogin() {
         when(mAccountUsername.getUsername()).thenReturn("tran DinhPhu");
         doReturn(UtilValidate.USER).when(mAccountPassword).getPassword();
         assertEquals(UtilValidate.resultLogin(mAccountUsername.getUsername(), mAccountPassword.getPassword()), UtilValidate.USERNAME_IS_NOT_SPECIAL);
+    }
+
+    @Test
+    public void testCaseErrorUserLoginMoreTwoDigitContinous() {
         when(mAccountUsername.getUsername()).thenReturn("tranDinhPhu234");
         doReturn(UtilValidate.USER).when(mAccountPassword).getPassword();
         assertEquals(UtilValidate.resultLogin(mAccountUsername.getUsername(), mAccountPassword.getPassword()), UtilValidate.USERNAME_CONTAIN_DIGIT);
+    }
+
+    @Test
+    public void testCaseErrorUserLoginStartWithUpperCase() {
         when(mAccountUsername.getUsername()).thenReturn(UtilValidate.USER_UPCASE);
         doReturn(UtilValidate.USER).when(mAccountPassword).getPassword();
         assertEquals(UtilValidate.resultLogin(mAccountUsername.getUsername(), mAccountPassword.getPassword()), UtilValidate.START_USERNAME);
+    }
+
+    @Test
+    public void testCaseErrorPassSameWithUser() {
         when(mAccountUsername.getUsername()).thenReturn(UtilValidate.USERNAME_RIGHT);
         doReturn(UtilValidate.USERNAME_RIGHT).when(mAccountPassword).getPassword();
         assertEquals(UtilValidate.resultLogin(mAccountUsername.getUsername(), mAccountPassword.getPassword()), UtilValidate.PASSWORD_IS_NOT_USERNAME);
+    }
+
+    @Test
+    public void testCaseErrorPassLessTwoSpecialOrDigit() {
         when(mAccountUsername.getUsername()).thenReturn(UtilValidate.USERNAME_RIGHT);
         doReturn(UtilValidate.USER).when(mAccountPassword).getPassword();
         assertEquals(UtilValidate.resultLogin(mAccountUsername.getUsername(), mAccountPassword.getPassword()), UtilValidate.PASSWORD_CONTAIN_SPECIAL);
+    }
+
+    @Test
+    public void testCaseErrorLengthPassword() {
         when(mAccountUsername.getUsername()).thenReturn(UtilValidate.USERNAME_RIGHT);
         doReturn("tran").when(mAccountPassword).getPassword();
         assertEquals(UtilValidate.resultLogin(mAccountUsername.getUsername(), mAccountPassword.getPassword()), UtilValidate.CHECK_LENGTH_PASSWORD);
+    }
+
+    @Test
+    public void testCaseErrorPassLoopMoreTwoTimesContinous() {
         when(mAccountUsername.getUsername()).thenReturn(UtilValidate.USERNAME_RIGHT);
         doReturn("tran1dinh22phu").when(mAccountPassword).getPassword();
         assertEquals(UtilValidate.resultLogin(mAccountUsername.getUsername(), mAccountPassword.getPassword()), UtilValidate.CHARACRER_PASSWORD_REPEAT);
+    }
+
+    @Test
+    public void testCaseErrorPassEndWithDigitOrSpecialCharacter() {
         when(mAccountUsername.getUsername()).thenReturn(UtilValidate.USERNAME_RIGHT);
         doReturn("tran1dinhphu1").when(mAccountPassword).getPassword();
         assertEquals(UtilValidate.resultLogin(mAccountUsername.getUsername(), mAccountPassword.getPassword()), UtilValidate.END_PASSWORD);
+    }
+
+    @Test
+    public void testCaseErrorPassLessThreeUpperCases() {
         when(mAccountUsername.getUsername()).thenReturn(UtilValidate.USERNAME_RIGHT);
         doReturn("tran1dinhphu1a").when(mAccountPassword).getPassword();
         assertEquals(UtilValidate.resultLogin(mAccountUsername.getUsername(), mAccountPassword.getPassword()), UtilValidate.UPPER_PASSWORD);
+    }
+
+    @Test
+    public void testCaseUserLoginSuccessful() {
         when(mAccountUsername.getUsername()).thenReturn(UtilValidate.USERNAME_RIGHT);
         doReturn("tran1DinhPhu1A").when(mAccountPassword).getPassword();
         assertEquals(UtilValidate.resultLogin(mAccountUsername.getUsername(), mAccountPassword.getPassword()), UtilValidate.SUCCESSFUL);
