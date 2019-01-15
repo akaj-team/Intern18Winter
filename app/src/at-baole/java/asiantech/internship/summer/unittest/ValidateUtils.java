@@ -81,7 +81,7 @@ public final class ValidateUtils {
 
     public static int checkPasswordMatchesUsername(User user) {
         if (!user.getUsername().isEmpty() && !user.getPassword().isEmpty()) {
-            if (user.getUsername().equals(user.getPassword())) {
+            if (user.getUsername().equalsIgnoreCase(user.getPassword())) {
                 return R.string.PasswordMatchesUsername;
             }
         }

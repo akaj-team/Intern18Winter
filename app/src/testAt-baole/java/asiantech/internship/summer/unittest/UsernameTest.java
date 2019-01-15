@@ -1,5 +1,7 @@
 package asiantech.internship.summer.unittest;
 
+import android.text.TextUtils;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -9,6 +11,7 @@ import asiantech.internship.summer.R;
 import asiantech.internship.summer.unittest.model.User;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.mockito.Mockito.when;
 
 public class UsernameTest {
@@ -18,6 +21,12 @@ public class UsernameTest {
     @Before
     public void initMockito() {
         MockitoAnnotations.initMocks(this);
+    }
+
+    @Test
+    public void isUsernameEmpty() {
+        when(mUser.getUsername()).thenReturn("");
+        assertFalse(TextUtils.isEmpty(mUser.getUsername()));
     }
 
     @Test

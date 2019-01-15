@@ -34,8 +34,8 @@ public class UnitTestActivity extends AppCompatActivity {
 
     private void onClickLogin() {
         mBtnLogin.setOnClickListener(view -> {
-            String username = mEdtUsername.getText().toString();
-            String password = mEdtPassword.getText().toString();
+            String username = mEdtUsername.getText().toString().trim();
+            String password = mEdtPassword.getText().toString().trim();
             User user = new User(username, password);
             String checkResult;
             mTvNotification.setBackground(getResources().getDrawable(R.drawable.bg_shape_stroke_red));
