@@ -34,9 +34,11 @@
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
             android:background="@drawable/bg_username_password"
+            android:hint="@string/userName"
             android:inputType="text"
             android:padding="10dp"
-            tools:ignore="Autofill,LabelFor" />
+            android:textAlignment="center"
+            tools:ignore="Autofill" />
 
         <EditText
             android:id="@+id/edtPassword"
@@ -44,11 +46,12 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:autofillHints="@string/userName"
             android:background="@drawable/bg_username_password"
+            android:hint="@string/passWord"
             android:inputType="textPassword"
             android:padding="10dp"
-            tools:ignore="LabelFor,TextFields,UnusedAttribute" />
+            android:textAlignment="center"
+            tools:ignore="Autofill" />
 
         <Button
             android:id="@+id/btnLogin"
