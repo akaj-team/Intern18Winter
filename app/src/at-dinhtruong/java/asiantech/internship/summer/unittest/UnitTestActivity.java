@@ -1,6 +1,5 @@
 package asiantech.internship.summer.unittest;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -11,7 +10,6 @@ import android.widget.TextView;
 import asiantech.internship.summer.R;
 import asiantech.internship.summer.models.User;
 
-@SuppressLint("Registered")
 public class UnitTestActivity extends AppCompatActivity implements View.OnClickListener {
     private EditText mEdtUsername;
     private EditText mEdtPassword;
@@ -36,13 +34,11 @@ public class UnitTestActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onClick(View view) {
         mTvNotificationError.setVisibility(view.getVisibility());
-        String username = mEdtUsername.getText().toString();
-        String password = mEdtPassword.getText().toString();
+        String username = mEdtUsername.getText().toString().trim();
+        String password = mEdtPassword.getText().toString().trim();
         User user = new User(username, password);
-        switch (view.getId()) {
-            case R.id.btnLogin: {
-                mTvNotificationError.setText(Validate.checkLogin(user));
-            }
+        if (view.getId() == R.id.btnLogin) {
+            mTvNotificationError.setText(Validate.checkLogin(user));
         }
     }
 }

@@ -20,6 +20,10 @@
     <color name="colorVioletWhile">#BCBED8</color>
     <color name="colorOrange">#fd6512</color>
     <color name="colorWhile">#ffffff</color>
+    <color name="colorColumnMoney">#FAFAFA</color>
+    <!--color column-->
+    <color name="colorColumnSale">#0077CC</color>
+    <color name="colorColumnExpenses">#fd6512</color>
     <color name="colorRedPink">#e9c3c5</color>
     <color name="colorRed">#e24f56</color>
     <color name="colorCream">#f5f6fb</color>

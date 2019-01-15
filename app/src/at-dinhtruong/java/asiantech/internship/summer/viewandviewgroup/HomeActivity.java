@@ -9,6 +9,7 @@ import android.widget.Button;
 import asiantech.internship.summer.R;
 import asiantech.internship.summer.activityandfragment.LoginActivity;
 import asiantech.internship.summer.asynctaskthreadhandler.AsyncTaskThreadHandlerActivity;
+import asiantech.internship.summer.canvas.CanvasActivity;
 import asiantech.internship.summer.eventandlistener.EventAndListenerActivity;
 import asiantech.internship.summer.recyclerview.RecyclerViewActivity;
 import asiantech.internship.summer.restapi.RestApiActivity;
@@ -34,6 +35,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         Button btnFileStorage = findViewById(R.id.btnFileStorage);
         Button btnRestApi = findViewById(R.id.btnRestApi);
         Button btnAsyncThreadHandler = findViewById(R.id.btnAsyncThreadHandler);
+        Button btnCanvas = findViewById(R.id.btnCanvas);
         Button btnUnitTest = findViewById(R.id.btnUnitTest);
         btnViewGroup.setOnClickListener(this);
         btnEventAndListener.setOnClickListener(this);
@@ -43,6 +45,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         btnFileStorage.setOnClickListener(this);
         btnRestApi.setOnClickListener(this);
         btnAsyncThreadHandler.setOnClickListener(this);
+        btnCanvas.setOnClickListener(this);
         btnUnitTest.setOnClickListener(this);
     }
 
@@ -86,6 +89,10 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             }
             case R.id.btnAsyncThreadHandler: {
                 Intent intent = new Intent(HomeActivity.this, AsyncTaskThreadHandlerActivity.class);
+                startActivity(intent);
+            }
+            case R.id.btnCanvas: {
+                Intent intent = new Intent(HomeActivity.this, CanvasActivity.class);
                 startActivity(intent);
             }
             case R.id.btnUnitTest: {

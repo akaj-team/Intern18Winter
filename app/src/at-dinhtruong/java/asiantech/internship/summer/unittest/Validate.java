@@ -6,7 +6,7 @@ import java.util.List;
 import asiantech.internship.summer.R;
 import asiantech.internship.summer.models.User;
 
-class Validate {
+final class Validate {
     static final String USERNAME_9_20_CHARATER = "Username should have 9 to 20 characters";
     static final String USERNAME_AT_LEAST_2_UPPER_CASE = "Username should have at least 2 uppercase letters";
     static final String USERNAME_SHOULD_NOT_HAVE_SPECIAL_CHARACTER = "Username should not have special characters";
@@ -17,6 +17,10 @@ class Validate {
     static final String PASSWORD_SHOULD_NOT_LOOP_CHARACTER_TWO_TIMES = "Password should not loop character more than two times";
     static final String PASSWORD_SHOULD_NOT_END_DIGIT_OR_SEPECIAL_CHAR = "Password do dot end with digit or special character";
     static final String PASSWORD_AT_LEAST_3_UPPERCASE_NOT_CONSECUTIVE = "Password at least three uppercase not consecutive";
+
+    private Validate() {
+        // no-op
+    }
 
     static boolean isUsernameLength(String username) {
         return username.length() > 8 && username.length() < 21;

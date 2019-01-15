@@ -5,6 +5,7 @@ public class User {
     private String password;
 
     public User() {
+        // no-op
     }
 
     public User(String username, String password) {
