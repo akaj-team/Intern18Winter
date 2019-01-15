@@ -23,7 +23,7 @@
         android:inputType="text"
         android:paddingLeft="5dp"
         android:background="@drawable/border_username_rect"
-        android:autofillHints="@string/password" />
+        android:autofillHints="@string/username" />
 
     <EditText
         android:id="@+id/edtPassword"
@@ -34,7 +34,8 @@
         android:hint="@string/password"
         android:paddingLeft="5dp"
         android:layout_marginTop="20dp"
-        android:background="@drawable/border_password_rect" />
+        android:background="@drawable/border_password_rect"
+        android:autofillHints="@string/password"/>
 
     <Button
         android:id="@+id/btnLogin"

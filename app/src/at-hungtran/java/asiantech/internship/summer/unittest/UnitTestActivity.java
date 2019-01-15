@@ -3,6 +3,7 @@ package asiantech.internship.summer.unittest;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -35,13 +36,16 @@ public class UnitTestActivity extends AppCompatActivity {
 
     private void onClickLogin() {
         mBtnLogin.setOnClickListener(v -> {
-            String username = mEdtUsername.getText().toString();
-            String password = mEdtPassword.getText().toString();
+            String username = mEdtUsername.getText().toString().trim();
+            String password = mEdtPassword.getText().toString().trim();
             User user = new User(username, password);
             mTvNotifycation.setBackground(getResources().getDrawable(R.drawable.border_error_rect));
-            String checkResult = getResources().getString(Validate.validateLogin(user));
-            mTvNotifycation.setText(checkResult);
+            if (TextUtils.isEmpty(user.getUserName()) || TextUtils.isEmpty(user.getPassword())) {
+                mTvNotifycation.setText(getResources().getString(R.string.usernmaePasswordCannotEmpty));
+            } else {
+                String checkResult = getResources().getString(Validate.validateLogin(user));
+                mTvNotifycation.setText(checkResult);
+            }
         });
     }
-
 }

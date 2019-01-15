@@ -1,6 +1,5 @@
 package asiantech.internship.summer.eventlistener;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -16,7 +15,6 @@ import java.util.regex.Pattern;
 
 import asiantech.internship.summer.R;
 
-@SuppressLint("Registered")
 public class LoginActivity extends AppCompatActivity {
     private static final String USERNAME_PATTERN = "^(?=.*[[0-9]a-zA-Z]).{6,18}$";
     private static final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-zA-Z]).{6,18}$";

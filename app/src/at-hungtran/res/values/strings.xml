@@ -43,6 +43,11 @@
     <string name="viewPager">Android ViewPager</string>
     <string name="asyncTask">AsyncTask Thread Handler</string>
     <string name="restAPI">Rest API with Retrofit and Gson</string>
+    <string name="title_chart">Sales and Expense</string>
+    <string name="sale">Sale</string>
+    <string name="expense">Expense</string>
+    <string name="usd">$</string>
+    <string name="canvas">Canvas</string>
     <string name="errorPasswordEmpty">Password can not Empty</string>
     <string name="errorUsernameEmpty">Username can not Empty</string>
     <string name="errorUsernameLength">Length username from 8 to 21</string>
@@ -55,4 +60,5 @@
     <string name="errorPasswordAtLeast3UppercaseNonConsecutive">Password at least 3 uppercase non consecutive</string>
     <string name="unitTest">Unit Test</string>
     <string name="listMenu">List Issue</string>
+    <string name="usernmaePasswordCannotEmpty">The account and password cannot be empty</string>
 </resources>
