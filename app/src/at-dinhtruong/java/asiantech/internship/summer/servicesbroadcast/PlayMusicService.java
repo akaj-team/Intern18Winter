@@ -31,6 +31,7 @@ public class PlayMusicService extends Service {
 
     private MediaPlayer mMediaPlayer;
     private CountDownTimer mCountDownTimer;
+    private NotificationManager mNotificationManager;
 
     public PlayMusicService() {
     }
@@ -59,7 +60,6 @@ public class PlayMusicService extends Service {
                                     showNotification();
                                     sendBroadcast(timePlayerIntent);
                                 }
-
                                 @Override
                                 public void onFinish() {
                                     mCountDownTimer.onFinish();
@@ -96,10 +96,9 @@ public class PlayMusicService extends Service {
                     if (mMediaPlayer.isPlaying()) {
                         Toast.makeText(this, R.string.pleasePauseBeforeClose, Toast.LENGTH_LONG).show();
                     } else {
-                        NotificationManager notificationManager = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
-                        if (notificationManager != null) {
-                            notificationManager.cancelAll();
-                        }
+                        mNotificationManager.cancelAll();
+                        mMediaPlayer.stop();
+                        mCountDownTimer.cancel();
                         stopForeground(true);
                         stopSelf();
                     }
@@ -175,9 +174,9 @@ public class PlayMusicService extends Service {
                 .setCustomContentView(remoteViews)
                 .setContentIntent(PendingIntent.getActivity(this, 0, openActivityIntent, 0))
                 .build();
-        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        if (notificationManager != null) {
-            notificationManager.notify(1, notification);
+        mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        if (mNotificationManager != null) {
+            mNotificationManager.notify(1, notification);
         }
     }
 
