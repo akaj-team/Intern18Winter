@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 import asiantech.internship.summer.R;
 import asiantech.internship.summer.unittest.model.User;
 
-public final class ValidateUtils {
+final class ValidateUtils {
     private static Pattern Username_Length_More_Than_8_And_Less_Than_21;
     private static Pattern Username_At_Least_2_NonConsecutive_Uppercase_Letters;
     private static Pattern Username_Not_Contain_Special_Characters;
@@ -36,7 +36,7 @@ public final class ValidateUtils {
         Password_At_Least_3_NonConsecutive_Uppercase_Letters = Pattern.compile("^.*[A-Z].+[A-Z].+[A-Z]");
     }
 
-    public static int validateUserName(String username) {
+    static int validateUserName(String username) {
         compileRegex();
         if (!Username_Length_More_Than_8_And_Less_Than_21.matcher(username).find()) {
             return R.string.errorUsernameLengthMoreThan8AndLessThan21;
@@ -59,7 +59,7 @@ public final class ValidateUtils {
         return R.string.validUsername;
     }
 
-    public static int validatePassword(String password) {
+    static int validatePassword(String password) {
         compileRegex();
         if (!Password_Length_At_Least_8.matcher(password).find()) {
             return R.string.errorPasswordLengthAtLeast8;
@@ -79,7 +79,7 @@ public final class ValidateUtils {
         return R.string.validPassword;
     }
 
-    public static int checkPasswordMatchesUsername(User user) {
+    static int checkPasswordMatchesUsername(User user) {
         if (!user.getUsername().isEmpty() && !user.getPassword().isEmpty()) {
             if (user.getUsername().equalsIgnoreCase(user.getPassword())) {
                 return R.string.PasswordMatchesUsername;
