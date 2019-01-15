@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="50dp"
@@ -8,33 +9,36 @@
         android:id="@+id/tvNotifycation"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_marginBottom="30dp"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp"
         android:paddingLeft="5dp"
-        android:layout_gravity="center" />
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp" />
 
     <EditText
         android:id="@+id/edtUsername"
         android:layout_width="300dp"
         android:layout_height="50dp"
-        android:hint="@string/username"
         android:layout_gravity="center"
+        android:autofillHints="@string/username"
+        android:background="@drawable/border_username_rect"
+        android:hint="@string/username"
         android:inputType="text"
         android:paddingLeft="5dp"
-        android:background="@drawable/border_username_rect"
-        android:autofillHints="@string/password" />
+        tools:targetApi="27" />
 
     <EditText
         android:id="@+id/edtPassword"
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:layout_gravity="center"
-        android:inputType="textPassword"
-        android:hint="@string/password"
-        android:paddingLeft="5dp"
         android:layout_marginTop="20dp"
-        android:background="@drawable/border_password_rect" />
+        android:autofillHints="@string/password"
+        android:background="@drawable/border_password_rect"
+        android:hint="@string/password"
+        android:inputType="textPassword"
+        android:paddingLeft="5dp"
+        tools:targetApi="27" />
 
     <Button
         android:id="@+id/btnLogin"
@@ -42,9 +46,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
+        android:background="@drawable/border_solid_cyan_rect"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
-        android:background="@drawable/border_solid_cyan_rect"
         android:text="@string/login" />
 
     <TextView
