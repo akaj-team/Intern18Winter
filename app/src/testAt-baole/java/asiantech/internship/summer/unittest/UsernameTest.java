@@ -1,7 +1,5 @@
 package asiantech.internship.summer.unittest;
 
-import android.text.TextUtils;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -26,7 +24,7 @@ public class UsernameTest {
     @Test
     public void isUsernameEmpty() {
         when(mUser.getUsername()).thenReturn("");
-        assertFalse(TextUtils.isEmpty(mUser.getUsername()));
+        assertFalse(ValidateUtils.isUsernameEmpty(mUser));
     }
 
     @Test

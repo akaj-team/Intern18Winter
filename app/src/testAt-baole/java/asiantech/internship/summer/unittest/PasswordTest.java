@@ -1,7 +1,5 @@
 package asiantech.internship.summer.unittest;
 
-import android.text.TextUtils;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -25,9 +23,9 @@ public class PasswordTest {
     }
 
     @Test
-    public void isPasswordEmpty(){
+    public void isPasswordEmpty() {
         when(mUser.getPassword()).thenReturn("");
-        assertFalse(TextUtils.isEmpty(mUser.getPassword()));
+        assertFalse(ValidateUtils.isPasswordEmpty(mUser));
     }
 
     @Test

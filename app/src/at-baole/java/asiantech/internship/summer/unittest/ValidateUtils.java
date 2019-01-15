@@ -1,5 +1,7 @@
 package asiantech.internship.summer.unittest;
 
+import android.text.TextUtils;
+
 import java.util.regex.Pattern;
 
 import asiantech.internship.summer.R;
@@ -86,5 +88,13 @@ final class ValidateUtils {
             }
         }
         return R.string.PasswordNotMatchUsername;
+    }
+
+    static boolean isUsernameEmpty(User user) {
+        return TextUtils.isEmpty(user.getUsername());
+    }
+
+    static boolean isPasswordEmpty(User user) {
+        return TextUtils.isEmpty(user.getPassword());
     }
 }
