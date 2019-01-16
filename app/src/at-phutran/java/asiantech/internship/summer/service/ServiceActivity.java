@@ -1,14 +1,20 @@
 package asiantech.internship.summer.service;
 
-import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.media.MediaPlayer;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
+import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -16,179 +22,201 @@ import android.widget.ImageView;
 import android.widget.RemoteViews;
 import android.widget.SeekBar;
 import android.widget.TextView;
-
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-
+import java.util.Objects;
 import asiantech.internship.summer.R;
-import asiantech.internship.summer.model.Song;
 
-public class ServiceActivity extends AppCompatActivity implements View.OnClickListener {
+public class ServiceActivity extends AppCompatActivity implements View.OnClickListener, SeekBar.OnSeekBarChangeListener {
 
-    private TextView mTvNameOfMusic;
-    private TextView mTvTimeSong;
-    private TextView mTvTimeTotal;
-    private SeekBar mSeekbarSong;
-    private ImageView mImgBack;
-    private ImageView mImgStop;
-    private ImageView mImgPlay;
-    private ImageView mImgNext;
-    private List<Song> mListSong;
-    private int mPosition = 0;
-    private MediaPlayer mMediaPlayer;
-    private Animation mAnimation;
-    private ImageView mImgDisc;
-    private SimpleDateFormat mSimpleDateFormat;
+    public static final String ACTION_SEEK_BAR = "Action seek bar";
+    public static final String ACTION_PLAY = "Action play";
+    public static final String ACTION_PAUSE = "Action pause";
+    public static final String ACTION_FOCUS_IMAGE_NOTIFICATION = "Action focus image";
+    public static final String ACTION_CLOSE_NOTIFICATION = "Action close notification";
+    public static final String ACTION_CREATE_ACTIVITY = "Action create activity";
+    public static final String ACTION_NOTIFICATION_PAUSE = "Music notification pause";
+    public static final String ACTION_NOTIFICATION_PLAY = "Music notification play";
+    public static final String ACTION_UPDATE_SEEK_BAR = "Action update seek bar";
+    public static final String KEY_PASS_PROGRESS = "Pass progress seek bar";
+    public static final String KEY_IS_PLAYING = "Is play";
+    private ImageView mImgCD;
+    private SeekBar mSeekBar;
+    private TextView mTvCurrentTime;
+    private TextView mTvTotalTime;
+    private TextView mTvMusicName;
+    private ImageView mImgAction;
+    private Animation mRotateAnimation;
+    private NotificationManager mNotificationManager;
+    private boolean mIsPlay = false;
+
+    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction() != null) {
+                switch (intent.getAction()) {
+                    case ACTION_UPDATE_SEEK_BAR:
+                        updateTimeSong(intent);
+                        break;
+                    case ACTION_NOTIFICATION_PAUSE:
+                        mImgAction.setBackgroundResource(R.drawable.ic_play_circle_filled_black_24dp);
+                        mImgCD.clearAnimation();
+                        mIsPlay = !Objects.requireNonNull(intent.getExtras()).getBoolean(PlayMusicService.KEY_PAUSE_NOTIFICATION);
+                        createNotification();
+                        break;
+                    case ACTION_NOTIFICATION_PLAY:
+                        mImgAction.setBackgroundResource(R.drawable.ic_pause_circle_filled_black_24dp);
+                        mImgCD.startAnimation(mRotateAnimation);
+                        mIsPlay = !Objects.requireNonNull(intent.getExtras()).getBoolean(PlayMusicService.KEY_PLAY_NOTIFICATION);
+                        createNotification();
+                        break;
+                    case ACTION_CLOSE_NOTIFICATION:
+                        boolean isCloseNotification = Objects.requireNonNull(intent.getExtras()).getBoolean(PlayMusicService.KEY_CLOSE_NOTIFICATION);
+                        if (!isCloseNotification) {
+                            mImgAction.setBackgroundResource(R.drawable.ic_play_circle_filled_black_24dp);
+                            mRotateAnimation.cancel();
+                            Intent stopServiceIntent = new Intent(getApplicationContext(), PlayMusicService.class);
+                            stopService(stopServiceIntent);
+                            mNotificationManager.cancelAll();
+                        }
+                        break;
+                    case ServiceActivity.ACTION_CREATE_ACTIVITY:
+                        mIsPlay = Objects.requireNonNull(intent.getExtras()).getBoolean(PlayMusicService.KEY_START_ACTIVITY);
+                        if (mIsPlay) {
+                            mImgAction.setBackgroundResource(R.drawable.ic_pause_circle_filled_black_24dp);
+                            mImgCD.startAnimation(mRotateAnimation);
+                        } else {
+                            mImgAction.setBackgroundResource(R.drawable.ic_play_circle_filled_black_24dp);
+                        }
+                        break;
+                }
+            }
+        }
+    };
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_service);
         mapping();
-        initSong();
-        mAnimation = AnimationUtils.loadAnimation(this, R.anim.disc_rotate);
-        createMediaPlayer();
-        mImgPlay.setOnClickListener(this);
-        mImgStop.setOnClickListener(this);
-        mImgNext.setOnClickListener(this);
-        mImgBack.setOnClickListener(this);
-        mSeekbarSong.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                mMediaPlayer.seekTo(mSeekbarSong.getProgress());
-            }
-        });
-
+        addListener();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(ACTION_UPDATE_SEEK_BAR);
+        intentFilter.addAction(ACTION_NOTIFICATION_PLAY);
+        intentFilter.addAction(ACTION_NOTIFICATION_PAUSE);
+        intentFilter.addAction(ACTION_CLOSE_NOTIFICATION);
+        intentFilter.addAction(ACTION_CREATE_ACTIVITY);
+        this.registerReceiver(mReceiver, intentFilter);
+        Intent startActivityIntent = new Intent(this, PlayMusicService.class);
+        startActivityIntent.setAction(ACTION_CREATE_ACTIVITY);
+        ContextCompat.startForegroundService(this, startActivityIntent);
     }
 
     private void mapping() {
-        mTvNameOfMusic = findViewById(R.id.tvNameOfMusic);
-        mTvTimeSong = findViewById(R.id.tvTimeSong);
-        mTvTimeTotal = findViewById(R.id.tvTimeTotal);
-        mSeekbarSong = findViewById(R.id.seekbarSong);
-        mImgBack = findViewById(R.id.imgBack);
-        mImgNext = findViewById(R.id.imgNext);
-        mImgPlay = findViewById(R.id.imgPlay);
-        mImgStop = findViewById(R.id.imgStop);
-        mImgDisc = findViewById(R.id.imgDisc);
+        mImgCD = findViewById(R.id.img_cd);
+        mSeekBar = findViewById(R.id.seekBarMusicTime);
+        mTvCurrentTime = findViewById(R.id.tvCurrentTime);
+        mTvTotalTime = findViewById(R.id.tvTotalTime);
+        mTvMusicName = findViewById(R.id.tvNameOfMusic);
+        mImgAction = findViewById(R.id.imgAction);
+        mTvMusicName.setText(R.string.name_music);
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_disc);
+        mImgCD.setImageBitmap(bitmap);
+        mRotateAnimation = AnimationUtils.loadAnimation(this, R.anim.disc_rotate);
     }
 
-    private void createMediaPlayer() {
-        mMediaPlayer = MediaPlayer.create(ServiceActivity.this, mListSong.get(mPosition).getFile());
-        mTvNameOfMusic.setText(mListSong.get(mPosition).getName());
-        showTime();
-        updateTimeSong();
-        showNotification();
-    }
-
-    private void initSong() {
-        mListSong = new ArrayList<>();
-        mListSong.add(new Song("Cô gái m52", R.raw.co_gai_m52));
-        mListSong.add(new Song("Có một nơi như thế", R.raw.co_mot_noi_nhu_the_phan_manh_quynh));
-        mListSong.add(new Song("Đừng quên tên anh", R.raw.dung_quen_ten_anh_hoa_vinh));
-        mListSong.add(new Song("Hồi ức", R.raw.hoi_uc_phan_manh_quynh));
-        mListSong.add(new Song("Hongkong1", R.raw.hongkong1_nguyentrongtai));
-        mListSong.add(new Song("Lạc trôi", R.raw.lactroi_sontungmtp));
-        mListSong.add(new Song("Người âm phủ", R.raw.nguoiamphu));
-        mListSong.add(new Song("Người lạ ơi", R.raw.nguoilaoi_karik));
-        mListSong.add(new Song("Nơi này có anh", R.raw.noinaycoanh_sontungmtp));
-    }
-
-    private void updateTimeSong() {
-        final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mTvTimeSong.setText(mSimpleDateFormat.format(mMediaPlayer.getCurrentPosition()));
-                //update seekbar
-                mSeekbarSong.setProgress(mMediaPlayer.getCurrentPosition());
-                //set next song
-                mMediaPlayer.setOnCompletionListener(mp -> playNextSong());
-                handler.postDelayed(this, 500);
-            }
-        }, 100);
-    }
-
-    private void showTime() {
-        mSimpleDateFormat = new SimpleDateFormat("mm:ss", Locale.ENGLISH);
-        mTvTimeTotal.setText(mSimpleDateFormat.format(mMediaPlayer.getDuration()));
-        mSeekbarSong.setMax(mMediaPlayer.getDuration());
-    }
-
-    private void playNextSong() {
-        mPosition++;
-        if (mPosition > mListSong.size() - 1) {
-            mPosition = 0;
-        }
-        if (mMediaPlayer.isPlaying()) {
-            mMediaPlayer.stop();
-            mMediaPlayer.release();
-        }
-        mImgPlay.setImageResource(R.drawable.ic_pause_circle_filled_black_24dp);
-        createMediaPlayer();
-        mMediaPlayer.start();
+    private void addListener() {
+        mImgAction.setOnClickListener(this);
+        mSeekBar.setOnSeekBarChangeListener(this);
     }
 
     @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.imgPlay:
-                if (mMediaPlayer.isPlaying()) {
-                    mMediaPlayer.pause();
-                    mImgPlay.setImageResource(R.drawable.ic_play_circle_filled_black_24dp);
-                    mImgDisc.clearAnimation();
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.imgAction:
+                if (mIsPlay) {
+                    mImgAction.setBackgroundResource(R.drawable.ic_play_circle_filled_black_24dp);
+                    mImgCD.clearAnimation();
+                    Intent intentPause = new Intent(this, PlayMusicService.class);
+                    intentPause.setAction(ACTION_PAUSE);
+                    startService(intentPause);
                 } else {
-                    mMediaPlayer.start();
-                    mImgPlay.setImageResource(R.drawable.ic_pause_circle_filled_black_24dp);
-                    mImgDisc.startAnimation(mAnimation);
+                    mImgAction.setBackgroundResource(R.drawable.ic_pause_circle_filled_black_24dp);
+                    mImgCD.startAnimation(mRotateAnimation);
+                    Intent intentPlay = new Intent(this, PlayMusicService.class);
+                    intentPlay.setAction(ACTION_PLAY);
+                    startService(intentPlay);
                 }
-                break;
-            case R.id.imgStop:
-                mMediaPlayer.stop();
-                mMediaPlayer.release();
-                mImgPlay.setImageResource(R.drawable.ic_play_circle_filled_black_24dp);
-                createMediaPlayer();
-                break;
-            case R.id.imgNext:
-                playNextSong();
-                break;
-            case R.id.imgBack:
-                mPosition--;
-                if (mPosition < 0) {
-                    mPosition = mListSong.size() - 1;
-                }
-                if (mMediaPlayer.isPlaying()) {
-                    mMediaPlayer.stop();
-                    mMediaPlayer.release();
-                }
-                mImgPlay.setImageResource(R.drawable.ic_pause_circle_filled_black_24dp);
-                createMediaPlayer();
-                mMediaPlayer.start();
+                mIsPlay = !mIsPlay;
+                createNotification();
                 break;
         }
     }
 
-    private void showNotification() {
-        final Handler handler = new Handler();
-        RemoteViews expandedView = new RemoteViews(getPackageName(), R.layout.notification);
-        expandedView.setTextViewText(R.id.tvNameOfMusic, mListSong.get(mPosition).getName());
-        expandedView.setTextViewText(R.id.tvTimeCurrent, "00:00");
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(ServiceActivity.this);
-        builder.setSmallIcon(R.drawable.ic_play_circle_filled_black_24dp)
-                .setCustomContentView(expandedView);
-        Notification notification = builder.build();
-        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        assert notificationManager != null;
-        notificationManager.notify(1, notification);
+    @Override
+    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+    }
+
+    @Override
+    public void onStartTrackingTouch(SeekBar seekBar) {
+    }
+
+    @Override
+    public void onStopTrackingTouch(SeekBar seekBar) {
+        mSeekBar.setProgress(seekBar.getProgress());
+        Intent dataIntent = new Intent(this, PlayMusicService.class);
+        dataIntent.putExtra(KEY_PASS_PROGRESS, seekBar.getProgress());
+        dataIntent.setAction(ACTION_SEEK_BAR);
+        startService(dataIntent);
+    }
+
+    private void updateTimeSong(Intent intent) {
+        int durationTime = Objects.requireNonNull(intent.getExtras()).getInt(PlayMusicService.KEY_DURATION_TIME);
+        int currentTime = intent.getExtras().getInt(PlayMusicService.KEY_CURRENT_TIME);
+        mSeekBar.setMax(durationTime);
+        mSeekBar.setProgress(currentTime);
+        int minuteDuration = durationTime / 60000;
+        int secondDuration = (durationTime % 60000) / 1000;
+        int minuteCurrent = currentTime / 60000;
+        int secondCurrent = (currentTime % 60000) / 1000;
+        if (secondCurrent < 10) {
+            mTvTotalTime.setText(String.valueOf("0" + minuteDuration + ":" + secondDuration));
+            mTvCurrentTime.setText(String.valueOf("0" + minuteCurrent + ":" + "0" + secondCurrent));
+        } else {
+            mTvTotalTime.setText(String.valueOf("0" + minuteDuration + ":" + secondDuration));
+            mTvCurrentTime.setText(String.valueOf("0" + minuteCurrent + ":" + secondCurrent));
+        }
+        createNotification();
+    }
+
+    private void createNotification() {
+        RemoteViews remoteViews = new RemoteViews(getPackageName(),
+                R.layout.custom_notification);
+        remoteViews.setImageViewResource(R.id.imgLogoNotification, R.drawable.img_music);
+        remoteViews.setTextViewText(R.id.tvNameMusicNotification, mTvMusicName.getText());
+        remoteViews.setTextViewText(R.id.tvTimeNotification, mTvCurrentTime.getText());
+        if (mIsPlay) {
+            remoteViews.setImageViewResource(R.id.imgActionNotification, R.drawable.ic_pause_circle_filled_black_24dp);
+        } else {
+            remoteViews.setImageViewResource(R.id.imgActionNotification, R.drawable.ic_play_circle_filled_black_24dp);
+        }
+        Intent pauseOrPlayNotificationIntent = new Intent(getApplicationContext(), PlayMusicService.class);
+        pauseOrPlayNotificationIntent.setAction(ACTION_FOCUS_IMAGE_NOTIFICATION);
+        pauseOrPlayNotificationIntent.putExtra(KEY_IS_PLAYING, mIsPlay);
+        PendingIntent pendingPauseOrPlayIntent = PendingIntent.getService(this, 0, pauseOrPlayNotificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        remoteViews.setOnClickPendingIntent(R.id.imgActionNotification, pendingPauseOrPlayIntent);
+        Intent closeNotificationIntent = new Intent(this, PlayMusicService.class);
+        closeNotificationIntent.setAction(ACTION_CLOSE_NOTIFICATION);
+        PendingIntent pendingCloseIntent = PendingIntent.getService(this, 0, closeNotificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        remoteViews.setOnClickPendingIntent(R.id.imgCloseNotification, pendingCloseIntent);
+        Intent openActivityIntent = new Intent(this, PlayMusicService.class);
+        openActivityIntent.setAction(Intent.ACTION_MAIN);
+        openActivityIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+        openActivityIntent.setComponent(Objects.requireNonNull(getPackageManager().getLaunchIntentForPackage(getPackageName())).getComponent());
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+                .setSmallIcon(R.drawable.ic_info_outline_black_24dp)
+                .setContentIntent(PendingIntent.getActivity(this, 0, openActivityIntent, 0))
+                .setCustomBigContentView(remoteViews);
+        mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotificationManager.notify(1, builder.build());
     }
 }

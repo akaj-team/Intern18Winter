@@ -34,5 +34,6 @@
             android:screenOrientation="landscape" />
         <activity android:name=".asynctask.AsyncTaskThreadHandlerActivity" />
         <activity android:name=".service.ServiceActivity" />
+        <service android:name=".service.PlayMusicService" />
     </application>
 </manifest>

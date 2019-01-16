@@ -23,7 +23,7 @@
             android:textSize="20sp" />
 
         <ImageView
-            android:id="@+id/imgDisc"
+            android:id="@+id/img_cd"
             android:layout_width="250dp"
             android:layout_height="250dp"
             android:src="@drawable/ic_disc"/>
@@ -35,7 +35,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/tvTimeSong"
+                android:id="@+id/tvCurrentTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/formatTime"
@@ -43,7 +43,7 @@
 
             <TextView
                 android:layout_gravity="right"
-                android:id="@+id/tvTimeTotal"
+                android:id="@+id/tvTotalTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/formatTime"
@@ -53,7 +53,7 @@
         </LinearLayout>
 
         <SeekBar
-            android:id="@+id/seekbarSong"
+            android:id="@+id/seekBarMusicTime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp" />
@@ -81,11 +81,10 @@
                 android:src="@drawable/ic_stop_black_24dp" />
 
             <ImageView
-                android:id="@+id/imgPlay"
+                android:id="@+id/imgAction"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_margin="15dp"
-                android:src="@drawable/ic_play_circle_filled_black_24dp" />
+                android:layout_margin="15dp"/>
 
             <ImageView
                 android:id="@+id/imgNext"
