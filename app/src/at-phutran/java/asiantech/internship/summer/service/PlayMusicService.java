@@ -10,14 +10,15 @@ import java.util.Objects;
 import asiantech.internship.summer.R;
 
 public class PlayMusicService extends Service {
-    public static final String KEY_DURATION_TIME = "Key duration time";
-    public static final String KEY_CURRENT_TIME = "Key current time";
+    public static final String KEY_DURATION_TIME = "Duration time";
+    public static final String KEY_CURRENT_TIME = "Current time";
     public static final String KEY_PAUSE_NOTIFICATION = "Key pause notification";
     public static final String KEY_PLAY_NOTIFICATION = "Key play notification";
     public static final String KEY_CLOSE_NOTIFICATION = "Key close notification";
-    public static final String KEY_START_ACTIVITY = "Key start activity";
+    public static final String KEY_CHECK_PLAY = "is playing";
     private MediaPlayer mMediaPlayer;
     private CountDownTimer mCountDownTimer;
+    private Intent mIntent;
 
     @Override
     public void onCreate() {
@@ -34,10 +35,10 @@ public class PlayMusicService extends Service {
                     mCountDownTimer = new CountDownTimer(mMediaPlayer.getDuration(), 1000) {
                         @Override
                         public void onTick(long millisUntilFinished) {
-                            Intent timePlayerIntent = new Intent(ServiceActivity.ACTION_UPDATE_SEEK_BAR);
-                            timePlayerIntent.putExtra(KEY_DURATION_TIME, mMediaPlayer.getDuration());
-                            timePlayerIntent.putExtra(KEY_CURRENT_TIME, mMediaPlayer.getCurrentPosition());
-                            sendBroadcast(timePlayerIntent);
+                            mIntent = new Intent(ServiceActivity.ACTION_UPDATE_SEEK_BAR);
+                            mIntent.putExtra(KEY_DURATION_TIME, mMediaPlayer.getDuration());
+                            mIntent.putExtra(KEY_CURRENT_TIME, mMediaPlayer.getCurrentPosition());
+                            sendBroadcast(mIntent);
                         }
 
                         @Override
@@ -55,9 +56,9 @@ public class PlayMusicService extends Service {
                 case ServiceActivity.ACTION_FOCUS_IMAGE_NOTIFICATION:
                     if (Objects.requireNonNull(intent.getExtras()).getBoolean(ServiceActivity.KEY_IS_PLAYING)) {
                         mMediaPlayer.pause();
-                        Intent musicPauseIntent = new Intent(ServiceActivity.ACTION_NOTIFICATION_PAUSE);
-                        musicPauseIntent.putExtra(KEY_PAUSE_NOTIFICATION, true);
-                        sendBroadcast(musicPauseIntent);
+                        mIntent = new Intent(ServiceActivity.ACTION_PAUSE_NOTIFICATION);
+                        mIntent.putExtra(KEY_PAUSE_NOTIFICATION, true);
+                        sendBroadcast(mIntent);
                     } else {
                         mMediaPlayer.start();
                         Intent musicPlayIntent = new Intent(ServiceActivity.ACTION_NOTIFICATION_PLAY);
@@ -66,14 +67,14 @@ public class PlayMusicService extends Service {
                     }
                     break;
                 case ServiceActivity.ACTION_CLOSE_NOTIFICATION:
-                    Intent notificationCloseIntent = new Intent(ServiceActivity.ACTION_CLOSE_NOTIFICATION);
-                    notificationCloseIntent.putExtra(KEY_CLOSE_NOTIFICATION, mMediaPlayer.isPlaying());
-                    sendBroadcast(notificationCloseIntent);
+                    mIntent = new Intent(ServiceActivity.ACTION_CLOSE_NOTIFICATION);
+                    mIntent.putExtra(KEY_CLOSE_NOTIFICATION, mMediaPlayer.isPlaying());
+                    sendBroadcast(mIntent);
                     break;
-                case ServiceActivity.ACTION_CREATE_ACTIVITY:
-                    Intent activityCreateIntent = new Intent(ServiceActivity.ACTION_CREATE_ACTIVITY);
-                    activityCreateIntent.putExtra(KEY_START_ACTIVITY, mMediaPlayer.isPlaying());
-                    sendBroadcast(activityCreateIntent);
+                case ServiceActivity.ACTION_CHECK:
+                    mIntent = new Intent(ServiceActivity.ACTION_CHECK);
+                    mIntent.putExtra(KEY_CHECK_PLAY, mMediaPlayer.isPlaying());
+                    sendBroadcast(mIntent);
                     break;
             }
         }

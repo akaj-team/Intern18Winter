@@ -13,7 +13,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.animation.Animation;
@@ -22,18 +21,19 @@ import android.widget.ImageView;
 import android.widget.RemoteViews;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 import java.util.Objects;
 import asiantech.internship.summer.R;
 
 public class ServiceActivity extends AppCompatActivity implements View.OnClickListener, SeekBar.OnSeekBarChangeListener {
-
     public static final String ACTION_SEEK_BAR = "Action seek bar";
     public static final String ACTION_PLAY = "Action play";
     public static final String ACTION_PAUSE = "Action pause";
     public static final String ACTION_FOCUS_IMAGE_NOTIFICATION = "Action focus image";
     public static final String ACTION_CLOSE_NOTIFICATION = "Action close notification";
-    public static final String ACTION_CREATE_ACTIVITY = "Action create activity";
-    public static final String ACTION_NOTIFICATION_PAUSE = "Music notification pause";
+    public static final String ACTION_CHECK = "Action check";
+    public static final String ACTION_PAUSE_NOTIFICATION = "Music notification pause";
     public static final String ACTION_NOTIFICATION_PLAY = "Music notification play";
     public static final String ACTION_UPDATE_SEEK_BAR = "Action update seek bar";
     public static final String KEY_PASS_PROGRESS = "Pass progress seek bar";
@@ -47,6 +47,7 @@ public class ServiceActivity extends AppCompatActivity implements View.OnClickLi
     private Animation mRotateAnimation;
     private NotificationManager mNotificationManager;
     private boolean mIsPlay = false;
+    private Intent mIntent;
 
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -57,7 +58,7 @@ public class ServiceActivity extends AppCompatActivity implements View.OnClickLi
                     case ACTION_UPDATE_SEEK_BAR:
                         updateTimeSong(intent);
                         break;
-                    case ACTION_NOTIFICATION_PAUSE:
+                    case ACTION_PAUSE_NOTIFICATION:
                         mImgAction.setBackgroundResource(R.drawable.ic_play_circle_filled_black_24dp);
                         mImgCD.clearAnimation();
                         mIsPlay = !Objects.requireNonNull(intent.getExtras()).getBoolean(PlayMusicService.KEY_PAUSE_NOTIFICATION);
@@ -79,8 +80,8 @@ public class ServiceActivity extends AppCompatActivity implements View.OnClickLi
                             mNotificationManager.cancelAll();
                         }
                         break;
-                    case ServiceActivity.ACTION_CREATE_ACTIVITY:
-                        mIsPlay = Objects.requireNonNull(intent.getExtras()).getBoolean(PlayMusicService.KEY_START_ACTIVITY);
+                    case ServiceActivity.ACTION_CHECK:
+                        mIsPlay = Objects.requireNonNull(intent.getExtras()).getBoolean(PlayMusicService.KEY_CHECK_PLAY);
                         if (mIsPlay) {
                             mImgAction.setBackgroundResource(R.drawable.ic_pause_circle_filled_black_24dp);
                             mImgCD.startAnimation(mRotateAnimation);
@@ -102,13 +103,13 @@ public class ServiceActivity extends AppCompatActivity implements View.OnClickLi
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(ACTION_UPDATE_SEEK_BAR);
         intentFilter.addAction(ACTION_NOTIFICATION_PLAY);
-        intentFilter.addAction(ACTION_NOTIFICATION_PAUSE);
+        intentFilter.addAction(ACTION_PAUSE_NOTIFICATION);
         intentFilter.addAction(ACTION_CLOSE_NOTIFICATION);
-        intentFilter.addAction(ACTION_CREATE_ACTIVITY);
+        intentFilter.addAction(ACTION_CHECK);
         this.registerReceiver(mReceiver, intentFilter);
-        Intent startActivityIntent = new Intent(this, PlayMusicService.class);
-        startActivityIntent.setAction(ACTION_CREATE_ACTIVITY);
-        ContextCompat.startForegroundService(this, startActivityIntent);
+        mIntent = new Intent(this, PlayMusicService.class);
+        mIntent.setAction(ACTION_CHECK);
+        startService(mIntent);
     }
 
     private void mapping() {
@@ -131,20 +132,19 @@ public class ServiceActivity extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public void onClick(View v) {
+        mIntent = new Intent(this, PlayMusicService.class);
         switch (v.getId()) {
             case R.id.imgAction:
                 if (mIsPlay) {
                     mImgAction.setBackgroundResource(R.drawable.ic_play_circle_filled_black_24dp);
                     mImgCD.clearAnimation();
-                    Intent intentPause = new Intent(this, PlayMusicService.class);
-                    intentPause.setAction(ACTION_PAUSE);
-                    startService(intentPause);
+                    mIntent.setAction(ACTION_PAUSE);
+                    startService(mIntent);
                 } else {
                     mImgAction.setBackgroundResource(R.drawable.ic_pause_circle_filled_black_24dp);
                     mImgCD.startAnimation(mRotateAnimation);
-                    Intent intentPlay = new Intent(this, PlayMusicService.class);
-                    intentPlay.setAction(ACTION_PLAY);
-                    startService(intentPlay);
+                    mIntent.setAction(ACTION_PLAY);
+                    startService(mIntent);
                 }
                 mIsPlay = !mIsPlay;
                 createNotification();
@@ -170,25 +170,18 @@ public class ServiceActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void updateTimeSong(Intent intent) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("mm:ss", Locale.US);
         int durationTime = Objects.requireNonNull(intent.getExtras()).getInt(PlayMusicService.KEY_DURATION_TIME);
         int currentTime = intent.getExtras().getInt(PlayMusicService.KEY_CURRENT_TIME);
         mSeekBar.setMax(durationTime);
         mSeekBar.setProgress(currentTime);
-        int minuteDuration = durationTime / 60000;
-        int secondDuration = (durationTime % 60000) / 1000;
-        int minuteCurrent = currentTime / 60000;
-        int secondCurrent = (currentTime % 60000) / 1000;
-        if (secondCurrent < 10) {
-            mTvTotalTime.setText(String.valueOf("0" + minuteDuration + ":" + secondDuration));
-            mTvCurrentTime.setText(String.valueOf("0" + minuteCurrent + ":" + "0" + secondCurrent));
-        } else {
-            mTvTotalTime.setText(String.valueOf("0" + minuteDuration + ":" + secondDuration));
-            mTvCurrentTime.setText(String.valueOf("0" + minuteCurrent + ":" + secondCurrent));
-        }
+        mTvTotalTime.setText(simpleDateFormat.format(durationTime));
+        mTvCurrentTime.setText(simpleDateFormat.format(currentTime));
         createNotification();
     }
 
     private void createNotification() {
+        mIntent = new Intent(getApplicationContext(), PlayMusicService.class);
         RemoteViews remoteViews = new RemoteViews(getPackageName(),
                 R.layout.custom_notification);
         remoteViews.setImageViewResource(R.id.imgLogoNotification, R.drawable.img_music);
@@ -199,22 +192,19 @@ public class ServiceActivity extends AppCompatActivity implements View.OnClickLi
         } else {
             remoteViews.setImageViewResource(R.id.imgActionNotification, R.drawable.ic_play_circle_filled_black_24dp);
         }
-        Intent pauseOrPlayNotificationIntent = new Intent(getApplicationContext(), PlayMusicService.class);
-        pauseOrPlayNotificationIntent.setAction(ACTION_FOCUS_IMAGE_NOTIFICATION);
-        pauseOrPlayNotificationIntent.putExtra(KEY_IS_PLAYING, mIsPlay);
-        PendingIntent pendingPauseOrPlayIntent = PendingIntent.getService(this, 0, pauseOrPlayNotificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        mIntent.setAction(ACTION_FOCUS_IMAGE_NOTIFICATION);
+        mIntent.putExtra(KEY_IS_PLAYING, mIsPlay);
+        PendingIntent pendingPauseOrPlayIntent = PendingIntent.getService(this, 0, mIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         remoteViews.setOnClickPendingIntent(R.id.imgActionNotification, pendingPauseOrPlayIntent);
-        Intent closeNotificationIntent = new Intent(this, PlayMusicService.class);
-        closeNotificationIntent.setAction(ACTION_CLOSE_NOTIFICATION);
-        PendingIntent pendingCloseIntent = PendingIntent.getService(this, 0, closeNotificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        mIntent.setAction(ACTION_CLOSE_NOTIFICATION);
+        PendingIntent pendingCloseIntent = PendingIntent.getService(this, 0, mIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         remoteViews.setOnClickPendingIntent(R.id.imgCloseNotification, pendingCloseIntent);
-        Intent openActivityIntent = new Intent(this, PlayMusicService.class);
-        openActivityIntent.setAction(Intent.ACTION_MAIN);
-        openActivityIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-        openActivityIntent.setComponent(Objects.requireNonNull(getPackageManager().getLaunchIntentForPackage(getPackageName())).getComponent());
+        mIntent.setAction(Intent.ACTION_MAIN);
+        mIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+        mIntent.setComponent(Objects.requireNonNull(getPackageManager().getLaunchIntentForPackage(getPackageName())).getComponent());
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.ic_info_outline_black_24dp)
-                .setContentIntent(PendingIntent.getActivity(this, 0, openActivityIntent, 0))
+                .setContentIntent(PendingIntent.getActivity(this, 0, mIntent, 0))
                 .setCustomBigContentView(remoteViews);
         mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         mNotificationManager.notify(1, builder.build());

@@ -74,13 +74,6 @@
                 android:src="@drawable/ic_skip_previous_black_24dp" />
 
             <ImageView
-                android:id="@+id/imgStop"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_margin="15dp"
-                android:src="@drawable/ic_stop_black_24dp" />
-
-            <ImageView
                 android:id="@+id/imgAction"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
