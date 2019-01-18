@@ -16,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".restapi.RestAPIActivity">
+        <activity android:name=".kotlin.recyclerview.RecyclerViewActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -34,5 +34,7 @@
         <activity
             android:name=".canvas.CanvasActivity"
             android:screenOrientation="landscape" />
+        <activity android:name=".restapi.RestAPIActivity" />
     </application>
+
 </manifest>
