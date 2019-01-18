@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ChartView">
+        <!--color column-->
+        <attr name="colorOfColumnSales" format="color" />
+        <attr name="colorOfColumnExpenses" format="color" />
+        <attr name="colorOfColumnRect" format="color" />
+        <attr name="colorOfText" format="color" />
+        <attr name="colorOfLine" format="color" />
+        <!--width column-->
+        <attr name="widthOfColumn" format="dimension" />
+        <attr name="sizeOfTextItem" format="dimension" />
+        <attr name="sizeOfTextCaption" format="dimension" />
+    </declare-styleable>
+</resources>

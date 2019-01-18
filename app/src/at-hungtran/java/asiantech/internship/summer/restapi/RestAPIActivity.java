@@ -2,6 +2,7 @@ package asiantech.internship.summer.restapi;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -9,6 +10,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -27,7 +29,9 @@ import com.google.gson.GsonBuilder;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import asiantech.internship.summer.R;
@@ -116,21 +120,13 @@ public class RestAPIActivity extends AppCompatActivity implements View.OnClickLi
                     if (mChoiceOption[i].equals(mChoiceOption[0])) {
                         int permissionCheck = ContextCompat.checkSelfPermission(this,
                                 CAMERA);
-                        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
-                            ActivityCompat.requestPermissions(
-                                    this,
-                                    new String[]{CAMERA},
-                                    READ_PERMISSION_REQUEST_CAMERA
-                            );
-                            return;
-                        }
-
                         int permissionWrite = ContextCompat.checkSelfPermission(this,
                                 WRITE_EXTERNAL_STORAGE);
-                        if (permissionWrite != PackageManager.PERMISSION_GRANTED) {
+                        if (permissionCheck != PackageManager.PERMISSION_GRANTED ||
+                                permissionWrite != PackageManager.PERMISSION_GRANTED) {
                             ActivityCompat.requestPermissions(
                                     this,
-                                    new String[]{WRITE_EXTERNAL_STORAGE},
+                                    new String[]{CAMERA, WRITE_EXTERNAL_STORAGE},
                                     WRITE_PERMISSION_REQUEST_CAMERA
                             );
                             return;
@@ -153,14 +149,46 @@ public class RestAPIActivity extends AppCompatActivity implements View.OnClickLi
         Dialog dialog = builder.create();
         dialog.show();
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
             case WRITE_PERMISSION_REQUEST_CAMERA: {
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                HashMap<String, Integer> permissionResults = new HashMap<>();
+                int deniedCount = 0;
+                for (int i = 0; i < grantResults.length; i++) {
+                    if (grantResults[i] == PackageManager.PERMISSION_DENIED) {
+                        permissionResults.put(permissions[i], grantResults[i]);
+                        deniedCount++;
+                    }
+                }
+                if (deniedCount == 0) {
                     openCamera();
                 } else {
-                    Toast.makeText(RestAPIActivity.this, R.string.permissionDenied, Toast.LENGTH_SHORT).show();
+                    for (Map.Entry<String, Integer> entry : permissionResults.entrySet()) {
+                        String perName = entry.getKey();
+                        if (ActivityCompat.shouldShowRequestPermissionRationale(this, perName)) {
+                            showDialog("", "This app need Location and Storage permission to work without and problems.",
+                                    "Yes, Grant permissions",
+                                    ((dialog, which) -> {
+                                        dialog.dismiss();
+                                        showDialogOption();
+                                    }), "No, Exit permission",
+                                    ((dialog, which) -> dialog.dismiss()), false);
+                        } else {
+                            showDialog("", "You have denied some permissions. Allow all permissions at [Setting] > [Permission]",
+                                    "Go to Settings",
+                                    (dialog, which) -> {
+                                        dialog.dismiss();
+                                        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                                                Uri.fromParts("package", getPackageName(), null));
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        startActivity(intent);
+                                        finish();
+                                    }, "No, Exit permission",
+                                    ((dialog, which) -> dialog.dismiss()), true);
+                        }
+                    }
                 }
                 break;
             }
@@ -168,7 +196,17 @@ public class RestAPIActivity extends AppCompatActivity implements View.OnClickLi
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     openGallery();
                 } else {
-                    Toast.makeText(RestAPIActivity.this, R.string.permissionDenied, Toast.LENGTH_SHORT).show();
+                    showDialog("", "You have denied some permissions. Allow all permissions at [Setting] > [Permission]",
+                            "Go to Settings",
+                            (dialog, which) -> {
+                                dialog.dismiss();
+                                Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                                        Uri.fromParts("package", getPackageName(), null));
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
+                                finish();
+                            }, "No, Exit permission",
+                            ((dialog, which) -> dialog.dismiss()), true);
                 }
                 break;
             }
@@ -282,5 +320,19 @@ public class RestAPIActivity extends AppCompatActivity implements View.OnClickLi
         mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         mProgressDialog.setMessage("Please wait, we are doing your image files");
         mProgressDialog.show();
+    }
+
+    public void showDialog(String title, String msg, String positiveLable,
+                           DialogInterface.OnClickListener positiveOnclick,
+                           String negativeLabel, DialogInterface.OnClickListener negativeOnclick,
+                           boolean cancelAble) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(title);
+        builder.setMessage(msg);
+        builder.setCancelable(cancelAble);
+        builder.setPositiveButton(positiveLable, positiveOnclick);
+        builder.setNegativeButton(negativeLabel, negativeOnclick);
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 }
