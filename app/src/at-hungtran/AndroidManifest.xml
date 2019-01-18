@@ -27,6 +27,8 @@
         <activity android:name=".eventlistener.LoginActivity"/>
         <activity android:name=".activityfragment.LoginActivity"/>
         <activity android:name=".viewpager.PagerActivity" />
+        <activity android:name=".canvas.CanvasActivity"
+                  android:screenOrientation="landscape" />
         <activity android:name=".view.ViewActivity" />
         <activity android:name=".recyclerview.TimelineActivity" />
         <activity android:name=".asynctask_thread_handler.ViewPagerActivity" />
