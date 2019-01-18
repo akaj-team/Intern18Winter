@@ -67,8 +67,6 @@
     <string name="chooseGallery">Choose a photo from gallery</string>
     <string name="captureCamera">Capture a photo from camera</string>
     <string name="cancelAction">Cancel</string>
-    <string name="galleryPermissionAccepted">Gallery Permission Accepted</string>
-    <string name="cameraPermissionAccepted">Camera Permission Accepted</string>
     <string name="data">data</string>
     <string name="title">Title</string>
     <string name="uploadSuccess">Upload Successfully</string>
@@ -92,7 +90,6 @@
     <string name="imageDirectory">Image Directory</string>
     <string name="imageSaved">Image Saved</string>
     <string name="saveImageFailed">Failed to save images</string>
-    <string name="data">data</string>
     <string name="imageExtension">png</string>
     <string name="imagePathPNG">image/png</string>
     <string name="notifyError">There is some error</string>
