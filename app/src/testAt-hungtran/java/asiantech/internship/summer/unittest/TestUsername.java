@@ -36,18 +36,18 @@ public class TestUsername {
     @Test
     public void usernameHasSpaceAndSpecialCharacters() {
         when(mUser.getUserName()).thenReturn("dsaenjkDsD.");
-        assertEquals(Validate.validateLogin(mUser), R.string.errorUserNameNoSpecialCharactersAndSpace);
+        assertEquals(Validate.validateLogin(mUser), R.string.errorUsernameNoSpecialCharactersAndSpace);
     }
 
     @Test
     public void usernameMoreThan2DigitsConsecutive() {
         when(mUser.getUserName()).thenReturn("dsaenjkDsD321");
-        assertEquals(Validate.validateLogin(mUser), R.string.errorUserNameNoAtMost2ConsecivitiveDigits);
+        assertEquals(Validate.validateLogin(mUser), R.string.errorUsernameNoAtMost2ConsecivitiveDigits);
     }
 
     @Test
     public void usernameStartWithUppercaseAndDigit() {
         when(mUser.getUserName()).thenReturn("DdsaenjkDsD32");
-        assertEquals(Validate.validateLogin(mUser), R.string.errorUserNameNotBeginWithUppercaseAndDigit);
+        assertEquals(Validate.validateLogin(mUser), R.string.errorUsernameNotBeginWithUppercaseAndDigit);
     }
 }
