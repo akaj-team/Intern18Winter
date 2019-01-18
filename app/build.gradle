@@ -67,12 +67,12 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     apply from: "../ci-java.gradle"
     implementation 'com.github.bumptech.glide:glide:4.8.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.9.0'
     implementation 'com.squareup.retrofit2:retrofit:2.5.0'
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
     implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.9.1'
     testImplementation 'org.mockito:mockito-core:2.23.4'
     androidTestImplementation 'org.mockito:mockito-android:2.23.4'
 }
