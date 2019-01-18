@@ -1,0 +1,12 @@
+<asiantech.internship.summer.canvas.GraphicViewSale xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="asiantech.internship.summer.canvas.CanvasActivity"
+    app:colorBlue="@color/colorBlue"
+    app:colorGray="@color/colorGray"
+    app:colorOrange="@color/colorOrange"
+    app:colorWhite="@color/colorWhite"
+    app:widthOfColumn="@dimen/widthOfColumn"
+    android:background="@color/colorWhite" />
