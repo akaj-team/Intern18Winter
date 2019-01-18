@@ -41,7 +41,7 @@ public class UnitTestActivity extends AppCompatActivity {
             User user = new User(username, password);
             mTvNotifycation.setBackground(getResources().getDrawable(R.drawable.border_error_rect));
             if (TextUtils.isEmpty(user.getUserName()) || TextUtils.isEmpty(user.getPassword())) {
-                mTvNotifycation.setText(getResources().getString(R.string.usernmaePasswordCannotEmpty));
+                mTvNotifycation.setText(getResources().getString(R.string.usernamePasswordCannotEmpty));
             } else {
                 String checkResult = getResources().getString(Validate.validateLogin(user));
                 mTvNotifycation.setText(checkResult);

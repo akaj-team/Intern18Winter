@@ -61,4 +61,8 @@
     <string name="unitTest">Unit Test</string>
     <string name="listMenu">List Issue</string>
     <string name="usernamePasswordCannotEmpty">The account and password cannot be empty</string>
+    <string name="errorPasswordNotHas2SpecialCharOrDigits">Password not has 2 special characters or digits</string>
+    <string name="errorUsernameNoAtMost2ConsecivitiveDigits">Username no at most 2 consecivitive digits</string>
+    <string name="validUsernamePassword">valid success!!</string>
+    <string name="errorUsernameLeastTwoNonConsecutiveUppercaseLetters">Username least 2 non-consecutive uppercase letters</string>
 </resources>

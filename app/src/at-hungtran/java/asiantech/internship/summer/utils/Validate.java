@@ -29,13 +29,13 @@ public final class Validate {
             return R.string.errorUsernameLeastTwoNonConsecutiveUppercaseLetters;
         }
         if (!VALID_USERNAME_NO_SPECIAL_CHARACTERS_AND_SPACE_REGEX.matcher(user.getUserName()).find()) {
-            return R.string.errorUserNameNoSpecialCharactersAndSpace;
+            return R.string.errorUsernameNoSpecialCharactersAndSpace;
         }
         if (VALID_USERNAME_AT_MOST_2_CONSECITIVE_DIGITS_REGEX.matcher(user.getUserName()).find()) {
-            return R.string.errorUserNameNoAtMost2ConsecivitiveDigits;
+            return R.string.errorUsernameNoAtMost2ConsecivitiveDigits;
         }
         if (VALID_USERNAME_NOT_BEGIN_WITH_UPPERCASE_AND_DIGIT_REGEX.matcher(user.getUserName()).find()) {
-            return R.string.errorUserNameNotBeginWithUppercaseAndDigit;
+            return R.string.errorUsernameNotBeginWithUppercaseAndDigit;
         }
 
         if (user.getUserName().equalsIgnoreCase(user.getPassword())) {
