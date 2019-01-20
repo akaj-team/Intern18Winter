@@ -96,4 +96,6 @@
     <string name="noteCamera">camera</string>
     <string name="isWrite">isWrite</string>
     <string name="isCamera">isCamera</string>
+    <string name="valueEmail">valueEmail</string>
+    <string name="valuePassword">valuePassword</string>
 </resources>
