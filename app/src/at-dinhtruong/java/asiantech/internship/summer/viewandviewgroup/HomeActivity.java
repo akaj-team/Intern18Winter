@@ -11,6 +11,7 @@ import asiantech.internship.summer.activityandfragment.LoginActivity;
 import asiantech.internship.summer.asynctaskthreadhandler.AsyncTaskThreadHandlerActivity;
 import asiantech.internship.summer.canvas.CanvasActivity;
 import asiantech.internship.summer.eventandlistener.EventAndListenerActivity;
+import asiantech.internship.summer.kotlin.KotlinActivity;
 import asiantech.internship.summer.recyclerview.RecyclerViewActivity;
 import asiantech.internship.summer.restapi.RestApiActivity;
 import asiantech.internship.summer.storage.FileStoreActivity;
@@ -35,6 +36,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         Button btnRestApi = findViewById(R.id.btnRestApi);
         Button btnAsyncThreadHandler = findViewById(R.id.btnAsyncThreadHandler);
         Button btnCanvas = findViewById(R.id.btnCanvas);
+        Button btnKotlin = findViewById(R.id.btnKotlin);
         btnViewGroup.setOnClickListener(this);
         btnEventAndListener.setOnClickListener(this);
         btnActivityAndFragment.setOnClickListener(this);
@@ -44,6 +46,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         btnRestApi.setOnClickListener(this);
         btnAsyncThreadHandler.setOnClickListener(this);
         btnCanvas.setOnClickListener(this);
+        btnKotlin.setOnClickListener(this);
     }
 
     @Override
@@ -87,10 +90,17 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btnAsyncThreadHandler: {
                 Intent intent = new Intent(HomeActivity.this, AsyncTaskThreadHandlerActivity.class);
                 startActivity(intent);
+                break;
             }
             case R.id.btnCanvas: {
                 Intent intent = new Intent(HomeActivity.this, CanvasActivity.class);
                 startActivity(intent);
+                break;
+            }
+            case R.id.btnKotlin: {
+                Intent intent = new Intent(HomeActivity.this, KotlinActivity.class);
+                startActivity(intent);
+                break;
             }
             default:
                 break;

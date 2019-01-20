@@ -119,4 +119,5 @@
     <string name="oct">Oct</string>
     <string name="nov">Nov</string>
     <string name="dec">Dec</string>
+    <string name="kotlin">Kotlin</string>
 </resources>

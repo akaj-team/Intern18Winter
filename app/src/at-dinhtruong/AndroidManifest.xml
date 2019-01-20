@@ -40,7 +40,7 @@
             android:screenOrientation="landscape" />
         <activity android:name=".kotlin.eventandlistener.EventAndListenerActivity" />
         <activity android:name=".kotlin.recyclerview.RecyclerViewActivity" />
-        <activity android:name=".kotlin.KotlinActivity"></activity>
+        <activity android:name=".kotlin.KotlinActivity"/>
     </application>
 
 </manifest>
