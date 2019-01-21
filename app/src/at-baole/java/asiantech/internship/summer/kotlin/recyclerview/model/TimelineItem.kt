@@ -1,6 +1,6 @@
 package asiantech.internship.summer.kotlin.recyclerview.model
 
-data class TimelineItem1(
+data class TimelineItem(
         val avatar: Int,
         val picture: Int,
         var countLike: Int,

@@ -12,7 +12,7 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.Toast
 import asiantech.internship.summer.R
-import asiantech.internship.summer.kotlin.recyclerview.model.TimelineItem1
+import asiantech.internship.summer.kotlin.recyclerview.model.TimelineItem
 import java.util.*
 
 class TimelineFragment : Fragment(), RecyclerViewAdapter.OnItemListener {
@@ -24,7 +24,7 @@ class TimelineFragment : Fragment(), RecyclerViewAdapter.OnItemListener {
     private val mTotalItem: Int = 10
     private val mProgressBarLoading: ProgressBar? = null
     private var isScrolled = true
-    private lateinit var mTimelineItems: List<TimelineItem1>
+    private lateinit var mTimelineItems: List<TimelineItem>
     private var mRecyclerView: RecyclerView? = null
     private lateinit var mAdapter: RecyclerViewAdapter
 
@@ -62,7 +62,7 @@ class TimelineFragment : Fragment(), RecyclerViewAdapter.OnItemListener {
     private fun setData() {
         mTimelineItems = ArrayList()
         for (i in 0 until mTotalItem) {
-            (mTimelineItems as ArrayList<TimelineItem1>).add(TimelineItem1(R.drawable.img_avatar_1, R.drawable.img_food_1,
+            (mTimelineItems as ArrayList<TimelineItem>).add(TimelineItem(R.drawable.img_avatar_1, R.drawable.img_food_1,
                     mCountLike, getString(R.string.username), getString(R.string.username), getString(R.string.comment), false))
         }
     }
@@ -79,7 +79,7 @@ class TimelineFragment : Fragment(), RecyclerViewAdapter.OnItemListener {
             try {
                 Thread.sleep(2000)
                 for (i in mSumItem until mSumItem + mTotalItem) {
-                    (mTimelineItems as ArrayList<TimelineItem1>).add(TimelineItem1(R.drawable.img_avatar_1, R.drawable.img_food_1,
+                    (mTimelineItems as ArrayList<TimelineItem>).add(TimelineItem(R.drawable.img_avatar_1, R.drawable.img_food_1,
                             mCountLike, getString(R.string.username), getString(R.string.username), getString(R.string.comment), false))
                 }
                 Handler(Looper.getMainLooper()).post {

@@ -5,10 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import asiantech.internship.summer.R
-import asiantech.internship.summer.kotlin.recyclerview.model.TimelineItem1
+import asiantech.internship.summer.kotlin.recyclerview.model.TimelineItem
+
 import kotlinx.android.synthetic.`at-baole`.kotlin_list_item.view.*
 
-class RecyclerViewAdapter(private val listUsers: List<TimelineItem1>, private val onItemListener: OnItemListener) : RecyclerView.Adapter<RecyclerViewAdapter.TimelineViewHolder>() {
+class RecyclerViewAdapter(private val listUsers: List<TimelineItem>, private val onItemListener: OnItemListener) : RecyclerView.Adapter<RecyclerViewAdapter.TimelineViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TimelineViewHolder {
         val layoutInflater: LayoutInflater = LayoutInflater.from(parent.context)
@@ -30,10 +31,10 @@ class RecyclerViewAdapter(private val listUsers: List<TimelineItem1>, private va
 
     inner class TimelineViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView) {
 
-        private val TEXT_LIKE_SINGULAR: String = "like"
-        private val TEXT_LIKE_PLURAL: String = "likes"
+        val likeSingular : String = "like"
+        val likesPlural : String = "likes"
 
-        fun bindView(timelineItem: TimelineItem1) {
+        fun bindView(timelineItem: TimelineItem) {
 
             itemView.imgAvatar.setImageResource(timelineItem.avatar)
             itemView.tvUsername.text = timelineItem.username
@@ -44,9 +45,9 @@ class RecyclerViewAdapter(private val listUsers: List<TimelineItem1>, private va
             itemView.imgBtnLike.setOnClickListener {
                 onItemListener.onClickLike(adapterPosition)
                 if (timelineItem.countLike < 2) {
-                    itemView.tvCountLike.text = "${timelineItem.countLike} $TEXT_LIKE_SINGULAR"
+                    itemView.tvCountLike.text = "${timelineItem.countLike} $likeSingular"
                 } else {
-                    itemView.tvCountLike.text = "${timelineItem.countLike} $TEXT_LIKE_PLURAL"
+                    itemView.tvCountLike.text = "${timelineItem.countLike} $likesPlural"
                 }
             }
         }
