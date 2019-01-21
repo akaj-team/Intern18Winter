@@ -4,6 +4,9 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature android:name="android.hardware.camera" />
 
     <application
         android:allowBackup="true"
@@ -32,8 +35,7 @@
         <activity
             android:name=".canvas.CanvasActivity"
             android:screenOrientation="landscape" />
+        <activity android:name=".restapi.RestAPIActivity" />
         <activity android:name=".kotlin.activityfragment.InformationActivity" />
-        <activity android:name=".kotlin.activityfragment.SignUpActivity" />
     </application>
-
 </manifest>
