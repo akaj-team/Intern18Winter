@@ -25,10 +25,10 @@ class TimelineAdapter(
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val layoutInflater: LayoutInflater = LayoutInflater.from(viewGroup.context)
         if (viewType == VIEWTYPEITEM) {
-            val itView = layoutInflater.inflate(R.layout.fragment_recycler_view_pager, viewGroup, false)
+            val itView: View = layoutInflater.inflate(R.layout.fragment_recycler_view_pager, viewGroup, false)
             return TimelineViewHolder(itView)
         }
-        val itView = layoutInflater.inflate(R.layout.item_progressbar, viewGroup, false)
+        val itView: View = layoutInflater.inflate(R.layout.item_progressbar, viewGroup, false)
         return ViewHolderLoading(itView)
     }
 

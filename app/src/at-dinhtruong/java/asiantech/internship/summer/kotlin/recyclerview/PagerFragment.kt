@@ -64,7 +64,7 @@ class PagerFragment : Fragment(), TimelineAdapter.OnItemClickListener {
                 mFirstVisible = viewManager.findFirstVisibleItemPosition()
                 if (mFirstVisible + mChildCount == mTotalItemCount && mIsLoadmore) {
                     mIsLoadmore = false
-                    //timelineAdapter.setLoaded(true);
+                    timelineAdapter.setLoaded(true)
                     timelineAdapter.mIsLoading
                     timelineAdapter.notifyDataSetChanged()
                     addItemLoadmore(timelineAdapter)
@@ -85,11 +85,11 @@ class PagerFragment : Fragment(), TimelineAdapter.OnItemClickListener {
                     val randomImage = random.nextInt(10) + 1
                     mTimelineItems.add(TimelineItem(0, "img_avatar$randomAvatar", "Nguyen Van " + (i + 1), "img_image$randomImage", "Noi dung thu " + (i + 1)))
                 }
-                Handler(Looper.getMainLooper()).post({
+                Handler(Looper.getMainLooper()).post {
                     mIsLoadmore = true
                     timelineAdapter.setLoaded(false)
                     timelineAdapter.notifyDataSetChanged()
-                })
+                }
             } catch (ignored: InterruptedException) {
 
             }
