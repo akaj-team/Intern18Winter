@@ -2,8 +2,10 @@ package asiantech.internship.summer.drawerlayout;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -11,6 +13,7 @@ import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -30,6 +33,7 @@ import java.util.List;
 import java.util.Objects;
 import asiantech.internship.summer.R;
 import asiantech.internship.summer.model.DrawerItem;
+import asiantech.internship.summer.retrofit.RetrofitActivity;
 
 public class DrawerLayoutActivity extends AppCompatActivity implements DrawerLayoutAdapter.OnItemClickListener {
 
@@ -39,12 +43,27 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerLay
     private static final int CAMERA = 222;
     private static final int REQUEST_CODE_ASK_PERMISSIONS_CAMERA = 333;
     private static final int REQUEST_CODE_ASK_PERMISSIONS_GALLERY = 444;
+    private static final String MY_PREFS_NAME = "MyFile";
     protected RecyclerView mRecyclerViewDrawer;
     private TextView mTvContent;
+    private SharedPreferences isSharedPreferences;
     private List<DrawerItem> mData;
     private DrawerLayoutAdapter mDrawerLayoutAdapter;
     private int mPosition = -1;
-    private int mActionChangeAvatar;
+
+    public static void startInstalledAppDetailsActivity(final Activity context) {
+        if (context == null) {
+            return;
+        }
+        final Intent intent = new Intent();
+        intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        intent.addCategory(Intent.CATEGORY_DEFAULT);
+        intent.setData(Uri.parse("package:" + context.getPackageName()));
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+        intent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+        context.startActivity(intent);
+    }
 
     @SuppressLint("CutPasteId")
     @Override
@@ -60,8 +79,8 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerLay
         //Move content to side in Drawer Layout
         slide();
         initData();
+        isSharedPreferences = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
         initView();
-
     }
 
     private void initData() {
@@ -116,13 +135,11 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerLay
                 (dialog, which) -> {
                     switch (which) {
                         case CHOOSE_GALLERY:
-                            mActionChangeAvatar = GALLERY;
                             if (checkPermissionForGallery()) {
                                 chooseGallery();
                             }
                             break;
                         case CHOOSE_CAMERA:
-                            mActionChangeAvatar = CAMERA;
                             if (checkPermissionForCamera()) {
                                 chooseCamera();
                             }
@@ -148,12 +165,29 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerLay
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        boolean isNotAllowAskWriteExternal;
+        boolean isNotAllowAskCamera;
+        boolean isShowRationaleWrite;
         switch (requestCode) {
             case REQUEST_CODE_ASK_PERMISSIONS_CAMERA: {
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
                     chooseCamera();
                 } else {
-                    Toast.makeText(DrawerLayoutActivity.this, R.string.deny, Toast.LENGTH_SHORT).show();
+                    boolean isShowRationaleCamera = ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA);
+                    isShowRationaleWrite = ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                    isNotAllowAskWriteExternal = getValueShowInSharedPreferences(getString(R.string.isWrite));
+                    isNotAllowAskCamera = getValueShowInSharedPreferences(getString(R.string.isCamera));
+                    if (!isShowRationaleWrite && !isShowRationaleCamera) {
+                        if (isNotAllowAskWriteExternal && isNotAllowAskCamera) {
+                            showSettingsAlert(getString(R.string.noteCamera));
+                        }
+                    }
+                    if (!isShowRationaleWrite) {
+                        saveValueShowInSharedPreferences(getString(R.string.isWrite));
+                    }
+                    if (!isShowRationaleCamera) {
+                        saveValueShowInSharedPreferences(getString(R.string.isCamera));
+                    }
                 }
                 break;
             }
@@ -161,7 +195,14 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerLay
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     chooseGallery();
                 } else {
-                    Toast.makeText(DrawerLayoutActivity.this, R.string.deny, Toast.LENGTH_SHORT).show();
+                    isShowRationaleWrite = ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                    isNotAllowAskWriteExternal = getValueShowInSharedPreferences(getString(R.string.isWrite));
+                    if (!isShowRationaleWrite) {
+                        if (isNotAllowAskWriteExternal) {
+                            showSettingsAlert(getString(R.string.noteGallery));
+                        }
+                        saveValueShowInSharedPreferences(getString(R.string.isWrite));
+                    }
                 }
                 break;
             }
@@ -170,14 +211,39 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerLay
         }
     }
 
+    private void saveValueShowInSharedPreferences(String value) {
+        SharedPreferences.Editor editor = isSharedPreferences.edit();
+        editor.putBoolean(value, true);
+        editor.apply();
+    }
+
+    private boolean getValueShowInSharedPreferences(String value) {
+        return isSharedPreferences.getBoolean(value, false);
+    }
+
+    private void showSettingsAlert(String message) {
+        android.support.v7.app.AlertDialog alertDialog = new android.support.v7.app.AlertDialog.Builder(this).create();
+        alertDialog.setTitle(getString(R.string.optionChoose));
+        alertDialog.setMessage(getString(R.string.noteAccess) + " " + message);
+        alertDialog.setButton(android.support.v7.app.AlertDialog.BUTTON_NEGATIVE, getString(R.string.cancel),
+                (dialog, which) -> dialog.dismiss());
+        alertDialog.setButton(android.support.v7.app.AlertDialog.BUTTON_POSITIVE, getString(R.string.setting),
+                (dialog, which) -> {
+                    dialog.dismiss();
+                    startInstalledAppDetailsActivity(DrawerLayoutActivity.this);
+                });
+        alertDialog.show();
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == GALLERY) {
-            openGallery(data);
-        } else {
-            openCamera(data);
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == GALLERY) {
+                openGallery(data);
+            } else {
+                openCamera(data);
+            }
         }
     }
 
@@ -203,15 +269,16 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerLay
     }
 
     private boolean checkPermissionForCamera() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED && mActionChangeAvatar == CAMERA) {
-            ActivityCompat.requestPermissions(DrawerLayoutActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, REQUEST_CODE_ASK_PERMISSIONS_CAMERA);
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, REQUEST_CODE_ASK_PERMISSIONS_CAMERA);
             return false;
         }
         return true;
     }
+
     private boolean checkPermissionForGallery() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED && mActionChangeAvatar == GALLERY) {
-            ActivityCompat.requestPermissions(DrawerLayoutActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_ASK_PERMISSIONS_GALLERY);
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_ASK_PERMISSIONS_GALLERY);
             return false;
         }
         return true;

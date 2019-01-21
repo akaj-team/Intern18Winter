@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<asiantech.internship.summer.canvas.ChartView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:colorOfColumnExpenses="@color/colorColumnExpenses"
+    app:colorOfColumnSales="@color/colorColumnSale"
+    app:colorOfText="@color/colorBlack"
+    app:colorOfLine="@color/colorGray"
+    app:colorOfColumnRect="@color/colorColumnMoney"
+    app:widthOfColumn="@dimen/widthOfColumn"
+    app:sizeOfTextCaption="@dimen/sizeOfTextCaption"
+    app:sizeOfTextItem="@dimen/sizeOfTextItem"
+    tools:context="asiantech.internship.summer.canvas.CanvasActivity" />
