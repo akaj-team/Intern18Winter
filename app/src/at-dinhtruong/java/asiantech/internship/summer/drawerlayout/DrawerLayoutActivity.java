@@ -4,12 +4,14 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -38,7 +40,9 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAda
     private static final int REQUEST_CODE_ASK_PERMISSIONS_CAMERA = 123;
     private static final int REQUEST_CODE_ASK_PERMISSIONS_GALLERY = 124;
     private int mPositionSelected = -1;
-    private int mActionChangeAvatar = 0;
+    private static final String CHECK_DO_NOT_ASK_AGAIN = "dontAskAgain";
+    private static final String CHECK_CAMERA = "checkCamera";
+    private static final String CHECK_GALLERY = "checkGallery";
     private List<DrawerItem> mDrawerItems;
     private DrawerAdapter mAdapterItem;
     private DrawerLayout mDrawerLayout;
@@ -90,15 +94,13 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAda
         builder.setTitle(R.string.addPhoto);
         builder.setItems(itemsDialog, (dialog, item) -> {
             if (itemsDialog[item].equals(getString(R.string.takePhoto))) {
-                mActionChangeAvatar = REQUEST_IMAGE_CAPTURE;
-                if (!requestPermission()) {
+                if (!checkAndRequestCameraPermission()) {
                     Toast.makeText(DrawerLayoutActivity.this, getString(R.string.permissionAccepted), Toast.LENGTH_SHORT).show();
                 } else {
                     openCamera();
                 }
             } else if (itemsDialog[item].equals(getString(R.string.chooseFromLibrary))) {
-                mActionChangeAvatar = REQUEST_SELECT_PICTURE;
-                if (!requestPermission()) {
+                if (!checkAndRequestGalleryPermission()) {
                     Toast.makeText(DrawerLayoutActivity.this, getString(R.string.permissionAccepted), Toast.LENGTH_SHORT).show();
                 } else {
                     openGallery();
@@ -113,23 +115,23 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAda
     @Override
     public void onItemClicked(int position) {
         if (mPositionSelected != -1) {
-            mDrawerItems.get(mPositionSelected-1).setChecked(false);
+            mDrawerItems.get(mPositionSelected - 1).setChecked(false);
             mAdapterItem.notifyItemChanged(mPositionSelected);
         }
         mPositionSelected = position;
-        mDrawerItems.get(mPositionSelected-1).setChecked(true);
+        mDrawerItems.get(mPositionSelected - 1).setChecked(true);
         mAdapterItem.notifyItemChanged(mPositionSelected);
     }
 
     private void openCamera() {
-        if (requestPermission()) {
+        if (checkAndRequestCameraPermission()) {
             Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
         }
     }
 
     private void openGallery() {
-        if (requestPermission()) {
+        if (checkAndRequestGalleryPermission()) {
             Intent intent = new Intent();
             intent.setType("image/*");
             intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -137,13 +139,17 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAda
         }
     }
 
-    private boolean requestPermission() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED && mActionChangeAvatar == REQUEST_IMAGE_CAPTURE) {
-            ActivityCompat
-                    .requestPermissions(DrawerLayoutActivity.this, new String[]{Manifest.permission.CAMERA}, REQUEST_CODE_ASK_PERMISSIONS_CAMERA);
+    private boolean checkAndRequestCameraPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(DrawerLayoutActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, REQUEST_CODE_ASK_PERMISSIONS_CAMERA);
             return false;
         }
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED && mActionChangeAvatar == REQUEST_SELECT_PICTURE) {
+        return true;
+    }
+
+    private boolean checkAndRequestGalleryPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat
                     .requestPermissions(DrawerLayoutActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_ASK_PERMISSIONS_GALLERY);
             return false;
@@ -153,12 +159,34 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAda
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        SharedPreferences sharedPreferences = getSharedPreferences(CHECK_DO_NOT_ASK_AGAIN, MODE_PRIVATE);
+        boolean isCheckGallery;
         switch (requestCode) {
             case REQUEST_CODE_ASK_PERMISSIONS_CAMERA: {
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
                     openCamera();
                 } else {
-                    Toast.makeText(DrawerLayoutActivity.this, getString(R.string.permissionDenied), Toast.LENGTH_SHORT).show();
+                    boolean isCheckCamera = sharedPreferences.getBoolean(CHECK_CAMERA, false);
+                    isCheckGallery = sharedPreferences.getBoolean(CHECK_GALLERY, false);
+                    boolean showRationale = false;
+                    boolean showRationaleWrite = false;
+                    if (grantResults[0] == PackageManager.PERMISSION_DENIED && grantResults[1] == PackageManager.PERMISSION_DENIED) {
+                        showRationale = ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA);
+                        showRationaleWrite = ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                    }
+                    SharedPreferences.Editor editor = getSharedPreferences(CHECK_DO_NOT_ASK_AGAIN, MODE_PRIVATE).edit();
+                    if (!showRationale && !showRationaleWrite) {
+                        if (isCheckCamera && isCheckGallery) {
+                            onPermissionDialog();
+                        }
+                        editor.putBoolean(CHECK_CAMERA, true);
+                        editor.putBoolean(CHECK_GALLERY, true);
+                    } else if (!showRationale) {
+                        editor.putBoolean(CHECK_CAMERA, true);
+                    } else if (!showRationaleWrite) {
+                        editor.putBoolean(CHECK_GALLERY, true);
+                    }
+                    editor.apply();
                 }
                 break;
             }
@@ -166,7 +194,19 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAda
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     openGallery();
                 } else {
-                    Toast.makeText(DrawerLayoutActivity.this, getString(R.string.permissionDenied), Toast.LENGTH_SHORT).show();
+                    isCheckGallery = sharedPreferences.getBoolean(CHECK_GALLERY, false);
+                    boolean showRationaleWrite = false;
+                    if (grantResults[0] == PackageManager.PERMISSION_DENIED) {
+                        showRationaleWrite = ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                    }
+                    if (!showRationaleWrite) {
+                        if (isCheckGallery) {
+                            onPermissionDialog();
+                        }
+                        SharedPreferences.Editor editor = getSharedPreferences(CHECK_DO_NOT_ASK_AGAIN, MODE_PRIVATE).edit();
+                        editor.putBoolean(CHECK_GALLERY, true);
+                        editor.apply();
+                    }
                 }
                 break;
             }
@@ -220,5 +260,27 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAda
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
         String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), inImage, getString(R.string.title), null);
         return Uri.parse(path);
+    }
+
+    private void onPermissionDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.acceptDialog);
+        builder.setMessage(R.string.youHaveDeniedPermission);
+        builder.setCancelable(false);
+        builder.setNegativeButton(R.string.cancle, (dialogInterface, i) -> Toast.makeText(DrawerLayoutActivity.this, R.string.denied, Toast.LENGTH_SHORT).show());
+        builder.setPositiveButton(R.string.setting, (dialogInterface, i) -> {
+            SharedPreferences.Editor editor = getSharedPreferences(CHECK_DO_NOT_ASK_AGAIN, MODE_PRIVATE).edit();
+            editor.putBoolean(CHECK_CAMERA, false);
+            editor.putBoolean(CHECK_GALLERY, false);
+            editor.apply();
+            dialogInterface.dismiss();
+            Intent intent = new Intent();
+            intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+            Uri uri = Uri.fromParts("package", getApplication().getPackageName(), null);
+            intent.setData(uri);
+            getApplicationContext().startActivity(intent);
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 }
