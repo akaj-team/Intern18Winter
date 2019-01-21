@@ -33,7 +33,7 @@
     <string name="liked">liked</string>
     <string name="like">like</string>
     <string name="likes">likes</string>
-    <string name="zerolike">%s like</string>
+    <string name="zerolike">0 like</string>
     <string name="username">Le Quoc Bao</string>
     <string name="comment">It is very delicious</string>
     <string name="timeline">Timeline</string>

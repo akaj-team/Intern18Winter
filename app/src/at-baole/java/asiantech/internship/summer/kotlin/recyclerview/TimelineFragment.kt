@@ -41,7 +41,7 @@ class TimelineFragment : Fragment(), RecyclerViewAdapter.OnItemListener {
         val linearLayoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         mRecyclerView?.layoutManager = linearLayoutManager
         setData()
-        mAdapter = RecyclerViewAdapter(mTimelineItems)
+        mAdapter = RecyclerViewAdapter(mTimelineItems, this)
         mRecyclerView?.adapter = mAdapter
 
         mRecyclerView?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -68,8 +68,8 @@ class TimelineFragment : Fragment(), RecyclerViewAdapter.OnItemListener {
     }
 
     override fun onClickLike(position: Int) {
-        Toast.makeText(context, R.string.liked, Toast.LENGTH_LONG).show()
         mTimelineItems[position].countLike += 1
+        Toast.makeText(context, R.string.liked, Toast.LENGTH_LONG).show()
         mAdapter.notifyDataSetChanged()
     }
 
@@ -90,41 +90,5 @@ class TimelineFragment : Fragment(), RecyclerViewAdapter.OnItemListener {
             } catch (ignored: InterruptedException) {
             }
         }.start()
-    }
-
-    private fun getAvatarImageId(): Int {
-        val random = Random()
-        val index = random.nextInt(10)
-        when (index) {
-            1 -> return R.drawable.img_avatar_1
-            2 -> return R.drawable.img_avatar_2
-            3 -> return R.drawable.img_avatar_3
-            4 -> return R.drawable.img_avatar_4
-            5 -> return R.drawable.img_avatar_5
-            6 -> return R.drawable.img_avatar_6
-            7 -> return R.drawable.img_avatar_7
-            8 -> return R.drawable.img_avatar_8
-            9 -> return R.drawable.img_avatar_9
-            10 -> return R.drawable.img_avatar_10
-        }
-        return index
-    }
-
-    private fun getImageFoodId(): Int {
-        val random = Random()
-        val index = random.nextInt(10)
-        when (index) {
-            1 -> return R.drawable.img_food_1
-            2 -> return R.drawable.img_food_2
-            3 -> return R.drawable.img_food_3
-            4 -> return R.drawable.img_food_4
-            5 -> return R.drawable.img_food_5
-            6 -> return R.drawable.img_food_6
-            7 -> return R.drawable.img_food_7
-            8 -> return R.drawable.img_food_8
-            9 -> return R.drawable.img_food_9
-            10 -> return R.drawable.img_food_10
-        }
-        return index
     }
 }
