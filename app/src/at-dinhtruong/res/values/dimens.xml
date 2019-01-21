@@ -5,4 +5,5 @@
     <dimen name="widthOfColumnMoney">25dp</dimen>
     <dimen name="sizeOfTextItem">13sp</dimen>
     <dimen name="sizeOfTextCaption">25sp</dimen>
+    <dimen name="errorTextSize">20dp</dimen>
 </resources>

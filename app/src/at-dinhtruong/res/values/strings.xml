@@ -119,5 +119,8 @@
     <string name="oct">Oct</string>
     <string name="nov">Nov</string>
     <string name="dec">Dec</string>
+    <string name="unitTest">Unit Test</string>
+    <string name="incorrectPassword">Incorrect password</string>
+    <string name="orLogInUsingASocialAccount">Or log in using a social account</string>
     <string name="kotlin">Kotlin</string>
 </resources>
