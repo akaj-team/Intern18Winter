@@ -1,5 +1,6 @@
 package asiantech.internship.summer.kotlin.recyclerview
 import android.os.Bundle
+import android.os.Handler
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -10,15 +11,17 @@ import asiantech.internship.summer.R
 import asiantech.internship.summer.kotlin.model.TimelineItem
 import java.util.*
 import kotlin.collections.ArrayList
+import android.os.Looper
+
+
 
 
 class PagerFragment : Fragment(), TimelineAdapter.OnItemClickListener {
 
     private lateinit var recyclerView: RecyclerView
-    private lateinit var mTimelineItems: List<TimelineItem>
+    private lateinit var mTimelineItems: ArrayList<TimelineItem>
     private lateinit var timelineAdapter: TimelineAdapter
     private lateinit var viewManager: LinearLayoutManager
-
     //test
     private val NUM_OF_ITEM_ON_PAGE = 10
     private var mIsLoadmore = true
@@ -44,7 +47,7 @@ class PagerFragment : Fragment(), TimelineAdapter.OnItemClickListener {
     }
 
     private fun initTimeline(view: View) {
-        mTimelineItems = mockTimelines()
+        mTimelineItems = ArrayList(mockTimelines())
         viewManager = LinearLayoutManager(view.context)
 
         timelineAdapter = TimelineAdapter(mTimelineItems as ArrayList<TimelineItem>, context, this)
@@ -58,29 +61,45 @@ class PagerFragment : Fragment(), TimelineAdapter.OnItemClickListener {
 
     private fun setRecyclerViewScrollListener() {
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener(){
-            override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
-                super.onScrollStateChanged(recyclerView, newState)
-
-            }
-
             override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 mTotalItemCount = viewManager.itemCount
                 mChildCount = viewManager.childCount
                 mFirstVisible = viewManager.findFirstVisibleItemPosition()
                 if (mFirstVisible + mChildCount == mTotalItemCount && mIsLoadmore) {
-                    mIsLoadmore = false;
+                    mIsLoadmore = false
                     //timelineAdapter.setLoaded(true);
                     timelineAdapter.mIsLoading
-                    timelineAdapter.notifyDataSetChanged();
-                    addItemLoadmore(timelineAdapter);
+                    timelineAdapter.notifyDataSetChanged()
+                    addItemLoadmore(timelineAdapter)
                 }
             }
         } )
     }
 
-    private fun addItemLoadmore(timelineAdapter: RecyclerView.Adapter<*>) {
+    private fun addItemLoadmore(timelineAdapter: TimelineAdapter) {
+        object : Thread({
+            try {
+                Thread.sleep(3000)
+                val fromIndex = mTimelineItems.size
+                val toIndex = fromIndex + NUM_OF_ITEM_ON_PAGE
+                val random = Random()
+                for (i in fromIndex until toIndex) {
+                    val randomAvatar = random.nextInt(10) + 1
+                    val randomImage = random.nextInt(10) + 1
+                    mTimelineItems.add(TimelineItem(0, "img_avatar$randomAvatar", "Nguyen Van " + (i + 1), "img_image$randomImage", "Noi dung thu " + (i + 1)))
+                }
+                Handler(Looper.getMainLooper()).post({
+                    mIsLoadmore = true
+                    timelineAdapter.setLoaded(false)
+                    timelineAdapter.notifyDataSetChanged()
+                })
+            } catch (ignored: InterruptedException) {
 
+            }
+        }) {
+
+        }.start()
     }
 
     private fun mockTimelines(): List<TimelineItem> {

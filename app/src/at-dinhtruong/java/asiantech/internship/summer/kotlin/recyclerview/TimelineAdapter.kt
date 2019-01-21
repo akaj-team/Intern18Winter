@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.`at-dinhtruong`.item_progressbar.view.*
 
 
 class TimelineAdapter(
-        private val timelineItems: ArrayList<TimelineItem>,
+        private var timelineItems: ArrayList<TimelineItem>,
         private val context: Context?,
         private val onItemClickListener: OnItemClickListener
 ) :
@@ -52,6 +52,10 @@ class TimelineAdapter(
         } else if (viewHolder is ViewHolderLoading) {
             viewHolder.onBind()
         }
+    }
+
+    fun setLoaded(isLoading: Boolean) {
+        mIsLoading = isLoading
     }
 
     open inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
