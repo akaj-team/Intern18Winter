@@ -88,13 +88,13 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(intent);
                 break;
             }
-            case R.id.btnExercise10: {
-                Intent intent = new Intent(ListActivity.this, UnitTestActivity.class);
+            case R.id.btnExercise11: {
+                Intent intent = new Intent(ListActivity.this, AsyncTaskThreadHandlerActivity.class);
                 startActivity(intent);
                 break;
             }
-            case R.id.btnExercise11: {
-                Intent intent = new Intent(ListActivity.this, AsyncTaskThreadHandlerActivity.class);
+            case R.id.btnExercise10: {
+                Intent intent = new Intent(ListActivity.this, UnitTestActivity.class);
                 startActivity(intent);
                 break;
             }
