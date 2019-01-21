@@ -26,12 +26,12 @@
             android:id="@+id/img_cd"
             android:layout_width="250dp"
             android:layout_height="250dp"
-            android:src="@drawable/ic_disc"/>
+            android:src="@drawable/ic_disc" />
 
         <LinearLayout
-            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:orientation="horizontal">
 
             <TextView
@@ -42,10 +42,10 @@
                 android:textSize="20sp" />
 
             <TextView
-                android:layout_gravity="right"
                 android:id="@+id/tvTotalTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="right"
                 android:text="@string/formatTime"
                 android:textAlignment="textEnd"
                 android:textSize="20sp"
@@ -77,7 +77,7 @@
                 android:id="@+id/imgAction"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_margin="15dp"/>
+                android:layout_margin="15dp" />
 
             <ImageView
                 android:id="@+id/imgNext"

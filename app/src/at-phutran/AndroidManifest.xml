@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -27,12 +28,14 @@
             android:name=".eventlistener.SignUpActivity"
             android:label="@string/title" />
         <activity android:name=".fragment.LoginActivity" />
+        <activity android:name=".fragment.WelcomeActivity" />
         <activity android:name=".recyclerview.RecyclerViewActivity" />
         <activity android:name=".viewpager.ViewPagerActivity" />
         <activity
             android:name=".canvas.CanvasActivity"
             android:screenOrientation="landscape" />
         <activity android:name=".asynctask.AsyncTaskThreadHandlerActivity" />
+        <activity android:name=".retrofit.RetrofitActivity" />
         <activity android:name=".service.ServiceActivity" />
         <service android:name=".service.PlayMusicService" />
     </application>
