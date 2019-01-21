@@ -1,7 +1,5 @@
 package asiantech.internship.summer.unittest;
 
-import android.text.TextUtils;
-
 import java.util.regex.Pattern;
 
 import asiantech.internship.summer.R;
@@ -38,7 +36,7 @@ final class ValidateUtils {
         Password_At_Least_3_NonConsecutive_Uppercase_Letters = Pattern.compile("^.*[A-Z].+[A-Z].+[A-Z]");
     }
 
-    static int validateUserName(String username) {
+    static int validateUsername(String username) {
         compileRegex();
         if (!Username_Length_More_Than_8_And_Less_Than_21.matcher(username).find()) {
             return R.string.errorUsernameLengthMoreThan8AndLessThan21;
@@ -88,13 +86,5 @@ final class ValidateUtils {
             }
         }
         return R.string.PasswordNotMatchUsername;
-    }
-
-    static boolean isUsernameEmpty(User user) {
-        return TextUtils.isEmpty(user.getUsername());
-    }
-
-    static boolean isPasswordEmpty(User user) {
-        return TextUtils.isEmpty(user.getPassword());
     }
 }

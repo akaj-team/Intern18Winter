@@ -2,6 +2,7 @@ package asiantech.internship.summer.unittest;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -36,18 +37,17 @@ public class UnitTestActivity extends AppCompatActivity {
             String username = mEdtUsername.getText().toString().trim();
             String password = mEdtPassword.getText().toString().trim();
             User user = new User(username, password);
-            String checkResult;
             mTvNotification.setBackground(getResources().getDrawable(R.drawable.bg_shape_stroke_red));
 
-            if (ValidateUtils.isUsernameEmpty(user)) {
+            if (TextUtils.isEmpty(user.getUsername())) {
                 mTvNotification.setText(R.string.usernameNotEmpty);
-            } else if (ValidateUtils.isPasswordEmpty(user)) {
+            } else if (TextUtils.isEmpty(user.getPassword())) {
                 mTvNotification.setText(R.string.passwordNotEmpty);
             } else {
-                checkResult = getResources().getString(ValidateUtils.validateUserName(username))
-                        + "\n" + getResources().getString(ValidateUtils.validatePassword(password))
-                        + "\n" + getResources().getString(ValidateUtils.checkPasswordMatchesUsername(user));
-                mTvNotification.setText(checkResult);
+                StringBuilder validationResult = new StringBuilder(getResources().getString(ValidateUtils.validateUsername(username)))
+                        .append("\n").append(getResources().getString(ValidateUtils.validatePassword(user.getPassword())))
+                        .append("\n").append(getResources().getString(ValidateUtils.checkPasswordMatchesUsername(user)));
+                mTvNotification.setText(validationResult);
             }
         });
     }
