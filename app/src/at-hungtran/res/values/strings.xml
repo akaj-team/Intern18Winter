@@ -48,4 +48,21 @@
     <string name="expense">Expense</string>
     <string name="usd">$</string>
     <string name="canvas">Canvas</string>
+    <string name="errorPasswordEmpty">Password can not Empty</string>
+    <string name="errorUsernameEmpty">Username can not Empty</string>
+    <string name="errorUsernameLength">Length username from 8 to 21</string>
+    <string name="errorUsernameNoSpecialCharactersAndSpace">Username no special characters and space</string>
+    <string name="errorUsernameNotBeginWithUppercaseAndDigit">Username not begin with uppercase and digit</string>
+    <string name="errorPasswordRepeatChar">This password repeat characters</string>
+    <string name="errorPasswordSmallestLengthIs8Char">Password smallest length is 8 char</string>
+    <string name="errorPasswordNoMore2CharConsecutive">Password no more 2 char or digits consecutive</string>
+    <string name="errorPasswordNotEndWithDigitOrSpecialChar">Password not end with digit or special char</string>
+    <string name="errorPasswordAtLeast3UppercaseNonConsecutive">Password at least 3 uppercase non consecutive</string>
+    <string name="unitTest">Unit Test</string>
+    <string name="listMenu">List Issue</string>
+    <string name="usernamePasswordCannotEmpty">The account and password cannot be empty</string>
+    <string name="errorPasswordNotHas2SpecialCharOrDigits">Password not has 2 special characters or digits</string>
+    <string name="errorUsernameNoAtMost2ConsecivitiveDigits">Username no at most 2 consecivitive digits</string>
+    <string name="validUsernamePassword">valid success!!</string>
+    <string name="errorUsernameLeastTwoNonConsecutiveUppercaseLetters">Username least 2 non-consecutive uppercase letters</string>
 </resources>
