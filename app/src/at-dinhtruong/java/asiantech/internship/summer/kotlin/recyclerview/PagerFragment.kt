@@ -13,9 +13,6 @@ import java.util.*
 import kotlin.collections.ArrayList
 import android.os.Looper
 
-
-
-
 class PagerFragment : Fragment(), TimelineAdapter.OnItemClickListener {
 
     private lateinit var recyclerView: RecyclerView
@@ -49,8 +46,7 @@ class PagerFragment : Fragment(), TimelineAdapter.OnItemClickListener {
     private fun initTimeline(view: View) {
         mTimelineItems = ArrayList(mockTimelines())
         viewManager = LinearLayoutManager(view.context)
-
-        timelineAdapter = TimelineAdapter(mTimelineItems as ArrayList<TimelineItem>, context, this)
+        timelineAdapter = TimelineAdapter(mTimelineItems, context, this)
         recyclerView = view.findViewById<RecyclerView>(R.id.recyclerViewPager).apply {
             setHasFixedSize(true)
            layoutManager = viewManager
