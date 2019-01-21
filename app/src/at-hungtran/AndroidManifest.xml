@@ -2,7 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="asiantech.internship.summer">
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -12,16 +17,23 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
 
-        <activity android:name=".viewpager.PagerActivity">
+        <activity android:name=".asynctask_thread_handler.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.HomeActivity" />
+        <activity android:name=".view.ViewActivity" />
         <activity android:name=".eventlistener.LoginActivity"/>
         <activity android:name=".activityfragment.LoginActivity"/>
+        <activity android:name=".recyclerview.TimelineActivity" />
+        <activity android:name=".viewpager.PagerActivity" />
+        <activity android:name=".restapi.RestAPIActivity" />
+        <activity android:name=".asynctask_thread_handler.ViewPagerActivity" />
+        <activity android:name=".unittest.UnitTestActivity"/>
+        <activity android:name=".canvas.CanvasActivity"
+            android:screenOrientation="landscape" />
     </application>
 
 </manifest>

@@ -8,11 +8,15 @@ import android.widget.Button;
 
 import asiantech.internship.summer.R;
 import asiantech.internship.summer.activityandfragment.LoginActivity;
-import asiantech.internship.summer.drawerlayout.DrawerLayoutActivity;
 import asiantech.internship.summer.eventandlistener.EventAndListenerActivity;
 import asiantech.internship.summer.recyclerview.RecyclerViewActivity;
 import asiantech.internship.summer.storage.FileStoreActivity;
+import asiantech.internship.summer.asynctaskthreadhandler.AsyncTaskThreadHandlerActivity;
+import asiantech.internship.summer.canvas.CanvasActivity;
+import asiantech.internship.summer.restapi.RestApiActivity;
+import asiantech.internship.summer.unittest.UnitTestActivity;
 import asiantech.internship.summer.viewpager.ViewPagerActivity;
+import asiantech.internship.summer.drawerlayout.DrawerLayoutActivity;
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -30,6 +34,10 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         Button btnRecyclerView = findViewById(R.id.btnRecyclerView);
         Button btnViewPager = findViewById(R.id.btnViewPager);
         Button btnFileStorage = findViewById(R.id.btnFileStorage);
+        Button btnRestApi = findViewById(R.id.btnRestApi);
+        Button btnAsyncThreadHandler = findViewById(R.id.btnAsyncThreadHandler);
+        Button btnCanvas = findViewById(R.id.btnCanvas);
+        Button btnUnitTest = findViewById(R.id.btnUnitTest);
         Button btnDrawerLayout = findViewById(R.id.btnDrawerLayout);
         btnViewGroup.setOnClickListener(this);
         btnEventAndListener.setOnClickListener(this);
@@ -37,6 +45,10 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         btnRecyclerView.setOnClickListener(this);
         btnViewPager.setOnClickListener(this);
         btnFileStorage.setOnClickListener(this);
+        btnRestApi.setOnClickListener(this);
+        btnAsyncThreadHandler.setOnClickListener(this);
+        btnCanvas.setOnClickListener(this);
+        btnUnitTest.setOnClickListener(this);
         btnDrawerLayout.setOnClickListener(this);
     }
 
@@ -70,6 +82,26 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             }
             case R.id.btnFileStorage: {
                 Intent intent = new Intent(HomeActivity.this, FileStoreActivity.class);
+                startActivity(intent);
+                break;
+            }
+            case R.id.btnRestApi: {
+                Intent intent = new Intent(HomeActivity.this, RestApiActivity.class);
+                startActivity(intent);
+                break;
+            }
+            case R.id.btnAsyncThreadHandler: {
+                Intent intent = new Intent(HomeActivity.this, AsyncTaskThreadHandlerActivity.class);
+                startActivity(intent);
+                break;
+            }
+            case R.id.btnCanvas: {
+                Intent intent = new Intent(HomeActivity.this, CanvasActivity.class);
+                startActivity(intent);
+                break;
+            }
+            case R.id.btnUnitTest: {
+                Intent intent = new Intent(HomeActivity.this, UnitTestActivity.class);
                 startActivity(intent);
                 break;
             }
