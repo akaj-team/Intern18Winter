@@ -11,7 +11,7 @@ import asiantech.internship.summer.kotlin.model.TimelineItem
 import kotlinx.android.synthetic.`at-hungtran`.list_item.view.*
 
 class TimelineAdapter(private val timelineItems: List<TimelineItem>) : RecyclerView.Adapter<TimelineAdapter.TimelineViewHolder>() {
-
+    private val onItemClick: OnItemListener? = null
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TimelineViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context).inflate(R.layout.list_item, parent, false)
         return TimelineViewHolder(layoutInflater)
@@ -25,17 +25,16 @@ class TimelineAdapter(private val timelineItems: List<TimelineItem>) : RecyclerV
         holder.onBind(timelineItems[position])
     }
 
-    class TimelineViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView) {
-        private val onItemClick: OnItemListener? = null
+    inner class TimelineViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView) {
+
         fun onBind(timelineItem: TimelineItem) {
             itemView.icAvt.setImageResource(timelineItem.imageAvatar)
             itemView.tvName.text = timelineItem.name
             itemView.imgImage.setImageResource(timelineItem.image)
             itemView.tvDescription.text = timelineItem.description
             itemView.tvCommenterName.text = timelineItem.commenterName
-            val position: Int = layoutPosition
             itemView.imgBtnLike.setOnClickListener {
-                onItemClick?.onClickLike(position)
+                onItemClick?.onClickLike(adapterPosition)
                 if (timelineItem.like == 1) {
                     itemView.context.getString(R.string.like, timelineItem.like)
                 } else {

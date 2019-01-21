@@ -17,7 +17,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class TimelineFragment : Fragment(), TimelineAdapter.OnItemListener {
-    var mTimelineItems: List<asiantech.internship.summer.kotlin.model.TimelineItem> = ArrayList()
+    private var mTimelineItems: List<asiantech.internship.summer.kotlin.model.TimelineItem> = ArrayList()
     private val comment = "チャン ヴァン フン "
     private val nameOfPeople = "Le Thi Quynh Chau "
     private lateinit var mTimelineAdapter: TimelineAdapter
