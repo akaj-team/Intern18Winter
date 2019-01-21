@@ -12,16 +12,17 @@ import asiantech.internship.summer.eventlistener.SignUpActivity;
 import asiantech.internship.summer.fragment.LoginActivity;
 import asiantech.internship.summer.recyclerview.RecyclerViewActivity;
 import asiantech.internship.summer.unittest.UnitTestActivity;
+import asiantech.internship.summer.retrofit.RetrofitActivity;
 import asiantech.internship.summer.viewpager.ViewPagerActivity;
 
 public class ListActivity extends AppCompatActivity implements View.OnClickListener {
-
     private Button mBtnView;
     private Button mBtnListener;
     private Button mBtnRecyclerView;
     private Button mBtnFragment;
     private Button mBtnViewPager;
     private Button mBtnUnitTest;
+    private Button mBtnRetrofit;
     private Button mBtnAsyncTask;
     private Button mBtnCanvas;
 
@@ -35,6 +36,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         mBtnRecyclerView = findViewById(R.id.btnExercise4);
         mBtnViewPager = findViewById(R.id.btnExercise5);
         mBtnUnitTest = findViewById(R.id.btnExercise10);
+        mBtnRetrofit = findViewById(R.id.btnExercise8);
         mBtnAsyncTask = findViewById(R.id.btnExercise11);
         mBtnCanvas = findViewById(R.id.btnExercise9);
         mBtnView.setOnClickListener(this);
@@ -43,6 +45,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         mBtnRecyclerView.setOnClickListener(this);
         mBtnViewPager.setOnClickListener(this);
         mBtnUnitTest.setOnClickListener(this);
+        mBtnRetrofit.setOnClickListener(this);
         mBtnAsyncTask.setOnClickListener(this);
         mBtnCanvas.setOnClickListener(this);
     }
@@ -72,6 +75,11 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
             }
             case R.id.btnExercise5: {
                 Intent intent = new Intent(ListActivity.this, ViewPagerActivity.class);
+                startActivity(intent);
+                break;
+            }
+            case R.id.btnExercise8: {
+                Intent intent = new Intent(ListActivity.this, RetrofitActivity.class);
                 startActivity(intent);
                 break;
             }
