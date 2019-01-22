@@ -84,4 +84,5 @@
     <string name="backToApp">Back to app.</string>
     <string name="gotoSettings">Go to Settings.</string>
     <string name="noPermissionsGranted">No permissions granted</string>
+    <string name="hintUsername">Username</string>
 </resources>
