@@ -33,7 +33,5 @@ class RetrofitAdapter (val mListImage : ArrayList<Image>) : RecyclerView.Adapter
                 Glide.with(itemView.context).load(image.url).into(imgContent)
             }
         }
-
     }
-
 }

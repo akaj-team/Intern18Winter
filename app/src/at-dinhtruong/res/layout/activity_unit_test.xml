@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorVioletBlue"
+    tools:context="asiantech.internship.summer.unittest.UnitTestActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="15dp"
+        android:background="@drawable/bg_form_login"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvNotificationError"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/bg_incorrect_password"
+            android:padding="10dp"
+            android:text="@string/incorrectPassword"
+            android:textAlignment="center"
+            android:textColor="@color/colorRed"
+            android:textSize="@dimen/errorTextSize"
+            android:visibility="gone" />
+
+        <EditText
+            android:id="@+id/editUserName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:background="@drawable/bg_username_password"
+            android:hint="@string/userName"
+            android:inputType="text"
+            android:padding="10dp"
+            android:textAlignment="center"
+            tools:ignore="Autofill" />
+
+        <EditText
+            android:id="@+id/edtPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/bg_username_password"
+            android:hint="@string/passWord"
+            android:inputType="textPassword"
+            android:padding="10dp"
+            android:textAlignment="center"
+            tools:ignore="Autofill" />
+
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bg_button_login"
+            android:text="@string/login"
+            android:textColor="@color/colorWhite" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:text="@string/orLogInUsingASocialAccount"
+            android:textAlignment="center"
+            android:textColor="@color/colorBlack" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:background="@color/colorRed"
+                android:padding="10dp"
+                android:paddingStart="35dp"
+                android:paddingEnd="35dp"
+                android:src="@drawable/google_plus" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/colorBlue"
+                android:padding="10dp"
+                android:paddingStart="35dp"
+                android:paddingEnd="35dp"
+                android:src="@drawable/facebook_box" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

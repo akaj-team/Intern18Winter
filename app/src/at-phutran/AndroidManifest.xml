@@ -37,14 +37,14 @@
         <activity android:name=".asynctask.AsyncTaskThreadHandlerActivity" />
         <activity android:name=".retrofit.RetrofitActivity" />
         <activity android:name=".kotlin.eventlistener.EventListenerSignUp" />
-        <activity android:name=".kotlin.fragment.LoginActivity" />
-        <activity android:name=".kotlin.fragment.WelcomeActivity" />
-        <activity android:name=".kotlin.retrofit.RetrofitActivity">
+        <activity android:name=".kotlin.fragment.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".kotlin.fragment.WelcomeActivity" />
+        <activity android:name=".kotlin.retrofit.RetrofitActivity" />
     </application>
 </manifest>
