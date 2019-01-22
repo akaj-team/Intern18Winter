@@ -22,6 +22,7 @@ class TimelineAdapter(private val timelineItems: List<TimelineItem>) : RecyclerV
     }
 
     override fun onBindViewHolder(holder: TimelineViewHolder, position: Int) {
+        holder.setIsRecyclable(false)
         holder.onBind(timelineItems[position])
     }
 

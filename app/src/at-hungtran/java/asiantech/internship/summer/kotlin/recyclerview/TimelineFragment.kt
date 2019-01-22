@@ -62,7 +62,7 @@ class TimelineFragment : Fragment(), TimelineAdapter.OnItemListener {
     private fun createTimelineItem() {
         val size = mTimelineItems.size
         val timelineItems = ArrayList<asiantech.internship.summer.kotlin.model.TimelineItem>()
-        for (i in size until size + 10) {
+        for (i in size..size + 10) {
             val mLike = 0
             timelineItems.add(asiantech.internship.summer.kotlin.model.TimelineItem(inputRandomImgAvt(), nameOfPeople + (i + 1), getRandomImageId(), comment + (i + 1), mLike, nameOfPeople + (i + 1)))
         }
