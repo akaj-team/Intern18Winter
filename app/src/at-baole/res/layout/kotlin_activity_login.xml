@@ -8,13 +8,13 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/colorLightBlue">
+        android:background="@color/colorPrimary">
 
         <Button
             android:id="@+id/btnBack"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="@drawable/ic_settings_backup_restore_black_18dp" />
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/ic_arrow_back_black_18dp" />
 
         <TextView
             android:id="@+id/tvToolBar"

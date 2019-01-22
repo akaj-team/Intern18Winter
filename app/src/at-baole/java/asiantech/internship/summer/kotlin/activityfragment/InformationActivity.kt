@@ -13,5 +13,10 @@ class InformationActivity : AppCompatActivity() {
 
         tvEmail.text = intent.getStringExtra(getString(R.string.email))
         tvPassword.text = intent.getStringExtra(getString(R.string.password))
+        backActivity()
+    }
+
+    private fun backActivity(){
+        btnBack.setOnClickListener { onBackPressed() }
     }
 }

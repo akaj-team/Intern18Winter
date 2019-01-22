@@ -1,5 +1,6 @@
 package asiantech.internship.summer.kotlin.recyclerview
 
+import android.annotation.SuppressLint
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -31,9 +32,10 @@ class RecyclerViewAdapter(private val listUsers: List<TimelineItem>, private val
 
     inner class TimelineViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView) {
 
-        val likeSingular : String = "like"
-        val likesPlural : String = "likes"
+        private val likeSingular : String = "like"
+        private val likesPlural : String = "likes"
 
+        @SuppressLint("SetTextI18n")
         fun bindView(timelineItem: TimelineItem) {
 
             itemView.imgAvatar.setImageResource(timelineItem.avatar)

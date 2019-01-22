@@ -77,7 +77,7 @@ class TimelineFragment : Fragment(), RecyclerViewAdapter.OnItemListener {
         mProgressBarLoading?.visibility = View.VISIBLE
         Thread {
             try {
-                Thread.sleep(2000)
+                Thread.sleep(1000)
                 for (i in mSumItem until mSumItem + mTotalItem) {
                     (mTimelineItems as ArrayList<TimelineItem>).add(TimelineItem(R.drawable.img_avatar_1, R.drawable.img_food_1,
                             mCountLike, getString(R.string.username), getString(R.string.username), getString(R.string.comment), false))

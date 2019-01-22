@@ -38,7 +38,7 @@ class LoginActivity : AppCompatActivity() {
         val fragment = supportFragmentManager.findFragmentById(R.id.llLogin)
         if (fragment is LoginFragment) {
             setTextToolbar(R.string.logIn)
-            btnBack.visibility = View.GONE
+            btnBack.visibility = View.VISIBLE
         } else {
             setTextToolbar(R.string.backToScreen)
             btnBack.visibility = View.VISIBLE
