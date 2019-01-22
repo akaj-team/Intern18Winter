@@ -1,8 +1,10 @@
 package asiantech.internship.summer.kotlin.recyclerview
 
 import android.content.Context
+import android.os.Build
 import android.support.v7.widget.RecyclerView
 import android.text.Html
+import android.text.Spanned
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,19 +14,17 @@ import kotlinx.android.synthetic.`at-dinhtruong`.fragment_recycler_view_pager.vi
 import kotlinx.android.synthetic.`at-dinhtruong`.item_progressbar.view.*
 
 
-class TimelineAdapter(
-        private var timelineItems: ArrayList<TimelineItem>,
-        private val context: Context?,
-        private val onItemClickListener: OnItemClickListener
-) :
+class TimelineAdapter(private var timelineItems: ArrayList<TimelineItem>,
+                      private val context: Context?,
+                      private val onItemClickListener: OnItemClickListener) :
         RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private val VIEWTYPEITEM = 0
-    private val VIEW_TYPE_LOADING = 1
+    private val viewTypeItem = 0
+    private val viewTypeloading = 1
     var mIsLoading: Boolean = false
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val layoutInflater: LayoutInflater = LayoutInflater.from(viewGroup.context)
-        if (viewType == VIEWTYPEITEM) {
+        if (viewType == viewTypeItem) {
             val itView: View = layoutInflater.inflate(R.layout.fragment_recycler_view_pager, viewGroup, false)
             return TimelineViewHolder(itView)
         }
@@ -41,9 +41,9 @@ class TimelineAdapter(
 
     override fun getItemViewType(position: Int): Int {
         if (position == timelineItems.size) {
-            return VIEW_TYPE_LOADING
+            return viewTypeloading
         }
-        return VIEWTYPEITEM
+        return viewTypeItem
     }
 
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
@@ -60,45 +60,29 @@ class TimelineAdapter(
 
     open inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
-    inner class TimelineViewHolder(itemView: View) : ViewHolder(itemView), View.OnClickListener {
+    open inner class TimelineViewHolder(itemView: View) : ViewHolder(itemView), View.OnClickListener {
         override fun onClick(v: View?) {
             onItemClickListener.onFavouriteClicked(adapterPosition)
         }
 
         fun onBind() {
-            val timelineItem = timelineItems.get(adapterPosition)
-            itemView.imgAvatar.setImageDrawable(
-                    context?.resources?.getDrawable(
-                            getResourceID(timelineItem.avatar, "drawable", context)
-                    )
-            )
-            itemView.imgImage.setImageDrawable(
-                    context?.resources?.getDrawable(
-                            getResourceID(
-                                    timelineItem.image,
-                                    "drawable",
-                                    context
-                            )
-                    )
-            )
+            val timelineItem = timelineItems[adapterPosition]
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                itemView.imgAvatar.setImageDrawable(context?.getDrawable(getResourceID(timelineItem.avatar, "drawable", context)))
+                itemView.imgImage.setImageDrawable(context?.getDrawable(getResourceID(timelineItem.image, "drawable", context)))
+            }
             itemView.tvNumerLike.text = (timelineItem.numberOfLike.toString().trim() + " like")
             itemView.tvName.text = timelineItem.name.trim()
-            itemView.tvDescription.text =
-                    Html.fromHtml("<b>" + timelineItem.name + "</b>" + "  " + timelineItem.desription)
+            itemView.tvDescription.text = ("<b>" + timelineItem.name + "</b>" + "  " + timelineItem.desription).toSpanned()
             itemView.imgFavourite.setOnClickListener(this)
         }
 
-        protected fun getResourceID(resName: String, resType: String, context: Context): Int {
-            val ResourceID = context.resources.getIdentifier(
-                    resName, resType,
-                    context.applicationInfo.packageName
-            )
-            return if (ResourceID == 0) {
-                throw IllegalArgumentException(
-                        "No resource string found with name $resName"
-                )
+        private fun getResourceID(resName: String, resType: String, context: Context): Int {
+            val resourceID = context.resources.getIdentifier(resName, resType, context.applicationInfo.packageName)
+            return if (resourceID == 0) {
+                throw IllegalArgumentException("No resource string found with name $resName")
             } else {
-                ResourceID
+                resourceID
             }
         }
 
@@ -114,4 +98,12 @@ class TimelineAdapter(
         fun onFavouriteClicked(position: Int)
     }
 
+    fun String.toSpanned(): Spanned {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            return Html.fromHtml(this, Html.FROM_HTML_MODE_LEGACY)
+        } else {
+            @Suppress("DEPRECATION")
+            return Html.fromHtml(this)
+        }
+    }
 }

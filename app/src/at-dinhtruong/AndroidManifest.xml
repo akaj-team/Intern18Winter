@@ -38,10 +38,11 @@
         <activity
             android:name=".canvas.CanvasActivity"
             android:screenOrientation="landscape" />
-        <activity android:name=".unittest.UnitTestActivity"/>
+        <activity android:name=".unittest.UnitTestActivity" />
         <activity android:name=".kotlin.eventandlistener.EventAndListenerActivity" />
         <activity android:name=".kotlin.recyclerview.RecyclerViewActivity" />
-        <activity android:name=".kotlin.KotlinActivity"/>
+        <activity android:name=".kotlin.KotlinActivity" />
+        <activity android:name=".kotlin.retrofit.RetrofitActivity"></activity>
     </application>
 
 </manifest>

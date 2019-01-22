@@ -103,6 +103,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btnUnitTest: {
                 Intent intent = new Intent(HomeActivity.this, UnitTestActivity.class);
                 startActivity(intent);
+                break;
             }
             case R.id.btnKotlin: {
                 Intent intent = new Intent(HomeActivity.this, KotlinActivity.class);

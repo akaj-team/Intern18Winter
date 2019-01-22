@@ -1,6 +1,8 @@
 package asiantech.internship.summer.kotlin.recyclerview
+
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -11,26 +13,25 @@ import asiantech.internship.summer.R
 import asiantech.internship.summer.kotlin.model.TimelineItem
 import java.util.*
 import kotlin.collections.ArrayList
-import android.os.Looper
 
 class PagerFragment : Fragment(), TimelineAdapter.OnItemClickListener {
 
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var mTimelineItems: ArrayList<TimelineItem>
-    private lateinit var timelineAdapter: TimelineAdapter
-    private lateinit var viewManager: LinearLayoutManager
-    //test
-    private val NUM_OF_ITEM_ON_PAGE = 10
-    private var mIsLoadmore = true
-    private var mTotalItemCount: Int = 0
-    private var mChildCount: Int = 0
-    private var mFirstVisible: Int = 0
+    lateinit var recyclerView: RecyclerView
+    lateinit var mTimelineItems: ArrayList<TimelineItem>
+    lateinit var timelineAdapter: TimelineAdapter
+    lateinit var viewManager: LinearLayoutManager
+    val numOfItemOnPage = 10
+    var mTotalItemCount = 0
+    var mChildCount = 0
+    var mFirstVisible = 0
+    var mIsLoadmore = true
 
     companion object {
         fun newInstance(): PagerFragment {
             return PagerFragment()
         }
     }
+
     override fun onFavouriteClicked(position: Int) {
         val timelineItem = mTimelineItems[position]
         timelineItem.numberOfLike = timelineItem.numberOfLike + 1
@@ -49,14 +50,14 @@ class PagerFragment : Fragment(), TimelineAdapter.OnItemClickListener {
         timelineAdapter = TimelineAdapter(mTimelineItems, context, this)
         recyclerView = view.findViewById<RecyclerView>(R.id.recyclerViewPager).apply {
             setHasFixedSize(true)
-           layoutManager = viewManager
+            layoutManager = viewManager
             adapter = timelineAdapter
         }
         setRecyclerViewScrollListener()
     }
 
     private fun setRecyclerViewScrollListener() {
-        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 mTotalItemCount = viewManager.itemCount
@@ -70,7 +71,7 @@ class PagerFragment : Fragment(), TimelineAdapter.OnItemClickListener {
                     addItemLoadmore(timelineAdapter)
                 }
             }
-        } )
+        })
     }
 
     private fun addItemLoadmore(timelineAdapter: TimelineAdapter) {
@@ -78,12 +79,12 @@ class PagerFragment : Fragment(), TimelineAdapter.OnItemClickListener {
             try {
                 Thread.sleep(3000)
                 val fromIndex = mTimelineItems.size
-                val toIndex = fromIndex + NUM_OF_ITEM_ON_PAGE
+                val toIndex = fromIndex + numOfItemOnPage - 1
                 val random = Random()
-                for (i in fromIndex until toIndex) {
+                (fromIndex..toIndex).forEach {
                     val randomAvatar = random.nextInt(10) + 1
                     val randomImage = random.nextInt(10) + 1
-                    mTimelineItems.add(TimelineItem(0, "img_avatar$randomAvatar", "Nguyen Van " + (i + 1), "img_image$randomImage", "Noi dung thu " + (i + 1)))
+                    mTimelineItems.add(TimelineItem(0, "img_avatar$randomAvatar", "Nguyen Van " + (it + 1), "img_image$randomImage", "Noi dung thu " + (it + 1)))
                 }
                 Handler(Looper.getMainLooper()).post {
                     mIsLoadmore = true
@@ -101,15 +102,10 @@ class PagerFragment : Fragment(), TimelineAdapter.OnItemClickListener {
     private fun mockTimelines(): List<TimelineItem> {
         val random = Random()
         val timelineItems = ArrayList<TimelineItem>()
-        for (i in 1..10) {
+        (1..10).forEach {
             val randomAvatar = random.nextInt(10) + 1
             val randomImage = random.nextInt(10) + 1
-            timelineItems.add(
-                TimelineItem(
-                    0, "img_avatar$randomAvatar", "Nguyen Van $i", "img_image$randomImage",
-                    " Đây là tất cả phần mô tả cho nội dung thứ $i"
-                )
-            )
+            timelineItems.add(TimelineItem(0, "img_avatar$randomAvatar", "Nguyen Van $it", "img_image$randomImage", " Đây là tất cả phần mô tả cho nội dung thứ $it"))
         }
         return timelineItems
     }

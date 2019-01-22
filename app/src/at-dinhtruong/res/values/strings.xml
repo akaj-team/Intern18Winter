@@ -123,4 +123,9 @@
     <string name="incorrectPassword">Incorrect password</string>
     <string name="orLogInUsingASocialAccount">Or log in using a social account</string>
     <string name="kotlin">Kotlin</string>
+    <string name="retrofit">Retrofit</string>
+    <string name="youHaveDeniedPermission">You have denied permission</string>
+    <string name="cancle">Cancle</string>
+    <string name="denied">Denied</string>
+    <string name="setting">Setting</string>
 </resources>
