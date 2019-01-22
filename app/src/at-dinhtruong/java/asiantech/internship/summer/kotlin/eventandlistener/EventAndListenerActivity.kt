@@ -4,21 +4,20 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import android.widget.CompoundButton
-import android.widget.EditText
-import android.widget.RadioButton
 import asiantech.internship.summer.R
 import kotlinx.android.synthetic.`at-dinhtruong`.activity_event_and_listener.*
 import kotlinx.android.synthetic.`at-dinhtruong`.fragment_share_preference.*
 import java.util.regex.Pattern
 
 class EventAndListenerActivity : AppCompatActivity(), CompoundButton.OnCheckedChangeListener {
-    private val EMAIL_PATTERN =
-            "^([a-zA-Z0-9_\\-.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(]?)$"
-    private val PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-zA-Z]).{6,18}$"
-    private val USERNAME_PATTERN = "^.{6,18}$"
+    companion object {
+        const val EMAIL_PATTERN =
+                "^([a-zA-Z0-9_\\-.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(]?)$"
+        const val PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-zA-Z]).{6,18}$"
+        const val USERNAME_PATTERN = "^.{6,18}$"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -20,7 +20,7 @@ class TimelineAdapter(private var timelineItems: ArrayList<TimelineItem>,
         RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val viewTypeItem = 0
     private val viewTypeloading = 1
-    var mIsLoading: Boolean = false
+    var isLoading: Boolean = false
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val layoutInflater: LayoutInflater = LayoutInflater.from(viewGroup.context)
@@ -33,7 +33,7 @@ class TimelineAdapter(private var timelineItems: ArrayList<TimelineItem>,
     }
 
     override fun getItemCount(): Int {
-        if (mIsLoading) {
+        if (isLoading) {
             return timelineItems.size + 1
         }
         return timelineItems.size
@@ -55,7 +55,7 @@ class TimelineAdapter(private var timelineItems: ArrayList<TimelineItem>,
     }
 
     fun setLoaded(isLoading: Boolean) {
-        mIsLoading = isLoading
+        this.isLoading = isLoading
     }
 
     open inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)

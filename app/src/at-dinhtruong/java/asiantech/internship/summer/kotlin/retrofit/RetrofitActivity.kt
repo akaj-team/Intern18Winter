@@ -1,14 +1,21 @@
+@file:Suppress("DEPRECATION")
+
 package asiantech.internship.summer.kotlin.retrofit
 
 import android.Manifest
+import android.app.Activity
+import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.provider.Settings
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.GridLayoutManager
@@ -17,41 +24,57 @@ import android.view.View
 import android.widget.Toast
 import asiantech.internship.summer.R
 import asiantech.internship.summer.kotlin.model.Image
+import asiantech.internship.summer.utils.RealPathUtil
+import com.google.gson.GsonBuilder
 import kotlinx.android.synthetic.`at-dinhtruong`.activity_rest_api.*
-import android.provider.Settings
-import android.support.v7.app.AlertDialog
-import asiantech.internship.summer.restapi.SOService
-
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.OkHttpClient
+import okhttp3.RequestBody
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.util.*
+import kotlin.collections.ArrayList
 
 class RetrofitActivity : AppCompatActivity(), View.OnClickListener {
-    private val REQUEST_IMAGE_CAPTURE = 200
-    private val REQUEST_SELECT_PICTURE = 201
-    private val REQUEST_CODE_ASK_PERMISSIONS_CAMERA = 123
-    private val REQUEST_CODE_ASK_PERMISSIONS_GALLERY = 124
-    private val CHECK_DO_NOT_ASK_AGAIN = "dontAskAgain"
-    private val CHECK_CAMERA = "checkCamera"
-    private val CHECK_GALLERY = "checkGallery"
-    private val mPage = 1
-    private val mPerPage = 20
-    private val ACCESS_TOKEN = "604d1f2a63e1620f8e496970f675f0322671a3de0ba9f44c850e9ddc193f4476"
-    private val BASE_URL = "https://api.gyazo.com/api/"
-    private val UPLOAD_URL = "https://upload.gyazo.com/api/upload"
-    private var mService: SOService? = null
+
+    companion object {
+        const val REQUEST_IMAGE_CAPTURE = 200
+        const val REQUEST_SELECT_PICTURE = 201
+        const val REQUEST_CODE_ASK_PERMISSIONS_CAMERA = 123
+        const val REQUEST_CODE_ASK_PERMISSIONS_GALLERY = 124
+        const val BASE_URL = "https://api.gyazo.com/api/"
+        const val UPLOAD_URL = "https://upload.gyazo.com/api/upload"
+        const val ACCESS_TOKEN = "604d1f2a63e1620f8e496970f675f0322671a3de0ba9f44c850e9ddc193f4476"
+    }
+
+    private val page = 1
+    private val perPage = 20
+    private var service: SOService? = null
     lateinit var recyclerView: RecyclerView
-    lateinit var mListImage: ArrayList<Image>
+    lateinit var listImage: ArrayList<Image>
     lateinit var imageAdapter: ImageAdapter
-    lateinit var viewManager: GridLayoutManager
+    private lateinit var viewManager: GridLayoutManager
+    private var mProgressDialog: ProgressDialog? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_rest_api)
+        setUpApi()
         initRecyclerView()
         addListener()
     }
 
     private fun initRecyclerView() {
-        mListImage = ArrayList()
+        listImage = ArrayList()
         viewManager = GridLayoutManager(this, 2)
-        imageAdapter = ImageAdapter(mListImage)
+        imageAdapter = ImageAdapter(listImage)
         recyclerView = findViewById<RecyclerView>(R.id.recyclerViewItem).apply {
             setHasFixedSize(true)
             layoutManager = viewManager
@@ -63,7 +86,24 @@ class RetrofitActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun loadImages() {
+        onProgressbarDialog()
+        service?.getImages(ACCESS_TOKEN, page, perPage)?.enqueue(object : Callback<List<Image>> {
+            override fun onResponse(call: Call<List<Image>>, response: Response<List<Image>>) {
+                if (response.body() != null) {
+                    for (objImage in response.body() as List) {
+                        if (objImage.imageId?.isEmpty() == false) {
+                            listImage.add(objImage)
+                        }
+                    }
+                }
+                imageAdapter.notifyDataSetChanged()
+                mProgressDialog?.dismiss()
+            }
 
+            override fun onFailure(call: Call<List<Image>>, t: Throwable) {
+                mProgressDialog?.dismiss()
+            }
+        })
     }
 
     private fun addListener() {
@@ -88,7 +128,7 @@ class RetrofitActivity : AppCompatActivity(), View.OnClickListener {
                 }
             }
             else -> {
-
+                Toast.makeText(this, R.string.accept, Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -109,6 +149,68 @@ class RetrofitActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
+                REQUEST_SELECT_PICTURE -> {
+                    data?.let { onSelectFromGalleryResult(it) }
+                }
+                REQUEST_IMAGE_CAPTURE -> {
+                    data?.let { onCaptureImageResult(it) }
+                }
+                else -> {
+                    Toast.makeText(applicationContext, getString(R.string.nothingToDo), Toast.LENGTH_LONG).show()
+                }
+            }
+        }
+    }
+
+    private fun onSelectFromGalleryResult(data: Intent) {
+        val selectedImageURI = data.data
+        uploadImage(selectedImageURI)
+    }
+
+    private fun onCaptureImageResult(data: Intent) {
+        val getExtrasImage = data.extras
+        var imageBitmap: Bitmap? = null
+        if (getExtrasImage != null) {
+            imageBitmap = getExtrasImage.get(getString(R.string.data)) as Bitmap
+        }
+        if (imageBitmap != null) {
+            uploadImage(getImageUri(applicationContext, imageBitmap))
+        }
+    }
+
+    private fun uploadImage(imageUri: Uri) {
+        onProgressbarDialog()
+        val file = File(Objects.requireNonNull(RealPathUtil.getRealPath(applicationContext, imageUri)))
+        val requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file)
+        val image = MultipartBody.Part.createFormData("imagedata", file.name, requestBody)
+        val token = RequestBody.create(MediaType.parse("text/plain"), ACCESS_TOKEN)
+        service?.uploadImage(UPLOAD_URL, token, image)?.enqueue(object : Callback<Image> {
+            override fun onFailure(call: Call<Image>, t: Throwable) {
+                mProgressDialog?.dismiss()
+            }
+
+            override fun onResponse(call: Call<Image>, response: Response<Image>) {
+                if (response.isSuccessful) {
+                    response.body()?.let { listImage.add(0, it) }
+                    imageAdapter.notifyItemInserted(0)
+                }
+                mProgressDialog?.dismiss()
+            }
+
+        })
+    }
+
+    private fun getImageUri(context: Context, inImage: Bitmap): Uri {
+        val bytes = ByteArrayOutputStream()
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+        val path = MediaStore.Images.Media.insertImage(context.contentResolver, inImage, getString(R.string.title), null)
+        return Uri.parse(path)
+    }
+
     private fun checkAndRequestCameraPermission(): Boolean {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA), REQUEST_CODE_ASK_PERMISSIONS_CAMERA)
@@ -127,52 +229,32 @@ class RetrofitActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        val sharedPreferences = getSharedPreferences(CHECK_DO_NOT_ASK_AGAIN, Context.MODE_PRIVATE)
-        val isCheckGallery: Boolean
         when (requestCode) {
             REQUEST_CODE_ASK_PERMISSIONS_CAMERA -> {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
                     openCamera()
                 } else {
-                    val isCheckCamera = sharedPreferences.getBoolean(CHECK_CAMERA, false)
-                    isCheckGallery = sharedPreferences.getBoolean(CHECK_GALLERY, false)
                     var showRationale = false
                     var showRationaleWrite = false
                     if (grantResults[0] == PackageManager.PERMISSION_DENIED && grantResults[1] == PackageManager.PERMISSION_DENIED) {
                         showRationale = ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)
                         showRationaleWrite = ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     }
-                    val editor = getSharedPreferences(CHECK_DO_NOT_ASK_AGAIN, Context.MODE_PRIVATE).edit()
                     if (!showRationale && !showRationaleWrite) {
-                        if (isCheckCamera && isCheckGallery) {
-                            onPermissionDialog()
-                        }
-                        editor.putBoolean(CHECK_CAMERA, true)
-                        editor.putBoolean(CHECK_GALLERY, true)
-                    } else if (!showRationale) {
-                        editor.putBoolean(CHECK_CAMERA, true)
-                    } else if (!showRationaleWrite) {
-                        editor.putBoolean(CHECK_GALLERY, true)
+                        onPermissionDialog()
                     }
-                    editor.apply()
                 }
             }
             REQUEST_CODE_ASK_PERMISSIONS_GALLERY -> {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     openGallery()
                 } else {
-                    isCheckGallery = sharedPreferences.getBoolean(CHECK_GALLERY, false)
                     var showRationaleWrite = false
                     if (grantResults[0] == PackageManager.PERMISSION_DENIED) {
                         showRationaleWrite = ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     }
                     if (!showRationaleWrite) {
-                        if (isCheckGallery) {
-                            onPermissionDialog()
-                        }
-                        val editor = getSharedPreferences(CHECK_DO_NOT_ASK_AGAIN, Context.MODE_PRIVATE).edit()
-                        editor.putBoolean(CHECK_GALLERY, true)
-                        editor.apply()
+                        onPermissionDialog()
                     }
                 }
             }
@@ -180,17 +262,27 @@ class RetrofitActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    private fun setUpApi() {
+        val logging = HttpLoggingInterceptor()
+        logging.level = HttpLoggingInterceptor.Level.BODY
+        val httpClient = OkHttpClient.Builder()
+        httpClient.addInterceptor(logging)
+        val gson = GsonBuilder().setLenient().create()
+        val getImagesRetrofit = Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .client(httpClient.build())
+                .build()
+        service = getImagesRetrofit.create<SOService>(SOService::class.java)
+    }
+
     private fun onPermissionDialog() {
         val builder = AlertDialog.Builder(this)
-        builder.setTitle(R.string.accept)
+        builder.setTitle(getString(R.string.acceptPermission))
         builder.setMessage(R.string.youHaveDeniedPermission)
         builder.setCancelable(false)
-        builder.setNegativeButton(R.string.cancle, { dialogInterface, i -> Toast.makeText(this, getString(R.string.denied), Toast.LENGTH_SHORT).show() })
-        builder.setPositiveButton(getString(R.string.setting)) { dialogInterface, i ->
-            val editor = getSharedPreferences(CHECK_DO_NOT_ASK_AGAIN, Context.MODE_PRIVATE).edit()
-            editor.putBoolean(CHECK_CAMERA, false)
-            editor.putBoolean(CHECK_GALLERY, false)
-            editor.apply()
+        builder.setNegativeButton(R.string.cancle) { _, _ -> Toast.makeText(this, getString(R.string.denied), Toast.LENGTH_SHORT).show() }
+        builder.setPositiveButton(getString(R.string.setting)) { dialogInterface, _ ->
             dialogInterface.dismiss()
             val intent = Intent()
             intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
@@ -202,4 +294,10 @@ class RetrofitActivity : AppCompatActivity(), View.OnClickListener {
         alertDialog.show()
     }
 
+    private fun onProgressbarDialog() {
+        mProgressDialog = ProgressDialog(this)
+        mProgressDialog?.setProgressStyle(ProgressDialog.STYLE_SPINNER)
+        mProgressDialog?.setMessage(getString(R.string.loading))
+        mProgressDialog?.show()
+    }
 }

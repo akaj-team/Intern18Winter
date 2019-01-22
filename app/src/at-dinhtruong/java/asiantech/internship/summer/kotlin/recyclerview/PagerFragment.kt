@@ -17,14 +17,14 @@ import kotlin.collections.ArrayList
 class PagerFragment : Fragment(), TimelineAdapter.OnItemClickListener {
 
     lateinit var recyclerView: RecyclerView
-    lateinit var mTimelineItems: ArrayList<TimelineItem>
+    lateinit var timelineItems: ArrayList<TimelineItem>
     lateinit var timelineAdapter: TimelineAdapter
     lateinit var viewManager: LinearLayoutManager
     val numOfItemOnPage = 10
-    var mTotalItemCount = 0
-    var mChildCount = 0
-    var mFirstVisible = 0
-    var mIsLoadmore = true
+    var totalItemCount = 0
+    var childCount = 0
+    var firstVisible = 0
+    var isLoadmore = true
 
     companion object {
         fun newInstance(): PagerFragment {
@@ -33,7 +33,7 @@ class PagerFragment : Fragment(), TimelineAdapter.OnItemClickListener {
     }
 
     override fun onFavouriteClicked(position: Int) {
-        val timelineItem = mTimelineItems[position]
+        val timelineItem = timelineItems[position]
         timelineItem.numberOfLike = timelineItem.numberOfLike + 1
         timelineAdapter.notifyItemChanged(position)
     }
@@ -45,9 +45,9 @@ class PagerFragment : Fragment(), TimelineAdapter.OnItemClickListener {
     }
 
     private fun initTimeline(view: View) {
-        mTimelineItems = ArrayList(mockTimelines())
+        timelineItems = ArrayList(mockTimelines())
         viewManager = LinearLayoutManager(view.context)
-        timelineAdapter = TimelineAdapter(mTimelineItems, context, this)
+        timelineAdapter = TimelineAdapter(timelineItems, context, this)
         recyclerView = view.findViewById<RecyclerView>(R.id.recyclerViewPager).apply {
             setHasFixedSize(true)
             layoutManager = viewManager
@@ -60,13 +60,13 @@ class PagerFragment : Fragment(), TimelineAdapter.OnItemClickListener {
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-                mTotalItemCount = viewManager.itemCount
-                mChildCount = viewManager.childCount
-                mFirstVisible = viewManager.findFirstVisibleItemPosition()
-                if (mFirstVisible + mChildCount == mTotalItemCount && mIsLoadmore) {
-                    mIsLoadmore = false
+                totalItemCount = viewManager.itemCount
+                childCount = viewManager.childCount
+                firstVisible = viewManager.findFirstVisibleItemPosition()
+                if (firstVisible + childCount == totalItemCount && isLoadmore) {
+                    isLoadmore = false
                     timelineAdapter.setLoaded(true)
-                    timelineAdapter.mIsLoading
+                    timelineAdapter.isLoading
                     timelineAdapter.notifyDataSetChanged()
                     addItemLoadmore(timelineAdapter)
                 }
@@ -78,16 +78,16 @@ class PagerFragment : Fragment(), TimelineAdapter.OnItemClickListener {
         object : Thread({
             try {
                 Thread.sleep(3000)
-                val fromIndex = mTimelineItems.size
+                val fromIndex = timelineItems.size
                 val toIndex = fromIndex + numOfItemOnPage - 1
                 val random = Random()
                 (fromIndex..toIndex).forEach {
                     val randomAvatar = random.nextInt(10) + 1
                     val randomImage = random.nextInt(10) + 1
-                    mTimelineItems.add(TimelineItem(0, "img_avatar$randomAvatar", "Nguyen Van " + (it + 1), "img_image$randomImage", "Noi dung thu " + (it + 1)))
+                    timelineItems.add(TimelineItem(0, "img_avatar$randomAvatar", "Nguyen Van " + (it + 1), "img_image$randomImage", "Noi dung thu " + (it + 1)))
                 }
                 Handler(Looper.getMainLooper()).post {
-                    mIsLoadmore = true
+                    isLoadmore = true
                     timelineAdapter.setLoaded(false)
                     timelineAdapter.notifyDataSetChanged()
                 }

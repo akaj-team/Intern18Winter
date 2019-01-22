@@ -2,7 +2,7 @@ package asiantech.internship.summer.kotlin.retrofit;
 
 import java.util.List;
 
-import asiantech.internship.summer.models.Image;
+import asiantech.internship.summer.kotlin.model.Image;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
