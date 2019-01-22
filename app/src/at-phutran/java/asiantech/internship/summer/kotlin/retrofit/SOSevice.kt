@@ -1,6 +1,5 @@
 package asiantech.internship.summer.kotlin.retrofit
 
-import asiantech.internship.summer.model.ImageItem
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call

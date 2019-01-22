@@ -35,17 +35,17 @@ class LoginFragment : Fragment(), View.OnClickListener {
             }
             R.id.btnSignUp -> {
                 val signUpFragment = SignUpFragment()
-                val fragmentTransaction = fragmentManager!!.beginTransaction()
-                fragmentTransaction.setCustomAnimations(R.anim.anim_slide_in_left,
+                val fragmentTransaction = fragmentManager?.beginTransaction()
+                fragmentTransaction?.setCustomAnimations(R.anim.anim_slide_in_left,
                         R.anim.anim_slide_out_left, R.anim.anim_slide_in_right,
                         R.anim.anim_slide_out_right)
-                fragmentTransaction.replace(R.id.frContent, signUpFragment)
+                fragmentTransaction?.replace(R.id.frContent, signUpFragment)
                 if (activity is LoginActivity) {
                     (activity as LoginActivity).setTextForToolBar(getString(R.string.signUp))
                     (activity as LoginActivity).onButton()
                 }
-                fragmentTransaction.addToBackStack(null)
-                fragmentTransaction.commit()
+                fragmentTransaction?.addToBackStack(null)
+                fragmentTransaction?.commit()
             }
         }
     }
