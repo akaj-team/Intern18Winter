@@ -6,4 +6,6 @@
     <dimen name="columnWidth">50dp</dimen>
     <dimen name="noteWidth">14dp</dimen>
     <dimen name="lineWidth">1dp</dimen>
+    <dimen name="textSize15dp">15dp</dimen>
+    <dimen name="textSize18dp">18dp</dimen>
 </resources>
