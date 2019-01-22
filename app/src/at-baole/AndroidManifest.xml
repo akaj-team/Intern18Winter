@@ -39,5 +39,6 @@
         <activity android:name=".kotlin.activityfragment.InformationActivity" />
         <activity android:name=".kotlin.eventlistener.SignUpActivity" />
         <activity android:name=".kotlin.recyclerview.RecyclerViewActivity" />
+        <activity android:name=".unittest.UnitTestActivity" />
     </application>
 </manifest>
