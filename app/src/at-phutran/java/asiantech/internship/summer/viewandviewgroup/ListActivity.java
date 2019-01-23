@@ -12,6 +12,7 @@ import asiantech.internship.summer.eventlistener.SignUpActivity;
 import asiantech.internship.summer.fragment.LoginActivity;
 import asiantech.internship.summer.recyclerview.RecyclerViewActivity;
 import asiantech.internship.summer.service.ServiceActivity;
+import asiantech.internship.summer.unittest.UnitTestActivity;
 import asiantech.internship.summer.retrofit.RetrofitActivity;
 import asiantech.internship.summer.viewpager.ViewPagerActivity;
 
@@ -21,6 +22,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
     private Button mBtnRecyclerView;
     private Button mBtnFragment;
     private Button mBtnViewPager;
+    private Button mBtnUnitTest;
     private Button mBtnRetrofit;
     private Button mBtnAsyncTask;
     private Button mBtnCanvas;
@@ -35,6 +37,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         mBtnFragment = findViewById(R.id.btnExercise3);
         mBtnRecyclerView = findViewById(R.id.btnExercise4);
         mBtnViewPager = findViewById(R.id.btnExercise5);
+        mBtnUnitTest = findViewById(R.id.btnExercise10);
         mBtnRetrofit = findViewById(R.id.btnExercise8);
         mBtnAsyncTask = findViewById(R.id.btnExercise11);
         mBtnCanvas = findViewById(R.id.btnExercise9);
@@ -44,6 +47,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         mBtnFragment.setOnClickListener(this);
         mBtnRecyclerView.setOnClickListener(this);
         mBtnViewPager.setOnClickListener(this);
+        mBtnUnitTest.setOnClickListener(this);
         mBtnRetrofit.setOnClickListener(this);
         mBtnAsyncTask.setOnClickListener(this);
         mBtnCanvas.setOnClickListener(this);
@@ -90,6 +94,11 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
             }
             case R.id.btnExercise11: {
                 Intent intent = new Intent(ListActivity.this, AsyncTaskThreadHandlerActivity.class);
+                startActivity(intent);
+                break;
+            }
+            case R.id.btnExercise10: {
+                Intent intent = new Intent(ListActivity.this, UnitTestActivity.class);
                 startActivity(intent);
                 break;
             }
