@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -18,7 +19,7 @@ public class SignUpActivity extends AppCompatActivity {
     private static final int NUMBER_ZERO_IN_DECIMARL = 48;
     private static final int NUMBER_NINE_IN_DECIMARL = 57;
     private static final int LENGHT_MIN = 6;
-    private static final String EMAIL_PATTERN = "^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4})(\\]?)$";
+    private static final String EMAIL_PATTERN = "^([a-zA-Z0-9_\\-.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4})(]?)$";
     private int mCheck = 0;
     private boolean mCheckUser;
     private boolean mCheckPass;
@@ -44,6 +45,7 @@ public class SignUpActivity extends AppCompatActivity {
         mEdtPass = findViewById(R.id.edtPass);
         mEdtEmail = findViewById(R.id.edtEmail);
         mBtnCheck = findViewById(R.id.btnCheck);
+        RadioGroup rgGender = findViewById(R.id.rgGender);
         unShowButtonApply();
         mEdtUser.addTextChangedListener(new TextWatcher() {
             @Override
@@ -103,6 +105,7 @@ public class SignUpActivity extends AppCompatActivity {
                 }
             }
         });
+        rgGender.setOnCheckedChangeListener((group, checkedId) -> onRadioButtonClicked());
     }
 
     private void showButtonApply() {
@@ -142,7 +145,7 @@ public class SignUpActivity extends AppCompatActivity {
         }
     }
 
-    public void onRadioButtonClicked(View view) {
+    public void onRadioButtonClicked() {
         mCheckButton = true;
         chechInputFullInformation();
     }

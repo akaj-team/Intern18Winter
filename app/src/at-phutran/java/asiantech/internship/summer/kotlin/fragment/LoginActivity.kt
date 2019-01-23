@@ -1,11 +1,13 @@
 package asiantech.internship.summer.kotlin.fragment
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import asiantech.internship.summer.R
 import kotlinx.android.synthetic.`at-phutran`.activity_login.*
 
+@SuppressLint("Registered")
 class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,15 +27,15 @@ class LoginActivity : AppCompatActivity() {
         tvToolBar.text = title
     }
 
-    fun unShowButtonBack() {
+    private fun unShowButtonBack() {
         btnBack.visibility = View.GONE
     }
 
-    fun showButtonBack() {
+    private fun showButtonBack() {
         btnBack.visibility = View.VISIBLE
     }
 
-    fun backFragment() {
+    private fun backFragment() {
         btnBack.setOnClickListener {
             onBackPressed()
         }

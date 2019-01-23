@@ -8,9 +8,9 @@ import asiantech.internship.summer.R
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.`at-phutran`.fragment_item_image.view.*
 
-class RetrofitAdapter (val mListImage : ArrayList<Image>) : RecyclerView.Adapter<RetrofitAdapter.ViewHolder>() {
+class RetrofitAdapter (private val listImage : ArrayList<Image>) : RecyclerView.Adapter<RetrofitAdapter.ViewHolder>() {
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.onBind(mListImage[position])
+        holder.onBind(listImage[position])
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RetrofitAdapter.ViewHolder {
@@ -20,16 +20,15 @@ class RetrofitAdapter (val mListImage : ArrayList<Image>) : RecyclerView.Adapter
     }
 
     override fun getItemCount(): Int {
-        return mListImage.size
+        return listImage.size
     }
 
     class ViewHolder (view: View) : RecyclerView.ViewHolder(view) {
-        val imgContent = view.imgContent
-        val tvContent = view.tvContent
+        val imgContent = view.imgContent!!
+        val tvContent = view.tvContent!!
         fun onBind(image: Image) {
-            assert(image != null)
             if (!image.image_id.isEmpty()) {
-                tvContent.text = "this is picture"
+                tvContent.text = R.string.commentImage.toString()
                 Glide.with(itemView.context).load(image.url).into(imgContent)
             }
         }

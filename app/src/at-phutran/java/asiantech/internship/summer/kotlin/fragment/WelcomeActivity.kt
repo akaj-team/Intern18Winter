@@ -8,14 +8,14 @@ import kotlinx.android.synthetic.`at-phutran`.activity_welcome.*
 
 @SuppressLint("Registered")
 class WelcomeActivity: AppCompatActivity() {
-    private var mValueEmail = ""
-    private var mValuePassword = ""
+    private var valueEmail = ""
+    private var valuePassword = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_welcome)
-        mValueEmail = intent.getStringExtra(getString(R.string.valueEmail))
-        mValuePassword = intent.getStringExtra(getString(R.string.valuePassword))
-        tvEmail.text = mValueEmail
-        tvPassword.text = mValuePassword
+        valueEmail = intent.getStringExtra(getString(R.string.valueEmail))
+        valuePassword = intent.getStringExtra(getString(R.string.valuePassword))
+        tvEmail.text = valueEmail
+        tvPassword.text = valuePassword
     }
 }

@@ -15,8 +15,8 @@ import java.util.regex.Pattern
 
 @Suppress("NAME_SHADOWING")
 class LoginFragment : Fragment(), View.OnClickListener {
-    val mEmailPattern = "^([a-zA-Z0-9_\\-.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4})(]?)$"
-    val mPassPattern = "^[a-zA-Z0-9]{7,}$"
+    val emailPattern = "^([a-zA-Z0-9_\\-.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4})(]?)$"
+    val passPattern = "^[a-zA-Z0-9]{7,}$"
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_login, container, false)
         handleEvent(view)
@@ -27,7 +27,7 @@ class LoginFragment : Fragment(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btnLogin -> {
-                if (isValidCheckLogin(edtInputEmail.text.toString(), mEmailPattern) && isValidCheckLogin((edtInputPass.text.toString()), mPassPattern)) {
+                if (isValidCheckLogin(edtInputEmail.text.toString(), emailPattern) && isValidCheckLogin((edtInputPass.text.toString()), passPattern)) {
                     gotoWelcomeActivity()
                 } else {
                     Toast.makeText(activity, R.string.checkInput, Toast.LENGTH_SHORT).show()

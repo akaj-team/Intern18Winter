@@ -14,13 +14,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".viewandviewgroup.ListActivity">
-            <!--<intent-filter>
+        <!--<activity android:name=".viewandviewgroup.ListActivity">
+
+            &lt;!&ndash;
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
-        </activity>
+            </intent-filter>
+            &ndash;&gt;
+        </activity>-->
         <activity
             android:name=".viewandviewgroup.ViewActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
@@ -36,27 +39,19 @@
             android:screenOrientation="landscape" />
         <activity android:name=".asynctask.AsyncTaskThreadHandlerActivity" />
         <activity android:name=".retrofit.RetrofitActivity" />
-        <activity android:name=".kotlin.eventlistener.EventListenerSignUp">
-            <!--<intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
-        </activity>
-        <activity android:name=".kotlin.fragment.LoginActivity">
+        <activity android:name=".kotlin.eventlistener.EventListenerSignUp" />
+        <activity android:name=".kotlin.fragment.LoginActivity" />
+        <activity android:name=".kotlin.fragment.WelcomeActivity" />
+        <activity android:name=".kotlin.retrofit.RetrofitActivity" />
+        <activity android:name=".menu.MenuActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".kotlin.fragment.WelcomeActivity" />
-        <activity android:name=".kotlin.retrofit.RetrofitActivity">
-            <!--<intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
-        </activity>
+        <activity android:name=".menu.ListActivityKotlin" />
+        <activity android:name=".menu.ListActivityJava" />
     </application>
+
 </manifest>

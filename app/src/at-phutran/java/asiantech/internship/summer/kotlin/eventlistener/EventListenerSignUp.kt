@@ -1,23 +1,26 @@
 package asiantech.internship.summer.kotlin.eventlistener
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.widget.RadioGroup
 import asiantech.internship.summer.R
 import kotlinx.android.synthetic.`at-phutran`.activity_sign_up.*
 import java.util.regex.Pattern
 
+@SuppressLint("Registered")
 @Suppress("NAME_SHADOWING")
 class EventListenerSignUp : AppCompatActivity() {
-    private val mEmailPattern = "^([a-zA-Z0-9_\\-.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4})(]?)$"
-    private val mUserPattern = "^.{6,18}$"
-    private val mPassPattern = "^(?=.*[0-9])(?=.*[a-zA-Z]).{6,18}$"
-    var mIsCheckUser: Boolean = false
-    var mIsCheckPass: Boolean = false
-    var mIsCheckEmail: Boolean = false
-    private var mIsCheckButton: Boolean = false
+    private val emailPattern = "^([a-zA-Z0-9_\\-.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4})(]?)$"
+    private val userPattern = "^.{6,18}$"
+    private val passPattern = "^(?=.*[0-9])(?=.*[a-zA-Z]).{6,18}$"
+    var isCheckUser: Boolean = false
+    var isCheckPass: Boolean = false
+    var isCheckEmail: Boolean = false
+    private var isCheckButton: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +29,9 @@ class EventListenerSignUp : AppCompatActivity() {
         checkUserSignUp()
         checkPassSignUp()
         checkEmailSignUp()
+        rgGender.setOnCheckedChangeListener { _: RadioGroup, _: Int ->
+            onRadioButtonClicked()
+        }
     }
 
     private fun checkUserSignUp() {
@@ -37,11 +43,11 @@ class EventListenerSignUp : AppCompatActivity() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                if (isValidCheckSignUp(edtUser.text.toString(), mUserPattern)) {
-                    mIsCheckUser = true
+                if (isValidCheckSignUp(edtUser.text.toString(), userPattern)) {
+                    isCheckUser = true
                     checkInputFullInformation()
                 } else {
-                    mIsCheckUser = false
+                    isCheckUser = false
                     unShowButtonApply()
                     edtUser.error = getString(R.string.errorInput)
                 }
@@ -58,11 +64,11 @@ class EventListenerSignUp : AppCompatActivity() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                if (isValidCheckSignUp(edtEmail.text.toString(), mEmailPattern)) {
-                    mIsCheckEmail = true
+                if (isValidCheckSignUp(edtEmail.text.toString(), emailPattern)) {
+                    isCheckEmail = true
                     checkInputFullInformation()
                 } else {
-                    mIsCheckEmail = false
+                    isCheckEmail = false
                     unShowButtonApply()
                     edtEmail.error = getString(R.string.errorInputEmail)
                 }
@@ -85,12 +91,12 @@ class EventListenerSignUp : AppCompatActivity() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                if (isValidCheckSignUp(edtPass.text.toString(), mPassPattern)) {
-                    mIsCheckPass = true
+                if (isValidCheckSignUp(edtPass.text.toString(), passPattern)) {
+                    isCheckPass = true
                     checkInputFullInformation()
                 } else {
                     unShowButtonApply()
-                    mIsCheckPass = false
+                    isCheckPass = false
                     edtPass.error = getString(R.string.errorInputPassword)
                 }
             }
@@ -98,7 +104,7 @@ class EventListenerSignUp : AppCompatActivity() {
     }
 
     private fun checkInputFullInformation() {
-        if (mIsCheckUser && mIsCheckPass && mIsCheckEmail && mIsCheckButton) {
+        if (isCheckUser && isCheckPass && isCheckEmail && isCheckButton) {
             showButtonApply()
         }
     }
@@ -111,8 +117,8 @@ class EventListenerSignUp : AppCompatActivity() {
         btnCheck.visibility = View.VISIBLE
     }
 
-    fun onRadioButtonClicked(view: View) {
-        mIsCheckButton = true
+    private fun onRadioButtonClicked() {
+        isCheckButton = true
         checkInputFullInformation()
     }
 }

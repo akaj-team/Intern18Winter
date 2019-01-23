@@ -22,7 +22,7 @@ class SignUpFragment : Fragment() {
 
     private fun eventCheckSignUp() {
         val loginFragment = LoginFragment()
-        if (loginFragment.isValidCheckLogin(edtInputEmail.text.toString(), loginFragment.mEmailPattern) && loginFragment.isValidCheckLogin(edtInputPass.text.toString(), loginFragment.mPassPattern) && edtInputPass.text.toString() == edtConfirmPass.text.toString()) {
+        if (loginFragment.isValidCheckLogin(edtInputEmail.text.toString(), loginFragment.emailPattern) && loginFragment.isValidCheckLogin(edtInputPass.text.toString(), loginFragment.passPattern) && edtInputPass.text.toString() == edtConfirmPass.text.toString()) {
             val fragmentTransaction = fragmentManager?.beginTransaction()
             fragmentTransaction?.replace(R.id.frContent, loginFragment)
             Toast.makeText(activity, R.string.success, Toast.LENGTH_SHORT).show()

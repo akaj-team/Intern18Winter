@@ -98,4 +98,7 @@
     <string name="isCamera">isCamera</string>
     <string name="valueEmail">valueEmail</string>
     <string name="valuePassword">valuePassword</string>
+    <string name="exercise14">kotlin</string>
+    <string name="exerciseKotlin">kotlin</string>
+    <string name="exerciseJava">java</string>
 </resources>
