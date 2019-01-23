@@ -14,16 +14,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <!--<activity android:name=".viewandviewgroup.ListActivity">
-
-            &lt;!&ndash;
+        <activity android:name=".menu.MenuActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            &ndash;&gt;
-        </activity>-->
+        </activity>
         <activity
             android:name=".viewandviewgroup.ViewActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
@@ -43,15 +40,8 @@
         <activity android:name=".kotlin.fragment.LoginActivity" />
         <activity android:name=".kotlin.fragment.WelcomeActivity" />
         <activity android:name=".kotlin.retrofit.RetrofitActivity" />
-        <activity android:name=".menu.MenuActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
         <activity android:name=".menu.ListActivityKotlin" />
         <activity android:name=".menu.ListActivityJava" />
+        <activity android:name=".unittest.UnitTestActivity" />
     </application>
-
 </manifest>

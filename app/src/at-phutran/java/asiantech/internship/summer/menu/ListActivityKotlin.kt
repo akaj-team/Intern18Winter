@@ -1,8 +1,8 @@
 package asiantech.internship.summer.menu
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.view.View
 import asiantech.internship.summer.R
 import asiantech.internship.summer.kotlin.eventlistener.EventListenerSignUp
@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.`at-phutran`.activity_list_kotlin.*
 
 class ListActivityKotlin : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
-        when(v?.id){
+        when (v?.id) {
             R.id.btnExercise00 -> {
                 val intent = Intent(this@ListActivityKotlin, EventListenerSignUp::class.java)
                 startActivity(intent)

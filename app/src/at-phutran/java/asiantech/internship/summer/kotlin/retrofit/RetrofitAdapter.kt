@@ -8,7 +8,7 @@ import asiantech.internship.summer.R
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.`at-phutran`.fragment_item_image.view.*
 
-class RetrofitAdapter (private val listImage : ArrayList<Image>) : RecyclerView.Adapter<RetrofitAdapter.ViewHolder>() {
+class RetrofitAdapter(private val listImage: ArrayList<Image>) : RecyclerView.Adapter<RetrofitAdapter.ViewHolder>() {
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.onBind(listImage[position])
     }
@@ -23,7 +23,7 @@ class RetrofitAdapter (private val listImage : ArrayList<Image>) : RecyclerView.
         return listImage.size
     }
 
-    class ViewHolder (view: View) : RecyclerView.ViewHolder(view) {
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val imgContent = view.imgContent!!
         val tvContent = view.tvContent!!
         fun onBind(image: Image) {

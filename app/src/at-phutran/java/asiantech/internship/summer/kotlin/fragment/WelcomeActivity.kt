@@ -7,7 +7,7 @@ import asiantech.internship.summer.R
 import kotlinx.android.synthetic.`at-phutran`.activity_welcome.*
 
 @SuppressLint("Registered")
-class WelcomeActivity: AppCompatActivity() {
+class WelcomeActivity : AppCompatActivity() {
     private var valueEmail = ""
     private var valuePassword = ""
     override fun onCreate(savedInstanceState: Bundle?) {

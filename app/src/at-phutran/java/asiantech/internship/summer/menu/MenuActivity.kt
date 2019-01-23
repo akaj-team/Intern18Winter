@@ -1,15 +1,15 @@
 package asiantech.internship.summer.menu
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.view.View
 import asiantech.internship.summer.R
 import kotlinx.android.synthetic.`at-phutran`.activity_menu.*
 
 class MenuActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
-        when(v?.id){
+        when (v?.id) {
             R.id.btnExerciseJava -> {
                 val intent = Intent(this@MenuActivity, ListActivityJava::class.java)
                 startActivity(intent)
