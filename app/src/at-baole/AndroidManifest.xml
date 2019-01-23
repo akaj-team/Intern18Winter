@@ -15,8 +15,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name=".unittest.UnitTestActivity">
+        <activity android:name=".finalproject.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -35,5 +34,8 @@
             android:name=".canvas.CanvasActivity"
             android:screenOrientation="landscape" />
         <activity android:name=".restapi.RestAPIActivity" />
+        <activity android:name=".unittest.UnitTestActivity" />
+        <activity android:name=".finalproject.WelcomeActivity"></activity>
     </application>
+
 </manifest>

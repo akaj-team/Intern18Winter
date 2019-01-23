@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorCyan">
+
+        <Button
+            android:id="@+id/btnBack"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:background="@drawable/ic_arrow_back_black_18dp" />
+
+        <TextView
+            android:id="@+id/tvToolBar"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:text="@string/logIn"
+            android:textColor="@color/colorWhite"
+            android:textSize="18sp" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:textColor="@color/colorRed"
+        android:textSize="30dp"
+        android:text="@string/textEnglishMaster"
+        android:gravity="center"/>
+
+    <EditText
+        android:id="@+id/edtEmailFinal"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="5dp"
+        android:autofillHints="@string/textEmailFinal"
+        android:background="@drawable/bg_shape_stroke_cyan"
+        android:hint="@string/textEmailFinal"
+        android:inputType="textEmailAddress"
+        tools:targetApi="27" />
+
+    <EditText
+        android:id="@+id/edtUsernameFinal"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:autofillHints="@string/textUsernameFinal"
+        android:background="@drawable/bg_shape_stroke_cyan"
+        android:hint="@string/textUsernameFinal"
+        android:inputType="text"
+        tools:targetApi="27" />
+
+    <EditText
+        android:id="@+id/edtPasswordFinal"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:autofillHints="@string/textPasswordFinal"
+        android:background="@drawable/bg_shape_stroke_cyan"
+        android:hint="@string/textPasswordFinal"
+        android:inputType="textPassword"
+        tools:targetApi="27" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/bg_shape_stroke_cyan">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="@string/textChooseYourGender"
+            android:textColor="@color/colorBlack" />
+
+        <Space
+            android:layout_width="10dp"
+            android:layout_height="match_parent" />
+
+        <RadioGroup
+            android:id="@+id/rgGenderFinal"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rbMaleFinal"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/textMaleFinal"
+                android:textSize="@dimen/textSize15dp" />
+
+            <Space
+                android:layout_width="10dp"
+                android:layout_height="match_parent" />
+
+            <RadioButton
+                android:id="@+id/rbFemaleFinal"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/textFemaleFinal"
+                android:textSize="@dimen/textSize15dp" />
+        </RadioGroup>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnLoginFinal"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/bg_shape_solid_cyan"
+        android:text="@string/textButtonLoginFinal"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/textSize18dp" />
+
+</LinearLayout>
