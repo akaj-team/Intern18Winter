@@ -33,7 +33,6 @@ import java.util.List;
 import java.util.Objects;
 import asiantech.internship.summer.R;
 import asiantech.internship.summer.model.DrawerItem;
-import asiantech.internship.summer.retrofit.RetrofitActivity;
 
 public class DrawerLayoutActivity extends AppCompatActivity implements DrawerLayoutAdapter.OnItemClickListener {
 
