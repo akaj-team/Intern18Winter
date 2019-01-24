@@ -10,56 +10,72 @@
     <Button
         android:id="@+id/btnExercise1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:background="@color/colorGreen"
+        android:layout_height="30dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/shape"
         android:text="@string/exercise1" />
 
     <Button
         android:id="@+id/btnExercise2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:background="@color/colorGreen"
+        android:layout_height="30dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/shape"
         android:text="@string/exercise2" />
 
     <Button
         android:id="@+id/btnExercise3"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:background="@color/colorGreen"
+        android:layout_height="30dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/shape"
         android:text="@string/exercise3" />
 
     <Button
         android:id="@+id/btnExercise4"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:background="@color/colorGreen"
+        android:layout_height="30dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/shape"
         android:text="@string/exercise4" />
 
     <Button
         android:id="@+id/btnExercise5"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:background="@color/colorGreen"
+        android:layout_height="30dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/shape"
         android:text="@string/exercise5" />
 
     <Button
         android:id="@+id/btnExercise9"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:background="@color/colorGreen"
+        android:layout_height="30dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/shape"
         android:text="@string/exercise9" />
 
     <Button
         android:id="@+id/btnExercise11"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:background="@color/colorGreen"
+        android:layout_height="30dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/shape"
         android:text="@string/exercise11" />
+
+    <Button
+        android:id="@+id/btnExercise8"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/shape"
+        android:text="@string/exercise8" />
+
+    <Button
+        android:id="@+id/btnExercise10"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/shape"
+        android:text="@string/exercise10" />
 </LinearLayout>

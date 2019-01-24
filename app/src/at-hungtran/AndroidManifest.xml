@@ -19,24 +19,26 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity android:name=".kotlin.restapi.RestAPIActivity" >
+        <activity android:name=".asynctask_thread_handler.HomeActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".eventlistener.LoginActivity" />
-        <activity android:name=".activityfragment.LoginActivity" />
+        <activity android:name=".view.ViewActivity" />
+        <activity android:name=".eventlistener.LoginActivity"/>
+        <activity android:name=".activityfragment.LoginActivity"/>
+        <activity android:name=".recyclerview.TimelineActivity" />
         <activity android:name=".viewpager.PagerActivity" />
+        <activity android:name=".restapi.RestAPIActivity" />
         <activity
             android:name=".canvas.CanvasActivity"
             android:screenOrientation="landscape" />
-        <activity android:name=".view.ViewActivity" />
-        <activity android:name=".recyclerview.TimelineActivity" />
         <activity android:name=".asynctask_thread_handler.ViewPagerActivity" />
-        <activity android:name=".restapi.RestAPIActivity" />
+        <activity android:name=".unittest.UnitTestActivity"/>
         <activity android:name=".kotlin.eventlistener.EventListenerActivity"/>
+        <activity android:name=".kotlin.restapi.RestAPIActivity" />
     </application>
 
 </manifest>
