@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">Intern18Summer</string>
+    <string name="like">12 likes</string>
+    <string name="description">Text description</string>
+    <string name="loginWithSocialAccount">Or log in using a social account</string>
+    <string name="dontHaveAnAccount">Don\'t have an account yet?</string>
+    <string name="fogotYourAccount">Forgot your password?</string>
+    <string name="validUsernamePassword">Valid Successed</string>
+    <string name="errorUsernameLeastTwoNonConsecutiveUppercaseLetters">Username have least 2 non-consecutive uppercase letters</string>
+    <string name="errorUserNameNoAtMost2ConsecivitiveDigits">Username have at most 2 consecutive digits</string>
+    <string name="errorPasswordNotHas2SpecialCharOrDigits">Password Must Have 2 Special Characters or Digits</string>
 </resources>
