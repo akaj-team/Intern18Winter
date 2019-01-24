@@ -3,9 +3,7 @@ package asiantech.internship.summer.drawerlayout;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -19,6 +17,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -34,6 +33,7 @@ import java.util.Objects;
 import asiantech.internship.summer.R;
 import asiantech.internship.summer.model.DrawerItem;
 
+@SuppressLint("Registered")
 public class DrawerLayoutActivity extends AppCompatActivity implements DrawerLayoutAdapter.OnItemClickListener {
 
     private static final int CHOOSE_GALLERY = 0;
@@ -42,10 +42,8 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerLay
     private static final int CAMERA = 222;
     private static final int REQUEST_CODE_ASK_PERMISSIONS_CAMERA = 333;
     private static final int REQUEST_CODE_ASK_PERMISSIONS_GALLERY = 444;
-    private static final String MY_PREFS_NAME = "MyFile";
     protected RecyclerView mRecyclerViewDrawer;
     private TextView mTvContent;
-    private SharedPreferences isSharedPreferences;
     private List<DrawerItem> mData;
     private DrawerLayoutAdapter mDrawerLayoutAdapter;
     private int mPosition = -1;
@@ -78,7 +76,6 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerLay
         //Move content to side in Drawer Layout
         slide();
         initData();
-        isSharedPreferences = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
         initView();
     }
 
@@ -164,8 +161,6 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerLay
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        boolean isNotAllowAskWriteExternal;
-        boolean isNotAllowAskCamera;
         boolean isShowRationaleWrite;
         switch (requestCode) {
             case REQUEST_CODE_ASK_PERMISSIONS_CAMERA: {
@@ -174,18 +169,8 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerLay
                 } else {
                     boolean isShowRationaleCamera = ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA);
                     isShowRationaleWrite = ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-                    isNotAllowAskWriteExternal = getValueShowInSharedPreferences(getString(R.string.isWrite));
-                    isNotAllowAskCamera = getValueShowInSharedPreferences(getString(R.string.isCamera));
-                    if (!isShowRationaleWrite && !isShowRationaleCamera) {
-                        if (isNotAllowAskWriteExternal && isNotAllowAskCamera) {
-                            showSettingsAlert(getString(R.string.noteCamera));
-                        }
-                    }
-                    if (!isShowRationaleWrite) {
-                        saveValueShowInSharedPreferences(getString(R.string.isWrite));
-                    }
-                    if (!isShowRationaleCamera) {
-                        saveValueShowInSharedPreferences(getString(R.string.isCamera));
+                    if (!isShowRationaleWrite || !isShowRationaleCamera) {
+                        showSettingsAlert(getString(R.string.noteCamera));
                     }
                 }
                 break;
@@ -195,12 +180,8 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerLay
                     chooseGallery();
                 } else {
                     isShowRationaleWrite = ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-                    isNotAllowAskWriteExternal = getValueShowInSharedPreferences(getString(R.string.isWrite));
                     if (!isShowRationaleWrite) {
-                        if (isNotAllowAskWriteExternal) {
-                            showSettingsAlert(getString(R.string.noteGallery));
-                        }
-                        saveValueShowInSharedPreferences(getString(R.string.isWrite));
+                        showSettingsAlert(getString(R.string.noteGallery));
                     }
                 }
                 break;
@@ -210,23 +191,13 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerLay
         }
     }
 
-    private void saveValueShowInSharedPreferences(String value) {
-        SharedPreferences.Editor editor = isSharedPreferences.edit();
-        editor.putBoolean(value, true);
-        editor.apply();
-    }
-
-    private boolean getValueShowInSharedPreferences(String value) {
-        return isSharedPreferences.getBoolean(value, false);
-    }
-
     private void showSettingsAlert(String message) {
-        android.support.v7.app.AlertDialog alertDialog = new android.support.v7.app.AlertDialog.Builder(this).create();
+        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
         alertDialog.setTitle(getString(R.string.optionChoose));
         alertDialog.setMessage(getString(R.string.noteAccess) + " " + message);
-        alertDialog.setButton(android.support.v7.app.AlertDialog.BUTTON_NEGATIVE, getString(R.string.cancel),
+        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, getString(R.string.cancel),
                 (dialog, which) -> dialog.dismiss());
-        alertDialog.setButton(android.support.v7.app.AlertDialog.BUTTON_POSITIVE, getString(R.string.setting),
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(R.string.setting),
                 (dialog, which) -> {
                     dialog.dismiss();
                     startInstalledAppDetailsActivity(DrawerLayoutActivity.this);

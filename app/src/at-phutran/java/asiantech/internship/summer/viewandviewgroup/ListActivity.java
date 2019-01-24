@@ -12,6 +12,7 @@ import asiantech.internship.summer.drawerlayout.DrawerLayoutActivity;
 import asiantech.internship.summer.eventlistener.SignUpActivity;
 import asiantech.internship.summer.fragment.LoginActivity;
 import asiantech.internship.summer.recyclerview.RecyclerViewActivity;
+import asiantech.internship.summer.unittest.UnitTestActivity;
 import asiantech.internship.summer.retrofit.RetrofitActivity;
 import asiantech.internship.summer.viewpager.ViewPagerActivity;
 
@@ -22,6 +23,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
     private Button mBtnFragment;
     private Button mBtnViewPager;
     private Button mBtnDrawerLayout;
+    private Button mBtnUnitTest;
     private Button mBtnRetrofit;
     private Button mBtnAsyncTask;
     private Button mBtnCanvas;
@@ -35,19 +37,21 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         mBtnFragment = findViewById(R.id.btnExercise3);
         mBtnRecyclerView = findViewById(R.id.btnExercise4);
         mBtnViewPager = findViewById(R.id.btnExercise5);
-        mBtnDrawerLayout = findViewById(R.id.btnExercise7);
+        mBtnUnitTest = findViewById(R.id.btnExercise10);
         mBtnRetrofit = findViewById(R.id.btnExercise8);
         mBtnAsyncTask = findViewById(R.id.btnExercise11);
         mBtnCanvas = findViewById(R.id.btnExercise9);
+        mBtnDrawerLayout = findViewById(R.id.btnExercise7);
         mBtnView.setOnClickListener(this);
         mBtnListener.setOnClickListener(this);
         mBtnFragment.setOnClickListener(this);
         mBtnRecyclerView.setOnClickListener(this);
         mBtnViewPager.setOnClickListener(this);
-        mBtnDrawerLayout.setOnClickListener(this);
+        mBtnUnitTest.setOnClickListener(this);
         mBtnRetrofit.setOnClickListener(this);
         mBtnAsyncTask.setOnClickListener(this);
         mBtnCanvas.setOnClickListener(this);
+        mBtnDrawerLayout.setOnClickListener(this);
     }
 
     @Override
@@ -88,13 +92,18 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(intent);
                 break;
             }
-            case R.id.btnExercise7: {
-                Intent intent = new Intent(ListActivity.this, DrawerLayoutActivity.class);
+            case R.id.btnExercise10: {
+                Intent intent = new Intent(ListActivity.this, UnitTestActivity.class);
                 startActivity(intent);
                 break;
             }
             case R.id.btnExercise11: {
                 Intent intent = new Intent(ListActivity.this, AsyncTaskThreadHandlerActivity.class);
+                startActivity(intent);
+                break;
+            }
+            case R.id.btnExercise7: {
+                Intent intent = new Intent(ListActivity.this, DrawerLayoutActivity.class);
                 startActivity(intent);
                 break;
             }
