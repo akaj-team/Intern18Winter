@@ -1,8 +1,8 @@
 package asiantech.internship.summer.kotlin
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.view.View
 import asiantech.internship.summer.R
 import asiantech.internship.summer.kotlin.eventandlistener.EventAndListenerActivity
@@ -10,7 +10,7 @@ import asiantech.internship.summer.kotlin.recyclerview.RecyclerViewActivity
 import asiantech.internship.summer.kotlin.retrofit.RetrofitActivity
 import kotlinx.android.synthetic.`at-dinhtruong`.activity_kotlin.*
 
-class KotlinActivity : AppCompatActivity(),View.OnClickListener {
+class KotlinActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,10 +24,10 @@ class KotlinActivity : AppCompatActivity(),View.OnClickListener {
         btnRetrofit.setOnClickListener(this)
     }
 
-    override fun onClick(v: View) {
-        when (v.id) {
+    override fun onClick(v: View?) {
+        when (v?.id) {
             R.id.btnEventAndListenerKotlin -> {
-                val intent = Intent(this,EventAndListenerActivity::class.java)
+                val intent = Intent(this, EventAndListenerActivity::class.java)
                 startActivity(intent)
             }
             R.id.btnRecyclerViewKotlin -> {

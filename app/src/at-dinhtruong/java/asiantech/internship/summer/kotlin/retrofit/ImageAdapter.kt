@@ -24,11 +24,14 @@ class ImageAdapter(private val listImage: ArrayList<Image>) :
     }
 
     override fun getItemCount() = listImage.size
-    inner class ImageViewHolder(val itmView: View) : RecyclerView.ViewHolder(itmView) {
+
+    inner class ImageViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         fun onBind() {
-            val image = listImage[adapterPosition]
-            Glide.with(itemView.context).load(image.url).into(itemView.imgItem)
-            itmView.tvItem.text = image.imageId
+            val image = listImage.get(index = adapterPosition)
+            if (!image.imageId.isNullOrEmpty()) {
+                Glide.with(itemView.context).load(image.url).into(itemView.imgItem)
+                view.tvItem.text = image.imageId
+            }
         }
     }
 }

@@ -88,12 +88,10 @@ class RetrofitActivity : AppCompatActivity(), View.OnClickListener {
     private fun loadImages() {
         onProgressbarDialog()
         service?.getImages(ACCESS_TOKEN, page, perPage)?.enqueue(object : Callback<List<Image>> {
-            override fun onResponse(call: Call<List<Image>>, response: Response<List<Image>>) {
-                if (response.body() != null) {
-                    for (objImage in response.body() as List) {
-                        if (objImage.imageId?.isEmpty() == false) {
-                            listImage.add(objImage)
-                        }
+            override fun onResponse(call: Call<List<Image>>, response: Response<List<Image>>?) {
+                for (objImage in response?.body() as List) {
+                    if (!objImage.imageId.isNullOrEmpty()) {
+                        listImage.add(objImage)
                     }
                 }
                 imageAdapter.notifyDataSetChanged()
@@ -173,13 +171,9 @@ class RetrofitActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun onCaptureImageResult(data: Intent) {
         val getExtrasImage = data.extras
-        var imageBitmap: Bitmap? = null
-        if (getExtrasImage != null) {
-            imageBitmap = getExtrasImage.get(getString(R.string.data)) as Bitmap
-        }
-        if (imageBitmap != null) {
-            uploadImage(getImageUri(applicationContext, imageBitmap))
-        }
+        val imageBitmap: Bitmap?
+        imageBitmap = getExtrasImage.get(getString(R.string.data)) as Bitmap
+        uploadImage(getImageUri(applicationContext, imageBitmap))
     }
 
     private fun uploadImage(imageUri: Uri) {

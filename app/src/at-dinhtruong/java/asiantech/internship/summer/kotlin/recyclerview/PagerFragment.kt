@@ -16,10 +16,10 @@ import kotlin.collections.ArrayList
 
 class PagerFragment : Fragment(), TimelineAdapter.OnItemClickListener {
 
-    lateinit var recyclerView: RecyclerView
-    lateinit var timelineItems: ArrayList<TimelineItem>
-    lateinit var timelineAdapter: TimelineAdapter
-    lateinit var viewManager: LinearLayoutManager
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var timelineItems: ArrayList<TimelineItem>
+    private lateinit var timelineAdapter: TimelineAdapter
+    private lateinit var viewManager: LinearLayoutManager
     val numOfItemOnPage = 10
     var totalItemCount = 0
     var childCount = 0
