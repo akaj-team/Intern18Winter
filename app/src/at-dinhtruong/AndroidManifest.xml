@@ -38,7 +38,8 @@
         <activity
             android:name=".canvas.CanvasActivity"
             android:screenOrientation="landscape" />
-        <activity android:name=".unittest.UnitTestActivity"/>
+        <activity android:name=".unittest.UnitTestActivity" />
+        <activity android:name=".finalproject.MovieActivity"></activity>
     </application>
 
 </manifest>

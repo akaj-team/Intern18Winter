@@ -90,14 +90,17 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btnAsyncThreadHandler: {
                 Intent intent = new Intent(HomeActivity.this, AsyncTaskThreadHandlerActivity.class);
                 startActivity(intent);
+                break;
             }
             case R.id.btnCanvas: {
                 Intent intent = new Intent(HomeActivity.this, CanvasActivity.class);
                 startActivity(intent);
+                break;
             }
             case R.id.btnUnitTest: {
                 Intent intent = new Intent(HomeActivity.this, UnitTestActivity.class);
                 startActivity(intent);
+                break;
             }
             default:
                 break;
