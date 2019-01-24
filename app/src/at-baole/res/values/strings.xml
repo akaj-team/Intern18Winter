@@ -115,6 +115,7 @@
     <string name="textChooseYourNationality">Your Nationality:</string>
     <string name="textButtonLoginFinal">LOGIN</string>
     <string name="textWelcome">Welcome</string>
+    <string name="textWelcomeCapital">WELCOME</string>
     <string name="textGoToYourProfile">GO TO YOUR PROFILE</string>
     <string name="textEnglishMaster">ENGLISH MASTER</string>
     <string name="textTestListening">TEST LISTENING</string>
@@ -156,7 +157,9 @@
         <item>Cambodian</item>
     </string-array>
     <string-array name="options">
+        <item> </item>
         <item>Your profile</item>
         <item>Your statistics</item>
+        <item>Sign out</item>
     </string-array>
 </resources>

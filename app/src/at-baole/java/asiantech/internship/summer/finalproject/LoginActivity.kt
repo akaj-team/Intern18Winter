@@ -26,6 +26,5 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         btnLoginFinal.setOnClickListener { getLoginUsername() }
-        btnBack.setOnClickListener { onBackPressed() }
     }
 }

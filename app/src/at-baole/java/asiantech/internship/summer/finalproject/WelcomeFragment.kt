@@ -18,7 +18,7 @@ class WelcomeFragment : Fragment() {
         return welcomeView
     }
 
-    private fun data(){
+    private fun data() {
         val usernameKey = "username"
         val string: String? = arguments?.getString(usernameKey).toString()
         tvWelcomeFinal?.text = string

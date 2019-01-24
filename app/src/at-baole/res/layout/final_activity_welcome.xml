@@ -4,10 +4,55 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <FrameLayout
-        android:id="@+id/llWelcome"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorCyan">
+
+        <TextView
+            android:id="@+id/tvToolBar"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:text="@string/textWelcomeCapital"
+            android:textColor="@color/colorWhite"
+            android:textSize="18sp" />
+
+        <Spinner
+            android:id="@+id/spinnerOptions"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/ic_more_vert_black_18dp">
+
+        </Spinner>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/viewPagerFinal"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    </FrameLayout>
+        <FrameLayout
+            android:id="@+id/llWelcome"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/llProfile"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/llStatistics"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </FrameLayout>
+    </RelativeLayout>
 </LinearLayout>
