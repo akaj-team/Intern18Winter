@@ -2,6 +2,7 @@ package asiantech.internship.summer.kotlin.fragment
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,7 +23,7 @@ class SignUpFragment : Fragment() {
 
     private fun eventCheckSignUp() {
         val loginFragment = LoginFragment()
-        if (loginFragment.isValidCheckLogin(edtInputEmail.text.toString(), loginFragment.emailPattern) && loginFragment.isValidCheckLogin(edtInputPass.text.toString(), loginFragment.passPattern) && edtInputPass.text.toString() == edtConfirmPass.text.toString()) {
+        if (loginFragment.isValidCheckLogin(edtInputEmail.text.toString(), Patterns.EMAIL_ADDRESS.toString()) && loginFragment.isValidCheckLogin(edtInputPass.text.toString(), loginFragment.passPattern) && edtInputPass.text.toString() == edtConfirmPass.text.toString()) {
             val fragmentTransaction = fragmentManager?.beginTransaction()
             fragmentTransaction?.replace(R.id.frContent, loginFragment)
             Toast.makeText(activity, R.string.success, Toast.LENGTH_SHORT).show()

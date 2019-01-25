@@ -42,6 +42,7 @@ class RetrofitActivity : AppCompatActivity() {
     private val camera = 222
     private val requestAskPermissionCamera = 333
     private val requestAskPermissionGallery = 444
+    private val space = " "
     private lateinit var imageItems: ArrayList<Image>
     private var adapter: RetrofitAdapter? = null
     private var soService: SOSevice? = null
@@ -55,7 +56,7 @@ class RetrofitActivity : AppCompatActivity() {
         soService = retrofitClient.getClient()?.create(SOSevice::class.java)
         initRecyclerView()
         loadData()
-        btnInsertImage.setOnClickListener {
+        btnInsertImage?.setOnClickListener {
             eventHandle()
         }
     }
@@ -123,7 +124,7 @@ class RetrofitActivity : AppCompatActivity() {
     private fun showSettingsAlert(message: String) {
         val alertDialog = AlertDialog.Builder(this).create()
         alertDialog.setTitle(getString(R.string.optionChoose))
-        alertDialog.setMessage(getString(R.string.noteAccess) + " " + message)
+        alertDialog.setMessage(getString(R.string.noteAccess) + space + message)
         alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, getString(R.string.cancel)
         ) { dialog, _ -> dialog.dismiss() }
         alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(R.string.setting)
@@ -145,22 +146,16 @@ class RetrofitActivity : AppCompatActivity() {
         }
     }
 
-    private fun openGallery(intent: Intent) {
-        val selectedImageURI = intent.data
-        if (selectedImageURI != null) {
-            uploadImage(selectedImageURI)
-        }
+    private fun openGallery(intent: Intent?) {
+        val selectedImageURI = intent?.data
+        uploadImage(selectedImageURI)
     }
 
-    private fun openCamera(data: Intent) {
-        val bundle = data.extras
-        var imageBitmap: Bitmap? = null
-        if (bundle != null) {
-            imageBitmap = bundle.get(getString(R.string.data)) as Bitmap
-        }
-        if (imageBitmap != null) {
-            uploadImage(getImageUri(applicationContext, imageBitmap))
-        }
+    private fun openCamera(data: Intent?) {
+        val bundle = data?.extras
+        val imageBitmap: Bitmap?
+        imageBitmap = bundle?.get(getString(R.string.data)) as Bitmap
+        uploadImage(getImageUri(applicationContext, imageBitmap))
     }
 
     private fun startInstalledAppDetailsActivity(context: Activity?) {
@@ -242,10 +237,10 @@ class RetrofitActivity : AppCompatActivity() {
         return Uri.parse(path)
     }
 
-    private fun uploadImage(imageUri: Uri) {
+    private fun uploadImage(imageUri: Uri?) {
         showProgressbarDialog()
         val realPathUtil = RealPathUtil()
-        val file = File(Objects.requireNonNull<String>(realPathUtil.getRealPathFromUriAPI11to18(applicationContext, imageUri)))
+        val file = File(Objects.requireNonNull<String>(imageUri?.let { realPathUtil.getRealPathFromUriAPI11to18(applicationContext, it) }))
         val requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file)
         val image = MultipartBody.Part.createFormData("imagedata", file.name, requestBody)
         val token = RequestBody.create(MediaType.parse("text/plain"), accessToken)
