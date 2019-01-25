@@ -90,7 +90,7 @@ class RetrofitActivity : AppCompatActivity(), View.OnClickListener {
         service?.getImages(ACCESS_TOKEN, page, perPage)?.enqueue(object : Callback<List<Image>> {
             override fun onResponse(call: Call<List<Image>>, response: Response<List<Image>>?) {
                 for (objImage in response?.body() as List) {
-                    if (!objImage.imageId.isNullOrEmpty()) {
+                    if (!objImage.image_id.isEmpty()) {
                         listImage.add(objImage)
                     }
                 }

@@ -10,8 +10,8 @@ import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.`at-dinhtruong`.restapi_item.view.*
 
 
-class ImageAdapter(private val listImage: ArrayList<Image>) :
-        RecyclerView.Adapter<ImageAdapter.ImageViewHolder>() {
+class ImageAdapter(private val listImage: ArrayList<Image>) : RecyclerView.Adapter<ImageAdapter.ImageViewHolder>() {
+
     override fun onCreateViewHolder(parent: ViewGroup,
                                     viewType: Int): ImageAdapter.ImageViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -28,9 +28,9 @@ class ImageAdapter(private val listImage: ArrayList<Image>) :
     inner class ImageViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         fun onBind() {
             val image = listImage.get(index = adapterPosition)
-            if (!image.imageId.isNullOrEmpty()) {
+            if (!image.image_id.isEmpty()) {
                 Glide.with(itemView.context).load(image.url).into(itemView.imgItem)
-                view.tvItem.text = image.imageId
+                view.tvItem.text = image.image_id
             }
         }
     }
