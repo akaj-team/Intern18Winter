@@ -13,6 +13,7 @@ import asiantech.internship.summer.event_listener.SignUpActivity;
 import asiantech.internship.summer.filestorage.FileStorageActivity;
 import asiantech.internship.summer.recyclerview.RecyclerViewActivity;
 import asiantech.internship.summer.restapi.RestAPIActivity;
+import asiantech.internship.summer.unittest.UnitTestActivity;
 import asiantech.internship.summer.view_and_groupview.ViewActivity;
 import asiantech.internship.summer.viewpager.PagerActivity;
 
@@ -26,6 +27,7 @@ public class ListIssuesActivity extends AppCompatActivity {
     private Button mBtnToAsyncTask;
     private Button mBtnToCanvas;
     private Button mBtnToRestAPI;
+    private Button mBtnToUnitTest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +47,7 @@ public class ListIssuesActivity extends AppCompatActivity {
         mBtnToAsyncTask = findViewById(R.id.btnToAsyncTask);
         mBtnToCanvas = findViewById(R.id.btnToCanvas);
         mBtnToRestAPI = findViewById(R.id.btnToRestAPI);
+        mBtnToUnitTest = findViewById(R.id.btnToUnitTest);
     }
 
     private void onClick() {
@@ -91,6 +94,11 @@ public class ListIssuesActivity extends AppCompatActivity {
         mBtnToRestAPI.setOnClickListener(toRestAPI -> {
             Intent intentRestAPI = new Intent(getApplication(), RestAPIActivity.class);
             startActivity(intentRestAPI);
+        });
+
+        mBtnToUnitTest.setOnClickListener(toUnitTest -> {
+            Intent intentUnitTest = new Intent(getApplication(), UnitTestActivity.class);
+            startActivity(intentUnitTest);
         });
     }
 }

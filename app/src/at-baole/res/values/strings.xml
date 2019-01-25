@@ -157,4 +157,5 @@
     <string name="encoding">utf-8</string>
     <string name="inputSaved">Input saved</string>
     <string name="sdCardNotFound">SD Card Not Found</string>
+    <string name="toUnitTest">Unit Test</string>
 </resources>
