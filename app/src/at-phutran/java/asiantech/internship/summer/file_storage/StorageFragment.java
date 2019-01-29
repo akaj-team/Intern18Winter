@@ -79,9 +79,7 @@ public class StorageFragment extends Fragment implements View.OnClickListener {
     }
 
     private void askPermissionAndWriteFile() {
-        boolean canWrite = this.askPermission(
-        );
-        if (canWrite) {
+        if (askPermission()) {
             this.writeFileExternalStorage();
         }
     }

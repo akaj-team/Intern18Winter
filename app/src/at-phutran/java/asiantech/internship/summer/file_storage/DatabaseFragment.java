@@ -16,6 +16,8 @@ import asiantech.internship.summer.R;
 import asiantech.internship.summer.model.Company;
 
 public class DatabaseFragment extends Fragment implements CompanyAdapter.OnclickNameCompany {
+    public static final String POSITION = "position";
+    public static final String NAME_COMPANY = "name_company";
     private Database mDatabase;
     private List<Company> mListCompany;
 
@@ -53,8 +55,8 @@ public class DatabaseFragment extends Fragment implements CompanyAdapter.Onclick
     public void viewEmployee(int position) {
         Company company = mListCompany.get(position);
         Intent intent = new Intent(getActivity(), EmployeeActivity.class);
-        intent.putExtra(getString(R.string.position), company.getId());
-        intent.putExtra(getString(R.string.nameCompany), company.getName());
+        intent.putExtra(POSITION, company.getId());
+        intent.putExtra(NAME_COMPANY, company.getName());
         startActivity(intent);
     }
 }

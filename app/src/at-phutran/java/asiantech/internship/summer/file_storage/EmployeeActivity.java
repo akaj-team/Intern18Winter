@@ -10,8 +10,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import asiantech.internship.summer.R;
 import asiantech.internship.summer.model.Employee;
 
@@ -66,8 +68,8 @@ public class EmployeeActivity extends AppCompatActivity implements View.OnClickL
 
     private void getDataCompanyClicked() {
         Intent intent = getIntent();
-        mIdCompany = intent.getIntExtra(getString(R.string.position), 0);
-        mNameCompany = intent.getStringExtra(getString(R.string.nameCompany));
+        mIdCompany = intent.getIntExtra(DatabaseFragment.POSITION, 0);
+        mNameCompany = intent.getStringExtra(DatabaseFragment.NAME_COMPANY);
     }
 
     @Override

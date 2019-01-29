@@ -41,7 +41,7 @@ public class Database extends SQLiteOpenHelper {
     void insertCompany(String name) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        if (!name.equals("")) {
+        if (!name.isEmpty()) {
             contentValues.put(COL_NAME_COMPANY, name);
             db.insert(TABLE_COMPANY, null, contentValues);
         }

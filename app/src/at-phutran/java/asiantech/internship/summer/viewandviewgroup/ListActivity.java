@@ -9,6 +9,7 @@ import android.widget.Button;
 import asiantech.internship.summer.R;
 import asiantech.internship.summer.asynctask.AsyncTaskThreadHandlerActivity;
 import asiantech.internship.summer.canvas.CanvasActivity;
+import asiantech.internship.summer.drawerlayout.DrawerLayoutActivity;
 import asiantech.internship.summer.eventlistener.SignUpActivity;
 import asiantech.internship.summer.file_storage.FileStorageActivity;
 import asiantech.internship.summer.fragment.LoginActivity;
@@ -24,6 +25,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
     private Button mBtnFragment;
     private Button mBtnStorage;
     private Button mBtnViewPager;
+    private Button mBtnDrawerLayout;
     private Button mBtnUnitTest;
     private Button mBtnRetrofit;
     private Button mBtnAsyncTask;
@@ -43,6 +45,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         mBtnRetrofit = findViewById(R.id.btnExercise8);
         mBtnAsyncTask = findViewById(R.id.btnExercise11);
         mBtnCanvas = findViewById(R.id.btnExercise9);
+        mBtnDrawerLayout = findViewById(R.id.btnExercise7);
         mBtnView.setOnClickListener(this);
         mBtnListener.setOnClickListener(this);
         mBtnFragment.setOnClickListener(this);
@@ -53,6 +56,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         mBtnRetrofit.setOnClickListener(this);
         mBtnAsyncTask.setOnClickListener(this);
         mBtnCanvas.setOnClickListener(this);
+        mBtnDrawerLayout.setOnClickListener(this);
     }
 
     @Override
@@ -93,13 +97,18 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(intent);
                 break;
             }
+            case R.id.btnExercise10: {
+                Intent intent = new Intent(ListActivity.this, UnitTestActivity.class);
+                startActivity(intent);
+                break;
+            }
             case R.id.btnExercise11: {
                 Intent intent = new Intent(ListActivity.this, AsyncTaskThreadHandlerActivity.class);
                 startActivity(intent);
                 break;
             }
-            case R.id.btnExercise10: {
-                Intent intent = new Intent(ListActivity.this, UnitTestActivity.class);
+            case R.id.btnExercise7: {
+                Intent intent = new Intent(ListActivity.this, DrawerLayoutActivity.class);
                 startActivity(intent);
                 break;
             }
