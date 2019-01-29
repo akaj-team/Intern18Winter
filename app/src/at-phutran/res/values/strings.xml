@@ -128,7 +128,6 @@
     <string name="delete">delete</string>
     <string name="listEmployee">List name employee of</string>
     <string name="updateEmployee">Update employee</string>
-
     <string name="successful">successful</string>
     <string name="error">error</string>
     <string name="noteInputEmployee">please input name of Employee</string>
