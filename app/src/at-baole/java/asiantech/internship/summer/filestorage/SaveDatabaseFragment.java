@@ -19,7 +19,7 @@ import asiantech.internship.summer.filestorage.model.Company;
 
 public class SaveDatabaseFragment extends Fragment implements CompanyAdapter.OnClickCompany {
     public static final String ID_COMPANY = "CompanyId";
-    DataAccess mDataAccess;
+    private DataAccess mDataAccess;
 
     @Nullable
     @Override
@@ -34,12 +34,12 @@ public class SaveDatabaseFragment extends Fragment implements CompanyAdapter.OnC
     }
 
     private void initCompany(View view) {
-        RecyclerView mRecyclerView = view.findViewById(R.id.recyclerViewCompany);
-        mRecyclerView.setHasFixedSize(true);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
-        mRecyclerView.setLayoutManager(linearLayoutManager);
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerViewCompany);
+        recyclerView.setHasFixedSize(true);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(linearLayoutManager);
         List<Company> companies = mDataAccess.getAllCompany();
-        mRecyclerView.setAdapter(new CompanyAdapter(companies, this, getContext()));
+        recyclerView.setAdapter(new CompanyAdapter(companies, this, getContext()));
     }
 
     private void addListCompany() {

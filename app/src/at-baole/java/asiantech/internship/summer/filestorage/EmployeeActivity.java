@@ -43,31 +43,31 @@ public class EmployeeActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void initEmployeeView() {
-        Company mCompany = mDataAccess.getCompanyById(mCompanyId);
-        RecyclerView mRvEmployee = findViewById(R.id.rvEmployee);
-        TextView mTvNameCompany = findViewById(R.id.tvCompany);
-        Button mBtnInsert = findViewById(R.id.btnInsert);
+        Company company = mDataAccess.getCompanyById(mCompanyId);
+        RecyclerView rvEmployee = findViewById(R.id.rvEmployee);
+        TextView tvNameCompany = findViewById(R.id.tvCompany);
+        Button btnInsert = findViewById(R.id.btnInsert);
         mBtnDelete = findViewById(R.id.btnDelete);
         mBtnUpdate = findViewById(R.id.btnUpdate);
         mEdtEmployeeId = findViewById(R.id.edtIdEmployee);
         mEdtEmployeeName = findViewById(R.id.edtEmployeeName);
 
-        mBtnInsert.setOnClickListener(this);
+        btnInsert.setOnClickListener(this);
         mBtnDelete.setOnClickListener(this);
         mBtnUpdate.setOnClickListener(this);
 
-        mRvEmployee.setHasFixedSize(true);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        mRvEmployee.setLayoutManager(linearLayoutManager);
+        rvEmployee.setHasFixedSize(true);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        rvEmployee.setLayoutManager(linearLayoutManager);
 
         mEmployees = mDataAccess.getAllEmployeeById(mCompanyId);
         mEdtEmployeeId.setText(String.valueOf(mEmployees.size() + 1));
-        mTvNameCompany.setText(mCompany.getCompanyName());
+        tvNameCompany.setText(company.getCompanyName());
         mEdtEmployeeId.setEnabled(false);
         mBtnUpdate.setEnabled(false);
         mBtnDelete.setEnabled(false);
         mEmployeeAdapter = new EmployeeAdapter(mEmployees, this, getApplicationContext());
-        mRvEmployee.setAdapter(mEmployeeAdapter);
+        rvEmployee.setAdapter(mEmployeeAdapter);
     }
 
     @Override

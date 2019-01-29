@@ -34,24 +34,23 @@ public class InternalExternalFragment extends Fragment {
     private EditText mEdtInputExternal;
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_internal_external, container, false);
 
         mEdtInputInternal = view.findViewById(R.id.edtIntStorage);
         mEdtInputExternal = view.findViewById(R.id.edtExtStorage);
-        Button mBtnSaveInternal = view.findViewById(R.id.btnSaveInternal);
-        Button mBtnLoadInternal = view.findViewById(R.id.btnLoadInternal);
-        Button mBtnSaveExternal = view.findViewById(R.id.btnSaveExternal);
-        Button mBtnLoadExternal = view.findViewById(R.id.btnLoadExternal);
+        Button btnSaveInternal = view.findViewById(R.id.btnSaveInternal);
+        Button btnLoadInternal = view.findViewById(R.id.btnLoadInternal);
+        Button btnSaveExternal = view.findViewById(R.id.btnSaveExternal);
+        Button btnLoadExternal = view.findViewById(R.id.btnLoadExternal);
 
-        mBtnSaveInternal.setOnClickListener(saveInternalView -> saveDataInternal());
-        mBtnLoadInternal.setOnClickListener(loadInternalView -> loadDataInternal());
-        mBtnSaveExternal.setOnClickListener(saveExternalView -> {
+        btnSaveInternal.setOnClickListener(saveInternalView -> saveDataInternal());
+        btnLoadInternal.setOnClickListener(loadInternalView -> loadDataInternal());
+        btnSaveExternal.setOnClickListener(saveExternalView -> {
             askPermissionAndWriteFile();
             saveDataExternal();
         });
-        mBtnLoadExternal.setOnClickListener(loadExternalView -> loadDataExternal());
+        btnLoadExternal.setOnClickListener(loadExternalView -> loadDataExternal());
         return view;
     }
 
@@ -73,8 +72,7 @@ public class InternalExternalFragment extends Fragment {
         try (FileInputStream fis = Objects.requireNonNull(getActivity()).openFileInput(INTERNAL_FILE_NAME)) {
             InputStreamReader isr = new InputStreamReader(fis, getString(R.string.encoding));
             BufferedReader br = new BufferedReader(isr);
-            StringBuilder sb;
-            sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             String text;
             while ((text = br.readLine()) != null) {
                 sb.append(text).append("\n");
@@ -91,9 +89,6 @@ public class InternalExternalFragment extends Fragment {
         if (Environment.MEDIA_MOUNTED.equals(state)) {
             File Root = Environment.getExternalStorageDirectory();
             File Dir = new File(Root.getAbsolutePath() + "/" + EXTERNAL_DIRECTORY_NAME);
-            if (!Dir.exists()) {
-                Dir.mkdir();
-            }
             File file = new File(Dir, EXTERNAL_FILE_NAME);
             String Message = mEdtInputExternal.getText().toString();
             try {
@@ -129,7 +124,6 @@ public class InternalExternalFragment extends Fragment {
 
     private void askPermissionAndWriteFile() {
         boolean canWrite = this.askPermission();
-        //
         if (canWrite) {
             this.loadDataExternal();
         }

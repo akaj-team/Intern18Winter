@@ -1,32 +1,39 @@
 package asiantech.internship.summer.filestorage;
 
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-public class PagerAdapter extends FragmentPagerAdapter {
-    private int mPagerAdapter;
+import java.util.ArrayList;
+import java.util.List;
 
-    PagerAdapter(FragmentManager fragmentManager, int pagerAdapter) {
+public class PagerAdapter extends FragmentPagerAdapter {
+    private final List<Fragment> mFragmentList = new ArrayList<>();
+    private final List<String> mFragmentTitleList = new ArrayList<>();
+
+    PagerAdapter(FragmentManager fragmentManager) {
         super(fragmentManager);
-        this.mPagerAdapter = pagerAdapter;
     }
 
     @Override
     public Fragment getItem(int position) {
-        switch (position) {
-            case 0:
-            default:
-                return new SharedPreferencesFragment();
-            case 1:
-                return new InternalExternalFragment();
-            case 2:
-                return new SaveDatabaseFragment();
-        }
+        return mFragmentList.get(position);
     }
 
     @Override
     public int getCount() {
-        return mPagerAdapter;
+        return mFragmentList.size();
+    }
+
+    @Nullable
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return mFragmentTitleList.get(position);
+    }
+
+    public void addFragment(Fragment fragment, String title) {
+        mFragmentList.add(fragment);
+        mFragmentTitleList.add(title);
     }
 }

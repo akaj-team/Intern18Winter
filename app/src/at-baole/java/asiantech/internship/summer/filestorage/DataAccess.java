@@ -147,9 +147,9 @@ public class DataAccess extends SQLiteOpenHelper {
         String countQuery = "SELECT * FROM " + TABLE_COMPANY;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
-        int countCompaniew = cursor.getCount();
+        int count = cursor.getCount();
         cursor.close();
-        return countCompaniew;
+        return count;
     }
 
     void addCompany(Company company) {

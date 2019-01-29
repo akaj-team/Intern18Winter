@@ -23,8 +23,7 @@ public class SharedPreferencesFragment extends Fragment {
     private SharedPreferences.Editor mEditor;
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View spView = inflater.inflate(R.layout.fragment_shared_preferences, container, false);
         mEdtUsername = spView.findViewById(R.id.edtUsername);
         mEdtPassword = spView.findViewById(R.id.edtPassword);
@@ -37,11 +36,11 @@ public class SharedPreferencesFragment extends Fragment {
     }
 
     private void checkSharedPreferences() {
-        String mUsername = mPreferences.getString(getString(R.string.username), "");
-        String mPassword = mPreferences.getString(getString(R.string.password), "");
+        String username = mPreferences.getString(getString(R.string.username), "");
+        String password = mPreferences.getString(getString(R.string.password), "");
 
-        mEdtUsername.setText(mUsername);
-        mEdtPassword.setText(mPassword);
+        mEdtUsername.setText(username);
+        mEdtPassword.setText(password);
     }
 
     private void onCLickLogin() {
@@ -49,12 +48,12 @@ public class SharedPreferencesFragment extends Fragment {
             if (mEdtUsername.getText().length() == 0 && mEdtPassword.getText().length() == 0) {
                 Toast.makeText(getActivity(), R.string.inputNull, Toast.LENGTH_LONG).show();
             } else {
-                String mUsername = mEdtUsername.getText().toString();
-                mEditor.putString(getString(R.string.username), mUsername);
+                String username = mEdtUsername.getText().toString();
+                mEditor.putString(getString(R.string.username), username);
                 mEditor.commit();
 
-                String mPassword = mEdtPassword.getText().toString();
-                mEditor.putString(getString(R.string.password), mPassword);
+                String password = mEdtPassword.getText().toString();
+                mEditor.putString(getString(R.string.password), password);
                 mEditor.commit();
 
                 Toast.makeText(getContext(), R.string.informationSaved, Toast.LENGTH_LONG).show();
