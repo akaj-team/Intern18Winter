@@ -78,4 +78,12 @@
         android:layout_marginTop="10dp"
         android:background="@drawable/shape"
         android:text="@string/exercise10" />
+
+    <Button
+        android:id="@+id/btnExercise7"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/shape"
+        android:text="@string/exercise7" />
 </LinearLayout>

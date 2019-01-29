@@ -34,6 +34,7 @@
         <activity
             android:name=".canvas.CanvasActivity"
             android:screenOrientation="landscape" />
+        <activity android:name=".drawerlayout.DrawerLayoutActivity" />
         <activity android:name=".asynctask.AsyncTaskThreadHandlerActivity" />
         <activity android:name=".retrofit.RetrofitActivity" />
         <activity android:name=".unittest.UnitTestActivity" />
