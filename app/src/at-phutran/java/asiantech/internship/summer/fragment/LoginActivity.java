@@ -11,7 +11,6 @@ import asiantech.internship.summer.R;
 
 public class LoginActivity extends AppCompatActivity {
     private Button mBackButton;
-    private TextView mTextViewToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,14 +29,12 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void setTextForToolBar(String title) {
-        mTextViewToolbar = findViewById(R.id.tvToolBar);
+        TextView mTextViewToolbar = findViewById(R.id.tvToolBar);
         mTextViewToolbar.setText(title);
     }
 
     public void backFragment() {
-        mBackButton.setOnClickListener(v -> {
-            onBackPressed();
-        });
+        mBackButton.setOnClickListener(v -> onBackPressed());
     }
 
     @Override
