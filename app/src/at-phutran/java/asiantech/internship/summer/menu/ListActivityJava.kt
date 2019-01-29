@@ -8,6 +8,7 @@ import android.view.View
 import asiantech.internship.summer.R
 import asiantech.internship.summer.asynctask.AsyncTaskThreadHandlerActivity
 import asiantech.internship.summer.canvas.CanvasActivity
+import asiantech.internship.summer.drawerlayout.DrawerLayoutActivity
 import asiantech.internship.summer.eventlistener.SignUpActivity
 import asiantech.internship.summer.fragment.LoginActivity
 import asiantech.internship.summer.recyclerview.RecyclerViewActivity
@@ -57,6 +58,10 @@ class ListActivityJava : AppCompatActivity(), View.OnClickListener {
                 val intent = Intent(this@ListActivityJava, UnitTestActivity::class.java)
                 startActivity(intent)
             }
+            R.id.btnExercise7 -> {
+                val intent = Intent(this@ListActivityJava, DrawerLayoutActivity::class.java)
+                startActivity(intent)
+            }
         }
     }
 
@@ -72,5 +77,6 @@ class ListActivityJava : AppCompatActivity(), View.OnClickListener {
         btnExercise9.setOnClickListener(this)
         btnExercise11.setOnClickListener(this)
         btnExercise10.setOnClickListener(this)
+        btnExercise7.setOnClickListener(this)
     }
 }
