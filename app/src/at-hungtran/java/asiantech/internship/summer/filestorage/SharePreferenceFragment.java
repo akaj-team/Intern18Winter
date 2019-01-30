@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.Objects;
+
 import asiantech.internship.summer.R;
 
 public class SharePreferenceFragment extends Fragment {
@@ -32,10 +34,10 @@ public class SharePreferenceFragment extends Fragment {
         mUsername = view.findViewById(R.id.edtUserName);
         mPassword = view.findViewById(R.id.edtPassword);
         Button mLogin = view.findViewById(R.id.btnLoginShare);
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("loginref", Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = Objects.requireNonNull(getActivity()).getSharedPreferences("loginref", Context.MODE_PRIVATE);
         mEditor = sharedPreferences.edit();
         mLogin.setOnClickListener(v -> login());
-        Boolean saveLogin = sharedPreferences.getBoolean("savelogin", true);
+        boolean saveLogin = sharedPreferences.getBoolean("savelogin", true);
         if (saveLogin) {
             mUsername.setText(sharedPreferences.getString("username", null));
             mPassword.setText(sharedPreferences.getString("password", null));

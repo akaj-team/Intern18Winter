@@ -12,19 +12,19 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.List;
+import java.util.Objects;
 
 import asiantech.internship.summer.R;
 import asiantech.internship.summer.model.Company;
 
 public class DatabaseFragment extends Fragment implements CompanyAdapter.OnClickCompany{
     DatabaseHelper databaseHelper;
-    List<Company> mCompanies;
     public static final String ID_COMPANY = "idCompany";
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_database, container, false);
-        databaseHelper = new DatabaseHelper(getActivity().getApplicationContext());
+        databaseHelper = new DatabaseHelper(Objects.requireNonNull(getActivity()).getApplicationContext());
         if(databaseHelper.getCompaniesCount() == 0){
             addListCompany();
         }
