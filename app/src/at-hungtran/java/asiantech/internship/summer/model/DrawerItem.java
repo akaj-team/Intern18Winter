@@ -15,10 +15,6 @@ public class DrawerItem {
         return iconResource;
     }
 
-    public void setIconResource(int iconResource) {
-        this.iconResource = iconResource;
-    }
-
     public String getTitle() {
         return title;
     }
