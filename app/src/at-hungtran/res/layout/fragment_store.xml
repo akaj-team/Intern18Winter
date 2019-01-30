@@ -1,0 +1,47 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:ignore="LabelFor,UnusedAttribute">
+
+    <EditText
+        android:id="@+id/edtInternal"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:background="@drawable/border"
+        android:importantForAutofill="no"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/edtExternal"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/border"
+        android:importantForAutofill="no"
+        android:inputType="text" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/btnInternal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="30dp"
+            android:text="@string/internal"
+            tools:ignore="ButtonStyle" />
+
+        <Button
+            android:id="@+id/btnExternal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/external"
+            tools:ignore="ButtonStyle" />
+    </LinearLayout>
+</LinearLayout>

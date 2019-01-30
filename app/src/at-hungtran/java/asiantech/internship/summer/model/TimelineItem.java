@@ -30,10 +30,6 @@ public class TimelineItem {
         return mImageAvt;
     }
 
-    public void setImageAvt(int imageAvt) {
-        this.mImageAvt = imageAvt;
-    }
-
     public String getName() {
         return mName;
     }
@@ -54,10 +50,6 @@ public class TimelineItem {
         return mDescription;
     }
 
-    public void setDescription(String description) {
-        this.mDescription = description;
-    }
-
     public int getLike() {
         return mLike;
     }
@@ -70,7 +62,4 @@ public class TimelineItem {
         return mCommenterName;
     }
 
-    public void setCommenterName(String commenterName) {
-        this.mCommenterName = commenterName;
-    }
 }

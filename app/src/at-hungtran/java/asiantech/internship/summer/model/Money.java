@@ -15,23 +15,12 @@ public class Money {
         return month;
     }
 
-    public void setMonth(String month) {
-        this.month = month;
-    }
-
     public int getSale() {
         return sale;
-    }
-
-    public void setSale(int sale) {
-        this.sale = sale;
     }
 
     public int getExpense() {
         return expense;
     }
 
-    public void setExpense(int expense) {
-        this.expense = expense;
-    }
 }

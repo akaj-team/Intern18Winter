@@ -33,7 +33,6 @@ public class HandlerFragment extends Fragment {
 
     private Button mBtnDownload;
     private ImageView mImgBigResult;
-    private ImageView mImgSmallResult;
 
     private ProgressDialog mProgressDialog;
 

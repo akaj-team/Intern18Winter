@@ -65,4 +65,18 @@
     <string name="errorUsernameNoAtMost2ConsecivitiveDigits">Username no at most 2 consecivitive digits</string>
     <string name="validUsernamePassword">valid success!!</string>
     <string name="errorUsernameLeastTwoNonConsecutiveUppercaseLetters">Username least 2 non-consecutive uppercase letters</string>
+    <string name="thisFieldIsNotEmpty">This field is not empty</string>
+    <string name="error">Error</string>
+    <string name="listCompany">List Company</string>
+    <string name="delete">Delete</string>
+    <string name="update">Update</string>
+    <string name="insert">Insert</string>
+    <string name="external">EXTERNAL</string>
+    <string name="internal">INTERNAL</string>
+    <string name="utf8">UTF-8</string>
+    <string name="saveSuccessfully">Save successfully!!</string>
+    <string name="permissionCancel">Permission Cancel!!</string>
+    <string name="saved">saved</string>
+    <string name="listEmployee">List Employee </string>
+    <string name="fileStorage">File Storage</string>
 </resources>

@@ -10,6 +10,7 @@ import android.widget.Button;
 import asiantech.internship.summer.R;
 import asiantech.internship.summer.canvas.CanvasActivity;
 import asiantech.internship.summer.eventlistener.LoginActivity;
+import asiantech.internship.summer.filestorage.FileStorageActivity;
 import asiantech.internship.summer.recyclerview.TimelineActivity;
 import asiantech.internship.summer.restapi.RestAPIActivity;
 import asiantech.internship.summer.unittest.UnitTestActivity;
@@ -30,10 +31,11 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         Button btnActivityFragment = findViewById(R.id.btnActivityFragment);
         Button btnRecyclerView = findViewById(R.id.btnRecyclerView);
         Button btnViewPager = findViewById(R.id.btnViewPager);
-        Button btnFileStorage = findViewById(R.id.btnAsyncTask);
+        Button btnAsyncTask = findViewById(R.id.btnAsyncTask);
         Button btnRestAPI = findViewById(R.id.btnRestAPI);
         Button btnCanvas = findViewById(R.id.btnCanvas);
         Button btnUnitTest = findViewById(R.id.btnUnitTest);
+        Button btnFileStorage = findViewById(R.id.btnFileStorage);
         btnViewGroup.setOnClickListener(this);
         btnEventAndListener.setOnClickListener(this);
         btnActivityFragment.setOnClickListener(this);
@@ -43,6 +45,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         btnRestAPI.setOnClickListener(this);
         btnCanvas.setOnClickListener(this);
         btnUnitTest.setOnClickListener(this);
+        btnAsyncTask.setOnClickListener(this);
     }
 
     @Override
@@ -90,6 +93,11 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             }
             case R.id.btnUnitTest: {
                 Intent intent = new Intent(HomeActivity.this, UnitTestActivity.class);
+                startActivity(intent);
+                break;
+            }
+            case R.id.btnFileStorage: {
+                Intent intent = new Intent(HomeActivity.this, FileStorageActivity.class);
                 startActivity(intent);
                 break;
             }
