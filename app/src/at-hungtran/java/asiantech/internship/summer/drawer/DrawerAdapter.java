@@ -19,8 +19,6 @@ import asiantech.internship.summer.model.DrawerItem;
 public class DrawerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_ITEM = 1;
-    private static final int REQUEST_CAMERA = 1;
-    private static final int SELECT_FILE = 2;
     private OnItemClickListener mOnClickItem;
     private List<DrawerItem> mDrawerItems;
     private Uri mSelectedImage;
@@ -85,13 +83,11 @@ public class DrawerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     public class HeaderViewHolder extends RecyclerView.ViewHolder {
         private ImageView mImgAvt;
         private TextView mTvGmail;
-        private ImageView mImgCheck;
 
         HeaderViewHolder(View itemView) {
             super(itemView);
             mImgAvt = itemView.findViewById(R.id.imgAvt);
             mTvGmail = itemView.findViewById(R.id.tvGmail);
-            mImgCheck = itemView.findViewById(R.id.imgIconCheck);
             mImgAvt.setOnClickListener(v -> mOnClickItem.onAvatarClicked());
         }
 

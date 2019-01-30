@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import asiantech.internship.summer.R;
 import asiantech.internship.summer.model.DrawerItem;
@@ -34,12 +35,10 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAda
     private static final int GALLERY_REQUEST = 1;
     private static final int READ_PERMISSION_REQUEST_CAMERA = 1111;
     private static final int WRITE_PERMISSION_REQUEST_CAMERA = 1112;
-    private static final int READ_PERMISSION_REQUEST_GALLERY = 1113;
     private static final int WRITE_PERMISSION_REQUEST_CALLERY = 11114;
     List<DrawerItem> mDrawerItem = new ArrayList<>();
     private ChoosePhotoDialogFragment mDialogFragment;
     private DrawerAdapter mAdapter;
-    private ActionBarDrawerToggle mDrawerToggle;
     private int mPositionSelected = -1;
     private DrawerLayout mDrawerLayout;
     private TextView mTvName;
@@ -152,7 +151,7 @@ public class DrawerLayoutActivity extends AppCompatActivity implements DrawerAda
         switch (requestCode) {
             case CAMERA_REQUEST:
                 if (resultCode == RESULT_OK) {
-                    Bitmap image = (Bitmap) imageReturnedIntent.getExtras().get("data");
+                    Bitmap image = (Bitmap) Objects.requireNonNull(imageReturnedIntent.getExtras()).get("data");
                     mAdapter.setAvartarBitmap(image);
                     mAdapter.setAvatarUri(null);
                     mAdapter.notifyItemChanged(0);

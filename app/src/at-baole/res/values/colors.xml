@@ -11,5 +11,12 @@
     <color name="colorGrey">#b3b3b3</color>
     <color name="colorLightGrey">#e6e6e6</color>
     <color name="colorLightBlue">#9999ff</color>
+    <color name="colorRed">#ff0000</color>
     <color name="colorCyan">#33cccc</color>
+    <color name="colorColumnSales">#2c81f1</color>
+    <color name="colorColumnExpenses">#ff7043</color>
+    <color name="colorDarkGreen">#00b386</color>
+    <color name="colorDarkRed">#cc0044</color>
+    <color name="colorOrange">#ff5c33</color>
+    <color name="colorLightOrange">#ffcccc</color>
 </resources>

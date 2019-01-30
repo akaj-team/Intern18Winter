@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="smallTextSize">14dp</dimen>
+    <dimen name="mediumTexSize">16dp</dimen>
+    <dimen name="largeTextSize">30dp</dimen>
+    <dimen name="columnWidth">50dp</dimen>
+    <dimen name="noteWidth">14dp</dimen>
+    <dimen name="lineWidth">1dp</dimen>
+    <dimen name="textSize15dp">15dp</dimen>
+    <dimen name="textSize18dp">18dp</dimen>
+</resources>

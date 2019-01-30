@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:text="@string/listIssues"
+        android:textColor="@color/colorRed"
+        android:textSize="30sp" />
+
+    <Button
+        android:id="@+id/btnToGroupView"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/toViewAndGroupView" />
+
+    <Button
+        android:id="@+id/btnToEventListener"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="@string/toEventListener" />
+
+    <Button
+        android:id="@+id/btnToActivityFragment"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="@string/toActivityFragment" />
+
+    <Button
+        android:id="@+id/btnToRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="@string/toRecyclerView" />
+
+    <Button
+        android:id="@+id/btnToViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="@string/toViewPager" />
+
+    <Button
+        android:id="@+id/btnToFileStorage"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="@string/toFileStorage" />
+
+    <Button
+        android:id="@+id/btnToAsyncTask"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="@string/toAsyncTask" />
+
+    <Button
+        android:id="@+id/btnToCanvas"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="@string/toCanvas" />
+
+    <Button
+        android:id="@+id/btnToRestAPI"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="@string/toRestAPI" />
+
+    <Button
+        android:id="@+id/btnToUnitTest"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="@string/toUnitTest"/>
+
+    <Button
+        android:id="@+id/btnToDrawerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="@string/toDrawerLayout"/>
+</LinearLayout>
