@@ -143,6 +143,7 @@
     <string name="toAsyncTask">asynctask - thread - handler</string>
     <string name="toCanvas">canvas</string>
     <string name="toRestAPI">rest api with retrofit</string>
+    <string name="toDrawerLayout">drawer layout</string>
     <string name="listCompanies">LIST COMPANIES</string>
     <string name="listEmployees">LIST EMPLOYEES</string>
     <string name="companyName">COMPANY NAME</string>

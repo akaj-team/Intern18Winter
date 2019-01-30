@@ -9,6 +9,7 @@ import asiantech.internship.summer.R;
 import asiantech.internship.summer.activity_fragment.LoginActivity;
 import asiantech.internship.summer.asynctaskthreadhandler.AsyncTaskThreadHandlerActivity;
 import asiantech.internship.summer.canvas.CanvasActivity;
+import asiantech.internship.summer.drawerlayout.DrawerLayoutActivity;
 import asiantech.internship.summer.event_listener.SignUpActivity;
 import asiantech.internship.summer.filestorage.FileStorageActivity;
 import asiantech.internship.summer.recyclerview.RecyclerViewActivity;
@@ -28,6 +29,7 @@ public class ListIssuesActivity extends AppCompatActivity {
     private Button mBtnToCanvas;
     private Button mBtnToRestAPI;
     private Button mBtnToUnitTest;
+    private Button mBtnToDrawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +50,7 @@ public class ListIssuesActivity extends AppCompatActivity {
         mBtnToCanvas = findViewById(R.id.btnToCanvas);
         mBtnToRestAPI = findViewById(R.id.btnToRestAPI);
         mBtnToUnitTest = findViewById(R.id.btnToUnitTest);
+        mBtnToDrawerLayout = findViewById(R.id.btnToDrawerLayout);
     }
 
     private void onClick() {
@@ -99,6 +102,11 @@ public class ListIssuesActivity extends AppCompatActivity {
         mBtnToUnitTest.setOnClickListener(toUnitTest -> {
             Intent intentUnitTest = new Intent(getApplication(), UnitTestActivity.class);
             startActivity(intentUnitTest);
+        });
+
+        mBtnToDrawerLayout.setOnClickListener(toDrawerLayout -> {
+            Intent intentDrawerLayout = new Intent(getApplication(), DrawerLayoutActivity.class);
+            startActivity(intentDrawerLayout);
         });
     }
 }
