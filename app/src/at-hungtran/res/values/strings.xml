@@ -65,4 +65,5 @@
     <string name="errorUsernameNoAtMost2ConsecivitiveDigits">Username no at most 2 consecivitive digits</string>
     <string name="validUsernamePassword">valid success!!</string>
     <string name="errorUsernameLeastTwoNonConsecutiveUppercaseLetters">Username least 2 non-consecutive uppercase letters</string>
+    <string name="kotlin">Kotlin</string>
 </resources>

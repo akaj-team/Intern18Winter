@@ -34,6 +34,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         Button btnRestAPI = findViewById(R.id.btnRestAPI);
         Button btnCanvas = findViewById(R.id.btnCanvas);
         Button btnUnitTest = findViewById(R.id.btnUnitTest);
+        Button btnKotlin = findViewById(R.id.btnKotlin);
         btnViewGroup.setOnClickListener(this);
         btnEventAndListener.setOnClickListener(this);
         btnActivityFragment.setOnClickListener(this);
@@ -43,6 +44,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         btnRestAPI.setOnClickListener(this);
         btnCanvas.setOnClickListener(this);
         btnUnitTest.setOnClickListener(this);
+        btnKotlin.setOnClickListener(this);
     }
 
     @Override
@@ -90,6 +92,11 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             }
             case R.id.btnUnitTest: {
                 Intent intent = new Intent(HomeActivity.this, UnitTestActivity.class);
+                startActivity(intent);
+                break;
+            }
+            case R.id.btnKotlin: {
+                Intent intent = new Intent(HomeActivity.this, asiantech.internship.summer.kotlin.restapi.RestAPIActivity.class);
                 startActivity(intent);
                 break;
             }
