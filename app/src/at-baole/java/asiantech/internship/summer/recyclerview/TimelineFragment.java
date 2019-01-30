@@ -115,7 +115,7 @@ public class TimelineFragment extends Fragment implements RecyclerViewAdapter.On
         int index = random.nextInt(10);
         switch (index) {
             case 1:
-                return R.drawable.img_avatar_1;
+                return R.drawable.img_avatar_default;
             case 2:
                 return R.drawable.img_avatar_2;
             case 3:
