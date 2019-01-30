@@ -56,20 +56,20 @@
         android:text="@string/exercise9" />
 
     <Button
-        android:id="@+id/btnExercise11"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/shape"
-        android:text="@string/exercise11" />
-
-    <Button
         android:id="@+id/btnExercise8"
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/shape"
         android:text="@string/exercise8" />
+
+    <Button
+        android:id="@+id/btnExercise11"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/shape"
+        android:text="@string/exercise11" />
 
     <Button
         android:id="@+id/btnExercise10"
@@ -86,4 +86,12 @@
         android:layout_marginTop="10dp"
         android:background="@drawable/shape"
         android:text="@string/exercise7" />
+
+    <Button
+        android:id="@+id/btnExercise6"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/shape"
+        android:text="@string/exercise6" />
 </LinearLayout>
