@@ -1,6 +1,5 @@
 package asiantech.internship.summer.filestorage;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -40,7 +39,6 @@ public class EmployeeActivity extends AppCompatActivity implements View.OnClickL
         initEmployee();
     }
 
-    @SuppressLint("SetTextI18n")
     private void initEmployee() {
         Company mCompany = mDatabaseHelper.getCompanyById(mIdCompany);
         RecyclerView mRvEmployee = findViewById(R.id.rvEmployee);
@@ -57,13 +55,13 @@ public class EmployeeActivity extends AppCompatActivity implements View.OnClickL
         mBtnUpdate.setOnClickListener(this);
 
         mRvEmployee.setHasFixedSize(true);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         mRvEmployee.setLayoutManager(linearLayoutManager);
 
         mEmployeesById = mDatabaseHelper.getAllEmployeeById(mIdCompany);
         mEdtIdEmployee.setText(String.valueOf(mEmployeesById.size() + 1));
         mTvNameCompany.setText(mCompany.getName());
-        mTvListNameEmployee.setText(getString(R.string.listEmployee) + " " + mCompany.getName());
+        mTvListNameEmployee.setText(getString(R.string.listEmployee, "", mCompany.getName()));
         mEdtIdEmployee.setEnabled(false);
         mBtnUpdate.setEnabled(false);
         mBtnDelete.setEnabled(false);

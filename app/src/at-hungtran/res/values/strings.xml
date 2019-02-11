@@ -77,6 +77,6 @@
     <string name="saveSuccessfully">Save successfully!!</string>
     <string name="permissionCancel">Permission Cancel!!</string>
     <string name="saved">saved</string>
-    <string name="listEmployee">List Employee </string>
     <string name="fileStorage">File Storage</string>
+    <string name="listEmployee">List Employee %1$s %2$s</string>
 </resources>

@@ -13,11 +13,11 @@ import asiantech.internship.summer.R;
 import asiantech.internship.summer.model.Company;
 
 public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.CompanyViewHolder> {
-    private List<Company> mItemCompany;
+    private List<Company> mCompanies;
     private OnClickCompany mOnClickCompany;
 
     CompanyAdapter(List<Company> companies, OnClickCompany onClickCompany){
-        this.mItemCompany = companies;
+        this.mCompanies = companies;
         this.mOnClickCompany = onClickCompany;
     }
     @NonNull
@@ -30,12 +30,12 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.CompanyV
 
     @Override
     public void onBindViewHolder(@NonNull CompanyAdapter.CompanyViewHolder holder, int position) {
-        holder.mTvNameCompany.setText(mItemCompany.get(position).getName());
+        holder.mTvNameCompany.setText(mCompanies.get(position).getName());
     }
 
     @Override
     public int getItemCount() {
-        return mItemCompany.size();
+        return mCompanies.size();
     }
 
     class CompanyViewHolder extends RecyclerView.ViewHolder {
@@ -44,7 +44,7 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.CompanyV
         CompanyViewHolder(View itemView) {
             super(itemView);
             mTvNameCompany = itemView.findViewById(R.id.tvItemCompany);
-            mTvNameCompany.setOnClickListener(v -> mOnClickCompany.onSelectItem(mItemCompany.get(getAdapterPosition()).getId()));
+            mTvNameCompany.setOnClickListener(v -> mOnClickCompany.onSelectItem(mCompanies.get(getAdapterPosition()).getId()));
         }
     }
     public interface OnClickCompany {

@@ -13,6 +13,9 @@ public class FileStorageAdapter extends FragmentPagerAdapter {
 
     FileStorageAdapter(FragmentManager fm) {
         super(fm);
+    }
+
+    private void initFragment() {
         mSharePreferenceFragment = new SharePreferenceFragment();
         mStoreFragment = new StoreFragment();
         mDatabaseFragment = new DatabaseFragment();
@@ -20,6 +23,7 @@ public class FileStorageAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
+        initFragment();
         if (position == 0) {
             return mSharePreferenceFragment;
         } else if (position == 1) {

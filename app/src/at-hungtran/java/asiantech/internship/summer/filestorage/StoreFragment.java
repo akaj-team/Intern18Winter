@@ -45,7 +45,6 @@ public class StoreFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.fragment_store, container, false);
         initView(view);
         readFileInternal();
@@ -107,7 +106,7 @@ public class StoreFragment extends Fragment {
     }
 
     private void writeFileExternal() {
-        ContextWrapper contextWrapper = new ContextWrapper(Objects.requireNonNull(getActivity()).getApplicationContext());
+        ContextWrapper contextWrapper = new ContextWrapper(getActivity());
         File extStore = contextWrapper.getDir(mFilepath, Context.MODE_PRIVATE);
         String path = extStore.getAbsolutePath() + "/" + mFileNameExternal;
         String external = mEdtExternal.getText().toString();
@@ -121,14 +120,14 @@ public class StoreFragment extends Fragment {
             myOutWriter.close();
             fOut.close();
 
-            Toast.makeText(getActivity().getApplicationContext(), mFileNameExternal + R.string.saved, Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), mFileNameExternal + R.string.saved, Toast.LENGTH_LONG).show();
         } catch (Exception e) {
             Log.e(TAG, e.getMessage(), e);
         }
     }
 
     private void onClickInternal() {
-        ContextWrapper contextWrapper = new ContextWrapper(Objects.requireNonNull(getActivity()).getApplicationContext());
+        ContextWrapper contextWrapper = new ContextWrapper(getActivity());
         File directory = contextWrapper.getDir(mFilepath, Context.MODE_PRIVATE);
         mMyFile = new File(directory, mFilenameInternal);
         String internal = mEdtInternal.getText().toString();
@@ -144,7 +143,7 @@ public class StoreFragment extends Fragment {
     }
 
     private void readFileInternal() {
-        ContextWrapper contextWrapper = new ContextWrapper(Objects.requireNonNull(getActivity()).getApplicationContext());
+        ContextWrapper contextWrapper = new ContextWrapper(getActivity());
         File directory = contextWrapper.getDir(mFilepath, Context.MODE_PRIVATE);
         mMyFile = new File(directory, mFilenameInternal);
         StringBuilder myData = new StringBuilder();

@@ -35,13 +35,13 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="30dp"
             android:text="@string/internal"
-            tools:ignore="ButtonStyle" />
+            style="?android:attr/borderlessButtonStyle"/>
 
         <Button
             android:id="@+id/btnExternal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/external"
-            tools:ignore="ButtonStyle" />
+            style="?android:attr/borderlessButtonStyle"/>
     </LinearLayout>
 </LinearLayout>

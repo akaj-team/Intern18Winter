@@ -12,20 +12,19 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.List;
-import java.util.Objects;
 
 import asiantech.internship.summer.R;
 import asiantech.internship.summer.model.Company;
 
 public class DatabaseFragment extends Fragment implements CompanyAdapter.OnClickCompany{
-    DatabaseHelper databaseHelper;
+    DatabaseHelper databaseCompany;
     public static final String ID_COMPANY = "idCompany";
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_database, container, false);
-        databaseHelper = new DatabaseHelper(Objects.requireNonNull(getActivity()).getApplicationContext());
-        if(databaseHelper.getCompaniesCount() == 0){
+        databaseCompany = new DatabaseHelper(getActivity());
+        if(databaseCompany.getCompaniesCount() == 0){
             addListCompany();
         }
         initCompany(view);
@@ -34,18 +33,18 @@ public class DatabaseFragment extends Fragment implements CompanyAdapter.OnClick
     private void initCompany(View view) {
         RecyclerView mRecyclerView = view.findViewById(R.id.rvCompany);
         mRecyclerView.setHasFixedSize(true);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(linearLayoutManager);
-        List<Company> companies = databaseHelper.getAllCompany();
+        List<Company> companies = databaseCompany.getAllCompany();
         mRecyclerView.setAdapter(new CompanyAdapter(companies, this));
     }
     private void addListCompany(){
-        databaseHelper.addCompany(new Company("Asian Tech Company"));
-        databaseHelper.addCompany(new Company("FPT Company"));
-        databaseHelper.addCompany(new Company("Framgia Company"));
-        databaseHelper.addCompany(new Company("Enclave Company"));
-        databaseHelper.addCompany(new Company("Axon Active Company"));
-        databaseHelper.addCompany(new Company("Gameloft Company"));
+        databaseCompany.addCompany(new Company("Asian Tech Company"));
+        databaseCompany.addCompany(new Company("FPT Company"));
+        databaseCompany.addCompany(new Company("Framgia Company"));
+        databaseCompany.addCompany(new Company("Enclave Company"));
+        databaseCompany.addCompany(new Company("Axon Active Company"));
+        databaseCompany.addCompany(new Company("Gameloft Company"));
     }
 
     @Override
