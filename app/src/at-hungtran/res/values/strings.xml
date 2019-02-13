@@ -25,7 +25,7 @@
     <string name="signUp">SIGN UP</string>
     <string name="singup">Singup?</string>
     <string name="pleasecheckemailpassword">Please check your email and password</string>
-    <string name="ltqc">Le Thi Quynh Chau</string>
+    <string name="ltqc">いなかもの</string>
     <string name="noLike"> 0 like</string>
     <string name="helloWorld">hello world :))</string>
     <string name="like">%s like</string>
@@ -65,4 +65,15 @@
     <string name="errorUsernameNoAtMost2ConsecivitiveDigits">Username no at most 2 consecivitive digits</string>
     <string name="validUsernamePassword">valid success!!</string>
     <string name="errorUsernameLeastTwoNonConsecutiveUppercaseLetters">Username least 2 non-consecutive uppercase letters</string>
+    <string name="navigationDrawerOpen">Drawer Open</string>
+    <string name="navigationDrawerClose">Drawer Closed</string>
+    <string name="gallery">Gallery</string>
+    <string name="camera">Camera</string>
+    <string name="gmail">abudory96@gmail.com</string>
+    <string name="inbox">Inbox</string>
+    <string name="outbox">Outbox</string>
+    <string name="trash">Trash</string>
+    <string name="spam">Spam</string>
+    <string name="dialog">Dialog</string>
+    <string name="drawerLayout">Drawer Layout</string>
 </resources>
