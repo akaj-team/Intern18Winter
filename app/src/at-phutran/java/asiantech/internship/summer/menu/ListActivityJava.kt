@@ -10,6 +10,7 @@ import asiantech.internship.summer.asynctask.AsyncTaskThreadHandlerActivity
 import asiantech.internship.summer.canvas.CanvasActivity
 import asiantech.internship.summer.drawerlayout.DrawerLayoutActivity
 import asiantech.internship.summer.eventlistener.SignUpActivity
+import asiantech.internship.summer.file_storage.FileStorageActivity
 import asiantech.internship.summer.fragment.LoginActivity
 import asiantech.internship.summer.recyclerview.RecyclerViewActivity
 import asiantech.internship.summer.retrofit.RetrofitActivity
@@ -62,6 +63,10 @@ class ListActivityJava : AppCompatActivity(), View.OnClickListener {
                 val intent = Intent(this@ListActivityJava, DrawerLayoutActivity::class.java)
                 startActivity(intent)
             }
+            R.id.btnExercise6 -> {
+                val intent = Intent(this@ListActivityJava, FileStorageActivity::class.java)
+                startActivity(intent)
+            }
         }
     }
 
@@ -78,5 +83,6 @@ class ListActivityJava : AppCompatActivity(), View.OnClickListener {
         btnExercise11.setOnClickListener(this)
         btnExercise10.setOnClickListener(this)
         btnExercise7.setOnClickListener(this)
+        btnExercise6.setOnClickListener(this)
     }
 }
