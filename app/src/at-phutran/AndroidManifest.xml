@@ -16,7 +16,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".viewandviewgroup.ListActivity">
+        <activity android:name=".menu.MenuActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -41,6 +41,12 @@
         <activity android:name=".drawerlayout.DrawerLayoutActivity" />
         <activity android:name=".asynctask.AsyncTaskThreadHandlerActivity" />
         <activity android:name=".retrofit.RetrofitActivity" />
+        <activity android:name=".kotlin.eventlistener.EventListenerSignUp" />
+        <activity android:name=".kotlin.fragment.LoginActivity" />
+        <activity android:name=".kotlin.fragment.WelcomeActivity" />
+        <activity android:name=".kotlin.retrofit.RetrofitActivity" />
+        <activity android:name=".menu.ListActivityKotlin" />
+        <activity android:name=".menu.ListActivityJava" />
         <activity android:name=".unittest.UnitTestActivity" />
     </application>
 </manifest>

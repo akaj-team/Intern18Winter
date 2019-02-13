@@ -54,7 +54,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:hint="@string/inputUser"
-            android:maxLength="@string/max" />
+            android:maxLength="@string/max"
+            android:inputType="text"
+            tools:ignore="Autofill" />
 
         <EditText
             android:id="@+id/edtPass"
@@ -62,16 +64,19 @@
             android:layout_height="wrap_content"
             android:hint="@string/inputPassword"
             android:inputType="textPassword"
-            android:maxLength="@string/max" />
+            android:maxLength="@string/max"
+            tools:ignore="Autofill" />
 
         <EditText
             android:id="@+id/edtEmail"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:hint="@string/inputEmail" />
+            android:hint="@string/inputEmail"
+            android:inputType="textEmailAddress"
+            tools:ignore="Autofill" />
 
         <RadioGroup
-            android:id="@+id/rd_genaral"
+            android:id="@+id/rgGender"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="-20dp"
@@ -79,22 +84,16 @@
             android:orientation="horizontal">
 
             <RadioButton
-                android:id="@+id/rd_pirates"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="onRadioButtonClicked"
                 android:text="@string/male"
-                android:textSize="18sp"
-                tools:ignore="OnClick" />
+                android:textSize="18sp"/>
 
             <RadioButton
-                android:id="@+id/rd_ninjas"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="onRadioButtonClicked"
                 android:text="@string/female"
-                android:textSize="18sp"
-                tools:ignore="OnClick" />
+                android:textSize="18sp"/>
         </RadioGroup>
 
         <LinearLayout
