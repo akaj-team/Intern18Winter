@@ -24,6 +24,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".event_listener.SignUpActivity" />
         <activity android:name=".view_and_groupview.ViewActivity" />
         <activity android:name=".activity_fragment.InformationActivity" />
@@ -36,9 +37,15 @@
             android:name=".canvas.CanvasActivity"
             android:screenOrientation="landscape" />
         <activity android:name=".restapi.RestAPIActivity" />
+
         <activity android:name=".unittest.UnitTestActivity" />
         <activity android:name=".drawerlayout.DrawerLayoutActivity" />
         <activity android:name=".filestorage.FileStorageActivity" />
         <activity android:name=".filestorage.EmployeeActivity" />
+        <activity android:name=".kotlin.eventlistener.SignUpActivity" />
+        <activity android:name=".kotlin.activityfragment.LoginActivity" />
+        <activity android:name=".kotlin.activityfragment.InformationActivity" />
+        <activity android:name=".kotlin.recyclerview.RecyclerViewActivity" />
+
     </application>
 </manifest>

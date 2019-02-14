@@ -2,6 +2,7 @@ package asiantech.internship.summer.mainactivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 
@@ -30,6 +31,7 @@ public class ListIssuesActivity extends AppCompatActivity {
     private Button mBtnToRestAPI;
     private Button mBtnToUnitTest;
     private Button mBtnToDrawerLayout;
+    private Button mBtnToKotlin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +53,7 @@ public class ListIssuesActivity extends AppCompatActivity {
         mBtnToRestAPI = findViewById(R.id.btnToRestAPI);
         mBtnToUnitTest = findViewById(R.id.btnToUnitTest);
         mBtnToDrawerLayout = findViewById(R.id.btnToDrawerLayout);
+        mBtnToKotlin = findViewById(R.id.btnToKotlin);
     }
 
     private void onClick() {
@@ -108,5 +111,40 @@ public class ListIssuesActivity extends AppCompatActivity {
             Intent intentDrawerLayout = new Intent(getApplication(), DrawerLayoutActivity.class);
             startActivity(intentDrawerLayout);
         });
+
+        mBtnToKotlin.setOnClickListener(toKotlin -> kotlinOptionsDialog());
+    }
+
+    private void kotlinOptionsDialog() {
+        final int ACTIVITY_FRAGMENT = 0;
+        final int EVENT_LISTENER = 1;
+        final int RECYCLER_VIEW = 2;
+        AlertDialog.Builder kotlinOptionsDialog = new AlertDialog.Builder(this);
+        kotlinOptionsDialog.setTitle(R.string.selectOneOption);
+        String kotlinOptionsDialogItems[] = {
+                getString(R.string.activityFragment),
+                getString(R.string.eventListener),
+                getString(R.string.recyclerView)
+        };
+        kotlinOptionsDialog.setItems(kotlinOptionsDialogItems, (dialogInterface, position) -> {
+            switch (position) {
+                case ACTIVITY_FRAGMENT: {
+                    Intent intentToActivityFragment = new Intent(getApplication(), asiantech.internship.summer.kotlin.activityfragment.LoginActivity.class);
+                    startActivity(intentToActivityFragment);
+                    break;
+                }
+                case EVENT_LISTENER: {
+                    Intent intentToEventListener = new Intent(getApplication(), asiantech.internship.summer.kotlin.eventlistener.SignUpActivity.class);
+                    startActivity(intentToEventListener);
+                    break;
+                }
+                case RECYCLER_VIEW: {
+                    Intent intentTORecyclerView = new Intent(getApplication(), asiantech.internship.summer.kotlin.recyclerview.RecyclerViewActivity.class);
+                    startActivity(intentTORecyclerView);
+                    break;
+                }
+            }
+        });
+        kotlinOptionsDialog.show();
     }
 }

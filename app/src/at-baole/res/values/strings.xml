@@ -33,7 +33,7 @@
     <string name="liked">liked</string>
     <string name="like">like</string>
     <string name="likes">likes</string>
-    <string name="zerolike">%s like</string>
+    <string name="zerolike">0 like</string>
     <string name="username">Username</string>
     <string name="comment">It is very delicious</string>
     <string name="timeline">Timeline</string>
@@ -175,4 +175,11 @@
     <string name="inputSaved">Input saved</string>
     <string name="sdCardNotFound">SD Card Not Found</string>
     <string name="toUnitTest">Unit Test</string>
+    <string name="hintUsername">Username</string>
+    <string name="information">INFORMATION</string>
+    <string name="toKotlin">Kotlin</string>
+    <string name="selectOneOption">Select one option</string>
+    <string name="activityFragment">Activity Fragment</string>
+    <string name="eventListener">Event Listener</string>
+    <string name="recyclerView">Recycler View</string>
 </resources>
