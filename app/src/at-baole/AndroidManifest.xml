@@ -40,5 +40,8 @@
         <activity android:name=".drawerlayout.DrawerLayoutActivity" />
         <activity android:name=".filestorage.FileStorageActivity" />
         <activity android:name=".filestorage.EmployeeActivity" />
+        <activity android:name=".servicesbroadcastreceiver.MusicActivity" />
+
+        <service android:name=".servicesbroadcastreceiver.MusicService" />
     </application>
 </manifest>
