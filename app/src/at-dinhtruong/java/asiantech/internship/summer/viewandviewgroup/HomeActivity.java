@@ -17,6 +17,7 @@ import asiantech.internship.summer.restapi.RestApiActivity;
 import asiantech.internship.summer.unittest.UnitTestActivity;
 import asiantech.internship.summer.viewpager.ViewPagerActivity;
 import asiantech.internship.summer.drawerlayout.DrawerLayoutActivity;
+import asiantech.internship.summer.servicesbroadcast.ServicesBroadcastActivity;
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -39,6 +40,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         Button btnCanvas = findViewById(R.id.btnCanvas);
         Button btnUnitTest = findViewById(R.id.btnUnitTest);
         Button btnDrawerLayout = findViewById(R.id.btnDrawerLayout);
+        Button btnServicesBroadcast = findViewById(R.id.btnServicesBroadcast);
         btnViewGroup.setOnClickListener(this);
         btnEventAndListener.setOnClickListener(this);
         btnActivityAndFragment.setOnClickListener(this);
@@ -50,6 +52,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         btnCanvas.setOnClickListener(this);
         btnUnitTest.setOnClickListener(this);
         btnDrawerLayout.setOnClickListener(this);
+        btnServicesBroadcast.setOnClickListener(this);
     }
 
     @Override
@@ -107,6 +110,11 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             }
             case R.id.btnDrawerLayout: {
                 Intent intent = new Intent(HomeActivity.this, DrawerLayoutActivity.class);
+                startActivity(intent);
+                break;
+            }
+            case R.id.btnServicesBroadcast: {
+                Intent intent = new Intent(HomeActivity.this, ServicesBroadcastActivity.class);
                 startActivity(intent);
                 break;
             }

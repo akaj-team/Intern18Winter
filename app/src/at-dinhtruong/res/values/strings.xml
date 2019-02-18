@@ -138,4 +138,11 @@
     <string name="setting">Setting</string>
     <string name="cancle">Cancle</string>
     <string name="denied">Denied</string>
+    <string name="servicesBroadcast">Services Broadcast</string>
+    <string name="pause">Pause</string>
+    <string name="play">Play</string>
+    <string name="timeMusicPlayer">--:--</string>
+    <string name="channelName">Channel Notification</string>
+    <string name="channelDescription">Channel Notification Description</string>
+    <string name="pleasePauseBeforeClose">Please pause before close</string>
 </resources>
