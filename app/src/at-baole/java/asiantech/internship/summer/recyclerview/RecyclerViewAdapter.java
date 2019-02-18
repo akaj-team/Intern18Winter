@@ -75,7 +75,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         @SuppressLint("SetTextI18n")
         private void bindView(TimelineItem timelineItem) {
             if (timelineItem == null) {
-                mImgAvatar.setImageResource(R.drawable.img_avatar_1);
+                mImgAvatar.setImageResource(R.drawable.img_avatar_default);
                 mTvUsername.setText(R.string.username);
                 mImgPictures.setImageResource(R.drawable.img_food_1);
                 mTvCommenter.setText(R.string.username);

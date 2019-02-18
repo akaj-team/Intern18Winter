@@ -83,6 +83,12 @@
             android:text="@string/unitTest" />
 
         <Button
+            android:id="@+id/btnDrawerLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="@string/drawerLayout" />
+        <Button
             android:id="@+id/btnKotlin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

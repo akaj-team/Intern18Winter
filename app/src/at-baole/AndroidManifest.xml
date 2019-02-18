@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="asiantech.internship.summer">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -16,7 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".unittest.UnitTestActivity">
+        <activity android:name=".mainactivity.ListIssuesActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -35,5 +36,9 @@
             android:name=".canvas.CanvasActivity"
             android:screenOrientation="landscape" />
         <activity android:name=".restapi.RestAPIActivity" />
+        <activity android:name=".unittest.UnitTestActivity" />
+        <activity android:name=".drawerlayout.DrawerLayoutActivity" />
+        <activity android:name=".filestorage.FileStorageActivity" />
+        <activity android:name=".filestorage.EmployeeActivity" />
     </application>
 </manifest>

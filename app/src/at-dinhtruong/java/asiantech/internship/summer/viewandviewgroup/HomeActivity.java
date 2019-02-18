@@ -10,6 +10,7 @@ import asiantech.internship.summer.R;
 import asiantech.internship.summer.activityandfragment.LoginActivity;
 import asiantech.internship.summer.asynctaskthreadhandler.AsyncTaskThreadHandlerActivity;
 import asiantech.internship.summer.canvas.CanvasActivity;
+import asiantech.internship.summer.drawerlayout.DrawerLayoutActivity;
 import asiantech.internship.summer.eventandlistener.EventAndListenerActivity;
 import asiantech.internship.summer.kotlin.KotlinActivity;
 import asiantech.internship.summer.recyclerview.RecyclerViewActivity;
@@ -38,6 +39,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         Button btnAsyncThreadHandler = findViewById(R.id.btnAsyncThreadHandler);
         Button btnCanvas = findViewById(R.id.btnCanvas);
         Button btnUnitTest = findViewById(R.id.btnUnitTest);
+        Button btnDrawerLayout = findViewById(R.id.btnDrawerLayout);
         Button btnKotlin = findViewById(R.id.btnKotlin);
         btnViewGroup.setOnClickListener(this);
         btnEventAndListener.setOnClickListener(this);
@@ -49,6 +51,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         btnAsyncThreadHandler.setOnClickListener(this);
         btnCanvas.setOnClickListener(this);
         btnUnitTest.setOnClickListener(this);
+        btnDrawerLayout.setOnClickListener(this);
         btnKotlin.setOnClickListener(this);
     }
 
@@ -102,6 +105,11 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             }
             case R.id.btnUnitTest: {
                 Intent intent = new Intent(HomeActivity.this, UnitTestActivity.class);
+                startActivity(intent);
+                break;
+            }
+            case R.id.btnDrawerLayout: {
+                Intent intent = new Intent(HomeActivity.this, DrawerLayoutActivity.class);
                 startActivity(intent);
                 break;
             }
