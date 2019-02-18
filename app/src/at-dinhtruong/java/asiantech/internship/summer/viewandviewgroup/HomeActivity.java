@@ -8,15 +8,16 @@ import android.widget.Button;
 
 import asiantech.internship.summer.R;
 import asiantech.internship.summer.activityandfragment.LoginActivity;
-import asiantech.internship.summer.eventandlistener.EventAndListenerActivity;
-import asiantech.internship.summer.recyclerview.RecyclerViewActivity;
-import asiantech.internship.summer.storage.FileStoreActivity;
 import asiantech.internship.summer.asynctaskthreadhandler.AsyncTaskThreadHandlerActivity;
 import asiantech.internship.summer.canvas.CanvasActivity;
+import asiantech.internship.summer.drawerlayout.DrawerLayoutActivity;
+import asiantech.internship.summer.eventandlistener.EventAndListenerActivity;
+import asiantech.internship.summer.kotlin.KotlinActivity;
+import asiantech.internship.summer.recyclerview.RecyclerViewActivity;
 import asiantech.internship.summer.restapi.RestApiActivity;
+import asiantech.internship.summer.storage.FileStoreActivity;
 import asiantech.internship.summer.unittest.UnitTestActivity;
 import asiantech.internship.summer.viewpager.ViewPagerActivity;
-import asiantech.internship.summer.drawerlayout.DrawerLayoutActivity;
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -39,6 +40,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         Button btnCanvas = findViewById(R.id.btnCanvas);
         Button btnUnitTest = findViewById(R.id.btnUnitTest);
         Button btnDrawerLayout = findViewById(R.id.btnDrawerLayout);
+        Button btnKotlin = findViewById(R.id.btnKotlin);
         btnViewGroup.setOnClickListener(this);
         btnEventAndListener.setOnClickListener(this);
         btnActivityAndFragment.setOnClickListener(this);
@@ -50,6 +52,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         btnCanvas.setOnClickListener(this);
         btnUnitTest.setOnClickListener(this);
         btnDrawerLayout.setOnClickListener(this);
+        btnKotlin.setOnClickListener(this);
     }
 
     @Override
@@ -107,6 +110,11 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             }
             case R.id.btnDrawerLayout: {
                 Intent intent = new Intent(HomeActivity.this, DrawerLayoutActivity.class);
+                startActivity(intent);
+                break;
+            }
+            case R.id.btnKotlin: {
+                Intent intent = new Intent(HomeActivity.this, KotlinActivity.class);
                 startActivity(intent);
                 break;
             }

@@ -40,6 +40,10 @@
             android:screenOrientation="landscape" />
         <activity android:name=".unittest.UnitTestActivity"/>
         <activity android:name=".drawerlayout.DrawerLayoutActivity" />
+        <activity android:name=".kotlin.eventandlistener.EventAndListenerActivity" />
+        <activity android:name=".kotlin.recyclerview.RecyclerViewActivity" />
+        <activity android:name=".kotlin.KotlinActivity" />
+        <activity android:name=".kotlin.retrofit.RetrofitActivity"/>
     </application>
 
 </manifest>
