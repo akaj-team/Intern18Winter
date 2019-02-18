@@ -119,4 +119,23 @@
     <string name="oct">Oct</string>
     <string name="nov">Nov</string>
     <string name="dec">Dec</string>
+    <string name="unitTest">Unit Test</string>
+    <string name="incorrectPassword">Incorrect password</string>
+    <string name="orLogInUsingASocialAccount">Or log in using a social account</string>
+    <string name="takePhoto">Take Photo</string>
+    <string name="chooseFromLibrary">Choose from Library</string>
+    <string name="cancel">Cancel</string>
+    <string name="permissionAccepted">Permission Accepted</string>
+    <string name="addPhoto">Add Photo!</string>
+    <string name="drawerLayout">DrawerLayout</string>
+    <string name="dinhTruongAsiantechVn">dinhtruong@asiantech.vn</string>
+    <string name="inbox">Inbox</string>
+    <string name="outbox">Outbox</string>
+    <string name="trash">Trash</string>
+    <string name="spam">Spam</string>
+    <string name="acceptDialog">Accept Dialog</string>
+    <string name="youHaveDeniedPermission">You have denied permission!</string>
+    <string name="setting">Setting</string>
+    <string name="cancle">Cancle</string>
+    <string name="denied">Denied</string>
 </resources>

@@ -3,3 +3,4 @@
     android:duration="350"
     android:fromXDelta="100%"
     android:toXDelta="0%" />
+

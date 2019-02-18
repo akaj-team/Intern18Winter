@@ -7,6 +7,15 @@
     android:orientation="vertical"
     tools:context=".view.ViewActivity">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="@string/listMenu"
+        android:textColor="@color/colorBlue"
+        android:textSize="@dimen/textSizeListIssue" />
+
     <Button
         android:id="@+id/btnViewGroup"
         android:layout_width="match_parent"
@@ -62,5 +71,19 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:text="@string/canvas" />
+
+    <Button
+        android:id="@+id/btnUnitTest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text="@string/unitTest" />
+
+    <Button
+        android:id="@+id/btnDrawer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text="@string/drawerLayout" />
 
 </LinearLayout>
