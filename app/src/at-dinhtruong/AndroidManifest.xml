@@ -3,10 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="asiantech.internship.summer">
 
-    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
@@ -39,8 +39,9 @@
         <activity
             android:name=".canvas.CanvasActivity"
             android:screenOrientation="landscape" />
+        <activity android:name=".unittest.UnitTestActivity"/>
+        <activity android:name=".drawerlayout.DrawerLayoutActivity" />
         <activity android:name=".servicesbroadcast.ServicesBroadcastActivity" />
-
         <service
             android:name=".servicesbroadcast.PlayMusicService"
             android:enabled="true" />

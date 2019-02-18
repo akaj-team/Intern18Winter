@@ -2,21 +2,21 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="asiantech.internship.summer">
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
 
     <uses-feature android:name="android.hardware.camera" />
-    <uses-permission android:name="android.permission.INTERNET" />
     <application
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-
+        tools:ignore="AllowBackup,GoogleAppIndexingWarning"
+        tools:replace="android:allowBackup">
         <activity android:name=".asynctask_thread_handler.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,15 +24,28 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".eventlistener.LoginActivity"/>
-        <activity android:name=".activityfragment.LoginActivity"/>
-        <activity android:name=".viewpager.PagerActivity" />
-        <activity android:name=".canvas.CanvasActivity"
-                  android:screenOrientation="landscape" />
         <activity android:name=".view.ViewActivity" />
+        <activity android:name=".eventlistener.LoginActivity" />
+        <activity android:name=".activityfragment.LoginActivity" />
         <activity android:name=".recyclerview.TimelineActivity" />
-        <activity android:name=".asynctask_thread_handler.ViewPagerActivity" />
+        <activity android:name=".viewpager.PagerActivity" />
         <activity android:name=".restapi.RestAPIActivity" />
+        <activity android:name=".asynctask_thread_handler.ViewPagerActivity" />
+        <activity android:name=".unittest.UnitTestActivity" />
+        <activity
+            android:name=".canvas.CanvasActivity"
+            android:screenOrientation="landscape" />
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
+        <activity android:name=".drawer.DrawerLayoutActivity" />
     </application>
 
 </manifest>

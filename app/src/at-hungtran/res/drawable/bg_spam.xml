@@ -1,0 +1,4 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/ic_error_blue_24dp" android:state_selected="true" />
+    <item android:drawable="@drawable/ic_error_grey_24dp" />
+</selector>
