@@ -42,5 +42,7 @@
         <activity android:name=".asynctask.AsyncTaskThreadHandlerActivity" />
         <activity android:name=".retrofit.RetrofitActivity" />
         <activity android:name=".unittest.UnitTestActivity" />
+        <activity android:name=".service.ServiceActivity" />
+        <service android:name=".service.PlayMusicService" />
     </application>
 </manifest>

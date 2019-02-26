@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Canvas_Phutran</string>
+    <string name="app_name">app music</string>
     <string name="todo">TODO</string>
     <string name="list">ListBaiTap</string>
     <string name="exercise1">W1-D3-View and Group View</string>
@@ -141,4 +141,9 @@
     <string name="employeeExist">employee is existing</string>
     <string name="userInfor">UserInfor</string>
     <string name="save">saved</string>
+    <string name="exercise12">service</string>
+    <string name="formatTime">00:00</string>
+    <string name="music_play">Play</string>
+    <string name="music_pause">Pause</string>
+    <string name="name_music">Hong khong 1</string>
 </resources>
